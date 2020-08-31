@@ -1,0 +1,10 @@
+# Project exclude paths
+/.gradle/
+/AACRecordLibrary/build/
+/AACRecordLibrary/build/intermediates/classes/debug/
+/DialogLib/build/
+/DialogLib/build/intermediates/classes/debug/
+/Library/build/
+/Library/build/intermediates/classes/debug/
+/YwApplication/build/
+/YwApplication/build/intermediates/classes/customer_app_default/debug/
