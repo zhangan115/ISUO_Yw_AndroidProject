@@ -1,0 +1,372 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="@color/colorPrimary" />
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:elevation="0dp">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary">
+
+                <TextView
+                    android:id="@+id/titleId"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="我的"
+                    android:textSize="18sp" />
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:background="@color/colorEAF4FD"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:gravity="left|center"
+                        android:orientation="horizontal"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:id="@+id/iv_user_photo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="@drawable/mine_head_default" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/id_setting_user"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:lines="1"
+                                android:textColor="@color/color535862"
+                                android:textSize="18sp"
+                                tools:text="刘大伟" />
+
+                            <TextView
+                                android:id="@+id/id_setting_user_position"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:lines="1"
+                                android:textColor="@color/color9B9B9B"
+                                android:textSize="13sp"
+                                tools:text="项目经理" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/ll_items"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/ll_setting_users"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_item_click"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/id_setting_users"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
+                                android:drawableLeft="@drawable/mine_contacts_icon"
+                                android:drawablePadding="8dp"
+                                android:drawableRight="@drawable/list_arrow"
+                                android:gravity="left|center"
+                                android:text="联系人"
+                                android:textColor="@color/setting_item_text"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:background="@color/color_energe_line" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_setting_clear"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_item_click"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/id_setting_clear"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
+                                android:drawableLeft="@drawable/mine_del_icon"
+                                android:drawablePadding="8dp"
+                                android:drawableRight="@drawable/list_arrow"
+                                android:gravity="left|center"
+                                android:text="清除缓存"
+
+                                android:textColor="@color/setting_item_text"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:background="@color/color_energe_line" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_setting_share"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_item_click"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/id_setting_share"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
+                                android:drawableLeft="@drawable/mine_invite_icon"
+                                android:drawablePadding="8dp"
+                                android:drawableRight="@drawable/list_arrow"
+                                android:gravity="left|center"
+                                android:text="邀请TA"
+
+                                android:textColor="@color/setting_item_text"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:background="@color/color_energe_line" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_setting_sugback"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_item_click"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/id_setting_sugback"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
+                                android:drawableLeft="@drawable/mine_feedback_icon"
+                                android:drawablePadding="8dp"
+                                android:drawableRight="@drawable/list_arrow"
+                                android:gravity="left|center"
+                                android:text="意见反馈"
+                                android:textColor="@color/setting_item_text"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:background="@color/color_energe_line" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_setting_version"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_item_click"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="15dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/id_setting_version"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="15dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_weight="1"
+                                    android:drawableLeft="@drawable/mine_update_icon"
+                                    android:drawablePadding="8dp"
+                                    android:gravity="left|center"
+                                    android:text="检查更新"
+                                    android:textColor="@color/setting_item_text"
+                                    android:textSize="15sp" />
+
+                                <TextView
+                                    android:id="@+id/version_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="15dp"
+                                    android:layout_marginTop="15dp"
+                                    android:drawablePadding="8dp"
+                                    android:drawableRight="@drawable/list_arrow"
+                                    android:textColor="@color/setting_item_text"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:background="@color/color_energe_line" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_setting_about"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_item_click"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/id_setting_about"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
+                                android:drawableLeft="@drawable/mine_about_icon"
+                                android:drawablePadding="8dp"
+                                android:drawableRight="@drawable/list_arrow"
+                                android:gravity="left|center"
+                                android:text="关于我们"
+                                android:textColor="@color/setting_item_text"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:background="@color/color_energe_line" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_change_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_item_click"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/id_change_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
+                                android:drawableLeft="@drawable/mine_password_icon"
+                                android:drawablePadding="8dp"
+                                android:drawableRight="@drawable/list_arrow"
+                                android:gravity="left|center"
+                                android:text="修改密码"
+                                android:textColor="@color/setting_item_text"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:background="@color/color_energe_line" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_setting_quit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_item_click"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/id_setting_quit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
+                                android:drawableLeft="@drawable/mine_quit_icon"
+                                android:drawablePadding="8dp"
+                                android:drawableRight="@drawable/list_arrow"
+                                android:gravity="left|center"
+                                android:text="退出登录"
+                                android:textColor="@color/setting_item_text"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bg_ll_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/id_staff_name"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/news_text_black"
+                    android:textSize="16sp"
+                    tools:text="日常巡检名称" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_news_line_gray"/>
+
+                <LinearLayout
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/id_staff_plantime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:textColor="@color/news_text_black"
+                        android:textSize="12sp"
+                        android:text="计划时间：2017.09.01 9:00-10:00"
+                        android:singleLine="true" />
+
+                    <TextView
+                        android:singleLine="true"
+                        android:id="@+id/id_staff_reptime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="left"
+                        android:textColor="@color/news_text_black"
+                        android:textSize="12sp"
+                        android:text="巡检时间：2017.09.01 9:00-10:00"  />
+
+                    <TextView
+                        android:singleLine="true"
+                        android:id="@+id/id_staff_repplace"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="left"
+                        android:textColor="@color/news_text_black"
+                        android:textSize="12sp"
+                        tools:text="巡检区域：1#配电室、2#配电室" />
+
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/id_staff_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="left"
+                        android:textColor="@color/news_text_black"
+                        android:textSize="16sp"
+                        tools:text="所属班组：运行一班" />
+                </LinearLayout>
+                <Button
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/id_staff_ok"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:text="知道了"
+                    android:textColor="@color/colorWhite"
+                    android:background="@drawable/bg_bt_blue"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+</LinearLayout>

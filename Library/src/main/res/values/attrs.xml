@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyAF">
+        <attr name="AFCount" format="integer"></attr>
+        <attr name="AFTopColor" format="color"></attr>
+        <attr name="AFDownColor" format="color"></attr>
+        <attr name="AFSpeed" format="integer"></attr>
+        <attr name="AFOffset" format="integer"></attr>
+        <attr name="AFHeight" format="dimension"></attr>
+    </declare-styleable>
+</resources>

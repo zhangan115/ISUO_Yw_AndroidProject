@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <EditText
+                android:id="@+id/et_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@color/colorWhite"
+                android:drawableLeft="@drawable/input_icon"
+                android:drawablePadding="5dp"
+                android:hint="请输入电流"
+                android:paddingBottom="10dp"
+                android:paddingTop="15dp"
+                android:textColor="#929db2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/iv_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@color/colorWhite"
+                android:drawableLeft="@drawable/input_icon"
+                android:drawablePadding="5dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="15dp"
+                android:textColor="#929db2"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_last_value"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:textColor="#929db2"
+            android:textSize="12sp"
+            tools:text="上次电流:30mA" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_norma_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="top"
+        android:paddingBottom="15dp"
+        android:textColor="#4c8fe2"
+        android:textSize="12sp"
+        tools:text="电流（mA）" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/login_name_pass_device" />
+</LinearLayout>

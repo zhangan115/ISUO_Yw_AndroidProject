@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <cn.bingoogolapple.badgeview.BGABadgeImageView
+                    android:id="@+id/id_bag_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/DP_2"
+                    android:src="@drawable/message_work_summary_icon" />
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/id_news_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/message_work_summary_icon"
+                    android:padding="@dimen/DP_2" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="今日工作汇总"
+                    android:textColor="@color/news_text_blue"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/id_news_reptime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:drawableLeft="@drawable/message_time_icon"
+                    android:drawablePadding="2dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/news_time_gray"
+                    tools:text="11:20" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_stroke_line"
+                android:layerType="software" />
+
+            <LinearLayout
+                android:id="@+id/id_news_checkwork"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/message_title_tag"
+                        android:drawablePadding="2dp"
+                        android:gravity="center_vertical"
+                        android:text="巡检工作"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/id_news_checkallnum"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="4dp"
+                        android:drawableRight="@drawable/list_arrow"
+                        android:gravity="center_vertical|right"
+                        android:textColor="@color/news_text_blue"
+                        android:textSize="14sp"
+                        tools:text="6个" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/id_news_checknum"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="6dp"
+                    android:drawableLeft="@drawable/message_title_round_tag"
+                    android:drawablePadding="2dp"
+                    android:textColor="@color/news_text_gray"
+                    android:textSize="13sp"
+                    tools:text="日常巡检 4个" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/chart_bg_line"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="待领取"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_news_line_gray" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="已领取"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_news_line_gray" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="执行中"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_news_line_gray" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="已完成"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/color_news_line_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/id_news_nostart"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            tools:text="2个" />
+
+                        <View
+                            android:id="@+id/id_news_"
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_news_line_gray" />
+
+                        <TextView
+                            android:id="@+id/id_news_begining"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            tools:text="1个" />
+
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_news_line_gray" />
+
+                        <TextView
+                            android:id="@+id/id_news_noget"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            tools:text="1个" />
+
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_news_line_gray" />
+
+                        <TextView
+                            android:id="@+id/id_news_finish"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            tools:text="0个" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/id_news_tasknum"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/message_title_round_tag"
+                    android:drawablePadding="2dp"
+                    android:textColor="@color/news_text_gray"
+                    android:textSize="13sp"
+                    tools:text="特检任务 2个" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/chart_bg_line"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/id_news_taskname01"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:maxLines="2"
+                            android:textSize="12sp"
+                            tools:text="国庆巡检" />
+
+                        <TextView
+                            android:id="@+id/id_news_tasktime01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="20dp"
+                            android:textSize="12sp"
+                            tools:text="2017.10.01-2017.10.11" />
+
+                        <TextView
+                            android:id="@+id/id_news_taskstate01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            android:gravity="right|center_vertical"
+                            android:textSize="12sp"
+                            tools:text="执行中" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/color_news_line_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/id_news_taskname02"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/DP_10"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:maxLines="2"
+                            android:textSize="12sp"
+                            tools:text="春节巡检" />
+
+                        <TextView
+                            android:id="@+id/id_news_tasktime02"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="20dp"
+                            android:textSize="12sp"
+                            tools:text="2017.10.01-2017.10.11" />
+
+                        <TextView
+                            android:id="@+id/id_news_taskstate02"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="@dimen/DP_10"
+                            android:gravity="right|center_vertical"
+                            android:textSize="12sp"
+                            tools:text="执行中" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/id_news_checktask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/message_title_tag"
+                        android:drawablePadding="2dp"
+                        android:gravity="center_vertical"
+                        android:text="检修任务"
+                        android:textColor="@color/news_text_black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/id_news_repairnum"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:drawablePadding="4dp"
+                        android:drawableRight="@drawable/list_arrow"
+                        android:gravity="center_vertical|right"
+                        android:textColor="@color/news_text_blue"
+                        android:textSize="14sp"
+                        tools:text="2个" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/chart_bg_line"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/id_news_repname01"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:maxLines="2"
+                            android:textSize="12sp"
+                            tools:text="检修任务" />
+
+
+                        <TextView
+                            android:id="@+id/id_news_repstate01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            android:gravity="right|center_vertical"
+                            android:textSize="12sp"
+                            tools:text="执行中" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/color_news_line_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/id_news_repname02"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:maxLines="2"
+                            android:textSize="12sp"
+                            tools:text="检修任务1" />
+
+
+                        <TextView
+                            android:id="@+id/id_news_repstate02"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            android:gravity="right|center_vertical"
+                            android:textSize="12sp"
+                            tools:text="执行中" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/id_news_checkadd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DP_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/message_title_tag"
+                    android:drawablePadding="2dp"
+                    android:gravity="center_vertical"
+                    android:text="增值工作目前上报"
+                    android:textColor="@color/news_text_black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/id_news_addwork"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableRight="@drawable/list_arrow"
+                    android:gravity="center_vertical|right"
+                    android:textColor="@color/news_text_blue"
+                    android:textSize="14sp"
+                    tools:text="8个" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

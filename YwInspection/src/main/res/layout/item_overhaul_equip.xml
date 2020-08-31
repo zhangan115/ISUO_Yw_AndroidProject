@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/DP_10"
+    android:layout_marginRight="@dimen/DP_10"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_belong_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/overhaul_belong_place_margin_bottom"
+        android:layout_marginLeft="@dimen/overhaul_item_card_view_margin"
+        android:layout_marginTop="@dimen/overhaul_belong_place_margin_top"
+        android:drawableLeft="@drawable/work_address_icon"
+        android:drawablePadding="4dp"
+        android:text="属地:一号配电室"
+        android:textColor="@color/item_overhaul_content_tv"
+        android:textSize="@dimen/overhaul_belong_place_text_size" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/overhaul_item_padding_left"
+                android:paddingRight="@dimen/overhaul_item_padding_right">
+
+                <TextView
+                    android:id="@+id/tv_equip_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/overhaul_equ_name_margin_top"
+                    android:text="1#出线柜"
+                    android:textSize="@dimen/overhaul_equip_name_text_size" />
+
+
+                <TextView
+                    android:id="@+id/tv_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_equip_name"
+                    android:layout_marginTop="@dimen/overhaul_user_margin_top"
+                    android:textSize="@dimen/overhaul_user_text_size"
+                    tools:text="祝伟政" />
+
+
+                <TextView
+                    android:id="@+id/tv_user_position"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tv_user"
+                    android:layout_marginTop="@dimen/overhaul_user_margin_top"
+                    android:layout_toRightOf="@+id/tv_user"
+                    android:text="检修人"
+                    android:textSize="@dimen/overhaul_user_position_text_size" />
+
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tv_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_user"
+                    android:layout_marginBottom="@dimen/overhaul_time_margin_bottom"
+                    android:layout_marginTop="@dimen/overhaul_user_margin_top"
+                    android:textSize="@dimen/overhaul_start_time_text_size"
+                    tools:text="计划时间: 2017-08-09 10:00" />
+
+                <TextView
+                    android:id="@+id/tv_repair_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_user"
+                    android:layout_marginBottom="@dimen/overhaul_time_margin_bottom"
+                    android:layout_marginTop="@dimen/overhaul_user_margin_top"
+                    android:textSize="@dimen/overhaul_start_time_text_size"
+                    tools:text="检修时间: 2017-08-09 10:00" />
+
+                <com.sito.library.widget.TextViewVertical
+                    android:id="@+id/tv_alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/overhaul_alarm_margin_left"
+                    android:layout_marginRight="@dimen/overhaul_alarm_margin_right"
+                    android:gravity="center"
+                    android:text="B类故障"
+                    android:textSize="@dimen/overhaul_alarm_text_size" />
+
+                <ImageView
+                    android:id="@+id/iv_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tv_alarm" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_start_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@drawable/bg_stroke_line"
+                    android:layerType="software" />
+
+                <TextView
+                    android:id="@+id/tv_repair_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="@dimen/overhaul_item_padding_left"
+                    android:paddingRight="@dimen/overhaul_item_padding_right"
+                    android:paddingTop="15dp"
+                    android:textColor="@color/color3E81D6"
+                    tools:text="检修结果:转大修" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

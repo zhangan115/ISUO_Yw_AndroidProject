@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorEAF4FD">
+
+    <com.sito.library.widget.PinnedHeaderExpandableListView
+        android:id="@+id/pinnedView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="7dp"
+        android:cacheColorHint="@null"
+        android:childDivider="@null"
+        android:childIndicatorLeft="0dp"
+        android:background="@drawable/bg"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:groupIndicator="@null"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:scrollbars="none" />
+
+    <include layout="@layout/layout_no_data" />
+
+</RelativeLayout>

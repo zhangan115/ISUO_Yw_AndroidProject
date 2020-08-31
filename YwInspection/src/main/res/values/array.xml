@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="choose_photo">
+        <item>@string/str_choose_carmer</item>
+        <item>@string/str_choose_photo</item>
+    </string-array>
+
+    <string-array name="choose_condition_1">
+        <item>@string/str_upload</item>
+        <item>@string/str_delete</item>
+        <item>@string/str_take_photo</item>
+    </string-array>
+
+    <string-array name="choose_condition_2">
+        <item>@string/str_delete</item>
+        <item>@string/str_take_photo</item>
+    </string-array>
+
+    <string-array name="special_chats">
+        <item>@string/chat_10kv</item>
+        <item>@string/chat_35kv</item>
+        <item>@string/chat_110kv</item>
+        <item>@string/chat_220kv</item>
+        <item>@string/chat_330kv</item>
+        <item>@string/chat_1</item>
+        <item>@string/chat_2</item>
+        <item>@string/chat_3</item>
+        <item>@string/chat_4</item>
+        <item>@string/chat_5</item>
+        <item>@string/chat_6</item>
+        <item>@string/chat_jin</item>
+    </string-array>
+    <string-array name="room_type">
+        <item>@string/room_type_1</item>
+        <item>@string/room_type_2</item>
+    </string-array>
+</resources>

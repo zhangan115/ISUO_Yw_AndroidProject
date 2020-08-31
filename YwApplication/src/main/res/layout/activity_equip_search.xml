@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_energe_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/DP_10"
+                android:layout_marginRight="@dimen/DP_10"
+                android:layout_marginTop="@dimen/DP_10"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="设备名称"
+                    android:textColor="@color/equip_search_gray"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="请输入设备名称"
+                        android:textColor="@color/news_text_black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/id_equip_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/DP_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_equip_text_gray"
+                        android:padding="2dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/id_equip_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/DP_10"
+                    android:layout_marginTop="20dp"
+                    android:drawablePadding="2dp"
+                    android:drawableRight="@drawable/list_arrow"
+                    android:text="设备类型"
+                    android:textColor="@color/equip_search_gray"
+                    android:textSize="16sp" />
+
+                <com.sito.library.widget.ExpendRecycleView
+                    android:id="@+id/recycleView_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/id_equip_seach_trans"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_equip_text_gray"
+                        android:gravity="center"
+                        android:text="变压器"
+                        android:textColor="@color/news_text_black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/id_equip_seach_switch"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/DP_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_equip_text_gray"
+                        android:gravity="center"
+                        android:text="开关柜"
+                        android:textColor="@color/news_text_black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/id_equip_seach_gis"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/DP_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_equip_text_gray"
+                        android:gravity="center"
+                        android:text="GIS"
+                        android:textColor="@color/news_text_black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/id_equip_seach_break"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/DP_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_equip_text_blue"
+                        android:gravity="center"
+                        android:text="断路器"
+                        android:textColor="@color/equip_search_blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/id_equip_seach_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/id_equip_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/DP_10"
+                    android:layout_marginTop="20dp"
+                    android:drawablePadding="2dp"
+                    android:drawableRight="@drawable/list_arrow"
+                    android:text="属地"
+                    android:textColor="@color/equip_search_gray"
+                    android:textSize="16sp" />
+
+                <com.sito.library.widget.ExpendRecycleView
+                    android:id="@+id/recycleView_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/id_equip_seach_place01"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_equip_text_gray"
+                        android:gravity="center"
+                        android:text="1#配电室"
+                        android:textColor="@color/news_text_black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/id_equip_seach_place02"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/DP_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_equip_text_gray"
+                        android:gravity="center"
+                        android:text="2#配电室"
+                        android:textColor="@color/news_text_black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/id_equip_seach_place03"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/DP_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_equip_text_gray"
+                        android:gravity="center"
+                        android:text="3#配电室"
+                        android:textColor="@color/news_text_black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/id_equip_seach_place04"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/DP_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_equip_text_blue"
+                        android:gravity="center"
+                        android:text="4#配电室"
+                        android:textColor="@color/equip_search_blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/id_equip_seach_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/id_equip_reset"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@color/color_search_reset"
+                    android:gravity="center"
+                    android:text="重置"
+                    android:textColor="@color/equip_search_text_reset" />
+
+                <TextView
+                    android:id="@+id/id_equip_commit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="@color/color_bg_bt_blue"
+                    android:gravity="center"
+                    android:text="完成"
+                    android:textColor="@color/colorWhite" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

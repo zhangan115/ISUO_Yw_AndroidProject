@@ -1,0 +1,106 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+def static releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+android {
+    signingConfigs {
+        debug {
+            keyAlias 'sito'
+            keyPassword '123456'
+            storeFile file('../sito_check.jks')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        applicationId "com.sito.evpro.inspection"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 3
+        versionName "1.1.1"
+    }
+    flavorDimensions "default"
+    productFlavors {
+        inspection_app_default {
+            applicationId "com.sito.evpro.inspection"
+            dimension "default"
+            resValue "string", "app_name", "易优维巡检版"
+            //buildConfigField "String", "HOST", '"https://www.ewaypro.cn/api"'
+            buildConfigField "String", "HOST", '"https://114.118.94.117:8080/isuoyw/api"'
+            buildConfigField "String", "UMENG_CHANNEL", '"defaultChannel"'
+            manifestPlaceholders = [
+                    TASK_AFFINITY_VALUE: "android.task.sito.evpro.inspection",
+                    UMENG_CHANNEL      : "defaultChannel",
+            ]
+        }
+        inspection_app_dev {
+            applicationId "com.sito.evpro.inspection.dev"
+            resValue "string", "app_name", "易优维巡检版开发"
+            buildConfigField "String", "HOST", '"https://114.118.94.117:8080/isuoyw/api"'
+            buildConfigField "String", "UMENG_CHANNEL", '"devChannel"'
+            manifestPlaceholders = [
+                    TASK_AFFINITY_VALUE: "android.task.sito.evpro.inspection.dev",
+                    UMENG_CHANNEL      : "devChannel",
+            ]
+        }
+        inspection_app_test {
+            applicationId "com.sito.evpro.inspection.test"
+            resValue "string", "app_name", "易优维巡检版测试"
+            buildConfigField "String", "HOST", '"https://www.ewaypro.cn/euvtest/api"'
+            buildConfigField "String", "UMENG_CHANNEL", '"testChannel"'
+            manifestPlaceholders = [
+                    TASK_AFFINITY_VALUE: "android.task.sito.evpro.inspection.test",
+                    UMENG_CHANNEL      : "testChannel",
+            ]
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "易优维巡检版_${variant.flavorName}_V${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}.apk"
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    //green dao 配置
+    greendao {
+        schemaVersion 7//版本号
+    }
+}
+repositories { flatDir { dirs 'libs' } }
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile "junit:junit:$rootProject.ext.junitVersion"
+    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    compile "org.greenrobot:greendao:$rootProject.greenDaoVersion"
+    compile "com.google.dagger:dagger:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    compile project(':DialogLib')
+    compile project(':Library')
+    compile project(':AACRecordLibrary')
+    compile files('libs/SystemProperties.jar')
+    compile(name: 'DateTimePicker', ext: 'aar')
+    compile(name: 'MPChartLib', ext: 'aar')
+    compile 'com.umeng.sdk:common:latest.integration'
+    compile 'com.umeng.sdk:analytics:latest.integration'
+}

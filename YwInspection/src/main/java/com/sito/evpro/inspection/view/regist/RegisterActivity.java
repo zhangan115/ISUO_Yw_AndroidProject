@@ -1,0 +1,228 @@
+package com.sito.evpro.inspection.view.regist;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+
+import com.sito.evpro.inspection.R;
+import com.sito.evpro.inspection.app.InspectionApp;
+import com.sito.evpro.inspection.mode.bean.Register;
+import com.sito.evpro.inspection.utils.CountDownTimerUtils;
+import com.sito.evpro.inspection.view.BaseActivity;
+import com.sito.library.utils.CheckInput;
+
+import javax.inject.Inject;
+
+public class RegisterActivity extends BaseActivity implements View.OnClickListener, RegisterContract.View {
+
+    private EditText mUserPhoneNumEt, mPasswordEt, mPasswordAgainEt, mCodeEt;
+    private TextView mGetCode;
+    private ImageView mCleanPs1Iv, mCleanPs2Iv, mCleanPhoneNumIv;
+    private String mPhoneNumStr, mPassStr, mPassStrAgainStr, mCodeStr;
+    public static final String NAME = "NAME";
+    public static final String PASSWORD = "PASSWORD";
+
+    @Inject
+    RegisterPresenter registerPresenter;
+    RegisterContract.Presenter mPresenter;
+    private CountDownTimerUtils timerUtils;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setLayoutAndToolbar(R.layout.activity_register, "找回密码");
+        DaggerRegisterComponent.builder().inspectionRepositoryComponent(InspectionApp.getInstance().getRepositoryComponent())
+                .registerModule(new RegisterModule(this)).build().inject(this);
+        initViews();
+        initEvents();
+        showCleanText();
+    }
+
+
+    private void initViews() {
+        mUserPhoneNumEt = (EditText) findViewById(R.id.user_phone_et);
+        mPasswordEt = (EditText) findViewById(R.id.password_et);
+        mPasswordAgainEt = (EditText) findViewById(R.id.password_2_et);
+        mCodeEt = (EditText) findViewById(R.id.code_et);
+        mCleanPhoneNumIv = (ImageView) findViewById(R.id.clean_phone_iv);
+        mCleanPs1Iv = (ImageView) findViewById(R.id.password_iv);
+        mCleanPs2Iv = (ImageView) findViewById(R.id.clean_password_2_iv);
+        mGetCode = (TextView) findViewById(R.id.get_code_tv);
+        timerUtils = new CountDownTimerUtils(mGetCode, 60000, 1000, "重新获取", "#004CAA");
+    }
+
+
+    private void initEvents() {
+        mGetCode.setOnClickListener(this);
+        mCleanPs1Iv.setOnClickListener(this);
+        mCleanPs2Iv.setOnClickListener(this);
+        mPasswordAgainEt.setOnClickListener(this);
+        mCleanPhoneNumIv.setOnClickListener(this);
+        findViewById(R.id.tv_sure).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.get_code_tv:
+                if (!timerUtils.getTimer()) {
+                    mPhoneNumStr = mUserPhoneNumEt.getText().toString();
+                    //获取验证码
+                    if (CheckInput.checkPhoneNum(mPhoneNumStr) != null) {
+                        InspectionApp.getInstance().showToast(CheckInput.checkPhoneNum(mPhoneNumStr));
+                        return;
+                    }
+                    mPresenter.getVerificationCode(mPhoneNumStr);
+                }
+                break;
+            case R.id.tv_sure:
+                mPassStr = mPasswordEt.getText().toString();
+                mPassStrAgainStr = mPasswordAgainEt.getText().toString();
+                mCodeStr = mCodeEt.getText().toString();
+                if (!mPassStrAgainStr.equals(mPassStr)) {
+                    InspectionApp.getInstance().showToast("两次密码输入不一致");
+                    return;
+                }
+                if (CheckInput.checkIdeCode(mCodeStr) != null) {
+                    InspectionApp.getInstance().showToast(CheckInput.checkIdeCode(mCodeStr));
+                    return;
+                }
+                //重置密码
+                Register mRegister = new Register();
+                mRegister.setPhoneNum(mPhoneNumStr);
+                mRegister.setPassword(mPassStr);
+                mRegister.setVerificationCode(mCodeStr);
+                mPresenter.toRegister(mRegister);
+                break;
+            case R.id.clean_phone_iv:
+                mUserPhoneNumEt.setText("");
+                break;
+            case R.id.password_iv:
+                mPasswordEt.setText("");
+                break;
+            case R.id.password_2_et:
+                mPasswordAgainEt.setText("");
+                break;
+        }
+    }
+
+    @Override
+    public void getSuccess() {
+        timerUtils.start();
+    }
+
+    @Override
+    public void getFail() {
+        InspectionApp.getInstance().showToast("验证码发送失败");
+    }
+
+    @Override
+    public void registerFail() {
+        InspectionApp.getInstance().showToast("密码重置失败");
+    }
+
+    @Override
+    public void registerSuccess() {
+        InspectionApp.getInstance().showToast("密码重置成功");
+        Intent intent = new Intent();
+        intent.putExtra(NAME, mPhoneNumStr);
+        intent.putExtra(PASSWORD, mPassStr);
+        setResult(RESULT_OK, intent);//发送返回码
+        finish();
+    }
+
+    @Override
+    public void showLoading() {
+        showProgressDialog("请稍等...");
+    }
+
+    @Override
+    public void hideLoading() {
+        hideProgressDialog();
+    }
+
+    @Override
+    public void setPresenter(RegisterContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    protected void onCancel() {
+        super.onCancel();
+        mPresenter.unSubscribe();
+    }
+
+    /**
+     * 监听文本框输入状态
+     */
+    private void showCleanText() {
+        mUserPhoneNumEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mUserPhoneNumEt.getText().toString().isEmpty()) {
+                    mCleanPhoneNumIv.setVisibility(View.GONE);
+                } else {
+                    mCleanPhoneNumIv.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        mPasswordEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mPasswordEt.getText().toString().isEmpty()) {
+                    mCleanPs1Iv.setVisibility(View.GONE);
+                } else {
+                    mCleanPs1Iv.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        mPasswordAgainEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mPasswordAgainEt.getText().toString().isEmpty()) {
+                    mCleanPs2Iv.setVisibility(View.GONE);
+                } else {
+                    mCleanPs2Iv.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mPresenter != null) {
+            mPresenter.unSubscribe();
+        }
+    }
+}

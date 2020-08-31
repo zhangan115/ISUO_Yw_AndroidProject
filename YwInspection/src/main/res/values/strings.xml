@@ -1,0 +1,118 @@
+<resources>
+    <string name="home_setting">设置</string>
+    <string name="home_account">退出账号</string>
+    <string name="home_tv_repair">检修工作</string>
+    <string name="home_tv_my_work">我的工作</string>
+    <string name="home_tv_energy">能量隔离</string>
+    <string name="home_tv_share">邀请TA</string>
+    <string name="home_tv_users">联系人</string>
+    <string name="home_tv_greasing">注油管理</string>
+    <string name="home_tv_increment">专项工作</string>
+    <string name="home_tv_fault">故障上报</string>
+    <string name="home_tv_sos">SOS</string>
+    <string name="home_tv_create_equip">设备录入</string>
+    <string name="home_tv_equip_info">设备档案</string>
+
+    <string name="no_data">没有您找的数据</string>
+    <string name="energy_point">请根据操作规范隔离能量\n系统将记录您本次操作</string>
+    <string name="mine_about_content">&#160;&#160;&#160;&#160;&#160;&#160;西安西拓电气股份有限公司成立于2006年，2015年9月正式完成股份制改造，是一家专门为电力系统用户提供全套在线监测解决方案以及运维检修技术服务的股份制科技企业。所提供的产品和服务已经覆盖发电、输电、变电、配电等领域，并逐步发展成为，以智能在线监测系统集成、电气设备运维检修技术服务、国际电力工程总包三大板块为主体，以自主品牌产品研发和生产为发展创新的高新技术企业。</string>
+    <string name="mine_tel">&#160;&#160;&#160;&#160;&#160;&#160;服务热线：</string>
+
+    <!-- 请替换成在语音云官网申请的appid -->
+    <string name="app_id">594a2e41</string>
+    <!-- 听写 -->
+    <string name="text_begin">请开始说话…</string>
+    <string name="text_begin_recognizer">开始音频流识别</string>
+    <string name="text_upload_contacts">上传联系人</string>
+    <string name="text_upload_userwords">上传用户词表</string>
+    <string name="text_upload_success">上传成功</string>
+    <string name="text_userword_empty">词表下载失败或内容为空</string>
+    <string name="text_download_success">下载成功</string>
+    <string name="pref_key_iat_show">iat_show</string>
+    <string name="pref_title_iat_show">显示听写界面</string>
+    <string name="pref_title_iat_dwa">结果动态修正</string>
+    <string name="str_request_error">请求出错</string>
+
+    <!-- 语言 -->
+    <string-array name="language_entries">
+        <item>普通话</item>
+        <item>粤语</item>
+        <item>英语</item>
+    </string-array>
+    <string-array name="language_values">
+        <item>mandarin</item>
+        <item>cantonese</item>
+        <item>en_us</item>
+    </string-array>
+
+    <!-- 标点符号 -->
+    <string-array name="punc_entries">
+        <item>有标点</item>
+        <item>无标点</item>
+    </string-array>
+    <string-array name="punc_values">
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+
+    <string name="str_login_btn">登录</string>
+    <string name="hit_login_user">请输入手机号</string>
+    <string name="hit_login_pass">请输入密码</string>
+    <string name="tab_inspection">日常巡检</string>
+    <string name="tab_overhaul">检修工作</string>
+    <string name="tab_increment">专项工作</string>
+
+    <string name="no_more_free_disk">磁盘空间不足</string>
+    <string name="download_prompt">下载进度</string>
+    <string name="update_new_version">版本更新</string>
+    <string name="cancel">取消</string>
+
+    <string name="text_sunday">周日</string>
+    <string name="text_monday">周一</string>
+    <string name="text_tuesday">周二</string>
+    <string name="text_wednesday">周三</string>
+    <string name="text_thursday">周四</string>
+    <string name="text_friday">周五</string>
+    <string name="text_saturday">周六</string>
+    <string name="toast_exit_app">再次点击将退出应用</string>
+
+    <string name="str_choose_carmer">拍照</string>
+    <string name="str_choose_photo">相册</string>
+
+    <string name="str_upload">重新上传</string>
+    <string name="str_delete">删除照片</string>
+    <string name="str_take_photo">重新拍照</string>
+
+    <string name="need_save_setting">当前App需要申请存储权限,需要打开设置页面么?</string>
+    <string name="need_save_state_setting">当前App需要申请麦克风权限进行录音,需要打开设置页面么?</string>
+    <string name="request_permissions">权限申请</string>
+    <string name="sure">确认</string>
+
+    <string name="chat_10kv">10kV</string>
+    <string name="chat_35kv">35kV</string>
+    <string name="chat_110kv">110kV</string>
+    <string name="chat_220kv">220kV</string>
+    <string name="chat_330kv">330kV</string>
+    <string name="chat_jin">#</string>
+    <string name="chat_1">Ⅰ</string>
+    <string name="chat_2">Ⅱ</string>
+    <string name="chat_3">Ⅲ</string>
+    <string name="chat_4">Ⅳ</string>
+    <string name="chat_5">Ⅴ</string>
+    <string name="chat_6">Ⅵ</string>
+    <string name="pro_special_table">特殊字符表</string>
+    <string name="toolbar_title_create_equip">设备录入</string>
+    <string name="toolbar_title_equip_info">设备信息</string>
+    <string name="room_type_1">电力配电室</string>
+    <string name="room_type_2">电机区域</string>
+    <string name="fault_disable_msg">无法使用</string>
+    <string name="fault_long_name">故障上报</string>
+    <string name="fault_short_name">故障上报</string>
+    <string name="increment_disable_msg">无法使用</string>
+    <string name="increment_long_name">上报专项工作</string>
+    <string name="increment_short_name">上报专项工作</string>
+    <string name="sos_disable_msg">无法使用</string>
+    <string name="sos_long_name">SOS</string>
+    <string name="sos_short_name">SOS</string>
+    <string name="please_waite">马上重启，请稍等</string>
+</resources>

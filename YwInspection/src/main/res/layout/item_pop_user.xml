@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/id_pop_username"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="left|center_vertical"
+        tools:text="哈哈"
+        android:textSize="14sp" />
+    <View
+        android:layout_marginTop="@dimen/login_enter_margin_top_bottom"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/login_name_pass_device" />
+</LinearLayout>

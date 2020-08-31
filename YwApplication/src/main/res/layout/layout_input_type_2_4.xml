@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_type_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_value_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="15dp"
+                    android:textColor="#535862"
+                    android:textSize="16sp"
+                    tools:text="干式变压器应无裂痕无异物" />
+
+                <TextView
+                    android:id="@+id/tv_norma_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="#929db2"
+                    android:textSize="12sp"
+                    tools:text="电流（mA）" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:descendantFocusability="beforeDescendants"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal"
+                android:paddingBottom="15dp">
+
+                <EditText
+                    android:id="@+id/et_value"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_speech_item"
+                    android:gravity="center_vertical"
+                    android:hint=""
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="8dp"
+                    android:textColor="@color/color4C8FE2"
+                    android:textColorHint="#aab5c9"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/iv_value"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_speech_item"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="8dp"
+                    android:textColor="@color/color4C8FE2"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_last_value"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:textColor="#929db2"
+                    android:textSize="12sp"
+                    tools:text="上次电流:30mA" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/iv_division_2"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/login_name_pass_device" />
+    </LinearLayout>
+</LinearLayout>

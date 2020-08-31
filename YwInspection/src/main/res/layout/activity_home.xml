@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sito.evpro.inspection.view.home.HomeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="3">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/home_picture_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:id="@+id/tv_repair"
+                            style="@style/Home_Tv_Style"
+                            android:drawableTop="@drawable/home_bg_repair"
+                            android:text="@string/home_tv_my_work" />
+
+                        <TextView
+                            android:id="@+id/tv_fault"
+                            style="@style/Home_Tv_Style"
+                            android:drawableTop="@drawable/home_bg_fault"
+                            android:text="@string/home_tv_fault" />
+
+                        <TextView
+                            android:id="@+id/tv_increment"
+                            style="@style/Home_Tv_Style"
+                            android:drawableTop="@drawable/home_bg_increment"
+                            android:text="@string/home_tv_increment" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:id="@+id/tv_greasing"
+                            style="@style/Home_Tv_Style"
+                            android:drawableTop="@drawable/home_bg_greasing"
+                            android:text="@string/home_tv_greasing" />
+
+                        <TextView
+                            android:id="@+id/tv_users"
+                            style="@style/Home_Tv_Style"
+                            android:drawableTop="@drawable/home_bg_contact"
+                            android:text="@string/home_tv_users" />
+
+                        <TextView
+                            android:id="@+id/tv_sos"
+                            style="@style/Home_Tv_Style"
+                            android:drawableTop="@drawable/home_bg_sos"
+                            android:text="@string/home_tv_sos" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:id="@+id/tv_create_equip"
+                            style="@style/Home_Tv_Style"
+                            android:drawableTop="@drawable/home_bg_equip_create"
+                            android:text="@string/home_tv_create_equip" />
+
+                        <TextView
+                            android:id="@+id/tv_equip_info"
+                            style="@style/Home_Tv_Style"
+                            android:drawableTop="@drawable/home_bg_equip_info"
+                            android:text="@string/home_tv_equip_info" />
+
+                        <TextView
+                            style="@style/Home_Tv_Style"
+                            android:drawableTop="@drawable/home_bg_sos"
+                            android:text="@string/home_tv_sos"
+                            android:visibility="invisible" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="31dp">
+
+                <TextView
+                    android:id="@+id/tv_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/home_tv_setting_margin_left"
+                    android:drawableLeft="@drawable/home_bg_setting"
+                    android:drawablePadding="6dp"
+                    android:gravity="center"
+                    android:text="@string/home_setting"
+                    android:textColor="@color/home_text"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/home_tv_setting_margin_left"
+                    android:drawableLeft="@drawable/home_bg_account"
+                    android:drawablePadding="6dp"
+                    android:gravity="center"
+                    android:text="@string/home_account"
+                    android:textColor="@color/home_text"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

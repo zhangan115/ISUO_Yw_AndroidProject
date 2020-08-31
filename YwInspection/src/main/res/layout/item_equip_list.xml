@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/id_ll_bg">
+
+    <LinearLayout
+        android:id="@+id/ll_item_child"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginLeft="@dimen/DP_10"
+            android:id="@+id/id_item_equip_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="1#配电室"
+            android:textColor="@color/equip_list_gray"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/id_item_line"
+        android:layout_marginLeft="@dimen/DP_10"
+        android:layout_marginRight="@dimen/DP_10"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_news_line_gray" />
+</LinearLayout>

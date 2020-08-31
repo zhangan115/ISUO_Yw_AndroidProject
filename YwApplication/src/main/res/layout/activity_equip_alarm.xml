@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_energe_bg"
+    android:orientation="vertical"
+    tools:context="com.sito.customer.view.home.news.equipalarm.EquipAlarmActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+
+        <com.sito.library.widget.RecycleRefreshLoadLayout
+            android:id="@+id/refreshLoadLayoutId"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.sito.library.widget.ExpendRecycleView
+                android:id="@+id/recycleViewId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none" />
+
+        </com.sito.library.widget.RecycleRefreshLoadLayout>
+
+        <include layout="@layout/layout_no_data" />
+    </RelativeLayout>
+
+</LinearLayout>

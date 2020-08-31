@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_energe_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="@dimen/DP_10"
+        android:layout_weight="2"
+        android:background="@drawable/bg"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/id_fault_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/DP_6"
+                android:background="@drawable/staff_bg_item"
+                android:drawablePadding="4dp"
+                android:drawableRight="@drawable/drop_down_arrow"
+                android:padding="@dimen/DP_10"
+                android:textColor="@color/text_item_content_1"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/id_fault_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/DP_6"
+                android:background="@drawable/staff_bg_item"
+                android:drawablePadding="4dp"
+                android:drawableRight="@drawable/drop_down_arrow"
+                android:lines="1"
+                android:padding="10dp"
+                android:text="运行一班"
+                android:textColor="@color/text_item_content_1"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_division" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.sito.library.chart.ChartXYView
+                android:id="@+id/chart_bg_view"
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:layout_margin="10dp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_margin="10dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/ll_add_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+            </ScrollView>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

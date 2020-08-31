@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":YwApplication" external.linked.project.path="$MODULE_DIR$/../YwApplication" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="ISUO_Yw_AndroidProject" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="android-gradle" name="Android-Gradle">
+      <configuration>
+        <option name="GRADLE_PROJECT_PATH" value=":YwApplication" />
+        <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" value="3.1.3" />
+        <option name="LAST_KNOWN_AGP_VERSION" value="3.1.3" />
+      </configuration>
+    </facet>
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="SELECTED_BUILD_VARIANT" value="customer_app_defaultDebug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleCustomer_app_defaultDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileCustomer_app_defaultDebugSources" />
+        <afterSyncTasks>
+          <task>generateCustomer_app_defaultDebugSources</task>
+        </afterSyncTasks>
+        <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
+        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../YwApplication/src/main/res;file://$MODULE_DIR$/../YwApplication/src/customer_app_default/res;file://$MODULE_DIR$/../YwApplication/src/debug/res;file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/res;file://$MODULE_DIR$/../YwApplication/build/generated/res/rs/customer_app_default/debug;file://$MODULE_DIR$/../YwApplication/build/generated/res/resValues/customer_app_default/debug" />
+        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../YwApplication/src/androidTest/res;file://$MODULE_DIR$/../YwApplication/src/test/res;file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/res;file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/res;file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/res;file://$MODULE_DIR$/../YwApplication/src/testDebug/res;file://$MODULE_DIR$/../YwApplication/build/generated/res/rs/androidTest/customer_app_default/debug;file://$MODULE_DIR$/../YwApplication/build/generated/res/resValues/androidTest/customer_app_default/debug" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
+    <output url="file://$MODULE_DIR$/../YwApplication/build/intermediates/classes/customer_app_default/debug" />
+    <output-test url="file://$MODULE_DIR$/../YwApplication/build/intermediates/classes/test/customer_app_default/debug" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../YwApplication">
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/greendao" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/apt/customer_app_default/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/aidl/customer_app_default/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/buildConfig/customer_app_default/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/rs/customer_app_default/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/res/rs/customer_app_default/debug" type="java-resource" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/res/resValues/customer_app_default/debug" type="java-resource" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/shaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/apt/androidTest/customer_app_default/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/aidl/androidTest/customer_app_default/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/buildConfig/androidTest/customer_app_default/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/rs/androidTest/customer_app_default/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/res/rs/androidTest/customer_app_default/debug" type="java-test-resource" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/res/resValues/androidTest/customer_app_default/debug" type="java-test-resource" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/apt/test/customer_app_default/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/shaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/shaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/shaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/shaders" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/../YwApplication/build" />
+    </content>
+    <orderEntry type="jdk" jdkName="Android API 26 Platform" jdkType="Android SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Gradle: ./YwApplication/libs/GetuiSDK2.10.2.0.jar" level="project" />
+    <orderEntry type="library" name="Gradle: ./YwApplication/libs/SystemProperties.jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.dagger:dagger:2.5@jar" level="project" />
+    <orderEntry type="library" name="Gradle: ./Library/libs/logger_v1.3.0.jar" level="project" />
+    <orderEntry type="library" name="Gradle: org.greenrobot:greendao:3.2.2@jar" level="project" />
+    <orderEntry type="library" name="Gradle: ./AACRecordLibrary/libs/Msc.jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.sdk:common:1.5.3@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.sdk:analytics:7.5.3@jar" level="project" />
+    <orderEntry type="library" name="Gradle: javax.inject:javax.inject:1@jar" level="project" />
+    <orderEntry type="library" name="Gradle: android.arch.persistence.room:common:1.1.1@jar" level="project" />
+    <orderEntry type="library" name="Gradle: android.arch.core:common:1.1.1@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-annotations:26.1.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:logging-interceptor:3.9.1@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.retrofit2:converter-gson:2.1.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.retrofit2:converter-scalars:2.1.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.retrofit2:converter-protobuf:2.1.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.retrofit2:adapter-rxjava:2.1.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.retrofit2:retrofit:2.1.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.9.1@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.bumptech.glide:glide:3.7.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: io.reactivex:rxjava:1.1.8@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.4@jar" level="project" />
+    <orderEntry type="library" name="Gradle: org.greenrobot:greendao-api:3.2.2@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.13.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.7@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.protobuf:protobuf-java:2.6.1@jar" level="project" />
+    <orderEntry type="library" name="Gradle: android.arch.lifecycle:common:1.0.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:cardview-v7:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.yuweiguocn:GreenDaoUpgradeHelper:v1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: :DateTimePicker:@aar" level="project" />
+    <orderEntry type="library" name="Gradle: :MPChartLib:@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.aurelhubert:ahbottomnavigation:2.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: cn.bingoogolapple:bga-badgeview:1.1.3@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huxq17.handygridview:handygridview:1.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.nbsp:library:1.8@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.bigkoo:convenientbanner:2.0.5@aar" level="project" />
+    <orderEntry type="library" name="Gradle: android.arch.persistence.room:runtime:1.1.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: android.arch.persistence:db-framework:1.1.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: android.arch.persistence:db:1.1.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: android.arch.core:runtime:1.1.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:design:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:transition:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:appcompat-v7:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-v4:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-media-compat:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-fragment:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-core-utils:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:animated-vector-drawable:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-vector-drawable:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:recyclerview-v7:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-core-ui:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-compat:26.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: android.arch.lifecycle:runtime:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: io.reactivex:rxandroid:1.2.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.soundcloud.android:android-crop:1.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: pub.devrel:easypermissions:1.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:multidex:1.0.3@aar" level="project" />
+    <orderEntry type="module" module-name="Library" />
+    <orderEntry type="module" module-name="DialogLib" />
+    <orderEntry type="module" module-name="AACRecordLibrary" />
+    <orderEntry type="library" name="Gradle: android-android-26" level="project" />
+  </component>
+</module>

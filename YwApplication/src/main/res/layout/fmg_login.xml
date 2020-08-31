@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@color/colorPrimary" />
+    <!--android:src="@drawable/login_bg" />-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/start_icon" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_btn_margin_left_right"
+                    android:layout_marginTop="90dp"
+                    android:layout_marginRight="@dimen/login_btn_margin_left_right"
+                    android:background="@drawable/bg_login_enter"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/login_enter_padding_left_right"
+                    android:paddingTop="@dimen/login_enter_padding_top_bottom"
+                    android:paddingRight="@dimen/login_enter_padding_left_right"
+                    android:paddingBottom="@dimen/login_enter_padding_top_bottom">
+
+                    <android.support.v7.widget.AppCompatMultiAutoCompleteTextView
+                        android:id="@+id/edit_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/login_enter_bg"
+                        android:drawableLeft="@drawable/login_user_icon"
+                        android:drawablePadding="4dp"
+                        android:freezesText="true"
+                        android:hint="@string/hit_login_user"
+                        android:inputType="textPersonName"
+                        android:lines="1"
+                        android:textColor="@color/login_name_et"
+                        android:textColorHint="@color/login_name_et_hit"
+                        android:textSize="@dimen/login_enter_tv_size" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginTop="@dimen/login_enter_margin_top_bottom"
+                        android:layout_marginBottom="@dimen/login_enter_margin_top_bottom"
+                        android:background="@color/login_name_pass_device" />
+
+                    <EditText
+                        android:id="@+id/edit_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/login_enter_bg"
+                        android:drawableLeft="@drawable/login_password_icon"
+                        android:drawablePadding="4dp"
+                        android:hint="@string/hit_login_pass"
+                        android:inputType="textPassword"
+                        android:lines="1"
+                        android:textColor="@color/login_pass_et"
+                        android:textColorHint="@color/login_pass_et_hit"
+                        android:textSize="@dimen/login_enter_tv_size" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_reg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:paddingLeft="40dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="40dp"
+                        android:paddingBottom="10dp"
+                        android:text="免费注册"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_forget_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:paddingLeft="40dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="@dimen/login_btn_margin_left_right"
+                        android:paddingBottom="10dp"
+                        android:text="忘记密码"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_btn_margin_left_right"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="@dimen/login_btn_margin_left_right"
+                    android:background="@drawable/bg_login_btn_select"
+                    android:gravity="center"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:text="@string/str_login_btn"
+                    android:textColor="@color/login_btn_text"
+                    android:textSize="@dimen/login_btn_text_size"
+                    android:typeface="serif" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/tv_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="Copyright@小梭易智信息股份出品"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+
+</FrameLayout>

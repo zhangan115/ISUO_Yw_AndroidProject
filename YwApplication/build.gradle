@@ -1,0 +1,110 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+def static releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+android {
+    signingConfigs {
+        debug {
+            keyAlias 'sito'
+            keyPassword '123456'
+            storeFile file('../sito_check.jks')
+            storePassword '123456'
+        }
+        relealse {
+            keyAlias 'sito'
+            keyPassword '123456'
+            storeFile file('../sito_check.jks')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        applicationId "com.isuo.yw"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 13
+        versionName "1.0.0"
+        ndk {
+            abiFilters "armeabi"
+        }
+        multiDexEnabled true
+    }
+    flavorDimensions "default"
+    productFlavors {
+        customer_app_default {
+            applicationId "com.isuo.yw"
+            dimension "default"
+            resValue "string", "app_name", "优维+"
+            buildConfigField "String", "HOST", '"http://114.118.94.117:8080/isuoyw/api"'
+            buildConfigField "String", "UMENG_CHANNEL", '"defaultChannel"'
+            manifestPlaceholders = [
+                    TASK_AFFINITY_VALUE: "android.task.sito.evpro.customer",
+                    GETUI_APP_ID       : "nAvqNVbvUO9hyU3ZFVmoR8",
+                    GETUI_APP_KEY      : "8wUztqtOQQAey1TNrqSFu8",
+                    GETUI_APP_SECRET   : "G4jxJRrrZm8Ff9YDsmCyq8",
+                    UMENG_CHANNEL      : "defaultChannel",
+                    PACKAGE_NAME       : applicationId,
+            ]
+            multiDexEnabled true
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "优维+_${variant.flavorName}_V${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}.apk"
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    //green dao 配置
+    greendao {
+        schemaVersion 11//版本号
+    }
+}
+
+repositories { flatDir { dirs 'libs' } }
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    implementation project(':Library')
+    implementation project(':DialogLib')
+    implementation "org.greenrobot:greendao:$rootProject.greenDaoVersion"
+    implementation(name: 'DateTimePicker', ext: 'aar')
+    implementation(name: 'MPChartLib', ext: 'aar')
+    implementation files('libs/GetuiSDK2.10.2.0.jar')
+    implementation project(':AACRecordLibrary')
+    //三方view
+    implementation files('libs/SystemProperties.jar')
+    implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
+    implementation 'cn.bingoogolapple:bga-badgeview:1.1.3'
+    implementation 'com.huxq17.handygridview:handygridview:1.1.0'
+    implementation 'com.nbsp:library:1.8'
+    implementation 'com.bigkoo:convenientbanner:2.0.5'
+
+    //统计，bug报警等
+    implementation 'com.umeng.sdk:common:latest.integration'
+    implementation 'com.umeng.sdk:analytics:latest.integration'
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+}

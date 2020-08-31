@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./YwApplication/libs/SystemProperties.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/YwApplication/libs/SystemProperties.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

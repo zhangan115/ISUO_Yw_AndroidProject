@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sito.library.widget.ExpendRecycleView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recycleViewId"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorEAF4FD"
+    android:scrollbars="none" />

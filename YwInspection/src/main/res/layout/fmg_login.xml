@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_login_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/login_bgn" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="250dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_btn_margin_left_right"
+                    android:layout_marginRight="@dimen/login_btn_margin_left_right"
+                    android:background="@drawable/bg_login_enter"
+                    android:orientation="vertical"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="@dimen/login_enter_padding_left_right"
+                    android:paddingRight="@dimen/login_enter_padding_left_right"
+                    android:paddingTop="@dimen/login_enter_padding_top_bottom">
+
+                    <LinearLayout
+                        android:id="@+id/ll_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatMultiAutoCompleteTextView
+                            android:id="@+id/edit_username"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:background="@color/login_enter_bg"
+                            android:drawableLeft="@drawable/login_user_icon"
+                            android:drawablePadding="4dp"
+                            android:hint="@string/hit_login_user"
+                            android:inputType="textPersonName"
+                            android:lines="1"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:textColor="@color/login_name_et"
+                            android:textColorHint="@color/login_name_et_hit"
+                            android:textSize="@dimen/login_enter_tv_size" />
+
+                        <ImageView
+                            android:id="@+id/img_choose"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:padding="10dp"
+                            android:src="@drawable/list_narrow_under_normal" />
+                    </LinearLayout>
+
+
+                    <View
+                        android:id="@+id/id_pop_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/login_name_pass_device" />
+
+                    <LinearLayout
+                        android:id="@+id/id_ll_user"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/item_bg_bottom"
+                        android:visibility="gone">
+
+                        <ListView
+                            android:id="@+id/id_user_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:divider="@null"
+                            android:scrollbars="none">
+
+                        </ListView>
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edit_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/login_enter_bg"
+                        android:drawableLeft="@drawable/login_password_icon"
+                        android:drawablePadding="4dp"
+                        android:hint="@string/hit_login_pass"
+                        android:inputType="textPassword"
+                        android:lines="1"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/login_pass_et"
+                        android:textColorHint="@color/login_pass_et_hit"
+                        android:textSize="@dimen/login_enter_tv_size"
+                        android:visibility="visible" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_forget_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="@dimen/login_btn_margin_left_right"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:text="忘记密码"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_btn_margin_left_right"
+                    android:layout_marginRight="@dimen/login_btn_margin_left_right"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/bg_login_btn_select"
+                    android:gravity="center"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    android:text="@string/str_login_btn"
+                    android:textColor="@color/login_btn_text"
+                    android:textSize="@dimen/login_btn_text_size"
+                    android:typeface="serif" />
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/tv_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="Copyright@西拓电气股份出品"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp" />
+    </RelativeLayout>
+</FrameLayout>
