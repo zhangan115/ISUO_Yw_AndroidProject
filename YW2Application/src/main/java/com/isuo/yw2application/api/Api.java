@@ -75,7 +75,6 @@ import rx.Observable;
 
 public class Api {
     //测试服务器
-    public static final String HOST = BuildConfig.HOST;
     private static Retrofit mRetrofit;
     private static final int CONNECT_TIME = 5;
     private static final int READ_TIME = 20;

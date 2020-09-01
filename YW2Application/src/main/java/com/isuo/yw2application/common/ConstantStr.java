@@ -10,6 +10,8 @@ public interface ConstantStr {
     String APP_HOST = "app_host";
     String NEED_LOGIN = "need_login";
     String CRASH_APP_KEY = "d614de822d";
+    String SPEED_APPID = "appid=594a2e41";
+    String UMConfigure_Key = "5f4a3ce412981d3ca30a79cf";
     String NOTIFICATION_CHANNEL_NAME = "ISUO";
     String NOTIFICATION_CHANNEL_DESCRIPTION = "消息提示";
     String NOTIFICATION_CHANNEL_ID = "isuo_news_id";

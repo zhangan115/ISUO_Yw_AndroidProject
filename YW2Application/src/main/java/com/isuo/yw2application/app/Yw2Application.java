@@ -45,25 +45,25 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Yw2Application extends AbsBaseApp {
 
-    private static Yw2Application _instance;
-    private User mUser;//当前用户
-    private ArrayList<OptionBean> mOptionBeen;
-    private SharedPreferences sp;
-    private Map<String, Map<String, String>> mapOption;
-    private String cid = "";
-
-    private static DaoSession mDaoSession;
     public static IWXAPI iwxapi;
-    //reposition component
+    private static DaoSession mDaoSession;
+    private static Yw2Application _instance;
+    private SharedPreferences sp;
+    private String cid = "";
+    private User mUser;
+    private ArrayList<OptionBean> mOptionBeen;
+    private Map<String, Map<String, String>> mapOption;
+
     private CustomerRepositoryComponent mRepositoryComponent;
     private WorkRepositoryComponent workRepositoryComponent;
     private FaultRepositoryComponent faultRepositoryComponent;
@@ -90,15 +90,7 @@ public class Yw2Application extends AbsBaseApp {
         generateRepositoryComponent = DaggerGenerateRepositoryComponent.builder().build();
         equipmentRepositoryComponent = DaggerEquipmentRepositoryComponent.builder().build();
         initDatabases();
-        initGetuiPush();
-        initSpeech();
-        iwxapi = WXAPIFactory.createWXAPI(this, ConstantStr.WEIXIN_APP_ID, true);
-        iwxapi.registerApp(ConstantStr.WEIXIN_APP_ID);
-        initUmeng();
-    }
-
-    public synchronized void sendMessage(String msg) {
-
+        initThirdModel();
     }
 
     /**
@@ -111,18 +103,21 @@ public class Yw2Application extends AbsBaseApp {
         mDaoSession = mDaoMaster.newSession();
     }
 
-    private void initSpeech() {
-        SpeechUtility.createUtility(getApplicationContext(), "appid=" + "594a2e41");
-    }
-
-    private void initUmeng() {
-        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
-        UMConfigure.init(this, "5f4a3ce412981d3ca30a79cf", BuildConfig.UMENG_CHANNEL, UMConfigure.DEVICE_TYPE_PHONE, null);
-    }
-
-    private void initGetuiPush() {
+    /**
+     * 初始化第三方模块
+     */
+    private void initThirdModel() {
         PushManager.getInstance().initialize(this.getApplicationContext(), CustPushService.class);
         PushManager.getInstance().registerPushIntentService(this, CustIntentService.class);
+        SpeechUtility.createUtility(getApplicationContext(), ConstantStr.SPEED_APPID);
+        iwxapi = WXAPIFactory.createWXAPI(this, ConstantStr.WEIXIN_APP_ID, true);
+        iwxapi.registerApp(ConstantStr.WEIXIN_APP_ID);
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
+        UMConfigure.init(this, ConstantStr.UMConfigure_Key, BuildConfig.UMENG_CHANNEL, UMConfigure.DEVICE_TYPE_PHONE, null);
+    }
+
+    public synchronized void sendMessage(String msg) {
+
     }
 
     public void setCid(String cid) {
@@ -135,7 +130,7 @@ public class Yw2Application extends AbsBaseApp {
 
     @Override
     public String AppHost() {
-        return null;
+        return SPHelper.readString(this, ConstantStr.USER_INFO, ConstantStr.APP_HOST, BuildConfig.HOST);
     }
 
     @Override
@@ -146,7 +141,15 @@ public class Yw2Application extends AbsBaseApp {
     @NonNull
     @Override
     public String imageCacheFile() {
-        return getExternalCacheDir().getAbsolutePath();
+        return Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath();
+    }
+
+    public String voiceCacheFile() {
+        String voiceCacheDir = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + File.separator + "voiceCache" + File.separator;
+        if (!new File(voiceCacheDir).exists()) {
+            new File(voiceCacheDir).mkdir();
+        }
+        return voiceCacheDir;
     }
 
     @Override
@@ -154,10 +157,12 @@ public class Yw2Application extends AbsBaseApp {
         return null;
     }
 
+    public DaoSession getDaoSession() {
+        return mDaoSession;
+    }
+
     /**
      * 设置当前用户
-     *
-     * @param user 用户
      */
     public void setCurrentUser(User user) {
         this.mUser = user;
@@ -168,37 +173,23 @@ public class Yw2Application extends AbsBaseApp {
     }
 
     /**
-     * @return 获取用户名称
+     * 获取用户名称
      */
     @Nullable
     public String getUserName() {
-        String name = null;
-        try {
-            name = new String(Base64Util.decode(sp.getString(ConstantStr.USER_NAME, "")), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return name;
+        return new String(Base64Util.decode(sp.getString(ConstantStr.USER_NAME, "")), StandardCharsets.UTF_8);
     }
 
     /**
-     * @return 获取用户密码
+     * 获取用户密码
      */
     @Nullable
     public String getUserPass() {
-        String pass = null;
-        try {
-            pass = new String(Base64Util.decode(sp.getString(ConstantStr.USER_PASS, "")), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return pass;
+        return new String(Base64Util.decode(sp.getString(ConstantStr.USER_PASS, "")), StandardCharsets.UTF_8);
     }
 
     /**
      * 获取当前用户
-     *
-     * @return 用户
      */
     public User getCurrentUser() {
         if (mUser == null) {
@@ -220,14 +211,8 @@ public class Yw2Application extends AbsBaseApp {
         mUser = null;
     }
 
-    public DaoSession getDaoSession() {
-        return mDaoSession;
-    }
-
     /**
-     * 保存字典
-     *
-     * @param list 字典数据
+     * 字典
      */
     public void setOptionInfo(@NonNull List<OptionBean> list) {
         mOptionBeen = new ArrayList<>();
@@ -236,12 +221,17 @@ public class Yw2Application extends AbsBaseApp {
         sp.edit().putString(ConstantStr.OPTION_INFO, optionStr).apply();
     }
 
-    public String voiceCacheFile() {
-        String voiceCacheDir = getExternalCacheDir().getAbsolutePath() + File.separator + "voiceCache" + File.separator;
-        if (!new File(voiceCacheDir).exists()) {
-            new File(voiceCacheDir).mkdir();
+    public void setMapOption(Map<String, Map<String, String>> mapOption) {
+        this.mapOption = mapOption;
+    }
+
+    public ArrayList<OptionBean> getOptionInfo() {
+        if (mOptionBeen == null) {
+            Type typeToken = new TypeToken<List<OptionBean>>() {
+            }.getType();
+            mOptionBeen = new Gson().fromJson(sp.getString(ConstantStr.OPTION_INFO, null), typeToken);
         }
-        return voiceCacheDir;
+        return mOptionBeen;
     }
 
     public Map<String, Map<String, String>> getMapOption() {
@@ -263,19 +253,16 @@ public class Yw2Application extends AbsBaseApp {
         return mOption;
     }
 
-    public void setMapOption(Map<String, Map<String, String>> mapOption) {
-        this.mapOption = mapOption;
+    /**
+     * 屏幕尺寸
+     */
+    public int getDisplayWidth() {
+        return getResources().getDisplayMetrics().widthPixels;
     }
 
-    public ArrayList<OptionBean> getOptionInfo() {
-        if (mOptionBeen == null) {
-            Type typeToken = new TypeToken<List<OptionBean>>() {
-            }.getType();
-            mOptionBeen = new Gson().fromJson(sp.getString(ConstantStr.OPTION_INFO, null), typeToken);
-        }
-        return mOptionBeen;
-    }
-
+    /**
+     * 获取model
+     */
     public CustomerRepositoryComponent getRepositoryComponent() {
         return mRepositoryComponent;
     }
@@ -300,10 +287,9 @@ public class Yw2Application extends AbsBaseApp {
         return workRepositoryComponent;
     }
 
-    public int getDisplayWidth() {
-        return getResources().getDisplayMetrics().widthPixels;
-    }
-
+    /**
+     * 获取单例
+     */
     public static Yw2Application getInstance() {
         return _instance;
     }
