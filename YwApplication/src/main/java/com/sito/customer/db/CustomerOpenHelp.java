@@ -7,6 +7,7 @@ import com.github.yuweiguocn.library.greendao.MigrationHelper;
 import com.sito.customer.mode.bean.db.CreateEquipmentDbDao;
 import com.sito.customer.mode.bean.db.CreateRoomDbDao;
 
+import com.sito.customer.mode.bean.db.DaoMaster;
 import com.sito.customer.mode.bean.db.EquipmentDataDbDao;
 import com.sito.customer.mode.bean.db.EquipmentDbDao;
 import com.sito.customer.mode.bean.db.ImageDao;
@@ -15,7 +16,6 @@ import com.sito.customer.mode.bean.db.ShareDataDbDao;
 import com.sito.customer.mode.bean.db.TaskDbDao;
 import com.sito.customer.mode.bean.db.UserInfoDao;
 import com.sito.customer.mode.bean.db.VoiceDao;
-import com.sito.customer.mode.bean.news.DaoMaster;
 import com.sito.customer.mode.bean.news.NewsBeanDao;
 
 import org.greenrobot.greendao.database.Database;

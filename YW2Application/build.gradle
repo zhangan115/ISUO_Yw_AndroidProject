@@ -38,7 +38,7 @@ android {
         customer_app_default {
             applicationId "com.isuo.yw2application"
             dimension "default"
-            resValue "string", "app_name", "优维2+"
+            resValue "string", "app_name", "小梭优维+"
             buildConfigField "String", "HOST", '"http://114.118.94.117:8080/isuoyw/api"'
             buildConfigField "String", "UMENG_CHANNEL", '"defaultChannel"'
             manifestPlaceholders = [

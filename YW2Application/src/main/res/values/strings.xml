@@ -1,3 +1,6 @@
 <resources>
-
+    <string name="download_prompt">下载进度</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="no_more_free_disk">磁盘空间不足</string>
 </resources>

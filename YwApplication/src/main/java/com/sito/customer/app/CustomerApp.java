@@ -29,8 +29,8 @@ import com.sito.customer.common.ConstantStr;
 import com.sito.customer.db.CustomerOpenHelp;
 import com.sito.customer.mode.bean.User;
 
-import com.sito.customer.mode.bean.news.DaoMaster;
-import com.sito.customer.mode.bean.news.DaoSession;
+import com.sito.customer.mode.bean.db.DaoMaster;
+import com.sito.customer.mode.bean.db.DaoSession;
 import com.sito.customer.mode.bean.news.MessageContent;
 import com.sito.customer.mode.bean.news.NewsBean;
 import com.sito.customer.mode.bean.option.OptionBean;
