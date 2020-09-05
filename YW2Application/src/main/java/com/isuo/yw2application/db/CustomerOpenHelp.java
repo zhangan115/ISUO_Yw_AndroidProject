@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.github.yuweiguocn.library.greendao.MigrationHelper;
 import com.isuo.yw2application.mode.bean.db.CreateEquipmentDbDao;
 import com.isuo.yw2application.mode.bean.db.CreateRoomDbDao;
-import com.isuo.yw2application.mode.bean.db.DaoMaster;
 import com.isuo.yw2application.mode.bean.db.EquipmentDataDbDao;
 import com.isuo.yw2application.mode.bean.db.EquipmentDbDao;
 import com.isuo.yw2application.mode.bean.db.ImageDao;
@@ -15,6 +14,7 @@ import com.isuo.yw2application.mode.bean.db.ShareDataDbDao;
 import com.isuo.yw2application.mode.bean.db.TaskDbDao;
 import com.isuo.yw2application.mode.bean.db.UserInfoDao;
 import com.isuo.yw2application.mode.bean.db.VoiceDao;
+import com.isuo.yw2application.mode.bean.news.DaoMaster;
 import com.isuo.yw2application.mode.bean.news.NewsBeanDao;
 
 

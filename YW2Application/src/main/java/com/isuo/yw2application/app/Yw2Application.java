@@ -18,8 +18,9 @@ import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.db.CustomerOpenHelp;
 import com.isuo.yw2application.mode.bean.User;
 
-import com.isuo.yw2application.mode.bean.db.DaoMaster;
-import com.isuo.yw2application.mode.bean.db.DaoSession;
+
+import com.isuo.yw2application.mode.bean.news.DaoMaster;
+import com.isuo.yw2application.mode.bean.news.DaoSession;
 import com.isuo.yw2application.mode.bean.option.OptionBean;
 import com.isuo.yw2application.mode.count.CountRepositoryComponent;
 import com.isuo.yw2application.mode.count.DaggerCountRepositoryComponent;

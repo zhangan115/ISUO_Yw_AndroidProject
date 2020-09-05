@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: :MPChartLib:@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MPChartLib.aar/d64bf4614ccdfb722623d4a5949c8e25/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MPChartLib.aar/d64bf4614ccdfb722623d4a5949c8e25/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MPChartLib.aar/d64bf4614ccdfb722623d4a5949c8e25/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MPChartLib.aar/8a533d9248d9ca35f9c338f45b430893/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MPChartLib.aar/8a533d9248d9ca35f9c338f45b430893/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MPChartLib.aar/8a533d9248d9ca35f9c338f45b430893/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
