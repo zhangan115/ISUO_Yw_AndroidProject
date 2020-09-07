@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
-import com.isuo.yw2application.view.BaseActivity;
+import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.MainActivity;
 import com.sito.library.utils.SystemUtil;
 

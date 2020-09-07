@@ -273,8 +273,14 @@ public class CustomerRepository implements CustomerDataSource {
     public Subscription autoLogin(@NonNull final SplashCallBack callBack) {
         boolean showWelcome = sp.getBoolean(ConstantStr.USE_APP, false);
         if (!showWelcome) {
-            callBack.showWelcome();
-            return Observable.just(false).subscribe();
+            return Observable.just(false).delaySubscription(WELCOME_TIME, TimeUnit.MILLISECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Object>() {
+                        @Override
+                        public void call(Object o) {
+                            callBack.showWelcome();
+                        }
+                    });
         }
         String userInfo = sp.getString(ConstantStr.USER_INFO, null);
         if (TextUtils.isEmpty(userInfo)) {

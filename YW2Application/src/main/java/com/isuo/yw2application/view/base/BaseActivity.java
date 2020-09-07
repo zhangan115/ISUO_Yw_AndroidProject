@@ -1,4 +1,4 @@
-package com.isuo.yw2application.view;
+package com.isuo.yw2application.view.base;
 
 
 import android.app.Dialog;
@@ -198,24 +198,24 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
 
     public void startActivityForResult(Intent intent, int requestCode) {
         super.startActivityForResult(intent, requestCode);
-        overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
+//        overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
     }
 
     public void startActivity(Intent intent) {
         super.startActivity(intent);
-        overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
+//        overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
     }
 
     @Override
     public void startActivity(Intent intent, @Nullable Bundle options) {
         super.startActivity(intent, options);
-        overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
+//        overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
     }
 
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.slideinleft, R.anim.slideoutright);
+//        overridePendingTransition(R.anim.slideinleft, R.anim.slideoutright);
     }
 
     public void hideProgressDialog() {

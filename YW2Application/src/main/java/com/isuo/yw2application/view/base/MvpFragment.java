@@ -1,16 +1,19 @@
-package com.isuo.yw2application.view;
+package com.isuo.yw2application.view.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.isuo.yw2application.view.base.BaseFragment;
 import com.sito.library.base.BasePresenter;
 
 /**
- * Created by zhangan on 2017-06-22.
+ * mvp fragment
+ * <p>
+ * Created by zhangan on 2017-04-27.
  */
 
-public class MvpFragmentV4<T extends BasePresenter> extends BaseFragmentV4 {
+public class MvpFragment<T extends BasePresenter> extends BaseFragment {
 
     protected T mPresenter;
 

@@ -1,4 +1,4 @@
-package com.isuo.yw2application.view;
+package com.isuo.yw2application.view.base;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,6 +8,7 @@ import android.content.Intent;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
+import com.isuo.yw2application.view.base.BaseActivity;
 import com.sito.library.base.AbsBaseFragmentV4;
 
 /**

@@ -1,9 +1,10 @@
-package com.isuo.yw2application.view;
+package com.isuo.yw2application.view.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.isuo.yw2application.view.base.BaseFragmentV4;
 import com.sito.library.base.BasePresenter;
 
 /**

@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.huxq17.handygridview:handygridview:1.1.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/handygridview-1.1.0.aar/c8e66e3728e36ca52497e92ce59d7dc3/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/handygridview-1.1.0.aar/c8e66e3728e36ca52497e92ce59d7dc3/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/handygridview-1.1.0.aar/c8e66e3728e36ca52497e92ce59d7dc3/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/handygridview-1.1.0.aar/c902f77562ffe0f1df182556bf5b612c/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/handygridview-1.1.0.aar/c902f77562ffe0f1df182556bf5b612c/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/handygridview-1.1.0.aar/c902f77562ffe0f1df182556bf5b612c/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
