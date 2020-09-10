@@ -48,7 +48,7 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
     }
 
    public interface OnToolbarClickListener {
-       public void onToolBarBackClick();
+       void onToolBarBackClick();
     }
 
     @Override
@@ -168,11 +168,7 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
 
 
     public Toolbar getToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            return toolbar;
-        }
-        return null;
+        return (Toolbar) findViewById(R.id.toolbar);
     }
 
     public void toolBarClick() {
@@ -194,28 +190,6 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
     @Override
     public void onClick(View v) {
 
-    }
-
-    public void startActivityForResult(Intent intent, int requestCode) {
-        super.startActivityForResult(intent, requestCode);
-//        overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
-    }
-
-    public void startActivity(Intent intent) {
-        super.startActivity(intent);
-//        overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
-    }
-
-    @Override
-    public void startActivity(Intent intent, @Nullable Bundle options) {
-        super.startActivity(intent, options);
-//        overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-//        overridePendingTransition(R.anim.slideinleft, R.anim.slideoutright);
     }
 
     public void hideProgressDialog() {

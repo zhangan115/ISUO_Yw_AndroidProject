@@ -1,6 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <!--color name="colorPrimary">#5F9FF7</color>-->
+    <color name="colorPrimary">#EABC38</color>
+    <color name="colorPrimaryDark">#EABC38</color>
+    <color name="colorYellow">#FCD745</color>>
+    <color name="colorAccent">#3b79ca</color>
+    <color name="transparent">#00000000</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="color80FFF">#80FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorDFF2FF">#DFF2FF</color>
+    <color name="color3E81D6">#3E81D6</color>
+    <color name="colorC6D8E6">#C6D8E6</color>
+    <color name="color165CB3">#165CB3</color>
+    <color name="color9B9B9B">#9b9b9b</color>
+    <color name="colorEAF4FD">#F5F5DC</color>
+    <color name="color004CAA">#004CAA</color>
+    <color name="color7690B3">#7690b3</color>
+    <color name="color90A5BF">#90A5BF</color>
+    <color name="color6983A5">#6983A5</color>
+    <color name="color6F88A9">#6F88A9</color>
+    <color name="color438AEE">#438AEE</color>
+    <color name="colorBFCEDE">#BFCEDE</color>
+    <color name="color488ED5">#488ED5</color>
+    <color name="color929DB3">#929DB3</color>
+    <color name="color535862">#535862</color>
+    <color name="color4283D3">#4283D3</color>
+    <color name="color3774C0">#3774C0</color>
+    <color name="colorE0EDFA">#E0EDFA</color>
+    <color name="color488DE5">#488DE5</color>
+    <color name="color3D7CCA">#3D7CCA</color>
+    <color name="colorEFA24F">#EFA24F</color>
+    <color name="colorF6B433">#F6B433</color>
+    <color name="color69A7FB">#69A7FB</color>
+    <color name="color58CE79">#58CE79</color>
+    <color name="colorF05340">#F05340</color>
+    <color name="color5F9FF7">#5F9FF7</color>
+    <color name="colorF9FCFE">#F9FCFE</color>
+    <color name="colorE0EDFB">#E0EDFB</color>
+    <color name="colorDADFE3">#DADFE3</color>
+    <color name="color69A7Fb">#69A7Fb</color>
+    <color name="color62D181">#62D181</color>
+    <color name="color6FA9F8">#6FA9F8</color>
+    <color name="color949AAC">#949AAC</color>
+    <color name="colorFF6461">#FF6461</color>
+    <color name="colorF0A426">#F0A426</color>
+    <color name="colorB9C9D5">#b9c9d5</color>
+    <color name="color929db2">#929db2</color>
+    <color name="color_home_ad">@color/colorDFF2FF</color>
+    <color name="login_btn_normal">@color/color4283D3</color>
+    <color name="login_btn_press">@color/color3774C0</color>
+    <color name="login_bg">@color/color165CB3</color>
+    <color name="login_enter_bg">@color/colorWhite</color>
+    <color name="login_primary">@color/color165CB3</color>
+    <color name="login_primary_dark">@color/color165CB3</color>
+    <color name="color_energe_bg">#F5F5DC</color>
+    <color name="color_energe_line">@color/colorB9C9D5</color>
+
+    <color name="color_repair_table_bg">@color/colorEAF4FD</color>
+    <color name="color_repair_bg">@color/colorEAF4FD</color>
+    <color name="color_item_overhaul_normal_bg">@color/colorWhite</color>
+    <color name="color_item_overhaul_press_bg">@color/colorWhite</color>
+    <color name="color_item_increment_normal_bg">@color/colorWhite</color>
+    <color name="color_item_increment_press_bg">@color/colorWhite</color>
+
+    <color name="color_shape_gray">#c4c4c4</color>
+    <color name="color_fault_blue">#488DE5</color>
+
+    <color name="color_choose_employee_normal">@color/color438AEE</color>
+    <color name="color_choose_employee_press">@color/color438AEE</color>
+    <color name="color_verline_blue">#58CAF0</color>
+    <color name="color_list_bg">#E7E7E7</color>
+
+    <color name="color_bg_nav_normal">#8998A5</color>
+    <color name="color_news_line_gray">#DFE3E7</color>
+    <color name="line_color_1">@color/colorF6B433</color>
+    <color name="line_color_2">@color/color69A7FB</color>
+    <color name="line_color_3">@color/color58CE79</color>
+    <color name="line_color_4">@color/colorF05340</color>
+    <color name="line_color_5">@color/color_fault_pink</color>
+
+    <color name="color_bg_staff_blue">#E0EDFB</color>
+    <color name="color_bg_staff_gray">#7F98B9</color>
+    <color name="color_bg_staff_textgreen">#1CB75E</color>
+    <color name="color_bg_staff_textred">#FC524F</color>
+    <color name="color_bg_staff_textgray">#ADB9C9</color>
+    <color name="color_bg_bt_blue">#5F9FF7</color>
+    <color name="color_fault_pink">#ED60DF</color>
+
+    <color name="color_search_reset">#B1D6FF</color>
+    <color name="gray_666666">#666666</color>
+
+    <color name="line_chart_color_1">#f6b433</color>
+    <color name="line_chart_color_2">#69A7fb</color>
+    <color name="line_chart_color_3">#58ce79</color>
+    <color name="line_chart_color_4">#f05340</color>
+    <color name="line_chart_color_5">#ED60DF</color>
+    <!--分割线背景-->
+    <color name="rules_color">@color/colorB9C9D5</color>
+    <!--边框线背景-->
+    <color name="border_color">@color/colorB9C9D5</color>
+    <color name="news_color">#FF0000</color>
+    <color name="color_text_home">@color/colorWhite</color>
+    <color name="login_name_et">@color/colorBlack</color>
+    <color name="login_pass_et">@color/colorBlack</color>
+    <color name="login_name_et_hit">@color/color9B9B9B</color>
+    <color name="login_pass_et_hit">@color/color9B9B9B</color>
+    <color name="login_btn_text">@color/colorWhite</color>
+    <color name="color_text_energy_title">#7C92AF</color>
+    <color name="color_text_energy_gray">#97AAC3</color>
+    <color name="color_text_energy_blue">#2AA3E8</color>
+    <color name="color_text_energy_yellow">#F0A72E</color>
+    <color name="color_text_greasing_blue">#1A5EB3</color>
+    <color name="color_text_table_select">@color/color004CAA</color>
+    <color name="color_text_table_normal">@color/color7690B3</color>
+    <color name="item_overhaul_content_tv">@color/color90A5BF</color>
+    <color name="item_overhaul_title_tv">@color/color6983A5</color>
+    <color name="item_increment_title_tv">@color/color6983A5</color>
+    <color name="item_increment_content_tv">@color/color90A5BF</color>
+    <color name="color_text_normal">@color/colorWhite</color>
+    <color name="color_text_press">@color/color80FFF</color>
+    <color name="setting_text_name">#535761</color>
+    <color name="setting_item_text">#575B65</color>
+    <color name="setting_text_job">#9AA2A9</color>
+
+    <color name="news_text_blue">#69A7FB</color>
+    <color name="news_text_black">#60646D</color>
+
+    <color name="text_item_title_1">#535862</color>
+    <color name="text_item_title_2">#60646D</color>
+    <color name="text_item_content_1">#60646D</color>
+    <color name="text_item_content_2">#949AAC</color>
+    <color name="news_text_gray">#90A5BF</color>
+    <color name="news_time_gray">#BDC6CD</color>
+
+    <color name="equip_search_blue">#518EE1</color>
+    <color name="equip_search_gray">#949FB4</color>
+    <color name="equip_search_bg_gray">#DBE9F9</color>
+    <color name="equip_search_bg_blue">#B1D6FF</color>
+    <color name="equip_search_text_reset">#69A0E8</color>
+
+    <color name="equip_list_black">#535862</color>
+    <color name="equip_list_gray">#6a84a4</color>
+    <color name="equip_list_blue">#6ca9f8</color>
+    <color name="color_text_content_1">#6A84A4</color>
+    <color name="colorFA5B58">#FA5B58</color>
+    <color name="colorF0A326">#F0A326</color>
+    <color name="color3A87EE">#3A87EE</color>
+    <color name="color6C9FEE">#6c9fee</color>
+    <color name="color969696">#969696</color>
+
+    <color name="color_state_choose">#5f97f9</color>
+    <color name="color_state_normal">#535862</color>
+    <color name="color_week">#86A0CD</color>
+    <color name="colorAlarmA">#FA5B58</color>
+    <color name="colorAlarmB">#F0A326</color>
+    <color name="colorAlarmC">#3787EE</color>
+
+    <color name="color90a5bf">#90a5bf</color>
+    <color name="color6294e0">#6294E0</color>
+    <color name="color95A4BB">#95A4BB</color>
+    <color name="color_not_start">#f0a529</color>
+    <color name="color_start">#5F9FF7</color>
+    <color name="color_finish">#5ab211</color>
+    <color name="color788FAE">#788FAE</color>
+    <color name="color9FADC1">#9FADC1</color>
+    <color name="color_tab_un_select">#b6d3fb</color>
+    <color name="color_message_complete">#E2BD3A</color>
+    <color name="color_message_start">#89D150</color>
+    <color name="color_message_receive">#8DA7C0</color>
+    <color name="colorD3D3D3">#D3D3D3</color>
+    <color name="color6983a5">#6983a5</color>
+
+    <color name="color4C8FE2">#4C8FE2</color>
+    <color name="colorAAB5C9">#aab5c9</color>
+    <color name="text333">#333333</color>
+
+    <color name="sp_tv_normal">#000</color>
+    <color name="sp_tv_pressed">#fff</color>
+    <color name="colorBtnYellowNormal">#dfa54c</color>
+    <color name="colorBtnYellowPress">#cf963e</color>
+
+    <color name="colorTextGreen">#49bb51</color>
+    <color name="colorTextBlue">#5f9ff7</color>
+    <color name="colorTextGray">#b9c9d5</color>
+    <color name="colorTextYellow">#e0a74f</color>
+    <color name="colorTextRed">#f48181</color>
+    <color name="color2B2B2B">#2B2B2B</color>
+
+    <color name="transparent_black">#44000000</color>
+    <color name="new_text_un_select">#EDEDED</color>
 </resources>

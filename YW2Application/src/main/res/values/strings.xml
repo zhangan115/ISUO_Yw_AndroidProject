@@ -1,6 +1,140 @@
 <resources>
-    <string name="download_prompt">下载进度</string>
+    <string name="home_setting">设置</string>
+    <string name="home_account">切换账号</string>
+    <string name="home_tv_repair">检修工作</string>
+    <string name="home_tv_energy">能量隔离</string>
+    <string name="home_tv_greasing">注油管理</string>
+    <string name="home_tv_increment">专项工作</string>
+    <string name="home_tv_fault">故障上报</string>
+    <string name="home_tv_sos">SOS</string>
+    <string name="str_request_error">请求出错</string>
+
+    <string name="toast_exit_app">再次点击将退出应用</string>
+
+    <string name="str_first_nav_1">消息</string>
+    <string name="str_first_nav_2">工作</string>
+    <string name="str_first_nav_3">故障报警</string>
+    <string name="str_first_nav_4">发现</string>
+    <string name="str_first_nav_5">我的</string>
+
+    <string name="no_data">没有您找的数据</string>
+    <string name="energy_point">请根据操作规范隔离能量\n系统将记录您本次操作</string>
+    <string name="mine_about_content">&#160;&#160;&#160;&#160;&#160;&#160;西安小梭易智信息科技有限公司是一家专门为生产制造企业提供智能化的移动企业资源协同管理系统的公司。公司由多位多年从事设备管理人员及系统研发人员合作创立，致力于为中国制造企业提供有用、易用、乐用的管理系统，帮助企业提高管理能力及系统协调效率。小梭优维是小梭易智当前的第一款产品，已经在国内三家大型生产制造企业成功实施上线，并获得用户认可。</string>
+    <string name="mine_tel">&#160;&#160;&#160;&#160;&#160;&#160;服务热线：</string>
+
+
+    <!-- 请替换成在语音云官网申请的appid -->
+    <string name="app_id">594a2e41</string>
+    <!-- 听写 -->
+    <string name="text_begin">请开始说话…</string>
+    <string name="text_begin_recognizer">开始音频流识别</string>
+    <string name="text_upload_contacts">上传联系人</string>
+    <string name="text_upload_userwords">上传用户词表</string>
+    <string name="text_upload_success">上传成功</string>
+    <string name="text_userword_empty">词表下载失败或内容为空</string>
+    <string name="text_download_success">下载成功</string>
+    <string name="pref_key_iat_show">iat_show</string>
+    <string name="pref_title_iat_show">显示听写界面</string>
+    <string name="pref_title_iat_dwa">结果动态修正</string>
+
+    <!-- 语言 -->
+    <string-array name="language_entries">
+        <item>普通话</item>
+        <item>粤语</item>
+        <item>英语</item>
+    </string-array>
+    <string-array name="language_values">
+        <item>mandarin</item>
+        <item>cantonese</item>
+        <item>en_us</item>
+    </string-array>
+
+    <!-- 标点符号 -->
+    <string-array name="punc_entries">
+        <item>有标点</item>
+        <item>无标点</item>
+    </string-array>
+    <string-array name="punc_values">
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+
+    <string name="str_login_btn">登录</string>
+    <string name="hit_login_user">请输入手机号</string>
+    <string name="hit_login_pass">请输入密码</string>
+    <string name="tab_await">待办任务</string>
+    <string name="tab_inspection">巡检任务</string>
+    <string name="tab_overhaul">检修任务</string>
+    <string name="tab_increment">专项工作</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_sunday">周日</string>
+    <string name="text_monday">周一</string>
+    <string name="text_tuesday">周二</string>
+    <string name="text_wednesday">周三</string>
+    <string name="text_thursday">周四</string>
+    <string name="text_friday">周五</string>
+    <string name="text_saturday">周六</string>
+
+    <string name="title_equipment_1">故障记录</string>
+    <string name="title_equipment_2">检修记录</string>
+    <string name="title_equipment_3">巡检数据</string>
+    <string name="title_alarm_detail_1">指派</string>
+    <string name="title_alarm_detail_2">关闭</string>
+    <string name="title_alarm_detail_3">转检修</string>
     <string name="ok">确定</string>
     <string name="cancel">取消</string>
     <string name="no_more_free_disk">磁盘空间不足</string>
+    <string name="download_prompt">下载进度</string>
+    <string name="update_new_version">版本更新</string>
+    <string name="need_save_setting">当前App需要申请存储权限,需要打开设置页面么?</string>
+    <string name="need_save_state_setting">当前App需要申请存储权限和获取手机状态,需要打开设置页面么?</string>
+    <string name="request_permissions">权限申请</string>
+    <string name="sure">确认</string>
+
+    <string name="str_choose_carmer">拍照</string>
+    <string name="str_choose_photo">相册</string>
+
+    <string name="str_all_count">总数</string>
+    <string name="str_pending_count">待处理</string>
+    <string name="str_flowing_count">处理中</string>
+    <string name="str_repair_count">转检修</string>
+    <string name="str_close_count">已关闭</string>
+    <string name="str_a_count">A类</string>
+    <string name="str_b_count">B类</string>
+    <string name="str_c_count">C类</string>
+
+    <string name="str_upload">重新上传</string>
+    <string name="str_delete">删除照片</string>
+    <string name="str_take_photo">重新拍照</string>
+
+    <string name="new_me">"与我相关"</string>
+    <string name="new_alarm">故障消息</string>
+    <string name="new_work">工作动态</string>
+    <string name="new_notify">企业通知</string>
+    <string name="please_waite">马上重启，请稍等</string>
+    <string name="zero_time">00:00:00</string>
+
+    <string name="room_type_1">电力配电室</string>
+    <string name="room_type_2">电机区域</string>
+
+    <string name="toolbar_title_create_equip">设备录入</string>
+    <string name="toolbar_title_equip_info">设备信息</string>
+
+    <string name="chat_10kv">10kV</string>
+    <string name="chat_35kv">35kV</string>
+    <string name="chat_110kv">110kV</string>
+    <string name="chat_220kv">220kV</string>
+    <string name="chat_330kv">330kV</string>
+    <string name="chat_jin">#</string>
+    <string name="chat_1">Ⅰ</string>
+    <string name="chat_2">Ⅱ</string>
+    <string name="chat_3">Ⅲ</string>
+    <string name="chat_4">Ⅳ</string>
+    <string name="chat_5">Ⅴ</string>
+    <string name="chat_6">Ⅵ</string>
+    <string name="pro_special_table">特殊字符表</string>
+
+    <string name="title_tab_start_date">开始时间</string>
+    <string name="ttile_tab_end_date">结束时间</string>
 </resources>
