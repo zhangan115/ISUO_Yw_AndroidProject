@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":YwApplication" external.linked.project.path="$MODULE_DIR$/../YwApplication" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="ISUO_Yw_AndroidProject" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":YwApplication" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="ISUO_Yw_AndroidProject" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
@@ -19,116 +19,116 @@
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../YwApplication/src/main/res;file://$MODULE_DIR$/../YwApplication/src/customer_app_default/res;file://$MODULE_DIR$/../YwApplication/src/debug/res;file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/res;file://$MODULE_DIR$/../YwApplication/build/generated/res/rs/customer_app_default/debug;file://$MODULE_DIR$/../YwApplication/build/generated/res/resValues/customer_app_default/debug" />
-        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../YwApplication/src/androidTest/res;file://$MODULE_DIR$/../YwApplication/src/test/res;file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/res;file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/res;file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/res;file://$MODULE_DIR$/../YwApplication/src/testDebug/res;file://$MODULE_DIR$/../YwApplication/build/generated/res/rs/androidTest/customer_app_default/debug;file://$MODULE_DIR$/../YwApplication/build/generated/res/resValues/androidTest/customer_app_default/debug" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/customer_app_default/res;file://$MODULE_DIR$/src/debug/res;file://$MODULE_DIR$/src/customer_app_defaultDebug/res;file://$MODULE_DIR$/build/generated/res/rs/customer_app_default/debug;file://$MODULE_DIR$/build/generated/res/resValues/customer_app_default/debug" />
+        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/androidTest/res;file://$MODULE_DIR$/src/test/res;file://$MODULE_DIR$/src/androidTestCustomer_app_default/res;file://$MODULE_DIR$/src/testCustomer_app_default/res;file://$MODULE_DIR$/src/androidTestDebug/res;file://$MODULE_DIR$/src/testDebug/res;file://$MODULE_DIR$/build/generated/res/rs/androidTest/customer_app_default/debug;file://$MODULE_DIR$/build/generated/res/resValues/androidTest/customer_app_default/debug" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
-    <output url="file://$MODULE_DIR$/../YwApplication/build/intermediates/classes/customer_app_default/debug" />
-    <output-test url="file://$MODULE_DIR$/../YwApplication/build/intermediates/classes/test/customer_app_default/debug" />
+    <output url="file://$MODULE_DIR$/build/intermediates/classes/customer_app_default/debug" />
+    <output-test url="file://$MODULE_DIR$/build/intermediates/classes/test/customer_app_default/debug" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../YwApplication">
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/greendao" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/apt/customer_app_default/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/aidl/customer_app_default/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/buildConfig/customer_app_default/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/rs/customer_app_default/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/res/rs/customer_app_default/debug" type="java-resource" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/res/resValues/customer_app_default/debug" type="java-resource" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/assets" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_defaultDebug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/apt/androidTest/customer_app_default/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/aidl/androidTest/customer_app_default/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/buildConfig/androidTest/customer_app_default/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/rs/androidTest/customer_app_default/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/res/rs/androidTest/customer_app_default/debug" type="java-test-resource" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/res/resValues/androidTest/customer_app_default/debug" type="java-test-resource" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_defaultDebug/shaders" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/build/generated/source/apt/test/customer_app_default/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_defaultDebug/shaders" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/assets" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/customer_app_default/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestCustomer_app_default/shaders" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testCustomer_app_default/shaders" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/assets" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/debug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTestDebug/shaders" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/testDebug/shaders" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/assets" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/main/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/androidTest/shaders" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../YwApplication/src/test/shaders" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/../YwApplication/build" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/customer_app_default/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/customer_app_default/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/greendao" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/customer_app_default/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/customer_app_default/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/customer_app_default/debug" type="java-resource" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/customer_app_default/debug" type="java-resource" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_defaultDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_defaultDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_defaultDebug/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_defaultDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_defaultDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_defaultDebug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_defaultDebug/shaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/customer_app_default/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/customer_app_default/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/customer_app_default/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/androidTest/customer_app_default/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/customer_app_default/debug" type="java-test-resource" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/customer_app_default/debug" type="java-test-resource" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_defaultDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_defaultDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_defaultDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_defaultDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_defaultDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_defaultDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_defaultDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/test/customer_app_default/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_defaultDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_defaultDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_defaultDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_defaultDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_defaultDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_defaultDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_defaultDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_default/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_default/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_default/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_default/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_default/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_default/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/customer_app_default/shaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_default/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_default/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_default/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_default/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_default/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_default/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestCustomer_app_default/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_default/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_default/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_default/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_default/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_default/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_default/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testCustomer_app_default/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/shaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/shaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/shaders" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 26 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
