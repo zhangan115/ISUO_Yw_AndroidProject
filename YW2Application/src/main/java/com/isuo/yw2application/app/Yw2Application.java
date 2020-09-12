@@ -135,6 +135,10 @@ public class Yw2Application extends AbsBaseApp {
         return SPHelper.readString(this, ConstantStr.USER_INFO, ConstantStr.APP_HOST, BuildConfig.HOST);
     }
 
+    public void editHost(String host) {
+        SPHelper.write(this, ConstantStr.USER_INFO, ConstantStr.APP_HOST, host);
+    }
+
     @Override
     public void showToast(@NonNull String message) {
         Utils.showToast(this, message);

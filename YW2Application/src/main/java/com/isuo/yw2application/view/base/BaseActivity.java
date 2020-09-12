@@ -39,7 +39,6 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Logger.d(TAG);
     }
 
@@ -110,7 +109,7 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
     public void setLayoutAndToolbar(int layoutId, int titleResId, boolean haveToolbar) {
         this.setContentView(layoutId);
         if (haveToolbar) {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             if (toolbar == null) {
                 return;
             }
@@ -142,7 +141,7 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
     public void setLayoutAndToolbar(int layoutId, String titleResId, boolean haveToolbar) {
         this.setContentView(layoutId);
         if (haveToolbar) {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             if (toolbar == null) {
                 return;
             }

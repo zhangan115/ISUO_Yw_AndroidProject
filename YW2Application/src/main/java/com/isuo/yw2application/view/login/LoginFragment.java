@@ -12,9 +12,11 @@ import android.widget.EditText;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
-import com.isuo.yw2application.view.MainActivity;
+import com.isuo.yw2application.view.main.MainActivity;
 import com.isuo.yw2application.view.base.MvpFragment;
-
+import com.isuo.yw2application.view.pass.ForgePassActivity;
+import com.isuo.yw2application.view.regist.RegisterActivity;
+import com.isuo.yw2application.view.test.TestActivity;
 
 
 /**
@@ -80,10 +82,17 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
                 checkUserInfo();
                 break;
             case R.id.tv_forget_password:
-//                startActivity(new Intent(getActivity(), ForgePassActivity.class));
+                startActivity(new Intent(getActivity(), ForgePassActivity.class));
                 break;
             case R.id.tv_reg:
-//                startActivity(new Intent(getActivity(), RegisterActivity.class));
+                startActivity(new Intent(getActivity(), RegisterActivity.class));
+                break;
+            case R.id.tv_test:
+                startTestTimes++;
+                if (startTestTimes > 6) {
+                    startActivity(new Intent(getActivity(), TestActivity.class));
+                    startTestTimes = 0;
+                }
                 break;
         }
     }

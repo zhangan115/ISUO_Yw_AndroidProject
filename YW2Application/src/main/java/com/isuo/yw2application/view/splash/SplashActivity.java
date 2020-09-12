@@ -7,7 +7,7 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.view.base.BaseActivity;
-import com.isuo.yw2application.view.MainActivity;
+import com.isuo.yw2application.view.main.MainActivity;
 import com.isuo.yw2application.view.login.LoginActivity;
 import com.sito.library.utils.SystemUtil;
 
@@ -46,7 +46,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     public void showWelcome() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
 
