@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import com.sito.customer.mode.IListCallBack;
 import com.sito.customer.mode.IObjectCallBack;
 import com.sito.customer.mode.bean.news.MessageListBean;
-import com.sito.customer.mode.bean.news.NewsBean;
 import com.sito.customer.mode.customer.CustomerRepository;
 
 import java.util.List;

@@ -7,7 +7,7 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tencent.mm.opensdk/wechat-sdk-android-without-mta/6.6.4/3058bd1179e1f6a030e0492d1f24426c59f08012/wechat-sdk-android-without-mta-6.6.4-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tencent.mm.opensdk/wechat-sdk-android-without-mta/6.6.4/6928d57e06ab96b76a849f756cfc9d815413d09e/wechat-sdk-android-without-mta-6.6.4-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tencent.mm.opensdk/wechat-sdk-android-without-mta/6.6.4/ca05fed08c5525671c254b82f243d88e1c05f162/wechat-sdk-android-without-mta-6.6.4-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

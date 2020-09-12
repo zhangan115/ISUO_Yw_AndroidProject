@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Gradle: ./YwApplication/libs/GetuiSDK2.10.2.0.jar">
+  <library name="Gradle: __local_aars__:./YwApplication/libs/GetuiSDK2.10.2.0.jar:unspecified@jar">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/YwApplication/libs/GetuiSDK2.10.2.0.jar!/" />
     </CLASSES>

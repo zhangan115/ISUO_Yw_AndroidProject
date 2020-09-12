@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Gradle: ./AACRecordLibrary/libs/Msc.jar">
+  <library name="Gradle: __local_aars__:./AACRecordLibrary/libs/Msc.jar:unspecified@jar">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/AACRecordLibrary/libs/Msc.jar!/" />
     </CLASSES>

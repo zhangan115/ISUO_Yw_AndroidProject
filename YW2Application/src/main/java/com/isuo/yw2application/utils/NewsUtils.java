@@ -2,10 +2,9 @@ package com.isuo.yw2application.utils;
 
 import android.text.TextUtils;
 
-import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.mode.bean.news.MessageContent;
-import com.isuo.yw2application.mode.bean.news.NewsBean;
+import com.isuo.yw2application.mode.bean.db.NewsBean;
 import com.sito.library.utils.DataUtil;
 
 /**

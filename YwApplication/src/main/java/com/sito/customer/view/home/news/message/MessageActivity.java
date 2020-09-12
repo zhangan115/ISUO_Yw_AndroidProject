@@ -1,12 +1,10 @@
 package com.sito.customer.view.home.news.message;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.sito.customer.R;
-import com.sito.customer.app.CustomerApp;
 import com.sito.customer.common.ConstantStr;
-import com.sito.customer.mode.bean.news.NewsBean;
+import com.sito.customer.mode.bean.db.NewsBean;
 import com.sito.customer.view.BaseActivity;
 import com.sito.library.utils.ActivityUtilsV4;
 

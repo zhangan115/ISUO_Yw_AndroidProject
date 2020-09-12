@@ -30,7 +30,7 @@ import com.isuo.yw2application.mode.bean.fault.FaultDayCountBean;
 import com.isuo.yw2application.mode.bean.fault.FaultYearCountBean;
 import com.isuo.yw2application.mode.bean.news.EnterpriseDetailBean;
 import com.isuo.yw2application.mode.bean.news.MessageListBean;
-import com.isuo.yw2application.mode.bean.news.NewsBean;
+import com.isuo.yw2application.mode.bean.db.NewsBean;
 
 import org.json.JSONObject;
 

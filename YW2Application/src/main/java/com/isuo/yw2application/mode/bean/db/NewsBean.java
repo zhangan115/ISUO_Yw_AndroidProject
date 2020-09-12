@@ -1,4 +1,4 @@
-package com.isuo.yw2application.mode.bean.news;
+package com.isuo.yw2application.mode.bean.db;
 
 import android.os.Parcel;
 import android.os.Parcelable;

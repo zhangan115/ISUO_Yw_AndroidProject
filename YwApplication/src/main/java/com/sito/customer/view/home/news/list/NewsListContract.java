@@ -1,7 +1,7 @@
 package com.sito.customer.view.home.news.list;
 
 import com.sito.customer.mode.bean.news.MessageListBean;
-import com.sito.customer.mode.bean.news.NewsBean;
+import com.sito.customer.mode.bean.db.NewsBean;
 import com.sito.library.base.BasePresenter;
 import com.sito.library.base.BaseView;
 

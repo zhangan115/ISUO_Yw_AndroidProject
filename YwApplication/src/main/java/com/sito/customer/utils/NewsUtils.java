@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import com.sito.customer.R;
 import com.sito.customer.app.CustomerApp;
 import com.sito.customer.mode.bean.news.MessageContent;
-import com.sito.customer.mode.bean.news.NewsBean;
+import com.sito.customer.mode.bean.db.NewsBean;
 import com.sito.library.utils.DataUtil;
 
 /**

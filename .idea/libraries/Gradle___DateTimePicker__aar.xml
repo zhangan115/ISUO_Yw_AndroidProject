@@ -1,9 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: :DateTimePicker:@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/DateTimePicker.aar/7412a27788906cef3486ea33789c9f56/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/DateTimePicker.aar/7412a27788906cef3486ea33789c9f56/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/DateTimePicker.aar/7412a27788906cef3486ea33789c9f56/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/DateTimePicker.aar/4614817fd397747c5e5137c2d596b9bb/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/DateTimePicker.aar/4614817fd397747c5e5137c2d596b9bb/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

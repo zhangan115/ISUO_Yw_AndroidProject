@@ -1,9 +1,10 @@
-package com.sito.customer.mode.bean.news;
+package com.isuo.yw2application.mode.bean.db;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.sito.customer.app.CustomerApp;
+
+import com.isuo.yw2application.app.Yw2Application;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -18,7 +19,7 @@ public class ReadNewsBean implements Parcelable {
     private boolean isRead;
     private long createTime;
     private int messageType;
-    private int userId = CustomerApp.getInstance().getCurrentUser().getUserId();
+    private int userId = Yw2Application.getInstance().getCurrentUser().getUserId();
 
     public long getMessageId() {
         return messageId;

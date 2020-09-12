@@ -26,7 +26,7 @@ import com.sito.customer.common.BroadcastAction;
 import com.sito.customer.common.ConstantInt;
 import com.sito.customer.common.ConstantStr;
 import com.sito.customer.mode.bean.news.MessageListBean;
-import com.sito.customer.mode.bean.news.NewsBean;
+import com.sito.customer.mode.bean.db.NewsBean;
 import com.sito.customer.utils.NewsUtils;
 import com.sito.customer.view.LazyLoadFragmentV4;
 import com.sito.customer.view.alarm.AlarmDetailActivity;

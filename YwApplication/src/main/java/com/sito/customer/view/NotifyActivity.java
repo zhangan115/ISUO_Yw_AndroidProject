@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.sito.customer.app.CustomerApp;
 import com.sito.customer.common.ConstantStr;
-import com.sito.customer.mode.bean.news.NewsBean;
+import com.sito.customer.mode.bean.db.NewsBean;
 
 /**
  * 通知类

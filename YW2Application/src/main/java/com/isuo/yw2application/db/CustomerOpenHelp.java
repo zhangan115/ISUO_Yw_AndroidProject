@@ -10,12 +10,13 @@ import com.isuo.yw2application.mode.bean.db.DaoMaster;
 import com.isuo.yw2application.mode.bean.db.EquipmentDataDbDao;
 import com.isuo.yw2application.mode.bean.db.EquipmentDbDao;
 import com.isuo.yw2application.mode.bean.db.ImageDao;
+import com.isuo.yw2application.mode.bean.db.NewsBeanDao;
 import com.isuo.yw2application.mode.bean.db.RoomDbDao;
 import com.isuo.yw2application.mode.bean.db.ShareDataDbDao;
 import com.isuo.yw2application.mode.bean.db.TaskDbDao;
 import com.isuo.yw2application.mode.bean.db.UserInfoDao;
 import com.isuo.yw2application.mode.bean.db.VoiceDao;
-import com.isuo.yw2application.mode.bean.news.NewsBeanDao;
+
 
 
 import org.greenrobot.greendao.database.Database;

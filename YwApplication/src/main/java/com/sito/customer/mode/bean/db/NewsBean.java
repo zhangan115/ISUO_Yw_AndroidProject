@@ -1,4 +1,4 @@
-package com.sito.customer.mode.bean.news;
+package com.sito.customer.mode.bean.db;
 
 import android.os.Parcel;
 import android.os.Parcelable;

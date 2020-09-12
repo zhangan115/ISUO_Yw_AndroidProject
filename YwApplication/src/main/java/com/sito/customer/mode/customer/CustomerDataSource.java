@@ -30,7 +30,7 @@ import com.sito.customer.mode.bean.fault.FaultDayCountBean;
 import com.sito.customer.mode.bean.fault.FaultYearCountBean;
 import com.sito.customer.mode.bean.news.EnterpriseDetailBean;
 import com.sito.customer.mode.bean.news.MessageListBean;
-import com.sito.customer.mode.bean.news.NewsBean;
+import com.sito.customer.mode.bean.db.NewsBean;
 
 import org.json.JSONObject;
 
