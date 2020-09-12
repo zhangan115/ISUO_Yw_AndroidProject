@@ -26,6 +26,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setLayoutAndToolbar(R.layout.activity_container);
         transparentStatusBar();
+        setDarkStatusIcon(true);
         LoginFragment fragment = (LoginFragment) getFragmentManager().findFragmentById(R.id.frame_container);
         if (fragment == null) {
             fragment = LoginFragment.newInstance();

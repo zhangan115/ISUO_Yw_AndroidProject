@@ -34,7 +34,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:launchMode="singleTop"
-            android:theme="@style/LoginActivityStyle"
+            android:theme="@style/WhiteStyleActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,8 +46,8 @@
             android:allowTaskReparenting="true"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTop"
+            android:theme="@style/WhiteStyleActivity"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
-            android:theme="@style/LoginActivityStyle"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <!-- 首页-->
         <activity

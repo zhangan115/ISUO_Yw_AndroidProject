@@ -21,34 +21,34 @@ public class DaoMaster extends AbstractDaoMaster {
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
-        CreateEquipmentDbDao.createTable(db, ifNotExists);
-        CreateRoomDbDao.createTable(db, ifNotExists);
-        EquipmentDataDbDao.createTable(db, ifNotExists);
-        EquipmentDbDao.createTable(db, ifNotExists);
+        VoiceDao.createTable(db, ifNotExists);
         ImageDao.createTable(db, ifNotExists);
+        TaskDbDao.createTable(db, ifNotExists);
+        ShareDataDbDao.createTable(db, ifNotExists);
+        UserInfoDao.createTable(db, ifNotExists);
         NewsBeanDao.createTable(db, ifNotExists);
         ReadNewsBeanDao.createTable(db, ifNotExists);
+        CreateEquipmentDbDao.createTable(db, ifNotExists);
+        EquipmentDataDbDao.createTable(db, ifNotExists);
         RoomDbDao.createTable(db, ifNotExists);
-        ShareDataDbDao.createTable(db, ifNotExists);
-        TaskDbDao.createTable(db, ifNotExists);
-        UserInfoDao.createTable(db, ifNotExists);
-        VoiceDao.createTable(db, ifNotExists);
+        CreateRoomDbDao.createTable(db, ifNotExists);
+        EquipmentDbDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
-        CreateEquipmentDbDao.dropTable(db, ifExists);
-        CreateRoomDbDao.dropTable(db, ifExists);
-        EquipmentDataDbDao.dropTable(db, ifExists);
-        EquipmentDbDao.dropTable(db, ifExists);
+        VoiceDao.dropTable(db, ifExists);
         ImageDao.dropTable(db, ifExists);
+        TaskDbDao.dropTable(db, ifExists);
+        ShareDataDbDao.dropTable(db, ifExists);
+        UserInfoDao.dropTable(db, ifExists);
         NewsBeanDao.dropTable(db, ifExists);
         ReadNewsBeanDao.dropTable(db, ifExists);
+        CreateEquipmentDbDao.dropTable(db, ifExists);
+        EquipmentDataDbDao.dropTable(db, ifExists);
         RoomDbDao.dropTable(db, ifExists);
-        ShareDataDbDao.dropTable(db, ifExists);
-        TaskDbDao.dropTable(db, ifExists);
-        UserInfoDao.dropTable(db, ifExists);
-        VoiceDao.dropTable(db, ifExists);
+        CreateRoomDbDao.dropTable(db, ifExists);
+        EquipmentDbDao.dropTable(db, ifExists);
     }
 
     /**
@@ -67,18 +67,18 @@ public class DaoMaster extends AbstractDaoMaster {
 
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
-        registerDaoClass(CreateEquipmentDbDao.class);
-        registerDaoClass(CreateRoomDbDao.class);
-        registerDaoClass(EquipmentDataDbDao.class);
-        registerDaoClass(EquipmentDbDao.class);
+        registerDaoClass(VoiceDao.class);
         registerDaoClass(ImageDao.class);
+        registerDaoClass(TaskDbDao.class);
+        registerDaoClass(ShareDataDbDao.class);
+        registerDaoClass(UserInfoDao.class);
         registerDaoClass(NewsBeanDao.class);
         registerDaoClass(ReadNewsBeanDao.class);
+        registerDaoClass(CreateEquipmentDbDao.class);
+        registerDaoClass(EquipmentDataDbDao.class);
         registerDaoClass(RoomDbDao.class);
-        registerDaoClass(ShareDataDbDao.class);
-        registerDaoClass(TaskDbDao.class);
-        registerDaoClass(UserInfoDao.class);
-        registerDaoClass(VoiceDao.class);
+        registerDaoClass(CreateRoomDbDao.class);
+        registerDaoClass(EquipmentDbDao.class);
     }
 
     public DaoSession newSession() {
