@@ -15,7 +15,7 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.view.main.MainActivity;
 import com.isuo.yw2application.view.base.MvpFragment;
 import com.isuo.yw2application.view.pass.ForgePassActivity;
-import com.isuo.yw2application.view.regist.RegisterActivity;
+import com.isuo.yw2application.view.register.RegisterActivity;
 import com.isuo.yw2application.view.test.TestActivity;
 
 

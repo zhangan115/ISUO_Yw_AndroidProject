@@ -49,6 +49,7 @@
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:theme="@style/LoginActivityStyle"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!-- 首页-->
         <activity
             android:name=".view.main.MainActivity"
             android:allowTaskReparenting="true"
@@ -56,7 +57,7 @@
             android:launchMode="singleTop"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-
+        <!--分享-->
         <activity
             android:name=".view.share.ShareActivity"
             android:allowTaskReparenting="true"
@@ -64,19 +65,22 @@
             android:launchMode="singleTop"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!-- 注册 -->
         <activity
-            android:name=".view.regist.RegisterActivity"
+            android:name=".view.register.RegisterActivity"
             android:allowTaskReparenting="true"
             android:launchMode="singleTop"
             android:configChanges="orientation|keyboardHidden"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!--忘记密码-->
         <activity
             android:name=".view.pass.ForgePassActivity"
             android:allowTaskReparenting="true"
             android:configChanges="orientation|keyboardHidden"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!-- 查看图片 -->
         <activity
             android:name=".view.photo.ViewPagePhotoActivity"
             android:allowTaskReparenting="true"

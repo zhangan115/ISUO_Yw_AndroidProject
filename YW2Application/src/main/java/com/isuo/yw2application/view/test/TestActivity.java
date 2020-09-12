@@ -37,7 +37,7 @@ public class TestActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setLayoutAndToolbar(R.layout.layout_text, "设置IP");
         initData();
-        hostTv = (TextView) findViewById(R.id.tv_host_1);
+        hostTv = findViewById(R.id.tv_host_1);
         String url = Yw2Application.getInstance().AppHost();
         String str = "当前请求IP为";
         switch (url) {

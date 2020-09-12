@@ -1,4 +1,4 @@
-package com.isuo.yw2application.view.regist;
+package com.isuo.yw2application.view.register;
 
 
 import  com.isuo.yw2application.mode.customer.CustomerRepositoryComponent;
