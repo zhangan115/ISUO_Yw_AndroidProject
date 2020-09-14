@@ -6,7 +6,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -16,15 +17,32 @@
                 android:id="@+id/ll_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="40dp"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:text="登陆"
+                    android:textColor="@color/text333"
+                    android:textSize="18sp" />
+
                 <ImageView
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
                     android:scaleType="centerCrop"
+                    android:layout_marginTop="10dp"
                     android:src="@drawable/start_icon" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="小梭优维"
+                    android:textColor="@color/text333"
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -33,11 +51,7 @@
                     android:layout_marginTop="90dp"
                     android:layout_marginRight="@dimen/login_btn_margin_left_right"
                     android:background="@drawable/bg_login_enter"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/login_enter_padding_left_right"
-                    android:paddingTop="@dimen/login_enter_padding_top_bottom"
-                    android:paddingRight="@dimen/login_enter_padding_left_right"
-                    android:paddingBottom="@dimen/login_enter_padding_top_bottom">
+                    android:orientation="vertical">
 
                     <android.support.v7.widget.AppCompatMultiAutoCompleteTextView
                         android:id="@+id/edit_username"
@@ -50,6 +64,9 @@
                         android:hint="@string/hit_login_user"
                         android:inputType="textPersonName"
                         android:lines="1"
+                        android:maxLength="16"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
                         android:textColor="@color/login_name_et"
                         android:textColorHint="@color/login_name_et_hit"
                         android:textSize="@dimen/login_enter_tv_size" />
@@ -57,8 +74,6 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:layout_marginTop="@dimen/login_enter_margin_top_bottom"
-                        android:layout_marginBottom="@dimen/login_enter_margin_top_bottom"
                         android:background="@color/login_name_pass_device" />
 
                     <EditText
@@ -71,44 +86,28 @@
                         android:hint="@string/hit_login_pass"
                         android:inputType="textPassword"
                         android:lines="1"
+                        android:maxLength="16"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
                         android:textColor="@color/login_pass_et"
                         android:textColorHint="@color/login_pass_et_hit"
                         android:textSize="@dimen/login_enter_tv_size" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/login_name_pass_device" />
                 </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_reg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:paddingLeft="40dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="40dp"
-                        android:paddingBottom="10dp"
-                        android:text="免费注册"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_forget_password"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:paddingLeft="40dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="@dimen/login_btn_margin_left_right"
-                        android:paddingBottom="10dp"
-                        android:text="忘记密码"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="14sp" />
-
-                </RelativeLayout>
-
-
+                <TextView
+                    android:id="@+id/tv_forget_password"
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/text333"
+                    android:text="忘记密码"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="@dimen/login_btn_margin_left_right"
+                    android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/tv_login"
                     android:layout_width="match_parent"
@@ -125,8 +124,34 @@
                     android:textSize="@dimen/login_btn_text_size"
                     android:typeface="serif" />
 
+                <TextView
+                    android:id="@+id/tv_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_btn_margin_left_right"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="@dimen/login_btn_margin_left_right"
+                    android:background="@drawable/bg_login_btn_select"
+                    android:gravity="center"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:text="@string/str_register_btn"
+                    android:textColor="@color/login_btn_text"
+                    android:textSize="@dimen/login_btn_text_size"
+                    android:typeface="serif" />
+
             </LinearLayout>
         </ScrollView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_test"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:text="多维度即时协同设备运维管理系统"
+            android:textColor="@color/gray_666666"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tv_test"
@@ -134,12 +159,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
+            android:layout_marginBottom="15dp"
             android:text="Copyright@小梭易智信息股份出品"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/gray_999999"
             android:textSize="12sp" />
     </RelativeLayout>
-
 
 </FrameLayout>

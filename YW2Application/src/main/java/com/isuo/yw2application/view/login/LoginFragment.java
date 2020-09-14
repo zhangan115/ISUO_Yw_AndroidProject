@@ -45,7 +45,7 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
         rootView.findViewById(R.id.tv_login).setOnClickListener(this);
         rootView.findViewById(R.id.tv_forget_password).setOnClickListener(this);
         rootView.findViewById(R.id.tv_test).setOnClickListener(this);
-        rootView.findViewById(R.id.tv_reg).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_register).setOnClickListener(this);
         return rootView;
     }
 
@@ -84,7 +84,7 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
             case R.id.tv_forget_password:
                 startActivity(new Intent(getActivity(), ForgePassActivity.class));
                 break;
-            case R.id.tv_reg:
+            case R.id.tv_register:
                 startActivity(new Intent(getActivity(), RegisterActivity.class));
                 break;
             case R.id.tv_test:
