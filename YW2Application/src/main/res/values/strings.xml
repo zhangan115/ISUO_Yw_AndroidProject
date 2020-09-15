@@ -60,7 +60,7 @@
     </string-array>
 
     <string name="str_login_btn">登录</string>
-    <string name="str_register_btn">登录</string>
+    <string name="str_register_btn">注册</string>
     <string name="hit_login_user">请输入账号</string>
     <string name="hit_login_pass">请输入密码</string>
     <string name="tab_await">待办任务</string>

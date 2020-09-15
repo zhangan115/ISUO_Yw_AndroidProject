@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -25,10 +27,13 @@ public class MainActivity extends BaseActivity {
     private AHBottomNavigation bottomNavigation;
     private int selectPosition = 0;
     private long mCurrentTime = 0;
+    private DrawerLayout drawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        drawer = findViewById(R.id.drawer_layout);
         mFragments = getFragments();
         bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.str_first_nav_2, R.drawable.nav_work_icon_normal, R.color.colorPrimary);
@@ -84,7 +89,6 @@ public class MainActivity extends BaseActivity {
         if (alarmFragment == null) {
             alarmFragment = AlarmFragment.newInstance();
         }
-
         DataFragment dataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("tag_4");
         if (dataFragment == null) {
             dataFragment = DataFragment.newInstance();
@@ -99,6 +103,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        if (this.drawer.isDrawerOpen(Gravity.START)){
+            this.drawer.closeDrawer(Gravity.START);
+            return;
+        }
         long time = System.currentTimeMillis();
         if (time - this.mCurrentTime < 2000) {
             Yw2Application.getInstance().exitApp();

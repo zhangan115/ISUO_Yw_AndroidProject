@@ -10,7 +10,7 @@
     <dimen name="login_btn_margin_top">40dp</dimen>
 
     <dimen name="login_btn_padding_top_bottom">20dp</dimen>
-    <dimen name="login_btn_text_size">18sp</dimen>
+    <dimen name="login_btn_text_size">16sp</dimen>
 
     <dimen name="login_enter_padding_top_bottom">15dp</dimen>
     <dimen name="login_enter_padding_left_right">30dp</dimen>

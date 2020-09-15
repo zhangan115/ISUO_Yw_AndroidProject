@@ -32,8 +32,8 @@
             android:name=".view.splash.SplashActivity"
             android:allowTaskReparenting="true"
             android:configChanges="orientation|keyboardHidden"
-            android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:launchMode="singleTop"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:theme="@style/WhiteStyleActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
@@ -46,8 +46,8 @@
             android:allowTaskReparenting="true"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTop"
-            android:theme="@style/WhiteStyleActivity"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:theme="@style/WhiteStyleActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <!-- 首页-->
         <activity
@@ -56,6 +56,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTop"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:theme="@style/LoginActivityStyle"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <!--分享-->
         <activity
@@ -69,8 +70,8 @@
         <activity
             android:name=".view.register.RegisterActivity"
             android:allowTaskReparenting="true"
-            android:launchMode="singleTop"
             android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTop"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <!--忘记密码-->
