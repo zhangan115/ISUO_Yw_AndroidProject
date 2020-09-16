@@ -1,23 +1,32 @@
 package com.isuo.yw2application.view.main;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
+import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.main.alarm.AlarmFragment;
 import com.isuo.yw2application.view.main.data.DataFragment;
 import com.isuo.yw2application.view.main.device.DeviceFragment;
 import com.isuo.yw2application.view.main.task.TaskFragment;
 import com.isuo.yw2application.view.main.work.WorkFragment;
+import com.isuo.yw2application.view.share.ShareActivity;
+import com.sito.library.utils.GlideUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -67,6 +76,30 @@ public class MainActivity extends BaseActivity {
         }
         bottomNavigation.setCurrentItem(selectPosition);
         transaction.commit();
+        initView();
+    }
+
+    private void initView() {
+        findViewById(R.id.layout_1).setOnClickListener(this);
+        findViewById(R.id.layout_2).setOnClickListener(this);
+        findViewById(R.id.layout_3).setOnClickListener(this);
+        findViewById(R.id.layout_4).setOnClickListener(this);
+        findViewById(R.id.layout_5).setOnClickListener(this);
+        findViewById(R.id.layout_6).setOnClickListener(this);
+        findViewById(R.id.layout_7).setOnClickListener(this);
+        findViewById(R.id.exitApp).setOnClickListener(this);
+        User user = Yw2Application.getInstance().getCurrentUser();
+        ImageView userImage = findViewById(R.id.userImage);
+        GlideUtils.ShowCircleImage(this, user.getPortraitUrl(), userImage, R.drawable.mine_head_default);
+        TextView userNameTv = findViewById(R.id.textUserName);
+        userNameTv.setText(user.getRealName());
+        TextView userInfoTv = findViewById(R.id.textUserInfo);
+        if (user.getCustomer() != null) {
+            userInfoTv.setText(String.format("%s-%s", user.getCustomer().getCustomerName(), user.getUserRoleNames()));
+        } else {
+            userInfoTv.setText(user.getUserRoleNames());
+        }
+
     }
 
     private static final int REQUEST_PERMISSION = 0;
@@ -102,8 +135,35 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.layout_1:
+                break;
+            case R.id.layout_2:
+                break;
+            case R.id.layout_3:
+                startActivity(new Intent(this, ShareActivity.class));
+                break;
+            case R.id.layout_4:
+                break;
+            case R.id.layout_5:
+                break;
+            case R.id.layout_6:
+                break;
+            case R.id.layout_7:
+                break;
+            case R.id.exitApp:
+                MobclickAgent.onProfileSignOff();
+                Yw2Application.getInstance().needLogin();
+                break;
+            case R.id.userImage:
+                break;
+        }
+    }
+
+    @Override
     public void onBackPressed() {
-        if (this.drawer.isDrawerOpen(Gravity.START)){
+        if (this.drawer.isDrawerOpen(Gravity.START)) {
             this.drawer.closeDrawer(Gravity.START);
             return;
         }

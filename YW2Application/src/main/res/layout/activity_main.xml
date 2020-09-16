@@ -36,5 +36,6 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
+        <include layout="@layout/include_main_draw_layout" />
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

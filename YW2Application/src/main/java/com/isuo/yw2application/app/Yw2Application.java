@@ -38,6 +38,7 @@ import com.isuo.yw2application.push.CustIntentService;
 import com.isuo.yw2application.push.CustPushService;
 import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.ApplicationModule;
+import com.isuo.yw2application.view.login.LoginActivity;
 import com.sito.library.base.AbsBaseApp;
 import com.sito.library.utils.Base64Util;
 import com.sito.library.utils.SPHelper;
@@ -160,7 +161,10 @@ public class Yw2Application extends AbsBaseApp {
 
     @Override
     public Intent needLoginIntent() {
-        return null;
+        Yw2Application.getInstance().exitCurrentUser();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.setAction(ConstantStr.NEED_LOGIN);
+        return intent;
     }
 
     public DaoSession getDaoSession() {
