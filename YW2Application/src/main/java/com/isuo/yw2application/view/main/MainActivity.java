@@ -2,7 +2,6 @@ package com.isuo.yw2application.view.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.UserManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -44,12 +43,12 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         drawer = findViewById(R.id.drawer_layout);
         mFragments = getFragments();
-        bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.str_first_nav_2, R.drawable.nav_work_icon_normal, R.color.colorPrimary);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.str_first_nav_1, R.drawable.nav_message_icon_normal, R.color.colorPrimary);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.str_first_nav_3, R.drawable.nav_call_icon_normal, R.color.colorPrimary);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.str_first_nav_4, R.drawable.nav_found_icon_normal, R.color.colorPrimary);
-        AHBottomNavigationItem item5 = new AHBottomNavigationItem(R.string.str_first_nav_5, R.drawable.nav_mine_icon_normal, R.color.colorPrimary);
+        bottomNavigation = findViewById(R.id.bottom_navigation);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.str_first_nav_2, R.drawable.work, R.color.colorPrimary);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.str_first_nav_1, R.drawable.drive, R.color.colorPrimary);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.str_first_nav_3, R.drawable.task_g, R.color.colorPrimary);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.str_first_nav_4, R.drawable.fault_bottom, R.color.colorPrimary);
+        AHBottomNavigationItem item5 = new AHBottomNavigationItem(R.string.str_first_nav_5, R.drawable.board, R.color.colorPrimary);
         bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);
         bottomNavigation.addItem(item3);

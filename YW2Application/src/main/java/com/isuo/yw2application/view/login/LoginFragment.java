@@ -28,7 +28,6 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
 
     private AppCompatMultiAutoCompleteTextView mNameEt;
     private EditText mPassEt;
-
     public static LoginFragment newInstance() {
         Bundle args = new Bundle();
         LoginFragment fragment = new LoginFragment();

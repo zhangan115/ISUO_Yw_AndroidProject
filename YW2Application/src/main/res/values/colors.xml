@@ -103,9 +103,9 @@
     <color name="border_color">@color/colorB9C9D5</color>
     <color name="news_color">#FF0000</color>
     <color name="color_text_home">@color/colorWhite</color>
-    <color name="login_name_et">@color/colorBlack</color>
-    <color name="login_pass_et">@color/colorBlack</color>
-    <color name="login_name_et_hit">@color/color9B9B9B</color>
+    <color name="login_name_et">@color/text333</color>
+    <color name="login_pass_et">@color/text333</color>
+    <color name="login_name_et_hit">@color/gray_999999</color>
     <color name="login_pass_et_hit">@color/color9B9B9B</color>
     <color name="login_btn_text">@color/colorWhite</color>
     <color name="color_text_energy_title">#7C92AF</color>

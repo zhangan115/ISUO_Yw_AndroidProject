@@ -1,6 +1,7 @@
 package com.isuo.yw2application.view.login;
 
 import android.os.Bundle;
+import android.widget.FrameLayout;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
@@ -27,6 +28,8 @@ public class LoginActivity extends BaseActivity {
         setLayoutAndToolbar(R.layout.activity_container);
         transparentStatusBar();
         setDarkStatusIcon(true);
+        FrameLayout fl = findViewById(R.id.frame_container);
+        fl.setPadding(0,getStatusHeight(),0,0);
         LoginFragment fragment = (LoginFragment) getFragmentManager().findFragmentById(R.id.frame_container);
         if (fragment == null) {
             fragment = LoginFragment.newInstance();
