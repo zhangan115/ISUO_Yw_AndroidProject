@@ -393,14 +393,14 @@ public class WorkRepository implements WorkDataSource {
         String workItemStr = sp.getString(ConstantStr.WORK_ITEM, "");
         List<WorkItem> allWorkItems = new ArrayList<>();
         List<WorkItem> myWorkItems = new ArrayList<>();
-        // TODO: 2020/9/1 修改功能
-//        allWorkItems.add(new WorkItem(1, "待办事项", R.drawable.bg_home_icon_db));
-//        allWorkItems.add(new WorkItem(2, "故障上报", R.drawable.bg_home_icon_gz));
-//        allWorkItems.add(new WorkItem(3, "日常巡检", R.drawable.bg_home_icon_rc));
-//        allWorkItems.add(new WorkItem(4, "检修工作", R.drawable.bg_home_icon_jx));
-//        allWorkItems.add(new WorkItem(5, "专项工作", R.drawable.bg_home_icon_zx));
-//        allWorkItems.add(new WorkItem(6, "注油管理", R.drawable.bg_home_icon_zy));
-//        allWorkItems.add(new WorkItem(7, "紧急电话", R.drawable.bg_home_icon_soe));
+        allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
+        allWorkItems.add(new WorkItem(2, "检修工作", R.drawable.overhaul));
+        allWorkItems.add(new WorkItem(3, "指派检修", R.drawable.assign));
+        allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
+        allWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
+        allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
+        allWorkItems.add(new WorkItem(7, "企业规范", R.drawable.standard));
+        // TODO: 2020/9/22  
 //        allWorkItems.add(new WorkItem(8, "指派检修", R.drawable.bg_home_icon_zp));
 //        allWorkItems.add(new WorkItem(9, "工具管理", R.drawable.bg_home_icon_gj));
 //        allWorkItems.add(new WorkItem(10, "发布通知", R.drawable.bg_home_icon_fb));
@@ -409,7 +409,7 @@ public class WorkRepository implements WorkDataSource {
             for (int i = 0; i < 7; i++) {
                 myWorkItems.add(allWorkItems.get(i));
             }
-//            myWorkItems.add(new WorkItem(-1, "更多", R.drawable.bg_home_icon_more));
+            myWorkItems.add(new WorkItem(-1, "全部", R.drawable.all));
         } else {
             String[] saveItems = workItemStr.split(",");
             for (String saveItem : saveItems) {
@@ -421,7 +421,7 @@ public class WorkRepository implements WorkDataSource {
                     }
                 }
             }
-//            myWorkItems.add(new WorkItem(-1, "更多", R.drawable.bg_home_icon_more));
+            myWorkItems.add(new WorkItem(-1, "全部", R.drawable.all));
         }
         callBack.showAllWorkItem(allWorkItems);
         callBack.showWorkItem(myWorkItems);

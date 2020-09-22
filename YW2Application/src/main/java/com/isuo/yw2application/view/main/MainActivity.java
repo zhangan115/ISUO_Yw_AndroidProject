@@ -9,10 +9,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.iflytek.cloud.thirdparty.V;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
@@ -36,6 +39,10 @@ public class MainActivity extends BaseActivity {
     private int selectPosition = 0;
     private long mCurrentTime = 0;
     private DrawerLayout drawer;
+    private LinearLayout frameLayout1;
+    private RelativeLayout frameLayout2;
+    private ImageView leftImage, rightImage;
+    private TextView frameTv, rightTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +51,14 @@ public class MainActivity extends BaseActivity {
         drawer = findViewById(R.id.drawer_layout);
         mFragments = getFragments();
         bottomNavigation = findViewById(R.id.bottom_navigation);
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.str_first_nav_2, R.drawable.work, R.color.colorPrimary);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.str_first_nav_1, R.drawable.drive, R.color.colorPrimary);
+        leftImage = findViewById(R.id.leftImage);
+        rightImage = findViewById(R.id.rightImage);
+        frameTv = findViewById(R.id.frameTitleTv);
+        rightTv = findViewById(R.id.rightTv);
+        frameLayout1 = findViewById(R.id.titleLayout1);
+        frameLayout2 = findViewById(R.id.titleLayout2);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.str_first_nav_1, R.drawable.work, R.color.colorPrimary);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.str_first_nav_2, R.drawable.drive, R.color.colorPrimary);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.str_first_nav_3, R.drawable.task_g, R.color.colorPrimary);
         AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.str_first_nav_4, R.drawable.fault_bottom, R.color.colorPrimary);
         AHBottomNavigationItem item5 = new AHBottomNavigationItem(R.string.str_first_nav_5, R.drawable.board, R.color.colorPrimary);
@@ -76,6 +89,7 @@ public class MainActivity extends BaseActivity {
         bottomNavigation.setCurrentItem(selectPosition);
         transaction.commit();
         initView();
+        showTitleLayout();
     }
 
     private void initView() {
@@ -89,7 +103,9 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.exitApp).setOnClickListener(this);
         User user = Yw2Application.getInstance().getCurrentUser();
         ImageView userImage = findViewById(R.id.userImage);
+        ImageView leftImage = findViewById(R.id.leftImage);
         GlideUtils.ShowCircleImage(this, user.getPortraitUrl(), userImage, R.drawable.mine_head_default);
+        GlideUtils.ShowCircleImage(this, user.getPortraitUrl(), leftImage, R.drawable.mine_head_default);
         TextView userNameTv = findViewById(R.id.textUserName);
         userNameTv.setText(user.getRealName());
         TextView userInfoTv = findViewById(R.id.textUserInfo);
@@ -98,7 +114,20 @@ public class MainActivity extends BaseActivity {
         } else {
             userInfoTv.setText(user.getUserRoleNames());
         }
+        findViewById(R.id.leftImage).setOnClickListener(this);
+        findViewById(R.id.rightImage).setOnClickListener(this);
+        findViewById(R.id.rightTv).setOnClickListener(this);
+        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
 
+            @Override
+            public boolean onTabSelected(int position, boolean wasSelected) {
+                if (selectPosition != position) {
+                    commitFragment(position);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private static final int REQUEST_PERMISSION = 0;
@@ -157,6 +186,73 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.userImage:
                 break;
+            case R.id.leftImage:
+                drawer.openDrawer(Gravity.START);
+                break;
+            case R.id.rightImage:
+                // TODO: 2020/9/22
+                //scan code
+                break;
+            case R.id.rightTv:
+                // TODO: 2020/9/22
+                if (selectPosition == 3) {
+                } else if (selectPosition == 4) {
+
+                }
+                break;
+        }
+    }
+
+    private void commitFragment(int position) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        if (mFragments.get(selectPosition).isAdded()) {
+            ft.hide(mFragments.get(selectPosition));
+        }
+        if (mFragments.get(position).isAdded()) {
+            ft.show(mFragments.get(position));
+        } else {
+            ft.add(R.id.frame_container, mFragments.get(position), "tag_" + position);
+        }
+        selectPosition = position;
+        showTitleLayout();
+        ft.commit();
+    }
+
+    private void showTitleLayout() {
+        frameLayout1.setVisibility(selectPosition != 2 ? View.VISIBLE : View.GONE);
+        frameLayout2.setVisibility(selectPosition == 2 ? View.VISIBLE : View.GONE);
+        leftImage.setVisibility(selectPosition == 0 ? View.VISIBLE : View.GONE);
+        rightTv.setVisibility(selectPosition == 0 ? View.VISIBLE : View.GONE);
+        switch (selectPosition) {
+            case 0:
+                rightTv.setVisibility(View.GONE);
+                User user = Yw2Application.getInstance().getCurrentUser();
+                frameTv.setText(String.format("欢迎，%s", user.getRealName()));
+                break;
+            case 1:
+                rightTv.setVisibility(View.GONE);
+                frameTv.setText("设备");
+
+                break;
+            case 3:
+                rightTv.setVisibility(View.VISIBLE);
+                frameTv.setText("故障");
+                rightTv.setText("故障列表");
+                break;
+            case 4:
+                rightTv.setVisibility(View.VISIBLE);
+                frameTv.setText("数据");
+                rightTv.setText("其他服务");
+                break;
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (outState != null) {
+            outState.putInt(ConstantStr.KEY_BUNDLE_INT, selectPosition);
         }
     }
 
