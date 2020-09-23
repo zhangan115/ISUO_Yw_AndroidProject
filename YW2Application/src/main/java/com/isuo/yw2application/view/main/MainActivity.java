@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -27,6 +28,7 @@ import com.isuo.yw2application.view.main.device.DeviceFragment;
 import com.isuo.yw2application.view.main.task.TaskFragment;
 import com.isuo.yw2application.view.main.work.WorkFragment;
 import com.isuo.yw2application.view.share.ShareActivity;
+import com.sito.library.utils.DisplayUtil;
 import com.sito.library.utils.GlideUtils;
 import com.umeng.analytics.MobclickAgent;
 
@@ -40,7 +42,6 @@ public class MainActivity extends BaseActivity {
     private long mCurrentTime = 0;
     private DrawerLayout drawer;
     private LinearLayout frameLayout1;
-    private RelativeLayout frameLayout2;
     private ImageView leftImage, rightImage;
     private TextView frameTv, rightTv;
 
@@ -56,7 +57,6 @@ public class MainActivity extends BaseActivity {
         frameTv = findViewById(R.id.frameTitleTv);
         rightTv = findViewById(R.id.rightTv);
         frameLayout1 = findViewById(R.id.titleLayout1);
-        frameLayout2 = findViewById(R.id.titleLayout2);
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.str_first_nav_1, R.drawable.work, R.color.colorPrimary);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.str_first_nav_2, R.drawable.drive, R.color.colorPrimary);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.str_first_nav_3, R.drawable.task_g, R.color.colorPrimary);
@@ -220,8 +220,16 @@ public class MainActivity extends BaseActivity {
     }
 
     private void showTitleLayout() {
+        LinearLayout layout = findViewById(R.id.layout2);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT
+                , FrameLayout.LayoutParams.MATCH_PARENT);
+        if (selectPosition == 2) {
+            params.setMargins(0,0,0,0);
+        } else {
+            params.setMargins(0, DisplayUtil.dip2px(this,54),0,0);
+        }
+        layout.setLayoutParams(params);
         frameLayout1.setVisibility(selectPosition != 2 ? View.VISIBLE : View.GONE);
-        frameLayout2.setVisibility(selectPosition == 2 ? View.VISIBLE : View.GONE);
         leftImage.setVisibility(selectPosition == 0 ? View.VISIBLE : View.GONE);
         rightTv.setVisibility(selectPosition == 0 ? View.VISIBLE : View.GONE);
         switch (selectPosition) {
@@ -233,7 +241,6 @@ public class MainActivity extends BaseActivity {
             case 1:
                 rightTv.setVisibility(View.GONE);
                 frameTv.setText("设备");
-
                 break;
             case 3:
                 rightTv.setVisibility(View.VISIBLE);

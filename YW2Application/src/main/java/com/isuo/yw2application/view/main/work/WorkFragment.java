@@ -62,7 +62,6 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
 
     @Override
     public void showWorkItemList(List<WorkItem> workItems) {
-        Log.d("za",""+workItems.size());
         if (workItems.size() == 8 && getView() != null) {
             ((WorkItemLayout) getView().findViewById(R.id.workItem1)).setContent(workItems.get(0));
             ((WorkItemLayout) getView().findViewById(R.id.workItem2)).setContent(workItems.get(1));

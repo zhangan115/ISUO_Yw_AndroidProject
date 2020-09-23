@@ -5,9 +5,9 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f7f7f7"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:background="#f7f7f7"
     tools:openDrawer="end">
 
     <FrameLayout
@@ -66,37 +66,12 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/titleLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="138dp"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:layout_marginLeft="15dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="任务"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/task_banner" />
-        </RelativeLayout>
-
         <LinearLayout
+            android:id="@+id/layout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="54dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="54dp">
 
             <FrameLayout
                 android:id="@+id/frame_container"

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.isuo.yw2application.R;
 import com.isuo.yw2application.view.base.BaseFragmentV4;
 
 public class TaskFragment extends BaseFragmentV4 {
@@ -20,6 +21,7 @@ public class TaskFragment extends BaseFragmentV4 {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = inflater.inflate(R.layout.fragment_task, container, false);
+        return rootView;
     }
 }
