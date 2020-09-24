@@ -5,12 +5,14 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
+import com.sito.library.utils.DisplayUtil;
 
 public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implements TaskContract.View, View.OnClickListener {
 
@@ -37,6 +39,12 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
         monthCountTv = rootView.findViewById(R.id.monthCountTv);
         weakCountTv = rootView.findViewById(R.id.workCountTv);
         dayCountTv = rootView.findViewById(R.id.dayCountTv);
+        int width = (getActivity().getResources().getDisplayMetrics().widthPixels - DisplayUtil.dip2px(getActivity(), 60)) / 2;
+        int height = width / 142 * 90;
+        rootView.findViewById(R.id.taskIv1).setLayoutParams(new LinearLayout.LayoutParams(width,height));
+        rootView.findViewById(R.id.taskIv2).setLayoutParams(new LinearLayout.LayoutParams(width,height));
+        rootView.findViewById(R.id.taskIv3).setLayoutParams(new LinearLayout.LayoutParams(width,height));
+        rootView.findViewById(R.id.taskIv4).setLayoutParams(new LinearLayout.LayoutParams(width,height));
         rootView.findViewById(R.id.taskIv1).setOnClickListener(this);
         rootView.findViewById(R.id.taskIv2).setOnClickListener(this);
         rootView.findViewById(R.id.taskIv3).setOnClickListener(this);
@@ -69,9 +77,9 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
 
     @Override
     public void showWorkCount(WorkState workState) {
-        monthCountTv.setText(String.format("%s/%s",workState.getMonthFinishCount(),workState.getMonthAllCount()));
-        weakCountTv.setText(String.format("%s/%s",workState.getWeekFinishCount(),workState.getWeekAllCount()));
-        dayCountTv.setText(String.format("%s/%s",workState.getDayFinishCount(),workState.getDayAllCount()));
+        monthCountTv.setText(String.format("%s/%s", workState.getMonthFinishCount(), workState.getMonthAllCount()));
+        weakCountTv.setText(String.format("%s/%s", workState.getWeekFinishCount(), workState.getWeekAllCount()));
+        dayCountTv.setText(String.format("%s/%s", workState.getDayFinishCount(), workState.getDayAllCount()));
     }
 
     @Override
