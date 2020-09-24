@@ -41,9 +41,6 @@ public class MainActivity extends BaseActivity {
     private int selectPosition = 0;
     private long mCurrentTime = 0;
     private DrawerLayout drawer;
-    private LinearLayout frameLayout1;
-    private ImageView leftImage, rightImage;
-    private TextView frameTv, rightTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +49,6 @@ public class MainActivity extends BaseActivity {
         drawer = findViewById(R.id.drawer_layout);
         mFragments = getFragments();
         bottomNavigation = findViewById(R.id.bottom_navigation);
-        leftImage = findViewById(R.id.leftImage);
-        rightImage = findViewById(R.id.rightImage);
-        frameTv = findViewById(R.id.frameTitleTv);
-        rightTv = findViewById(R.id.rightTv);
-        frameLayout1 = findViewById(R.id.titleLayout1);
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.str_first_nav_1, R.drawable.work, R.color.colorPrimary);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.str_first_nav_2, R.drawable.drive, R.color.colorPrimary);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.str_first_nav_3, R.drawable.task_g, R.color.colorPrimary);
@@ -89,7 +81,6 @@ public class MainActivity extends BaseActivity {
         bottomNavigation.setCurrentItem(selectPosition);
         transaction.commit();
         initView();
-        showTitleLayout();
     }
 
     private void initView() {
@@ -103,9 +94,7 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.exitApp).setOnClickListener(this);
         User user = Yw2Application.getInstance().getCurrentUser();
         ImageView userImage = findViewById(R.id.userImage);
-        ImageView leftImage = findViewById(R.id.leftImage);
         GlideUtils.ShowCircleImage(this, user.getPortraitUrl(), userImage, R.drawable.mine_head_default);
-        GlideUtils.ShowCircleImage(this, user.getPortraitUrl(), leftImage, R.drawable.mine_head_default);
         TextView userNameTv = findViewById(R.id.textUserName);
         userNameTv.setText(user.getRealName());
         TextView userInfoTv = findViewById(R.id.textUserInfo);
@@ -114,9 +103,6 @@ public class MainActivity extends BaseActivity {
         } else {
             userInfoTv.setText(user.getUserRoleNames());
         }
-        findViewById(R.id.leftImage).setOnClickListener(this);
-        findViewById(R.id.rightImage).setOnClickListener(this);
-        findViewById(R.id.rightTv).setOnClickListener(this);
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
 
             @Override
@@ -186,20 +172,6 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.userImage:
                 break;
-            case R.id.leftImage:
-                drawer.openDrawer(Gravity.START);
-                break;
-            case R.id.rightImage:
-                // TODO: 2020/9/22
-                //scan code
-                break;
-            case R.id.rightTv:
-                // TODO: 2020/9/22
-                if (selectPosition == 3) {
-                } else if (selectPosition == 4) {
-
-                }
-                break;
         }
     }
 
@@ -215,44 +187,8 @@ public class MainActivity extends BaseActivity {
             ft.add(R.id.frame_container, mFragments.get(position), "tag_" + position);
         }
         selectPosition = position;
-        showTitleLayout();
-        ft.commit();
-    }
 
-    private void showTitleLayout() {
-        LinearLayout layout = findViewById(R.id.layout2);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT
-                , FrameLayout.LayoutParams.MATCH_PARENT);
-        if (selectPosition == 2) {
-            params.setMargins(0,0,0,0);
-        } else {
-            params.setMargins(0, DisplayUtil.dip2px(this,54),0,0);
-        }
-        layout.setLayoutParams(params);
-        frameLayout1.setVisibility(selectPosition != 2 ? View.VISIBLE : View.GONE);
-        leftImage.setVisibility(selectPosition == 0 ? View.VISIBLE : View.GONE);
-        rightTv.setVisibility(selectPosition == 0 ? View.VISIBLE : View.GONE);
-        switch (selectPosition) {
-            case 0:
-                rightTv.setVisibility(View.GONE);
-                User user = Yw2Application.getInstance().getCurrentUser();
-                frameTv.setText(String.format("欢迎，%s", user.getRealName()));
-                break;
-            case 1:
-                rightTv.setVisibility(View.GONE);
-                frameTv.setText("设备");
-                break;
-            case 3:
-                rightTv.setVisibility(View.VISIBLE);
-                frameTv.setText("故障");
-                rightTv.setText("故障列表");
-                break;
-            case 4:
-                rightTv.setVisibility(View.VISIBLE);
-                frameTv.setText("数据");
-                rightTv.setText("其他服务");
-                break;
-        }
+        ft.commit();
     }
 
     @Override

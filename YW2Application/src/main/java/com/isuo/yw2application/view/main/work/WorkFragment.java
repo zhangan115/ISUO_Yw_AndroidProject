@@ -7,17 +7,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
+import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.widget.WorkItemLayout;
+import com.sito.library.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implements WorkContract.View {
+public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implements WorkContract.View, View.OnClickListener {
 
     private ArrayList<WorkItem> workItemList;
     private ArrayList<WorkItem> showWorkItemList;
@@ -50,6 +54,12 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                 mPresenter.getWorkItem();
             }
         });
+        User user = Yw2Application.getInstance().getCurrentUser();
+        TextView userNameTv = rootView.findViewById(R.id.userNameTv);
+        userNameTv.setText(String.format("欢迎，%s", user.getRealName()));
+        rootView.findViewById(R.id.rightImage).setOnClickListener(this);
+        ImageView leftImage = rootView.findViewById(R.id.leftImage);
+        GlideUtils.ShowCircleImage(this.getActivity(), user.getPortraitUrl(), leftImage, R.drawable.mine_head_default);
         return rootView;
     }
 
@@ -86,5 +96,10 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
     @Override
     public void setPresenter(WorkContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }
