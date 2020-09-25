@@ -191,4 +191,8 @@
 
     <color name="transparent_black">#44000000</color>
     <color name="new_text_un_select">#EDEDED</color>
+
+    <color name="fault_color_a">#fd643c</color>
+    <color name="fault_color_b">#ffd900</color>
+    <color name="fault_color_c">#08c161</color>
 </resources>
