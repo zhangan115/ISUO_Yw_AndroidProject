@@ -72,6 +72,7 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
         });
         recyclerView = rootView.findViewById(R.id.recycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        recyclerView.setNestedScrollingEnabled(false);
         RVAdapter<FaultList> adapter = new RVAdapter<FaultList>(recyclerView, this.alarmList, R.layout.item_alarm) {
             @Override
             public void showData(ViewHolder vHolder, FaultList data, final int position) {
@@ -123,7 +124,7 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
                 if (data.isPlay() && isPlay) {
                     mVoiceTime.setBackgroundResource(R.drawable.play_anim);
                     animation = (AnimationDrawable) mVoiceTime.getBackground();
-                    mCountDownTimerUtils = new CountDownTimerUtils(mVoiceTime, data.getSoundTimescale() * 1000, 1000, data.getSoundTimescale() + "''", "#ffffff");
+                    mCountDownTimerUtils = new CountDownTimerUtils(mVoiceTime, data.getSoundTimescale() * 1000, 1000, data.getSoundTimescale() + "s", "#999999");
                     MediaPlayerManager.playSound(data.getVoiceUrl(), new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
@@ -138,7 +139,7 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
                         }
                     });
                 } else {
-                    mVoiceTime.setText(String.valueOf(data.getSoundTimescale()));
+                    mVoiceTime.setText(String.format("%ss",data.getSoundTimescale()));
                     mVoiceTime.setBackgroundResource(R.drawable.voice_three);
                 }
                 mVoiceTime.setOnClickListener(new View.OnClickListener() {

@@ -154,12 +154,11 @@
 
     <TextView
         android:id="@+id/tv_seconds"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/voice_three"
-        android:gravity="right|center_vertical"
-        android:paddingRight="2dp"
+        android:gravity="center"
         android:textColor="@color/gray_999999"
         android:textSize="12sp" />
 

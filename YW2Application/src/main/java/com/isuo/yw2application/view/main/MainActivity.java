@@ -8,15 +8,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-import com.iflytek.cloud.thirdparty.V;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
@@ -28,13 +24,12 @@ import com.isuo.yw2application.view.main.device.DeviceFragment;
 import com.isuo.yw2application.view.main.task.TaskFragment;
 import com.isuo.yw2application.view.main.work.WorkFragment;
 import com.isuo.yw2application.view.share.ShareActivity;
-import com.sito.library.utils.DisplayUtil;
 import com.sito.library.utils.GlideUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements WorkFragment.DrawClickCallBack {
 
     private ArrayList<Fragment> mFragments;
     private AHBottomNavigation bottomNavigation;
@@ -212,5 +207,10 @@ public class MainActivity extends BaseActivity {
             this.mCurrentTime = time;
             Yw2Application.getInstance().showToast(getString(R.string.toast_exit_app));
         }
+    }
+
+    @Override
+    public void onCallBack() {
+        drawer.openDrawer(Gravity.START);
     }
 }

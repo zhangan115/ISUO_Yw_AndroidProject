@@ -1,5 +1,6 @@
 package com.isuo.yw2application.utils;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.text.Spannable;
@@ -38,11 +39,12 @@ public class CountDownTimerUtils extends CountDownTimer {
         this.mColorStr = colors;
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void onTick(long millisUntilFinished) {
         isTimer = true;
 //        mTextView.setClickable(false); //设置不可点击
-        mTextView.setText(millisUntilFinished / 1000 + "''");  //设置倒计时时间
+        mTextView.setText(String.format("%ds", millisUntilFinished / 1000));  //设置倒计时时间
 //        mTextView.setBackgroundResource(R.color.colorGray); //设置按钮为灰色，这时是不能点击的
 
         /**

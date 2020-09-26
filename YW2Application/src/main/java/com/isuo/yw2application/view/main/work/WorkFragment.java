@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.work;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,6 +16,7 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
+import com.isuo.yw2application.view.main.MainActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
 import com.sito.library.utils.GlideUtils;
 
@@ -26,6 +28,21 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
     private ArrayList<WorkItem> workItemList;
     private ArrayList<WorkItem> showWorkItemList;
     private SwipeRefreshLayout swipeRefreshLayout;
+
+   public interface DrawClickCallBack {
+        void onCallBack();
+    }
+
+    private DrawClickCallBack callBack;
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof MainActivity) {
+            callBack = (DrawClickCallBack) context;
+        }
+    }
 
     public static WorkFragment newInstance() {
         Bundle args = new Bundle();
@@ -59,6 +76,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         userNameTv.setText(String.format("欢迎，%s", user.getRealName()));
         rootView.findViewById(R.id.rightImage).setOnClickListener(this);
         ImageView leftImage = rootView.findViewById(R.id.leftImage);
+        leftImage.setOnClickListener(this);
         GlideUtils.ShowCircleImage(this.getActivity(), user.getPortraitUrl(), leftImage, R.drawable.mine_head_default);
         return rootView;
     }
@@ -100,6 +118,12 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.leftImage:
+                if (callBack != null) {
+                    callBack.onCallBack();
+                }
+                break;
+        }
     }
 }
