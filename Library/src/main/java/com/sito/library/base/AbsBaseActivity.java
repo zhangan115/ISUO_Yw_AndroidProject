@@ -120,4 +120,13 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements Dialo
     public void onCancel(DialogInterface dialog) {
 
     }
+
+    public int getStatusHeight(){
+        int statusBarHeight = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+        }
+        return  statusBarHeight;
+    }
 }

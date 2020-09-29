@@ -59,6 +59,7 @@ public class PinnedHeaderExpandableListView extends ExpandableListView implement
         public void updatePinnedHeader(View headerView, int firstVisibleGroupPos);
     }
 
+
     private View mHeaderView;
     private int mHeaderWidth;
     private int mHeaderHeight;
@@ -132,7 +133,8 @@ public class PinnedHeaderExpandableListView extends ExpandableListView implement
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int heightSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+        super.onMeasure(widthMeasureSpec, heightSpec);
         if (mHeaderView == null) {
             return;
         }
