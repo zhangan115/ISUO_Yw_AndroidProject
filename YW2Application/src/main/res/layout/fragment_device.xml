@@ -120,7 +120,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="7dp"
-                                android:text="完好设备数"
+                                android:text="完好运行数"
                                 android:textColor="@color/text333"
                                 android:textSize="12sp" />
 
