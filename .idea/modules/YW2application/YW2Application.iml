@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":YW2Application" external.linked.project.path="$MODULE_DIR$/../../../YW2Application" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":YW2Application" external.linked.project.path="$MODULE_DIR$/../../../YW2Application" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="ISUO_Yw_AndroidProject" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
@@ -19,8 +19,8 @@
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../YW2Application/src/main/res;file://$MODULE_DIR$/../../../YW2Application/build/generated/res/rs/yw2_app_default/debug;file://$MODULE_DIR$/../../../YW2Application/build/generated/res/resValues/yw2_app_default/debug" />
-        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../YW2Application/src/main/res;file://$MODULE_DIR$/../../../YW2Application/src/yw2_app_default/res;file://$MODULE_DIR$/../../../YW2Application/src/debug/res;file://$MODULE_DIR$/../../../YW2Application/src/yw2_app_defaultDebug/res;file://$MODULE_DIR$/../../../YW2Application/build/generated/res/rs/yw2_app_default/debug;file://$MODULE_DIR$/../../../YW2Application/build/generated/res/resValues/yw2_app_default/debug" />
+        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../YW2Application/src/androidTest/res;file://$MODULE_DIR$/../../../YW2Application/src/test/res;file://$MODULE_DIR$/../../../YW2Application/src/androidTestYw2_app_default/res;file://$MODULE_DIR$/../../../YW2Application/src/testYw2_app_default/res;file://$MODULE_DIR$/../../../YW2Application/src/androidTestDebug/res;file://$MODULE_DIR$/../../../YW2Application/src/testDebug/res;file://$MODULE_DIR$/../../../YW2Application/build/generated/res/rs/androidTest/yw2_app_default/debug;file://$MODULE_DIR$/../../../YW2Application/build/generated/res/resValues/androidTest/yw2_app_default/debug" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
@@ -30,11 +30,11 @@
     <output-test url="file://$MODULE_DIR$/../../../YW2Application/build/intermediates/classes/test/yw2_app_default/debug" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../../YW2Application">
-      <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/greendao" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/apt/yw2_app_default/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/aidl/yw2_app_default/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/buildConfig/yw2_app_default/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/rs/yw2_app_default/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/aidl/yw2_app_default/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/greendao" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/buildConfig/yw2_app_default/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/apt/yw2_app_default/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/res/rs/yw2_app_default/debug" type="java-resource" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/res/resValues/yw2_app_default/debug" type="java-resource" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/src/yw2_app_defaultDebug/res" type="java-resource" />
@@ -45,9 +45,9 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/src/yw2_app_defaultDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/src/yw2_app_defaultDebug/shaders" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/apt/androidTest/yw2_app_default/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/aidl/androidTest/yw2_app_default/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/buildConfig/androidTest/yw2_app_default/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/rs/androidTest/yw2_app_default/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/buildConfig/androidTest/yw2_app_default/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/source/aidl/androidTest/yw2_app_default/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/res/rs/androidTest/yw2_app_default/debug" type="java-test-resource" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/build/generated/res/resValues/androidTest/yw2_app_default/debug" type="java-test-resource" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../YW2Application/src/androidTestYw2_app_defaultDebug/res" type="java-test-resource" />
@@ -132,12 +132,12 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 26 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Gradle: __local_aars__:./YW2Application/libs/GetuiSDK2.10.2.0.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:./YW2Application/libs/SystemProperties.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: ./YW2Application/libs/GetuiSDK2.10.2.0.jar" level="project" />
+    <orderEntry type="library" name="Gradle: ./YW2Application/libs/SystemProperties.jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.dagger:dagger:2.5@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:./Library/libs/logger_v1.3.0.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: ./Library/libs/logger_v1.3.0.jar" level="project" />
     <orderEntry type="library" name="Gradle: org.greenrobot:greendao:3.2.2@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:./AACRecordLibrary/libs/Msc.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: ./AACRecordLibrary/libs/Msc.jar" level="project" />
     <orderEntry type="library" name="Gradle: com.umeng.sdk:common:1.5.3@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.umeng.sdk:analytics:7.5.3@jar" level="project" />
     <orderEntry type="library" name="Gradle: javax.inject:javax.inject:1@jar" level="project" />
@@ -192,5 +192,6 @@
     <orderEntry type="module" module-name="Library" />
     <orderEntry type="module" module-name="DialogLib" />
     <orderEntry type="module" module-name="AACRecordLibrary" />
+    <orderEntry type="library" name="Gradle: android-android-26" level="project" />
   </component>
 </module>

@@ -18,9 +18,13 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.view.base.BaseActivity;
+import com.isuo.yw2application.view.contact.ContactActivity;
+import com.isuo.yw2application.view.main.about.AboutActivity;
 import com.isuo.yw2application.view.main.alarm.AlarmFragment;
 import com.isuo.yw2application.view.main.data.DataFragment;
 import com.isuo.yw2application.view.main.device.DeviceFragment;
+import com.isuo.yw2application.view.main.feedback.QuestionActivity;
+import com.isuo.yw2application.view.main.forgepassword.ForgePassWordActivity;
 import com.isuo.yw2application.view.main.task.TaskFragment;
 import com.isuo.yw2application.view.main.work.WorkFragment;
 import com.isuo.yw2application.view.share.ShareActivity;
@@ -147,6 +151,7 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_1:
+                startActivity(new Intent(this, ContactActivity.class));
                 break;
             case R.id.layout_2:
                 break;
@@ -154,12 +159,15 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
                 startActivity(new Intent(this, ShareActivity.class));
                 break;
             case R.id.layout_4:
+                startActivity(new Intent(this, QuestionActivity.class));
                 break;
             case R.id.layout_5:
                 break;
             case R.id.layout_6:
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.layout_7:
+                startActivity(new Intent(this, ForgePassWordActivity.class));
                 break;
             case R.id.exitApp:
                 MobclickAgent.onProfileSignOff();

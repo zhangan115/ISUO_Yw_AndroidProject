@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Gradle: __local_aars__:./YwApplication/libs/SystemProperties.jar:unspecified@jar">
+  <library name="Gradle: ./YwApplication/libs/SystemProperties.jar">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/YwApplication/libs/SystemProperties.jar!/" />
     </CLASSES>
