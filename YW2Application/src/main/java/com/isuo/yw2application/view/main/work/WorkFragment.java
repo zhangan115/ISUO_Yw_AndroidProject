@@ -1,6 +1,9 @@
 package com.isuo.yw2application.view.main.work;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
+import com.isuo.yw2application.common.BroadcastAction;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
@@ -28,13 +32,20 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
     private ArrayList<WorkItem> workItemList;
     private ArrayList<WorkItem> showWorkItemList;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ImageView userPhoto;
 
-   public interface DrawClickCallBack {
+    public interface DrawClickCallBack {
         void onCallBack();
     }
 
     private DrawClickCallBack callBack;
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            userPhotoUpdate();
+        }
+    };
 
     @Override
     public void onAttach(Context context) {
@@ -57,6 +68,15 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         workItemList = new ArrayList<>();
         showWorkItemList = new ArrayList<>();
         new WorkPresenter(Yw2Application.getInstance().getWorkRepositoryComponent().getRepository(), this);
+        getActivity().registerReceiver(receiver, new IntentFilter(BroadcastAction.USER_PHOTO_UPDATE));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (receiver != null) {
+            getActivity().unregisterReceiver(receiver);
+        }
     }
 
     @Nullable
@@ -75,10 +95,17 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         TextView userNameTv = rootView.findViewById(R.id.userNameTv);
         userNameTv.setText(String.format("欢迎，%s", user.getRealName()));
         rootView.findViewById(R.id.rightImage).setOnClickListener(this);
-        ImageView leftImage = rootView.findViewById(R.id.leftImage);
-        leftImage.setOnClickListener(this);
-        GlideUtils.ShowCircleImage(this.getActivity(), user.getPortraitUrl(), leftImage, R.drawable.mine_head_default);
+        userPhoto = rootView.findViewById(R.id.leftImage);
+        userPhoto.setOnClickListener(this);
+        GlideUtils.ShowCircleImage(this.getActivity(), user.getPortraitUrl(), userPhoto, R.drawable.mine_head_default);
         return rootView;
+    }
+
+    private void userPhotoUpdate() {
+        User user = Yw2Application.getInstance().getCurrentUser();
+        if (userPhoto != null) {
+            GlideUtils.ShowCircleImage(this.getActivity(), user.getPortraitUrl(), userPhoto, R.drawable.mine_head_default);
+        }
     }
 
     @Override

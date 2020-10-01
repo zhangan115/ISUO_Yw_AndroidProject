@@ -43,10 +43,10 @@ public class ContactFragment extends MvpFragment<ContactContract.Presenter> impl
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fmg_employee, container, false);
-        mListView = (PinnedHeaderExpandableListView) rootView.findViewById(R.id.expandableListView);
+        mListView = rootView.findViewById(R.id.expandableListView);
         mContactAdapter = new ContactListAdapter(getActivity(), mListView
                 , R.layout.item_employee_group, R.layout.item_employee_child_call);
-        noDataLayout = (RelativeLayout) rootView.findViewById(R.id.layout_no_data);
+        noDataLayout = rootView.findViewById(R.id.layout_no_data);
         return rootView;
     }
 
@@ -71,12 +71,12 @@ public class ContactFragment extends MvpFragment<ContactContract.Presenter> impl
 
     @Override
     public void showLoading() {
-        showEvLoading();
+//        showEvLoading();
     }
 
     @Override
     public void hideLoading() {
-        hideEvLoading();
+//        hideEvLoading();
     }
 
     @Override

@@ -14,4 +14,6 @@ public interface BroadcastAction {
     String AUTO_UPLOAD_DATA = "auto_upload_data";
     String AUTO_REFRESH_UI = "auto_refresh_ui";
     String AUTO_SAVE_DATA = "auto_save_dataa";
+
+    String USER_PHOTO_UPDATE = "user_photo_update";
 }

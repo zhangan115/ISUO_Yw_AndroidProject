@@ -1057,7 +1057,7 @@ public class CustomerRepository implements CustomerDataSource {
             @Override
             public void onSuccess(List<String> strings) {
                 if (strings != null && strings.size() > 0) {
-                    String userPhotoUrl = strings.get(0);
+                   final String userPhotoUrl = strings.get(0);
                     JSONObject jsonObject = new JSONObject();
                     try {
                         jsonObject.put("portraitUrl", userPhotoUrl);
@@ -1070,7 +1070,9 @@ public class CustomerRepository implements CustomerDataSource {
                         @Override
                         public void onSuccess(@Nullable String s) {
                             callBack.onFinish();
-                            callBack.onSuccess("");
+                            Yw2Application.getInstance().getCurrentUser().setPortraitUrl(userPhotoUrl);
+                            Yw2Application.getInstance().setCurrentUser(Yw2Application.getInstance().getCurrentUser());
+                            callBack.onSuccess(userPhotoUrl);
                         }
 
                         @Override
