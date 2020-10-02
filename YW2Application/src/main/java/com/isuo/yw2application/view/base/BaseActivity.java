@@ -21,6 +21,8 @@ import com.orhanobut.logger.Logger;
 import com.sito.library.base.AbsBaseActivity;
 import com.umeng.analytics.MobclickAgent;
 
+import org.w3c.dom.Text;
+
 
 /**
  * BaseActivity 页面基类
@@ -129,6 +131,10 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
                 }
             });
         }
+    }
+
+    public TextView getTitleTv(){
+        return findViewById(R.id.titleId);
     }
 
     /**

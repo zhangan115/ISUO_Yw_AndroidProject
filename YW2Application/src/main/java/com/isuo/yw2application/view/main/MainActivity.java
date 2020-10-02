@@ -79,7 +79,7 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
     private MainContract.Presenter mainPresenter;
     private NewVersion mVersion;
     private ImageView mUserPhoto;
-    private File userPhoto;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,6 +216,9 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
                 startActivity(new Intent(this, ForgePassWordActivity.class));
                 break;
             case R.id.exitApp:
+                if (mainPresenter!=null){
+                    mainPresenter.exitApp();
+                }
                 MobclickAgent.onProfileSignOff();
                 Yw2Application.getInstance().needLogin();
                 break;
@@ -362,16 +365,6 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
     }
 
     @Override
-    public void showUploadPhotoLoading() {
-        showProgressDialog("上传中...");
-    }
-
-    @Override
-    public void hideUploadPhotoLoading() {
-        hideProgressDialog();
-    }
-
-    @Override
     public void uploadUserPhotoSuccess(String url) {
         GlideUtils.ShowCircleImage(this, url, mUserPhoto, R.drawable.mine_head_default);
         Intent userPhotoUpdate = new Intent(BroadcastAction.USER_PHOTO_UPDATE);
@@ -474,7 +467,6 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
                 @Override
                 public void onSuccess(File file) {
                     if (mainPresenter != null) {
-                        userPhoto = file;
                         mainPresenter.uploadUserPhoto(file);
                     }
                 }

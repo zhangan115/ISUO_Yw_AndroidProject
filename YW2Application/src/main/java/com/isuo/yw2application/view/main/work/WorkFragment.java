@@ -17,13 +17,19 @@ import android.widget.TextView;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.BroadcastAction;
+import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.User;
+import com.isuo.yw2application.mode.bean.news.MessageListBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
+import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.MainActivity;
+import com.isuo.yw2application.view.main.work.message.NewsListActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
+import com.sito.library.utils.DataUtil;
 import com.sito.library.utils.GlideUtils;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +73,8 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         super.onCreate(savedInstanceState);
         workItemList = new ArrayList<>();
         showWorkItemList = new ArrayList<>();
-        new WorkPresenter(Yw2Application.getInstance().getWorkRepositoryComponent().getRepository(), this);
+        new WorkPresenter(Yw2Application.getInstance().getWorkRepositoryComponent().getRepository()
+                , Yw2Application.getInstance().getRepositoryComponent().getRepository(), this);
         getActivity().registerReceiver(receiver, new IntentFilter(BroadcastAction.USER_PHOTO_UPDATE));
     }
 
@@ -89,6 +96,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
             @Override
             public void onRefresh() {
                 mPresenter.getWorkItem();
+                mPresenter.getNews();
             }
         });
         User user = Yw2Application.getInstance().getCurrentUser();
@@ -97,6 +105,10 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         rootView.findViewById(R.id.rightImage).setOnClickListener(this);
         userPhoto = rootView.findViewById(R.id.leftImage);
         userPhoto.setOnClickListener(this);
+        rootView.findViewById(R.id.workMessageLayout).setOnClickListener(this);
+        rootView.findViewById(R.id.alarmMessageLayout).setOnClickListener(this);
+        rootView.findViewById(R.id.enterpriseMessageLayout).setOnClickListener(this);
+        rootView.findViewById(R.id.abtMeMessageLayout).setOnClickListener(this);
         GlideUtils.ShowCircleImage(this.getActivity(), user.getPortraitUrl(), userPhoto, R.drawable.mine_head_default);
         return rootView;
     }
@@ -112,7 +124,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mPresenter.getWorkItem();
-
+        mPresenter.getNews();
     }
 
     @Override
@@ -134,8 +146,44 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
     }
 
     @Override
-    public void showNews() {
+    public void showWorkNews(MessageListBean bean) {
+        if (getView() != null) {
+            ((TextView) getView().findViewById(R.id.workContentTv)).setText(bean
+                    .getTitle());
+            ((TextView) getView().findViewById(R.id.workContentTimeTv)).setText(getTimeStr(bean.getCreateTime()));
+        }
+    }
 
+    @Override
+    public void showAlarmNews(MessageListBean bean) {
+        if (getView() != null) {
+            ((TextView) getView().findViewById(R.id.faultContentTv)).setText(bean
+                    .getTitle());
+            ((TextView) getView().findViewById(R.id.faultContentTimeTv)).setText(getTimeStr(bean.getCreateTime()));
+        }
+    }
+
+    @Override
+    public void showEnterpriseNews(MessageListBean bean) {
+        if (getView() != null) {
+            ((TextView) getView().findViewById(R.id.enterpriseContentTv)).setText(bean
+                    .getTitle());
+            ((TextView) getView().findViewById(R.id.enterpriseContentTimeTv)).setText(getTimeStr(bean.getCreateTime()));
+        }
+    }
+
+    @Override
+    public void showMyNews(MessageListBean bean) {
+        if (getView() != null) {
+            ((TextView) getView().findViewById(R.id.abtMeContentTv)).setText(bean
+                    .getTitle());
+            ((TextView) getView().findViewById(R.id.abtMeContentTimeTv)).setText(getTimeStr(bean.getCreateTime()));
+        }
+    }
+
+    @Override
+    public void requestFinish() {
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -151,6 +199,30 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                     callBack.onCallBack();
                 }
                 break;
+            case R.id.workMessageLayout:
+            case R.id.alarmMessageLayout:
+            case R.id.enterpriseMessageLayout:
+            case R.id.abtMeMessageLayout:
+                int type = Integer.parseInt((String) view.getTag());
+                Intent intent = new Intent(getActivity(), NewsListActivity.class);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_INT, type);
+                startActivity(intent);
+                break;
         }
+    }
+
+    private String getTimeStr(long time) {
+        try {
+            if (Utils.IsToday(DataUtil.timeFormat(time, null))) {
+                return (DataUtil.timeFormat(time, "HH:mm"));
+            } else if (Utils.IsYesterday(DataUtil.timeFormat(time, null))) {
+                return ("昨天" + DataUtil.timeFormat(time, "HH:mm"));
+            } else {
+                return (DataUtil.timeFormat(time, "MM.dd HH:mm"));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

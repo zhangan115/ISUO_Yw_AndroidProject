@@ -74,6 +74,6 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void exitApp() {
-        mSubscription.add(mRepository.exitApp());
+        mRepository.exitApp();
     }
 }

@@ -29,10 +29,6 @@ interface MainContract {
 
         void downLoadApp();
 
-        void showUploadPhotoLoading();
-
-        void hideUploadPhotoLoading();
-
         void uploadUserPhotoSuccess(String url);
 
         void uploadUserPhotoFail();
