@@ -32,4 +32,30 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Equipment_TEXT_TITLE_STYLE">
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:textColor">@color/gray_999999</item>
+    </style>
+    <style name="Equipment_TEXT_CONTENT_STYLE">
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:textColor">@color/text333</item>
+        <item name="android:layout_marginLeft">14dp</item>
+    </style>
+    <style name="mdialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!--边框-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--半透明-->
+        <item name="android:windowNoTitle">true</item>
+        <!--无标题-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--背景透明-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--模糊-->
+    </style>
 </resources>

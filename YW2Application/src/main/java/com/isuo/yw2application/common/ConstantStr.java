@@ -96,6 +96,7 @@ public interface ConstantStr {
     String KEY_BUNDLE_BOOLEAN = "key_boolean";
     String KEY_BUNDLE_BOOLEAN_1 = "key_boolean_1";
     String KEY_BUNDLE_BOOLEAN_2 = "key_boolean_2";
+    String KEY_BUNDLE_BOOLEAN_3 = "key_boolean_3";
 
     String USER_NAME = "user_name";
     String USER_PASS = "user_pass";

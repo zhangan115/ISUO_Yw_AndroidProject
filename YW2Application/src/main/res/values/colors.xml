@@ -136,8 +136,9 @@
     <color name="news_time_gray">#BDC6CD</color>
 
     <color name="equip_search_blue">#518EE1</color>
+    <color name="equip_search_green">@color/colorPrimary</color>
     <color name="equip_search_gray">#949FB4</color>
-    <color name="equip_search_bg_gray">#DBE9F9</color>
+    <color name="equip_search_bg_gray">#f7f7f7</color>
     <color name="equip_search_bg_blue">#B1D6FF</color>
     <color name="equip_search_text_reset">#69A0E8</color>
 

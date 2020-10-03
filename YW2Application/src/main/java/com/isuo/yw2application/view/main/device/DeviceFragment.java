@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.device;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,10 +11,14 @@ import android.widget.TextView;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
+import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.equip.EquipBean;
 import com.isuo.yw2application.mode.bean.equip.EquipmentBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
+import com.isuo.yw2application.view.main.device.list.EquipListActivity;
+import com.isuo.yw2application.view.main.device.search.EquipSearchActivity;
+import com.isuo.yw2application.view.main.equip.archives.EquipmentArchivesActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 
@@ -79,7 +84,9 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
             equipAdapter.setItemListener(new EquipListAdapter.ItemClickListener() {
                 @Override
                 public void onItemClick(EquipBean equipBean, EquipmentBean equipName) {
-                    // TODO: 2020/9/23
+                    Intent intent = new Intent(getActivity(), EquipmentArchivesActivity.class);
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, equipName);
+                    startActivity(intent);
                 }
             });
             expandableListView.setAdapter(equipAdapter);
@@ -91,6 +98,8 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.searchDeviceLayout:
+                Intent searchIntent = new Intent(getActivity(), EquipSearchActivity.class);
+                startActivity(searchIntent);
                 break;
             case R.id.deviceCountTv:
                 break;
