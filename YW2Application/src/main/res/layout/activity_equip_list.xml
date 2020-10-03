@@ -44,23 +44,18 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <RelativeLayout
+        <com.sito.library.widget.RecycleRefreshLoadLayout
+            android:id="@+id/refreshLoadLayoutId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.sito.library.widget.RecycleRefreshLoadLayout
-                android:id="@+id/refreshLoadLayoutId"
+            <com.sito.library.widget.ExpendRecycleView
+                android:id="@+id/recycleViewId"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:scrollbars="none" />
 
-                <com.sito.library.widget.ExpendRecycleView
-                    android:id="@+id/recycleViewId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none" />
-
-            </com.sito.library.widget.RecycleRefreshLoadLayout>
-        </RelativeLayout>
+        </com.sito.library.widget.RecycleRefreshLoadLayout>
     </LinearLayout>
 
     <RelativeLayout
