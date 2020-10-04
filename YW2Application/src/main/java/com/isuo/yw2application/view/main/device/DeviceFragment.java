@@ -16,6 +16,8 @@ import com.isuo.yw2application.mode.bean.equip.EquipBean;
 import com.isuo.yw2application.mode.bean.equip.EquipmentBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
+import com.isuo.yw2application.view.main.device.equipment.CreateEquipmentActivity;
+import com.isuo.yw2application.view.main.device.info.CreateEquipInfoActivity;
 import com.isuo.yw2application.view.main.device.list.EquipListActivity;
 import com.isuo.yw2application.view.main.device.search.EquipSearchActivity;
 import com.isuo.yw2application.view.main.equip.archives.EquipmentArchivesActivity;
@@ -104,10 +106,18 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
             case R.id.deviceCountTv:
                 break;
             case R.id.workItem1:
+                Intent createEquipIntent = new Intent(getActivity(), CreateEquipmentActivity.class);
+                startActivity(createEquipIntent);
                 break;
             case R.id.workItem2:
+//                Intent scannIntent = new Intent();
+//                startActivity(scannIntent);
                 break;
             case R.id.workItem3:
+                Intent importIntent = new Intent(getActivity(),EquipListActivity.class);
+                importIntent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN_1,true);
+                importIntent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN_2,true);
+                startActivity(importIntent);
                 break;
         }
     }

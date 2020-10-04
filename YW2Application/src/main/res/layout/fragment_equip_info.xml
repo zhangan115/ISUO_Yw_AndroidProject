@@ -8,7 +8,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="7dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/white_bg_with_shape"
         android:orientation="horizontal">
 
         <EditText
@@ -19,34 +22,36 @@
             android:background="@null"
             android:drawableLeft="@drawable/edit_icon"
             android:paddingLeft="7dp"
-            android:textColor="#565a64"
-            android:textColorHint="#91abbf"
-            android:textSize="16sp" />
+            android:textColor="@color/text333"
+            android:textColorHint="@color/gray_666666"
+            android:textSize="15sp" />
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/color_division" />
+            android:background="#f7f7f7" />
 
         <TextView
             android:id="@+id/tv_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="7dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:paddingTop="7dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="7dp"
             android:text="添加"
-            android:textColor="#488de5"
-            android:textSize="16sp" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleViewId"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="7dp"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/white_bg_with_shape"
         android:scrollbars="none" />
 </LinearLayout>

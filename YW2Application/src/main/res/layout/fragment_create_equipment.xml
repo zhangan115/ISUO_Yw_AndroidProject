@@ -18,10 +18,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="17dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/white_bg_with_shape"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -31,19 +36,15 @@
                     <LinearLayout
                         android:id="@+id/ll_create_room"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="15dp"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15dp"
-                        android:paddingTop="15dp">
+                        android:layout_height="44dp"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:text="属地名称"
-                            android:textColor="#535761"
+                            android:textColor="@color/text333"
                             android:textSize="16sp" />
 
                         <TextView
@@ -51,8 +52,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:drawablePadding="4dp"
                             android:drawableRight="@drawable/list_arrow"
+                            android:drawablePadding="4dp"
                             android:gravity="right|center_vertical"
                             android:textColor="@color/color6983A5"
                             android:textSize="16sp" />
@@ -61,24 +62,20 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="#b9c9d5" />
+                        android:background="#f7f7f7" />
 
                     <LinearLayout
                         android:id="@+id/ll_create_equip_type"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="15dp"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15dp"
-                        android:paddingTop="15dp">
+                        android:layout_height="44dp"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:text="设备类型"
-                            android:textColor="#535761"
+                            android:textColor="@color/text333"
                             android:textSize="16sp" />
 
                         <TextView
@@ -86,8 +83,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:drawablePadding="4dp"
                             android:drawableRight="@drawable/list_arrow"
+                            android:drawablePadding="4dp"
                             android:gravity="right|center_vertical"
                             android:textColor="@color/color6983A5"
                             android:textSize="16sp" />
@@ -96,24 +93,20 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="#b9c9d5" />
+                        android:background="#f7f7f7" />
 
                     <LinearLayout
                         android:id="@+id/ll_create_equip_level"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="15dp"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15dp"
-                        android:paddingTop="15dp">
+                        android:layout_height="44dp"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:text="设备等级"
-                            android:textColor="#535761"
+                            android:textColor="@color/text333"
                             android:textSize="16sp" />
 
                         <TextView
@@ -121,8 +114,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:drawablePadding="4dp"
                             android:drawableRight="@drawable/list_arrow"
+                            android:drawablePadding="4dp"
                             android:gravity="right|center_vertical"
                             android:textColor="@color/color6983A5"
                             android:textSize="16sp" />
@@ -134,10 +127,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:orientation="vertical">
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/white_bg_with_shape"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -147,20 +145,16 @@
                     <LinearLayout
                         android:id="@+id/ll_create_equip_name"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="15dp"
+                        android:layout_height="44dp"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:text="设备名称"
-                            android:textColor="#535761"
+                            android:textColor="@color/text333"
                             android:textSize="16sp" />
 
                         <TextView
@@ -183,25 +177,21 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="#b9c9d5" />
+                        android:background="#f7f7f7" />
 
                     <LinearLayout
                         android:id="@+id/ll_create_equip_num"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="15dp"
+                        android:layout_height="44dp"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15dp"
-                        android:paddingTop="15dp">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:text="设备位号"
-                            android:textColor="#535761"
+                            android:textColor="@color/text333"
                             android:textSize="16sp" />
 
                         <TextView
@@ -224,49 +214,54 @@
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#f7f7f7" />
+
+                <LinearLayout
+                    android:id="@+id/ll_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="双重命名"
+                        android:textColor="@color/text333"
+                        android:textSize="16sp" />
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/switchCompat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/iv_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="双重命名"
-                    android:textColor="@color/color6983A5"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:orientation="vertical">
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/white_bg_with_shape"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="16dp">
 
                 <LinearLayout
                     android:id="@+id/ll_equip_grade"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="15dp"
-                    android:paddingTop="15dp">
+                    android:layout_height="44dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -281,8 +276,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:drawablePadding="4dp"
                         android:drawableRight="@drawable/list_arrow"
+                        android:drawablePadding="4dp"
                         android:gravity="right|center_vertical"
                         android:textColor="@color/color6983A5"
                         android:textSize="16sp" />
@@ -291,39 +286,34 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="#b9c9d5" />
+                    android:background="#f7f7f7" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:paddingBottom="15dp"
-                    android:paddingTop="15dp"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
                     android:text="设备铭牌"
                     android:textColor="#535761"
                     android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/photo_view"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/photo_button" />
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/photograph" />
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_report"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginBottom="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/bg_btn_upload"
+                android:background="@drawable/shape_green"
                 android:gravity="center"
-                android:paddingBottom="18dp"
-                android:paddingTop="18dp"
                 android:text="提交"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp" />
@@ -344,8 +334,8 @@
             android:background="@color/colorWhite"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp">
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/iv_change"
@@ -363,8 +353,8 @@
                 android:background="@drawable/bg_create_equipment_edit"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
                 <EditText
                     android:id="@+id/edit_content"

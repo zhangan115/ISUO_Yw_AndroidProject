@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -52,9 +54,10 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
     private EditText edit_content;
     private TextView currentTv;
     private LinearLayout layout_contain, ll_enter_layout;
-    private ImageView photo_view, iv_change, iv_clean_edit, iv_type;
+    private ImageView photo_view, iv_change, iv_clean_edit;
     private ImageView iv_equipment_name, iv_equipment_num;
     private SpecialChatView mSpecialV; //特殊字符表
+    private SwitchCompat switchCompat;
     //data
     private EquipmentBean equipmentBean;
     private String roomName;
@@ -107,11 +110,20 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
         rootView.findViewById(R.id.ll_equip_grade).setOnClickListener(this);
         rootView.findViewById(R.id.tv_sure).setOnClickListener(this);
         photo_view = rootView.findViewById(R.id.photo_view);
+        switchCompat = rootView.findViewById(R.id.switchCompat);
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    chooseNameType = 1;
+                } else {
+                    chooseNameType = 0;
+                }
+            }
+        });
         iv_change = rootView.findViewById(R.id.iv_change);
-        iv_type = rootView.findViewById(R.id.iv_type);
         iv_equipment_name = rootView.findViewById(R.id.iv_equipment_name);
         iv_equipment_num = rootView.findViewById(R.id.iv_equipment_num);
-        iv_type.setImageDrawable(findDrawById(R.drawable.choose_normal));
         iv_clean_edit = rootView.findViewById(R.id.iv_clean_edit);
         tv_equip_level = rootView.findViewById(R.id.tv_create_equip_level);
         tv_create_room = rootView.findViewById(R.id.tv_create_room);
@@ -266,12 +278,6 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
                 }
                 break;
             case R.id.ll_type://双重命名
-                chooseNameType = chooseNameType == 0 ? 1 : 0;
-                if (chooseNameType == 0) {
-                    iv_type.setImageDrawable(findDrawById(R.drawable.choose_normal));
-                } else {
-                    iv_type.setImageDrawable(findDrawById(R.drawable.choose_select));
-                }
                 break;
             case R.id.ll_equip_grade://电压等级
                 List<String> list = new ArrayList<>();
