@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.task;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,6 +13,10 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
+import com.isuo.yw2application.view.main.generate.increment.GenerateIncrementActivity;
+import com.isuo.yw2application.view.main.generate.repair.GenerateRepairActivity;
+import com.isuo.yw2application.view.main.task.increment.WorkIncrementActivity;
+import com.isuo.yw2application.view.main.task.overhaul.WorkOverhaulActivity;
 import com.sito.library.utils.DisplayUtil;
 
 public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implements TaskContract.View, View.OnClickListener {
@@ -41,10 +46,10 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
         dayCountTv = rootView.findViewById(R.id.dayCountTv);
         int width = (getActivity().getResources().getDisplayMetrics().widthPixels - DisplayUtil.dip2px(getActivity(), 60)) / 2;
         int height = width / 142 * 90;
-        rootView.findViewById(R.id.taskIv1).setLayoutParams(new LinearLayout.LayoutParams(width,height));
-        rootView.findViewById(R.id.taskIv2).setLayoutParams(new LinearLayout.LayoutParams(width,height));
-        rootView.findViewById(R.id.taskIv3).setLayoutParams(new LinearLayout.LayoutParams(width,height));
-        rootView.findViewById(R.id.taskIv4).setLayoutParams(new LinearLayout.LayoutParams(width,height));
+        rootView.findViewById(R.id.taskIv1).setLayoutParams(new LinearLayout.LayoutParams(width, height));
+        rootView.findViewById(R.id.taskIv2).setLayoutParams(new LinearLayout.LayoutParams(width, height));
+        rootView.findViewById(R.id.taskIv3).setLayoutParams(new LinearLayout.LayoutParams(width, height));
+        rootView.findViewById(R.id.taskIv4).setLayoutParams(new LinearLayout.LayoutParams(width, height));
         rootView.findViewById(R.id.taskIv1).setOnClickListener(this);
         rootView.findViewById(R.id.taskIv2).setOnClickListener(this);
         rootView.findViewById(R.id.taskIv3).setOnClickListener(this);
@@ -65,12 +70,20 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.taskIv1:
+                Intent taskIntent1 = new Intent(getActivity(), GenerateRepairActivity.class);
+                startActivity(taskIntent1);
                 break;
             case R.id.taskIv2:
+                Intent taskIntent2 = new Intent(getActivity(), WorkOverhaulActivity.class);
+                startActivity(taskIntent2);
                 break;
             case R.id.taskIv3:
+                Intent taskIntent3 = new Intent(getActivity(), GenerateIncrementActivity.class);
+                startActivity(taskIntent3);
                 break;
             case R.id.taskIv4:
+                Intent taskIntent4 = new Intent(getActivity(), WorkIncrementActivity.class);
+                startActivity(taskIntent4);
                 break;
         }
     }
