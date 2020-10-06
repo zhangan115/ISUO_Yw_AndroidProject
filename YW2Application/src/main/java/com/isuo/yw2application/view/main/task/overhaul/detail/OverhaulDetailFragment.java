@@ -57,10 +57,10 @@ public class OverhaulDetailFragment extends MvpFragment<OverhaulDetailContract.P
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_overhaul, container, false);
-        noDataLayout = (RelativeLayout) rootView.findViewById(R.id.layout_no_data);
-        mScrollView = (ScrollView) rootView.findViewById(R.id.scroll_view);
+        noDataLayout = rootView.findViewById(R.id.layout_no_data);
+        mScrollView = rootView.findViewById(R.id.scroll_view);
         mScrollView.setVisibility(View.GONE);
-        card_view_repair = (LinearLayout) rootView.findViewById(R.id.card_view_repair);
+        card_view_repair = rootView.findViewById(R.id.card_view_repair);
         return rootView;
     }
 
@@ -89,14 +89,14 @@ public class OverhaulDetailFragment extends MvpFragment<OverhaulDetailContract.P
         if (getView() == null) {
             return;
         }
-        TextView tv_start_time = (TextView) getView().findViewById(R.id.tv_start_time);
-        TextView tv_overhaul_time = (TextView) getView().findViewById(R.id.tv_overhaul_time);
-        TextView tv_state = (TextView) getView().findViewById(R.id.tv_equip_state);
-        TextView tv_repair_name = (TextView) getView().findViewById(R.id.tv_repair_name);
-        TextView tv_equip_name = (TextView) getView().findViewById(R.id.tv_equip_name);
-        TextView tv_equip_alias = (TextView) getView().findViewById(R.id.tv_equip_alias);
-        ShowImageLayout alarm_show_image = (ShowImageLayout) getView().findViewById(R.id.alarm_show_image);
-        alarmSoundLayout = (PlaySoundLayout) getView().findViewById(R.id.alarm_play_sound);
+        TextView tv_start_time = getView().findViewById(R.id.tv_start_time);
+        TextView tv_overhaul_time = getView().findViewById(R.id.tv_overhaul_time);
+        TextView tv_state = getView().findViewById(R.id.tv_equip_state);
+        TextView tv_repair_name = getView().findViewById(R.id.tv_repair_name);
+        TextView tv_equip_name = getView().findViewById(R.id.tv_equip_name);
+        TextView tv_equip_alias = getView().findViewById(R.id.tv_equip_alias);
+        ShowImageLayout alarm_show_image = getView().findViewById(R.id.alarm_show_image);
+        alarmSoundLayout = getView().findViewById(R.id.alarm_play_sound);
 
         if (overhaulBean.getStartTime() == 0) {
             tv_start_time.setVisibility(View.GONE);
@@ -154,7 +154,7 @@ public class OverhaulDetailFragment extends MvpFragment<OverhaulDetailContract.P
             }
         });
 
-        TextView tv_repair_result = (TextView) getView().findViewById(R.id.tv_repair_result);
+        TextView tv_repair_result = getView().findViewById(R.id.tv_repair_result);
         //检修结果
         if (overhaulBean.getRepairState() < 3) {
             card_view_repair.setVisibility(View.GONE);
@@ -166,13 +166,13 @@ public class OverhaulDetailFragment extends MvpFragment<OverhaulDetailContract.P
             tv_repair_result.setText(MessageFormat.format("检修结果:{0}"
                     , Yw2Application.getInstance().getMapOption().get("4").get(String.valueOf(overhaulBean.getRepairResult()))));
         }
-        TextView tv_repair_time = (TextView) getView().findViewById(R.id.id_repair_time);
+        TextView tv_repair_time = getView().findViewById(R.id.id_repair_time);
         tv_repair_time.setText(MessageFormat.format("检修时间：{0}", DataUtil.timeFormat(overhaulBean.getCommitTime(), null)));
         String[] repairPicUr = new String[overhaulBean.getRepairPics().size()];
         for (int i = 0; i < overhaulBean.getRepairPics().size(); i++) {
             repairPicUr[i] = overhaulBean.getRepairPics().get(i).getPicUrl();
         }
-        ShowImageLayout repair_show_image = (ShowImageLayout) getView().findViewById(R.id.repair_show_image);
+        ShowImageLayout repair_show_image = getView().findViewById(R.id.repair_show_image);
         repair_show_image.showImage(repairPicUr);
         repairSoundLayout = getView().findViewById(R.id.repair_play_sound);
         repairSoundLayout.setContent(overhaulBean.getVoiceUrl(), overhaulBean.getSoundTimescale(), "结果描述", overhaulBean.getRepairRemark());

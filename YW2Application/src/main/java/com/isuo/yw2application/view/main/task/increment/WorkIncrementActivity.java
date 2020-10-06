@@ -67,17 +67,17 @@ public class WorkIncrementActivity extends BaseActivity implements IncrementCont
         time = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR);
         unFinish = getIntent().getBooleanExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, false);
         new IncrementPresenter(Yw2Application.getInstance().getWorkRepositoryComponent().getRepository(), this);
-        mRecyclerView = (ExpendRecycleView) findViewById(R.id.recycleViewId);
+        mRecyclerView = findViewById(R.id.recycleViewId);
         @SuppressLint("InflateParams")
         View loadFooterView = LayoutInflater.from(this).inflate(R.layout.view_load_more_inspection, null);
-        swipeRefreshLayout = (RecycleRefreshLoadLayout) findViewById(R.id.swipeLayout);
+        swipeRefreshLayout = findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setColorSchemeColors(findColorById(R.color.colorPrimary));
         swipeRefreshLayout.setOnRefreshListener(this);
         if (TextUtils.isEmpty(time)) {
             swipeRefreshLayout.setOnLoadListener(this);
         }
         swipeRefreshLayout.setViewFooter(loadFooterView);
-        noDataLayout = (RelativeLayout) findViewById(R.id.layout_no_data);
+        noDataLayout = findViewById(R.id.layout_no_data);
         mList = new ArrayList<>();
         initRecycleView();
         mPresenter.getData(time, unFinish);
@@ -212,11 +212,11 @@ public class WorkIncrementActivity extends BaseActivity implements IncrementCont
                     tv_seconds.setBackgroundResource(R.drawable.play_anim);
                     animation = (AnimationDrawable) tv_seconds.getBackground();
                     mCountDownTimerUtils = new CountDownTimerUtils(tv_seconds, soundTime * 1000
-                            , 1000, soundTime + "''", "#ffffff");
+                            , 1000, soundTime + "s", "#999999");
                     MediaPlayerManager.playSound(soundUrl, new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
-                            tv_seconds.setBackgroundResource(R.drawable.record_play_3);
+                            tv_seconds.setBackgroundResource(R.drawable.voice_three);
                         }
                     }, new MediaPlayer.OnPreparedListener() {
                         @Override
@@ -227,9 +227,9 @@ public class WorkIncrementActivity extends BaseActivity implements IncrementCont
                         }
                     });
                 } else {
-                    String str = soundTime + "''";
+                    String str = soundTime + "s";
                     tv_seconds.setText(str);
-                    tv_seconds.setBackgroundResource(R.drawable.record_play_3);
+                    tv_seconds.setBackgroundResource(R.drawable.voice_three);
                 }
                 tv_seconds.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -240,7 +240,7 @@ public class WorkIncrementActivity extends BaseActivity implements IncrementCont
                             mCountDownTimerUtils.cancel();
                         }
                         if (animation != null) {
-                            tv_seconds.setBackgroundResource(R.drawable.record_play_3);
+                            tv_seconds.setBackgroundResource(R.drawable.voice_three);
                         }
                         for (int i = 0; i < mList.size(); i++) {
                             if (position == i) {

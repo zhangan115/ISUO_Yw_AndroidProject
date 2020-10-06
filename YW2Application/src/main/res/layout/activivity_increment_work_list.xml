@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorEAF4FD">
+        android:background="#f7f7f7">
 
         <com.sito.library.widget.RecycleRefreshLoadLayout
             android:id="@+id/swipeLayout"

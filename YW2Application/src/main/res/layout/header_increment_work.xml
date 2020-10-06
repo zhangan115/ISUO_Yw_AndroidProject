@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="44dp"
     android:orientation="horizontal"
     android:paddingTop="10dp">
 
     <Button
         android:id="@+id/btnPoint"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="7dp"
         android:layout_weight="1"
-        android:background="@drawable/bg_btn_blue"
+        android:background="@drawable/bg_btn_yellow"
         android:gravity="center"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
         android:text="指派他人"
         android:textColor="@color/colorWhite"
         android:textSize="15dp" />
@@ -23,14 +21,12 @@
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="10dp"
         android:layout_weight="1"
-        android:background="@drawable/bg_btn_yellow"
+        android:background="@drawable/bg_btn_blue"
         android:gravity="center"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
         android:text="本人完成"
         android:textColor="@color/colorWhite"
         android:textSize="15dp" />

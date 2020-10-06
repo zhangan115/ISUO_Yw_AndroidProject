@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -48,8 +49,9 @@ public class WorkOverhaulActivity extends BaseActivity implements DatePickerView
 
     private LinearLayout mChooseDayLayout;
     private DatePickerView mDatePickerView;
-    private TextView mYearTv, mMonthTv, mDayTv;
+    private TextView mYearTv;
     private TextView[] dayTvs = new TextView[7];
+    private TextView[] dayWeekNumTvs = new TextView[7];
     private LinearLayout[] dayOfWeekLayout = new LinearLayout[7];
     private RecyclerView mRecyclerView;
     private RelativeLayout noDataLayout;
@@ -66,7 +68,7 @@ public class WorkOverhaulActivity extends BaseActivity implements DatePickerView
         super.onCreate(savedInstanceState);
         setLayoutAndToolbar(R.layout.activivity_inspection_work_list, "检修");
         new OverhaulPresenter(Yw2Application.getInstance().getWorkRepositoryComponent().getRepository(), this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar == null) {
             return;
         }
@@ -81,35 +83,42 @@ public class WorkOverhaulActivity extends BaseActivity implements DatePickerView
                 toolBarClick();
             }
         });
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycleViewId);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
+        mRecyclerView = findViewById(R.id.recycleViewId);
+        swipeRefreshLayout = findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setColorSchemeColors(findColorById(R.color.colorPrimary));
         swipeRefreshLayout.setOnRefreshListener(this);
-        noDataLayout = (RelativeLayout) findViewById(R.id.layout_no_data);
-        mYearTv = (TextView) findViewById(R.id.tv_year);
-        mMonthTv = (TextView) findViewById(R.id.tv_month);
-        mDayTv = (TextView) findViewById(R.id.tv_day);
-        mChooseDayLayout = (LinearLayout) findViewById(R.id.ll_choose_day);
-        LinearLayout addDatePickLayout = (LinearLayout) findViewById(R.id.ll_choose_day_content);
+        noDataLayout = findViewById(R.id.layout_no_data);
+        mYearTv = findViewById(R.id.tv_year);
+        mChooseDayLayout = findViewById(R.id.ll_choose_day);
+        LinearLayout addDatePickLayout = findViewById(R.id.ll_choose_day_content);
         mDatePickerView = DatePickerView.newInstance(this, this);
         addDatePickLayout.addView(mDatePickerView);
         mCurrentDay = Calendar.getInstance(Locale.CHINA);
         dateList = CalendarUtil.getDaysOfWeek(mCurrentDay.getTime());
 
-        dayTvs[0] = (TextView) findViewById(R.id.tv_1);
-        dayTvs[1] = (TextView) findViewById(R.id.tv_2);
-        dayTvs[2] = (TextView) findViewById(R.id.tv_3);
-        dayTvs[3] = (TextView) findViewById(R.id.tv_4);
-        dayTvs[4] = (TextView) findViewById(R.id.tv_5);
-        dayTvs[5] = (TextView) findViewById(R.id.tv_6);
-        dayTvs[6] = (TextView) findViewById(R.id.tv_7);
-        dayOfWeekLayout[0] = (LinearLayout) findViewById(R.id.ll_monday);
-        dayOfWeekLayout[1] = (LinearLayout) findViewById(R.id.ll_tuesday);
-        dayOfWeekLayout[2] = (LinearLayout) findViewById(R.id.ll_wednesday);
-        dayOfWeekLayout[3] = (LinearLayout) findViewById(R.id.ll_thursday);
-        dayOfWeekLayout[4] = (LinearLayout) findViewById(R.id.ll_friday);
-        dayOfWeekLayout[5] = (LinearLayout) findViewById(R.id.ll_saturday);
-        dayOfWeekLayout[6] = (LinearLayout) findViewById(R.id.ll_sunday);
+        dayTvs[0] = findViewById(R.id.tv_1);
+        dayTvs[1] = findViewById(R.id.tv_2);
+        dayTvs[2] = findViewById(R.id.tv_3);
+        dayTvs[3] = findViewById(R.id.tv_4);
+        dayTvs[4] = findViewById(R.id.tv_5);
+        dayTvs[5] = findViewById(R.id.tv_6);
+        dayTvs[6] = findViewById(R.id.tv_7);
+
+        dayWeekNumTvs[0] = findViewById(R.id.tv_1_1);
+        dayWeekNumTvs[1] = findViewById(R.id.tv_2_1);
+        dayWeekNumTvs[2] = findViewById(R.id.tv_3_1);
+        dayWeekNumTvs[3] = findViewById(R.id.tv_4_1);
+        dayWeekNumTvs[4] = findViewById(R.id.tv_5_1);
+        dayWeekNumTvs[5] = findViewById(R.id.tv_6_1);
+        dayWeekNumTvs[6] = findViewById(R.id.tv_7_1);
+
+        dayOfWeekLayout[0] = findViewById(R.id.ll_monday);
+        dayOfWeekLayout[1] = findViewById(R.id.ll_tuesday);
+        dayOfWeekLayout[2] = findViewById(R.id.ll_wednesday);
+        dayOfWeekLayout[3] = findViewById(R.id.ll_thursday);
+        dayOfWeekLayout[4] = findViewById(R.id.ll_friday);
+        dayOfWeekLayout[5] = findViewById(R.id.ll_saturday);
+        dayOfWeekLayout[6] = findViewById(R.id.ll_sunday);
 
         for (LinearLayout layout : dayOfWeekLayout) {
             layout.setOnClickListener(this);
@@ -134,7 +143,7 @@ public class WorkOverhaulActivity extends BaseActivity implements DatePickerView
                 TextView tv_user = (TextView) vHolder.getView(R.id.tv_user);
                 TextView tv_start_time = (TextView) vHolder.getView(R.id.tv_start_time);
                 LinearLayout ll_start_task = (LinearLayout) vHolder.getView(R.id.ll_start_task);
-                TextViewVertical tv_alarm = (TextViewVertical) vHolder.getView(R.id.tv_alarm);
+                TextView tv_alarm = (TextView) vHolder.getView(R.id.tv_alarm);
                 ImageView iv_state = (ImageView) vHolder.getView(R.id.iv_state);
                 if (data.getEquipment() != null) {
                     if (TextUtils.isEmpty(data.getEquipment().getEquipmentSn())) {
@@ -145,7 +154,7 @@ public class WorkOverhaulActivity extends BaseActivity implements DatePickerView
                     }
                     tv_belong_place.setText(data.getEquipment().getRoom().getRoomName());
                 }
-                tv_start_time.setText(MessageFormat.format("计划开始时间:{0}", DataUtil.timeFormat(data.getStartTime(), "yyyy-MM-dd HH:mm")));
+                tv_start_time.setText(DataUtil.timeFormat(data.getStartTime(), "yyyy-MM-dd HH:mm"));
                 if (data.getAddType() == 1) {
                     tv_alarm.setVisibility(View.GONE);
                     iv_state.setVisibility(View.GONE);
@@ -155,13 +164,13 @@ public class WorkOverhaulActivity extends BaseActivity implements DatePickerView
                         tv_alarm.setVisibility(View.VISIBLE);
                         if (data.getFault().getFaultType() == 1) {
                             tv_alarm.setText("A类故障");
-                            iv_state.setImageDrawable(findDrawById(R.drawable.work_a));
+                            iv_state.setImageDrawable(findDrawById(R.drawable.fault_a));
                         } else if (data.getFault().getFaultType() == 2) {
                             tv_alarm.setText("B类故障");
-                            iv_state.setImageDrawable(findDrawById(R.drawable.work_b));
+                            iv_state.setImageDrawable(findDrawById(R.drawable.fault_b));
                         } else {
                             tv_alarm.setText("C类故障");
-                            iv_state.setImageDrawable(findDrawById(R.drawable.work_c));
+                            iv_state.setImageDrawable(findDrawById(R.drawable.fault_c));
                         }
                     }
                 }
@@ -229,7 +238,6 @@ public class WorkOverhaulActivity extends BaseActivity implements DatePickerView
         mCurrentDay.set(year, monthOfYear, dayOfMonth);
         dateList = CalendarUtil.getDaysOfWeek(mCurrentDay.getTime());
         setDayToView();
-        monthOfYear = monthOfYear + 1;
         getDate(year, monthOfYear, dayOfMonth);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_calendar_close);
         mDatePickerView.startAnimation(animation);
@@ -322,36 +330,26 @@ public class WorkOverhaulActivity extends BaseActivity implements DatePickerView
         for (int i = 0; i < dayTvs.length; i++) {
             calendar.setTime(dateList.get(i));
             if (calendar.get(Calendar.DAY_OF_WEEK) == mCurrentDay.get(Calendar.DAY_OF_WEEK)) {
-                dayOfWeekLayout[i].setBackgroundColor(findColorById(R.color.color6FA9F8));
+                dayTvs[i].setTextColor(findColorById(R.color.colorWhite));
+                dayWeekNumTvs[i].setTextColor(findColorById(R.color.colorWhite));
+                dayOfWeekLayout[i].setBackgroundResource(R.drawable.day_green_gb);
             } else {
-                dayOfWeekLayout[i].setBackgroundColor(findColorById(R.color.colorPrimary));
+                dayTvs[i].setTextColor(findColorById(R.color.text333));
+                dayWeekNumTvs[i].setTextColor(findColorById(R.color.gray_999999));
+                dayOfWeekLayout[i].setBackgroundColor(findColorById(R.color.colorWhite));
             }
             dayTvs[i].setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
         }
-        getDate(mCurrentDay.get(Calendar.YEAR), mCurrentDay.get(Calendar.MONTH) + 1, mCurrentDay.get(Calendar.DAY_OF_MONTH));
+        getDate(mCurrentDay.get(Calendar.YEAR), mCurrentDay.get(Calendar.MONTH), mCurrentDay.get(Calendar.DAY_OF_MONTH));
         onRefresh();
     }
 
 
     private void getDate(int year, int monthOfYear, int dayOfMonth) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.valueOf(year)).append("-");
-        mYearTv.setText(String.valueOf(year));
-        if (monthOfYear < 10) {
-            sb.append("0").append(String.valueOf(monthOfYear)).append("-");
-            mMonthTv.setText("0" + String.valueOf(monthOfYear) + "月");
-        } else {
-            sb.append(String.valueOf(monthOfYear)).append("-");
-            mMonthTv.setText(MessageFormat.format("{0}月", String.valueOf(monthOfYear)));
-        }
-        if (dayOfMonth < 10) {
-            sb.append("0").append(String.valueOf(dayOfMonth));
-            mDayTv.setText(String.format("0%s日", String.valueOf(dayOfMonth)));
-        } else {
-            sb.append(MessageFormat.format("{0}", String.valueOf(dayOfMonth)));
-            mDayTv.setText(MessageFormat.format("{0}日", String.valueOf(dayOfMonth)));
-        }
-        mDate = sb.toString();
+        Calendar newCalendar = Calendar.getInstance();
+        newCalendar.set(year, monthOfYear, dayOfMonth);
+        mDate = DataUtil.timeFormat(newCalendar.getTime().getTime(), "yyyy-MM-dd");
+        mYearTv.setText(DataUtil.timeFormat(newCalendar.getTime().getTime(), "yyyy年MM月dd日"));
     }
 
     private Animation.AnimationListener animationListener = new Animation.AnimationListener() {

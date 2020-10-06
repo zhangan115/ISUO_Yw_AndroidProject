@@ -116,8 +116,8 @@
     <color name="color_text_table_select">@color/color004CAA</color>
     <color name="color_text_table_normal">@color/color7690B3</color>
     <color name="item_overhaul_content_tv">@color/color90A5BF</color>
-    <color name="item_overhaul_title_tv">@color/color6983A5</color>
-    <color name="item_increment_title_tv">@color/color6983A5</color>
+    <color name="item_overhaul_title_tv">@color/text333</color>
+    <color name="item_increment_title_tv">@color/text333</color>
     <color name="item_increment_content_tv">@color/color90A5BF</color>
     <color name="color_text_normal">@color/colorWhite</color>
     <color name="color_text_press">@color/color80FFF</color>

@@ -14,6 +14,8 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.utils.CountDownTimerUtils;
 import com.isuo.yw2application.utils.MediaPlayerManager;
 
+import java.text.MessageFormat;
+
 /**
  * Created by zhangan on 2017-08-01.
  */
@@ -44,18 +46,18 @@ public class PlaySoundLayout extends LinearLayout implements View.OnClickListene
 
     private void init(Context context) {
         inflate(context, R.layout.layout_play_sound, this);
-        titleNameTv = (TextView) findViewById(R.id.tv_title);
-        LinearLayout playSoundLL = (LinearLayout) findViewById(R.id.ll_play_sound);
-        soundTimeTv = (TextView) findViewById(R.id.id_sound_time);
-        soundContentTv = (TextView) findViewById(R.id.tv_play_text);
+        titleNameTv = findViewById(R.id.tv_title);
+        LinearLayout playSoundLL = findViewById(R.id.ll_play_sound);
+        soundTimeTv = findViewById(R.id.id_sound_time);
+        soundContentTv = findViewById(R.id.tv_play_text);
         playSoundLL.setOnClickListener(this);
     }
 
     public void setContent(String voiceUrl, int soundTime, String title, String content) {
         this.voiceUrl = voiceUrl;
         this.soundTime = soundTime;
-        titleNameTv.setText(title + ":");
-        soundTimeTv.setText(soundTime + "''");
+        titleNameTv.setText(MessageFormat.format("{0}:", title));
+        soundTimeTv.setText(MessageFormat.format("{0}s", soundTime));
         soundTimeTv.setBackgroundResource(R.drawable.play_anim);
         soundContentTv.setText(content);
         if (soundTime == 0 || TextUtils.isEmpty(voiceUrl)) {
@@ -81,7 +83,7 @@ public class PlaySoundLayout extends LinearLayout implements View.OnClickListene
                 animation = (AnimationDrawable) soundTimeTv.getBackground();
                 //播放故障语音
                 mTimer = new CountDownTimerUtils(soundTimeTv, soundTime * 1000, 1000
-                        , soundTime + "''", "#ffffff");
+                        , soundTime + "s", "#999999");
                 MediaPlayerManager.playSound(voiceUrl, new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
@@ -112,7 +114,7 @@ public class PlaySoundLayout extends LinearLayout implements View.OnClickListene
         animation.selectDrawable(0);
         animation.stop();
         soundTimeTv.clearAnimation();
-        soundTimeTv.setText(soundTime + "''");
+        soundTimeTv.setText(MessageFormat.format("{0}s", soundTime));
     }
 
     public void setOnPlaySoundListener(OnPlaySoundListener onPlaySoundListener) {

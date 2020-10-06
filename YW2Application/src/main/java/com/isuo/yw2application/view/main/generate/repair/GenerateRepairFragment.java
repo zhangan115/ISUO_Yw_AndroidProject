@@ -50,10 +50,12 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -199,7 +201,7 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
     }
 
     private void updateVoiceUi() {
-        String timeStr = String.valueOf(voiceTime) + "''";
+        String timeStr = voiceTime + "s";
         faultTimeTv.setText(timeStr);
         id_fault_content.setText(voiceContent);
         id_fault_content.setSelection(voiceContent.length());
@@ -275,7 +277,7 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
                 animation = (AnimationDrawable) faultTimeTv.getBackground();
                 animation.start();
                 mCountDownTimerUtils = new CountDownTimerUtils(faultTimeTv, voiceTime * 1000
-                        , 1000, voiceTime + "''", "#FFFFFF");
+                        , 1000, voiceTime + "s", "#999999");
                 mCountDownTimerUtils.start();
                 MediaPlayerManager.playSound(voiceFile, new MediaPlayer.OnCompletionListener() {
 
@@ -286,7 +288,7 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
                         animation.selectDrawable(0);
                         animation.stop();
                         faultTimeTv.clearAnimation();
-                        String voiceTimeStr = voiceTime + "''";
+                        String voiceTimeStr = voiceTime + "s";
                         faultTimeTv.setText(voiceTimeStr);
                     }
                 });
@@ -370,7 +372,7 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
                         getApp().showToast("请选择指派人");
                         return;
                     }
-                    uploadJson.put("usersNext", String.valueOf(getUserIds()));
+                    uploadJson.put("usersNext", getUserIds());
                     if (TextUtils.isEmpty(startTime)) {
                         getApp().showToast("选择开始时间");
                     }
@@ -424,7 +426,7 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
                 ImageButton imageButton = new ImageButton(getActivity());
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(getActivity(), 50)
                         , DisplayUtil.dip2px(getActivity(), 50));
-                imageButton.setBackground(findDrawById(R.drawable.bg_add_user));
+                imageButton.setBackground(findDrawById(R.drawable.add_btn));
                 imageButton.setLayoutParams(params);
                 imageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -435,7 +437,7 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
                     }
                 });
                 mAddUserLayout.addView(imageButton);
-                final HorizontalScrollView scrollView = getView().findViewById(R.id.id_hs_employee);
+                final HorizontalScrollView scrollView = Objects.requireNonNull(getView()).findViewById(R.id.id_hs_employee);
                 scrollView.post(new Runnable() {
                     @Override
                     public void run() {
@@ -554,9 +556,10 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
 
     private String getUserIds() {
         StringBuilder sb = new StringBuilder();
-        if (employeeBeen != null && employeeBeen.size() >= 0) {
+        if (employeeBeen != null) {
+            employeeBeen.size();
             for (int i = 0; i < employeeBeen.size(); i++) {
-                sb.append(String.valueOf(employeeBeen.get(i).getUser().getUserId()));
+                sb.append(employeeBeen.get(i).getUser().getUserId());
                 if (i != employeeBeen.size() - 1) {
                     sb.append(",");
                 }
@@ -582,7 +585,7 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
             animation.selectDrawable(0);
             animation.stop();
             faultTimeTv.clearAnimation();
-            faultTimeTv.setText(voiceTime + "''");
+            faultTimeTv.setText(MessageFormat.format("{0}s", voiceTime));
         }
     }
 

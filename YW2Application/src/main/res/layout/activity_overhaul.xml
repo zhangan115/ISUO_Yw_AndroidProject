@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorEAF4FD">
+    android:background="#f7f7f7">
 
     <ScrollView
         android:id="@+id/scroll_view"
@@ -16,22 +16,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                android:background="@drawable/white_bg_with_shape"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="7dp"
-                    android:layout_marginTop="7dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -47,6 +49,7 @@
                             android:drawableLeft="@drawable/message_title_tag"
                             android:drawablePadding="2dp"
                             android:text="任务描述"
+                            android:textColor="@color/text333"
                             android:textSize="14sp" />
 
                         <TextView
@@ -63,7 +66,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/color_energe_line" />
+                        android:background="#f7f7f7" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -75,10 +78,10 @@
                             android:id="@+id/tv_equip_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
                             android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
                             android:textColor="@color/news_text_black"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_equip_alias"
@@ -86,7 +89,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/item_overhaul_title_tv"
-                            android:textSize="@dimen/overhaul_start_time_text_size" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_start_time"
@@ -135,17 +138,19 @@
                 android:id="@+id/card_view_repair"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
                 android:layout_marginTop="7dp"
+                android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="7dp"
-                    android:layout_marginTop="7dp"
-                    android:orientation="vertical">
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/white_bg_with_shape"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="12dp">
 
                     <TextView
                         android:id="@+id/tv_repair_result"
@@ -162,15 +167,15 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/color_energe_line" />
+                        android:background="#f7f7f7" />
 
                     <TextView
                         android:id="@+id/id_repair_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:lines="1"
-                        android:paddingBottom="10dp"
                         android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
                         android:textColor="@color/item_overhaul_title_tv"
                         android:textSize="14sp"
                         tools:text="检修时间" />

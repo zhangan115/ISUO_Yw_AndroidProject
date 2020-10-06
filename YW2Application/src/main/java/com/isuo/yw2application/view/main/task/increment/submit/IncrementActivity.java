@@ -40,6 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,7 +111,7 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
                 mContent.setText(voices.get(0).getMContent());
                 mContent.setSelection(mContent.getText().toString().length());
                 mVoiceStr = voices.get(0).getMContent();
-                mVoiceTime.setText(voices.get(0).getVoiceTime() + "''");
+                mVoiceTime.setText(MessageFormat.format("{0}s", voices.get(0).getVoiceTime()));
                 mTime = Long.parseLong(voices.get(0).getVoiceTime()) * 1000;
                 mVTime = voices.get(0).getVoiceTime();
                 if (!TextUtils.isEmpty(mVoiceStr)) {
@@ -132,21 +133,21 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
     }
 
     private void initView() {
-        mWorkType = (TextView) findViewById(R.id.id_increment_type);
-        mSpeech = (ImageView) findViewById(R.id.id_increment_speech);
-        mWorkSource = (TextView) findViewById(R.id.id_increment_source);
-        mCommit = (TextView) findViewById(R.id.id_increment_commit);
-        mContent = (EditText) findViewById(R.id.id_increment_content);
-        mVoiceTime = (TextView) findViewById(R.id.id_increment_time);
-        mLLType = (LinearLayout) findViewById(R.id.id_increment_ll_type);
-        mLLSource = (LinearLayout) findViewById(R.id.id_increment_ll_source);
-        mLLChooseQuarantine = (LinearLayout) findViewById(R.id.ll_choose_quarantine);
-        mIncrementState = (LinearLayout) findViewById(R.id.id_ll_incre_state);
-        mIncrementDevice = (LinearLayout) findViewById(R.id.id_incre_device);
-        mIncrementStart = (TextView) findViewById(R.id.id_incre_start);
-        mIncrementStop = (TextView) findViewById(R.id.id_incre_stop);
-        mDeviceName = (TextView) findViewById(R.id.id_incre_devicename);
-        SwitchButton switchButton = (SwitchButton) findViewById(R.id.switchButton);
+        mWorkType = findViewById(R.id.id_increment_type);
+        mSpeech = findViewById(R.id.id_increment_speech);
+        mWorkSource = findViewById(R.id.id_increment_source);
+        mCommit = findViewById(R.id.id_increment_commit);
+        mContent = findViewById(R.id.id_increment_content);
+        mVoiceTime = findViewById(R.id.id_increment_time);
+        mLLType = findViewById(R.id.id_increment_ll_type);
+        mLLSource = findViewById(R.id.id_increment_ll_source);
+        mLLChooseQuarantine = findViewById(R.id.ll_choose_quarantine);
+        mIncrementState = findViewById(R.id.id_ll_incre_state);
+        mIncrementDevice = findViewById(R.id.id_incre_device);
+        mIncrementStart = findViewById(R.id.id_incre_start);
+        mIncrementStop = findViewById(R.id.id_incre_stop);
+        mDeviceName = findViewById(R.id.id_incre_devicename);
+        SwitchButton switchButton = findViewById(R.id.switchButton);
         switchButton.setChecked(false);//默认开启
         switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -158,7 +159,7 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
                 }
             }
         });
-        takePhotoView = (TakePhotoView) findViewById(R.id.take_photo_view);
+        takePhotoView = findViewById(R.id.take_photo_view);
         takePhotoView.setTakePhotoListener(new TakePhotoView.TakePhotoListener() {
             @Override
             public void onTakePhoto() {
@@ -200,7 +201,7 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
                         mPath = voiceFile;
                         mVTime = String.valueOf(time);
                         mVoiceTime.setEnabled(true);
-                        mVoiceTime.setText(mVTime + "''");
+                        mVoiceTime.setText(MessageFormat.format("{0}s", mVTime));
                         mTime = time * 1000;
                         saveVoiceInDb(mPath);
                     }
@@ -280,13 +281,14 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
                 animation = (AnimationDrawable) mVoiceTime.getBackground();
                 animation.start();
                 //开始计时
-                mCountDownTimerUtils = new CountDownTimerUtils(mVoiceTime, mTime, 1000, mVTime + "''", "#FFFFFF");
+                mCountDownTimerUtils = new CountDownTimerUtils(mVoiceTime, mTime, 1000
+                        , mVTime + "s", "#999999");
                 mCountDownTimerUtils.start();
                 //播放录音
                 MediaPlayerManager.playSound(mPath, new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
-                        mVoiceTime.setBackgroundResource(R.drawable.record_play_3);
+                        mVoiceTime.setBackgroundResource(R.drawable.voice_three);
                     }
                 });
                 break;
@@ -448,8 +450,8 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
         MediaPlayerManager.release();
         if (animation != null && animation.isRunning()) {
             animation.stop();
-            mVoiceTime.setBackgroundResource(R.drawable.record_play_3);
-            mVoiceTime.setText(mVTime + "''");
+            mVoiceTime.setBackgroundResource(R.drawable.voice_three);
+            mVoiceTime.setText(MessageFormat.format("{0}s", mVTime));
         }
         if (mCountDownTimerUtils != null) {
             mCountDownTimerUtils.cancel();

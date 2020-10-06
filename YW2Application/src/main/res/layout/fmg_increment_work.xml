@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorEAF4FD"
+    android:background="#f7f7f7"
     android:orientation="vertical">
 
     <ScrollView
@@ -18,15 +18,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="7dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/layout_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="7dp"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/white_bg_with_shape"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="12dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -48,6 +54,7 @@
                             android:id="@+id/tv_increment_state"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/text333"
                             android:textSize="14sp"
                             android:visibility="visible"
                             tools:text="已完成" />
@@ -62,28 +69,28 @@
                         android:id="@+id/tv_equip_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
                         android:layout_marginTop="10dp"
-                        android:textColor="@color/color535862"
-                        android:textSize="15sp"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/text333"
+                        android:textSize="14sp"
                         tools:text="催化" />
 
                     <TextView
                         android:id="@+id/tv_plan_start_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
-                        android:textColor="@color/color788FAE"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/text333"
                         android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_plan_end_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
-                        android:textColor="@color/color788FAE"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/text333"
                         android:textSize="14sp" />
 
 
@@ -92,59 +99,55 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/bg_overhual_detail"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:gravity="center_vertical"
                                 android:lines="1"
-                                android:paddingBottom="5dp"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="10dp"
+                                android:paddingBottom="5dp"
                                 android:text="工作内容:"
                                 android:textColor="@color/color535862"
                                 android:textSize="14sp" />
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginRight="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_increment_play_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:minLines="2"
+                                    android:paddingTop="8dp"
+                                    android:paddingRight="10dp"
+                                    android:paddingBottom="8dp"
+                                    android:text="语音内容文字展示区域"
+                                    android:textColor="@color/text333"
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/id_increment_time"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/record_play_3"
-                                    android:gravity="right|center_vertical"
-                                    android:paddingRight="4dp"
-                                    android:textColor="@color/colorWhite"
+                                    android:background="@drawable/voice_three"
+                                    android:gravity="center"
+                                    android:textColor="@color/gray_999999"
                                     android:textSize="12sp"
-                                    tools:text="60''" />
+                                    tools:text="60s" />
                             </LinearLayout>
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/tv_increment_play_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minLines="2"
-                            android:paddingBottom="8dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:paddingTop="8dp"
-                            android:text="语音内容文字展示区域"
-                            android:textColor="@color/item_increment_title_tv"
-                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -152,8 +155,7 @@
                         android:id="@+id/ll_increment_image"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="10dp"
                         android:orientation="horizontal" />
                 </LinearLayout>
 
@@ -170,8 +172,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="7dp"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/white_bg_with_shape"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="12dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -183,8 +192,8 @@
                             android:layout_height="wrap_content"
                             android:drawableLeft="@drawable/message_title_tag"
                             android:drawablePadding="2dp"
-                            android:paddingBottom="5dp"
                             android:lines="1"
+                            android:paddingBottom="5dp"
                             android:text="工作结果"
                             android:textSize="14sp" />
 
@@ -200,7 +209,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/bg_overhual_detail"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -214,53 +222,48 @@
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
                                 android:lines="1"
-                                android:paddingBottom="5dp"
-                                android:paddingLeft="10dp"
-                                android:paddingTop="10dp"
                                 android:text="结果描述:"
                                 android:textColor="@color/color535862"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
-
-                        <ImageView
-                            android:id="@+id/iv_record"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="10dp"
-                            android:src="@drawable/bg_record_button" />
 
                         <LinearLayout
                             android:id="@+id/ll_play_work_sound"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="25dp"
                             android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingLeft="6dp"
-                            android:paddingRight="6dp">
+                            android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/id_work_sound_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="top"
-                                android:background="@drawable/record_play_3"
-                                android:gravity="right|center_vertical"
-                                android:textColor="@color/colorWhite"
-                                android:textSize="12sp"
-                                tools:text="60''" />
 
                             <EditText
                                 android:id="@+id/id_work_content"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="10dp"
                                 android:background="@null"
                                 android:gravity="center_vertical"
                                 android:hint="语音文字显示区域"
                                 android:textSize="14sp" />
+
+
+                            <TextView
+                                android:id="@+id/id_work_sound_time"
+                                android:layout_width="70dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/voice_three"
+                                android:gravity="center"
+                                android:textColor="@color/gray_999999"
+                                android:textSize="12sp"
+                                tools:text="60s" />
+
+                            <ImageView
+                                android:id="@+id/iv_record"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:src="@drawable/mic_btn" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -277,14 +280,14 @@
                 android:id="@+id/tv_upload"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
                 android:background="@drawable/bg_btn_report"
                 android:gravity="center"
-                android:paddingBottom="15dp"
                 android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:text="提交"
                 android:textColor="@color/colorWhite" />
         </LinearLayout>

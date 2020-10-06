@@ -123,7 +123,7 @@ public class IncrementWorkFragment extends MvpFragment<IncrementWorkContract.Pre
             if (TextUtils.isEmpty(data.getEquipment().getEquipmentSn())) {
                 tv_equip_name.setText(data.getEquipment().getEquipmentName());
             } else {
-                tv_equip_name.setText(data.getEquipment().getEquipmentName() + "(" + data.getEquipment().getEquipmentSn() + ")");
+                tv_equip_name.setText(MessageFormat.format("{0}({1})", data.getEquipment().getEquipmentName(), data.getEquipment().getEquipmentSn()));
             }
             tv_equip_name.setVisibility(View.VISIBLE);
         }
@@ -146,7 +146,7 @@ public class IncrementWorkFragment extends MvpFragment<IncrementWorkContract.Pre
             tv_plan_end_time.setText(MessageFormat.format("计划截至时间:{0}", DataUtil.timeFormat(data.getEndTime(), null)));
             tv_increment_state.setVisibility(View.VISIBLE);
         }
-        mIncrementTime.setText(soundTime + "''");
+        mIncrementTime.setText(MessageFormat.format("{0}s", soundTime));
         tv_increment_name.setText(Yw2Application.getInstance().getMapOption().get("1").get(String.valueOf(data.getWorkType())));
         String state;
         switch (data.getWorkState()) {
@@ -210,7 +210,7 @@ public class IncrementWorkFragment extends MvpFragment<IncrementWorkContract.Pre
                     public void onSpeechFinish(int time, String content, String voiceFile) {
                         mWorkSoundET.setText(content);
                         mWorkSoundET.setSelection(mWorkSoundET.getText().toString().length());
-                        workSoundTimeTv.setText(String.valueOf(time) + "''");
+                        workSoundTimeTv.setText(MessageFormat.format("{0}s", time));
                         if (mVoice == null) {
                             mVoice = new Voice();
                         }
@@ -289,12 +289,12 @@ public class IncrementWorkFragment extends MvpFragment<IncrementWorkContract.Pre
                     mIncrementTime.setBackgroundResource(R.drawable.play_anim);
                     incrementAnim = (AnimationDrawable) mIncrementTime.getBackground();
                     mIncrementTimer = new CountDownTimerUtils(mIncrementTime, soundTime * 1000
-                            , 1000, soundTime + "''", "#ffffff");
+                            , 1000, soundTime + "s", "#999999");
                     MediaPlayerManager.playSound(soundUrl, new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
                             isIncrementPlay = false;
-                            mIncrementTime.setBackgroundResource(R.drawable.record_play_3);
+                            mIncrementTime.setBackgroundResource(R.drawable.voice_three);
                         }
                     }, new MediaPlayer.OnPreparedListener() {
                         @Override
@@ -320,12 +320,13 @@ public class IncrementWorkFragment extends MvpFragment<IncrementWorkContract.Pre
                     isWorkPlay = true;
                     workSoundTimeTv.setBackgroundResource(R.drawable.play_anim);
                     workAnim = (AnimationDrawable) workSoundTimeTv.getBackground();
-                    mWorkTimer = new CountDownTimerUtils(workSoundTimeTv, Integer.valueOf(mVoice.getVoiceTime()) * 1000, 1000, Integer.valueOf(mVoice.getVoiceTime()) + "''", "#ffffff");
+                    mWorkTimer = new CountDownTimerUtils(workSoundTimeTv, Integer.parseInt(mVoice.getVoiceTime()) * 1000, 1000
+                            , Integer.valueOf(mVoice.getVoiceTime()) + "s", "#999999");
                     MediaPlayerManager.playSound(mVoice.getVoiceLocal(), new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
                             isWorkPlay = false;
-                            workSoundTimeTv.setBackgroundResource(R.drawable.record_play_3);
+                            workSoundTimeTv.setBackgroundResource(R.drawable.voice_three);
                         }
                     });
                     mWorkTimer.start();
@@ -362,8 +363,8 @@ public class IncrementWorkFragment extends MvpFragment<IncrementWorkContract.Pre
         MediaPlayerManager.release();
         mIncrementTimer.cancel();
         mIncrementTime.clearAnimation();
-        mIncrementTime.setText(soundTime + "''");
-        mIncrementTime.setBackgroundResource(R.drawable.record_play_3);
+        mIncrementTime.setText(MessageFormat.format("{0}s", soundTime));
+        mIncrementTime.setBackgroundResource(R.drawable.voice_three);
     }
 
     private void workSoundStopPlay() {
@@ -371,8 +372,8 @@ public class IncrementWorkFragment extends MvpFragment<IncrementWorkContract.Pre
         MediaPlayerManager.release();
         mWorkTimer.cancel();
         workSoundTimeTv.clearAnimation();
-        workSoundTimeTv.setText(mVoice.getVoiceTime() + "''");
-        workSoundTimeTv.setBackgroundResource(R.drawable.record_play_3);
+        workSoundTimeTv.setText(MessageFormat.format("{0}s", mVoice.getVoiceTime()));
+        workSoundTimeTv.setBackgroundResource(R.drawable.voice_three);
     }
 
     private void uploadAllData() {
@@ -473,7 +474,7 @@ public class IncrementWorkFragment extends MvpFragment<IncrementWorkContract.Pre
         if (mVoice != null) {
             mWorkSoundET.setText(mVoice.getMContent());
             mWorkSoundET.setSelection(mWorkSoundET.getText().toString().length());
-            workSoundTimeTv.setText(mVoice.getVoiceTime() + "''");
+            workSoundTimeTv.setText(MessageFormat.format("{0}s", mVoice.getVoiceTime()));
         }
     }
 

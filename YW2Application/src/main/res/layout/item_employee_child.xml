@@ -25,12 +25,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingBottom="15dp"
             android:paddingLeft="6dp"
             android:paddingTop="15dp"
-            android:textColor="@color/item_increment_content_tv"
+            android:paddingBottom="15dp"
+            android:textColor="@color/gray_666666"
             android:textSize="14sp"
-            tools:text="张安" />
+            tools:text="xxx" />
     </LinearLayout>
 
     <View

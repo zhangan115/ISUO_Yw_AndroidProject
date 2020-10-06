@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.task.increment.detail;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import com.isuo.yw2application.utils.MediaPlayerManager;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.widget.ShowImageLayout;
 import com.sito.library.utils.DataUtil;
+
+import java.text.MessageFormat;
 
 /**
  * 展示专项工作
@@ -74,7 +77,7 @@ public class IncrementDetailActivity extends BaseActivity implements IncrementDe
     private void setLayout() {
         ((TextView) findViewById(R.id.tv_increment_name))
                 .setText(Yw2Application.getInstance().getMapOption().get("1").get(String.valueOf(data.getWorkType())));
-        TextView tv_increment_state = (TextView) findViewById(R.id.tv_increment_state);
+        TextView tv_increment_state = findViewById(R.id.tv_increment_state);
         String state;
         switch (data.getWorkState()) {
             case 0:
@@ -91,14 +94,14 @@ public class IncrementDetailActivity extends BaseActivity implements IncrementDe
                 break;
         }
         tv_increment_state.setText(state);
-        TextView tv_equip_name = (TextView) findViewById(R.id.tv_equip_name);
+        TextView tv_equip_name = findViewById(R.id.tv_equip_name);
         if (data.getEquipment() == null) {
             tv_equip_name.setVisibility(View.GONE);
         } else {
             if (TextUtils.isEmpty(data.getEquipment().getEquipmentSn())) {
                 tv_equip_name.setText(data.getEquipment().getEquipmentName());
             } else {
-                tv_equip_name.setText(data.getEquipment().getEquipmentName() + "(" + data.getEquipment().getEquipmentSn() + ")");
+                tv_equip_name.setText(MessageFormat.format("{0}({1})", data.getEquipment().getEquipmentName(), data.getEquipment().getEquipmentSn()));
             }
             tv_equip_name.setVisibility(View.VISIBLE);
         }
@@ -114,9 +117,9 @@ public class IncrementDetailActivity extends BaseActivity implements IncrementDe
         }
         findViewById(R.id.ll_play_task_sound).setOnClickListener(this);
         ((TextView) findViewById(R.id.tv_increment_play_text)).setText(data.getXworkContent());
-        incrementTimeTv = (TextView) findViewById(R.id.id_increment_time);
-        incrementTimeTv.setText(incrementSoundTime + "''");
-        ShowImageLayout ll_increment_image = (ShowImageLayout) findViewById(R.id.ll_increment_image);
+        incrementTimeTv = findViewById(R.id.id_increment_time);
+        incrementTimeTv.setText(MessageFormat.format("{0}s", incrementSoundTime));
+        ShowImageLayout ll_increment_image = findViewById(R.id.ll_increment_image);
         ll_increment_image.showImage(data.getXworkImages().split(","));
         if (incrementSoundTime == 0 || TextUtils.isEmpty(incrementSoundUrl)) {
             incrementTimeTv.setVisibility(View.GONE);
@@ -128,7 +131,7 @@ public class IncrementDetailActivity extends BaseActivity implements IncrementDe
     private void setLayout1() {
         ((TextView) findViewById(R.id.tv_increment_name_1))
                 .setText(Yw2Application.getInstance().getMapOption().get("1").get(String.valueOf(data.getWorkType())));
-        TextView tv_increment_state = (TextView) findViewById(R.id.tv_increment_state_1);
+        TextView tv_increment_state = findViewById(R.id.tv_increment_state_1);
         String state;
         switch (data.getWorkState()) {
             case 0:
@@ -145,14 +148,14 @@ public class IncrementDetailActivity extends BaseActivity implements IncrementDe
                 break;
         }
         tv_increment_state.setText(state);
-        TextView tv_equip_name = (TextView) findViewById(R.id.tv_equip_name_1);
+        TextView tv_equip_name = findViewById(R.id.tv_equip_name_1);
         if (data.getEquipment() == null) {
             tv_equip_name.setVisibility(View.GONE);
         } else {
             if (TextUtils.isEmpty(data.getEquipment().getEquipmentSn())) {
                 tv_equip_name.setText(data.getEquipment().getEquipmentName());
             } else {
-                tv_equip_name.setText(data.getEquipment().getEquipmentName() + "(" + data.getEquipment().getEquipmentSn() + ")");
+                tv_equip_name.setText(String.format("%s(%s)", data.getEquipment().getEquipmentName(), data.getEquipment().getEquipmentSn()));
             }
             tv_equip_name.setVisibility(View.VISIBLE);
         }
@@ -171,10 +174,10 @@ public class IncrementDetailActivity extends BaseActivity implements IncrementDe
         } else {
             ((TextView) findViewById(R.id.textView_time)).setText(DataUtil.timeFormat(data.getCommitTime(), null));
         }
-        workSoundTimeTv = (TextView) findViewById(R.id.id_result_increment_time);
-        workSoundTimeTv.setText(String.valueOf(workSoundTime) + "''");
+        workSoundTimeTv = findViewById(R.id.id_result_increment_time);
+        workSoundTimeTv.setText(MessageFormat.format("{0}s", workSoundTime));
         findViewById(R.id.ll_result_sound).setOnClickListener(this);
-        ShowImageLayout showImageLayout = (ShowImageLayout) findViewById(R.id.ll_result_image);
+        ShowImageLayout showImageLayout = findViewById(R.id.ll_result_image);
         showImageLayout.showImage(data.getWorkImages().split(","));
         if (workSoundTime == 0 || TextUtils.isEmpty(workSoundUrl)) {
             workSoundTimeTv.setVisibility(View.GONE);
@@ -195,7 +198,8 @@ public class IncrementDetailActivity extends BaseActivity implements IncrementDe
                     isIncrementPlay = true;
                     incrementTimeTv.setBackgroundResource(R.drawable.play_anim);
                     incrementAnim = (AnimationDrawable) incrementTimeTv.getBackground();
-                    mIncrementTimer = new CountDownTimerUtils(incrementTimeTv, incrementSoundTime * 1000, 1000, incrementSoundTime + "''", "#ffffff");
+                    mIncrementTimer = new CountDownTimerUtils(incrementTimeTv, incrementSoundTime * 1000
+                            , 1000, incrementSoundTime + "s", "#999999");
                     MediaPlayerManager.playSound(incrementSoundUrl, new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
@@ -223,7 +227,7 @@ public class IncrementDetailActivity extends BaseActivity implements IncrementDe
                     workSoundTimeTv.setBackgroundResource(R.drawable.play_anim);
                     workAnim = (AnimationDrawable) workSoundTimeTv.getBackground();
                     mWorkTimer = new CountDownTimerUtils(workSoundTimeTv, workSoundTime * 1000, 1000
-                            , workSoundTime + "''", "#ffffff");
+                            , workSoundTime + "s", "#ffffff");
                     MediaPlayerManager.playSound(workSoundUrl, new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
@@ -249,8 +253,8 @@ public class IncrementDetailActivity extends BaseActivity implements IncrementDe
         MediaPlayerManager.release();
         mIncrementTimer.cancel();
         incrementTimeTv.clearAnimation();
-        incrementTimeTv.setText(incrementSoundTime + "''");
-        incrementTimeTv.setBackgroundResource(R.drawable.record_play_3);
+        incrementTimeTv.setText(MessageFormat.format("{0}s", incrementSoundTime));
+        incrementTimeTv.setBackgroundResource(R.drawable.voice_three);
     }
 
     private void workSoundStopPlay() {
@@ -258,8 +262,8 @@ public class IncrementDetailActivity extends BaseActivity implements IncrementDe
         MediaPlayerManager.release();
         mWorkTimer.cancel();
         workSoundTimeTv.clearAnimation();
-        workSoundTimeTv.setText(workSoundTime + "''");
-        workSoundTimeTv.setBackgroundResource(R.drawable.record_play_3);
+        workSoundTimeTv.setText(MessageFormat.format("{0}s", workSoundTime));
+        workSoundTimeTv.setBackgroundResource(R.drawable.voice_three);
     }
 
     @Override
@@ -292,13 +296,13 @@ public class IncrementDetailActivity extends BaseActivity implements IncrementDe
         MediaPlayerManager.release();
         if (mWorkTimer != null) {
             mWorkTimer.cancel();
-            workSoundTimeTv.setText(workSoundTime + "''");
-            workSoundTimeTv.setBackgroundResource(R.drawable.record_play_3);
+            workSoundTimeTv.setText(MessageFormat.format("{0}s", workSoundTime));
+            workSoundTimeTv.setBackgroundResource(R.drawable.voice_three);
         }
         if (mIncrementTimer != null) {
             mIncrementTimer.cancel();
-            incrementTimeTv.setText(incrementSoundTime + "''");
-            incrementTimeTv.setBackgroundResource(R.drawable.record_play_3);
+            incrementTimeTv.setText(MessageFormat.format("{0}s", incrementSoundTime));
+            incrementTimeTv.setBackgroundResource(R.drawable.voice_three);
         }
         if (workAnim != null && workAnim.isRunning()) {
             workAnim.stop();

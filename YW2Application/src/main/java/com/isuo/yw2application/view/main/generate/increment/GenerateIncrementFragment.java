@@ -56,10 +56,12 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -267,7 +269,7 @@ public class GenerateIncrementFragment extends MvpFragment<GenerateIncrementCont
                             @Override
                             public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
                                 mWorkType.setText(typeList.get(position).getItemName());
-                                mTypeCode = Long.valueOf(typeList.get(position).getItemCode());
+                                mTypeCode = Long.parseLong(typeList.get(position).getItemCode());
                                 if (mTypeCode == 1) {
                                     mIncrementState.setVisibility(View.VISIBLE);
                                     mLLChooseQuarantine.setVisibility(View.VISIBLE);
@@ -343,7 +345,7 @@ public class GenerateIncrementFragment extends MvpFragment<GenerateIncrementCont
                     incrementTimeTv.setBackgroundResource(R.drawable.play_anim);
                     animation = (AnimationDrawable) incrementTimeTv.getBackground();
                     animation.start();
-                    mCountDownTimerUtils = new CountDownTimerUtils(incrementTimeTv, voiceTime * 1000, 1000, voiceTime + "''", "#FFFFFF");
+                    mCountDownTimerUtils = new CountDownTimerUtils(incrementTimeTv, voiceTime * 1000, 1000, voiceTime + "s", "#999999");
                     mCountDownTimerUtils.start();
                     isPlaying = true;
                     MediaPlayerManager.playSound(voiceFile, new MediaPlayer.OnCompletionListener() {
@@ -452,7 +454,7 @@ public class GenerateIncrementFragment extends MvpFragment<GenerateIncrementCont
         animation.selectDrawable(0);
         animation.stop();
         incrementTimeTv.clearAnimation();
-        incrementTimeTv.setText(voiceTime + "''");
+        incrementTimeTv.setText(MessageFormat.format("{0}s", voiceTime));
     }
 
 
@@ -480,7 +482,7 @@ public class GenerateIncrementFragment extends MvpFragment<GenerateIncrementCont
                 ImageButton imageButton = new ImageButton(getActivity());
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(getActivity(), 50)
                         , DisplayUtil.dip2px(getActivity(), 50));
-                imageButton.setBackground(findDrawById(R.drawable.bg_add_user));
+                imageButton.setBackground(findDrawById(R.drawable.add_btn));
                 imageButton.setLayoutParams(params);
                 imageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -491,7 +493,7 @@ public class GenerateIncrementFragment extends MvpFragment<GenerateIncrementCont
                     }
                 });
                 mAddUserLayout.addView(imageButton);
-                final HorizontalScrollView scrollView = getView().findViewById(R.id.id_hs_employee);
+                final HorizontalScrollView scrollView = Objects.requireNonNull(getView()).findViewById(R.id.id_hs_employee);
                 scrollView.post(new Runnable() {
                     @Override
                     public void run() {
@@ -537,7 +539,7 @@ public class GenerateIncrementFragment extends MvpFragment<GenerateIncrementCont
 
 
     private void updateVoiceUi() {
-        incrementTimeTv.setText(String.valueOf(voiceTime) + "''");
+        incrementTimeTv.setText(MessageFormat.format("{0}s", String.valueOf(voiceTime)));
         incrementContentTv.setText(voiceContent);
         incrementContentTv.setSelection(voiceContent.length());
     }
@@ -581,7 +583,8 @@ public class GenerateIncrementFragment extends MvpFragment<GenerateIncrementCont
 
     private String getUserIds() {
         StringBuilder sb = new StringBuilder();
-        if (employeeBeen != null && employeeBeen.size() >= 0) {
+        if (employeeBeen != null) {
+            employeeBeen.size();
             for (int i = 0; i < employeeBeen.size(); i++) {
                 sb.append(String.valueOf(employeeBeen.get(i).getUser().getUserId()));
                 if (i != employeeBeen.size() - 1) {
