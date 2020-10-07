@@ -6,7 +6,7 @@
     android:background="@drawable/white_bg_with_shape"
     android:orientation="vertical"
     android:paddingLeft="15dp"
-    android:paddingRight="12dp"
+    android:paddingRight="15dp"
     android:paddingBottom="12dp">
 
     <LinearLayout
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:text="祝伟政"
-                    android:textColor="@color/gray_999999"
+                    android:textColor="@color/text333"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:text="上报时间: 2017-08-09 10:00"
-                    android:textColor="@color/gray_999999"
+                    android:textColor="@color/text333"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>

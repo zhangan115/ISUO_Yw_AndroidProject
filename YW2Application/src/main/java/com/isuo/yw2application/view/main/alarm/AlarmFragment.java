@@ -1,8 +1,10 @@
 package com.isuo.yw2application.view.main.alarm;
 
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,10 +18,15 @@ import android.widget.TextView;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
+import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.check.FaultList;
 import com.isuo.yw2application.utils.CountDownTimerUtils;
 import com.isuo.yw2application.utils.MediaPlayerManager;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
+import com.isuo.yw2application.view.main.alarm.detail.AlarmDetailActivity;
+import com.isuo.yw2application.view.main.alarm.equipalarm.EquipAlarmActivity;
+import com.isuo.yw2application.view.main.alarm.fault.FaultActivity;
+import com.isuo.yw2application.view.main.alarm.list.AlarmListActivity;
 import com.isuo.yw2application.widget.ShowImageLayout;
 import com.sito.library.adapter.RVAdapter;
 import com.sito.library.utils.DataUtil;
@@ -27,6 +34,7 @@ import com.sito.library.widget.TextViewVertical;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implements View.OnClickListener, AlarmContract.View {
@@ -59,6 +67,12 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_alarm, container, false);
         rootView.findViewById(R.id.reportAlarmIv).setOnClickListener(this);
+        rootView.findViewById(R.id.rightTv).setOnClickListener(this);
+        rootView.findViewById(R.id.layout_1).setOnClickListener(this);
+        rootView.findViewById(R.id.layout_2).setOnClickListener(this);
+        rootView.findViewById(R.id.layout_3).setOnClickListener(this);
+        rootView.findViewById(R.id.layout_4).setOnClickListener(this);
+        rootView.findViewById(R.id.layout_5).setOnClickListener(this);
         swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorScheme(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -139,7 +153,7 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
                         }
                     });
                 } else {
-                    mVoiceTime.setText(String.format("%ss",data.getSoundTimescale()));
+                    mVoiceTime.setText(String.format("%ss", data.getSoundTimescale()));
                     mVoiceTime.setBackgroundResource(R.drawable.voice_three);
                 }
                 mVoiceTime.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +180,14 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
             }
         };
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new RVAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getActivity(), AlarmDetailActivity.class);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_STR, String.valueOf(alarmList.get(position).getFaultId()));
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 
@@ -182,8 +204,54 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.reportAlarmIv:
+                startActivity(new Intent(getActivity(), FaultActivity.class));
                 break;
+            case R.id.rightTv:
+                startActivity(new Intent(getActivity(), AlarmListActivity.class));
+                break;
+            case R.id.layout_1:
+            case R.id.layout_2:
+            case R.id.layout_3:
+            case R.id.layout_4:
+            case R.id.layout_5:
+                int type = Integer.parseInt(view.getTag().toString());
+                Intent intent = new Intent(getActivity(), EquipAlarmActivity.class);
+                if (type == 0) {
+                    Calendar calendar = Calendar.getInstance();
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd"));
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "今日故障");
+                } else if (type == 1) {
+                    Calendar calendar = Calendar.getInstance();
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd"));
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "今日故障");
+                } else {
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "遗留故障");
+                }
+                startActivity(intent);
+                break;
+
         }
+    }
+
+    @NonNull
+    private String getDataStr(Calendar calendar) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(calendar.get(Calendar.YEAR));
+        sb.append("-");
+        int month = calendar.get(Calendar.MONTH) + 1;
+        if (month < 10) {
+            sb.append("0").append(month);
+        } else {
+            sb.append(month);
+        }
+        sb.append("-");
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        if (day < 10) {
+            sb.append("0").append(day);
+        } else {
+            sb.append(day);
+        }
+        return sb.toString();
     }
 
     @Override

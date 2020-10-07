@@ -16,7 +16,6 @@
             android:layout_width="0dp"
             android:layout_height="44dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="16dp"
             android:layout_weight="1"
             android:drawableRight="@drawable/list_arrow"
             android:gravity="center|left"
@@ -28,6 +27,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:background="@color/color_news_line_gray" />
 </LinearLayout>

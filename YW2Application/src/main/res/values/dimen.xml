@@ -29,7 +29,7 @@
     <dimen name="overhaul_item_margin_left_right">13dp</dimen>
     <dimen name="overhaul_item_padding_left">15dp</dimen>
     <dimen name="overhaul_item_padding_right">22dp</dimen>
-    <dimen name="overhaul_belong_place_text_size">13sp</dimen>
+    <dimen name="overhaul_belong_place_text_size">14sp</dimen>
     <dimen name="overhaul_equip_name_text_size">14sp</dimen>
     <dimen name="overhaul_item_card_view_margin">3dp</dimen>
     <dimen name="overhaul_item_card_view_radius">8dp</dimen>

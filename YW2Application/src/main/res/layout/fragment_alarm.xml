@@ -95,11 +95,13 @@
                             android:weightSum="5">
 
                             <LinearLayout
+                                android:id="@+id/layout_1"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:tag="0">
 
                                 <TextView
                                     android:id="@+id/alarmTv1"
@@ -120,11 +122,13 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/layout_2"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:tag="1">
 
                                 <TextView
                                     android:id="@+id/alarmTv2"
@@ -145,11 +149,13 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/layout_3"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:tag="1">
 
                                 <TextView
                                     android:id="@+id/alarmTv3"
@@ -170,11 +176,13 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/layout_4"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:tag="1">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -195,11 +203,13 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/layout_5"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:tag="2">
 
                                 <TextView
                                     android:id="@+id/alarmTv5"
