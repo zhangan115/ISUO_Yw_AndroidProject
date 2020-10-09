@@ -154,7 +154,7 @@
 
     <color name="color_state_choose">#5f97f9</color>
     <color name="color_state_normal">#535862</color>
-    <color name="color_week">#86A0CD</color>
+    <color name="color_week">#333333</color>
     <color name="colorAlarmA">#FA5B58</color>
     <color name="colorAlarmB">#F0A326</color>
     <color name="colorAlarmC">#3787EE</color>

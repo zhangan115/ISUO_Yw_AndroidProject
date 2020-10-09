@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.work;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.MainActivity;
+import com.isuo.yw2application.view.main.work.all.WorkItemListActivity;
 import com.isuo.yw2application.view.main.work.message.NewsListActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
 import com.sito.library.utils.DataUtil;
@@ -129,6 +131,10 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
 
     @Override
     public void showWorkItemList(List<WorkItem> workItems) {
+        showWorkItemList.clear();
+        showWorkItemList.addAll(workItems);
+        workItemList.clear();
+        workItemList.addAll(workItems);
         if (workItems.size() == 8 && getView() != null) {
             ((WorkItemLayout) getView().findViewById(R.id.workItem1)).setContent(workItems.get(0));
             ((WorkItemLayout) getView().findViewById(R.id.workItem2)).setContent(workItems.get(1));
@@ -142,6 +148,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
             WorkItem workItem10 = new WorkItem(10, "安全制度管理", R.drawable.security);
             ((WorkItemLayout) getView().findViewById(R.id.workItem9)).setContent(workItem9);
             ((WorkItemLayout) getView().findViewById(R.id.workItem10)).setContent(workItem10);
+            getView().findViewById(R.id.workItem8).setOnClickListener(this);
         }
     }
 
@@ -208,6 +215,26 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                 intent.putExtra(ConstantStr.KEY_BUNDLE_INT, type);
                 startActivity(intent);
                 break;
+            case R.id.workItem8:
+                Intent workItemListInt = new Intent(getActivity(), WorkItemListActivity.class);
+                workItemListInt.putParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST, showWorkItemList);
+                workItemListInt.putParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST_1, workItemList);
+                startActivityForResult(workItemListInt, WORK_ITEM_CODE);
+                break;
+        }
+    }
+
+    private int WORK_ITEM_CODE = 100;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == WORK_ITEM_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            ArrayList<WorkItem> workItems = data.getParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST);
+            showWorkItemList(workItems);
+//            if (workItems != null) {
+//                mPresenter.saveWorkItem(workItems);
+//            }
         }
     }
 

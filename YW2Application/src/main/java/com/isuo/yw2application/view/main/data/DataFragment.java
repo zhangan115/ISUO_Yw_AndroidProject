@@ -1,6 +1,7 @@
 package com.isuo.yw2application.view.main.data;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -16,6 +17,14 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.mode.bean.discover.ValueAddedBean;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
+import com.isuo.yw2application.view.main.data.count.alarm.DealAlarmCountActivity;
+import com.isuo.yw2application.view.main.data.count.work.WorkCountActivity;
+import com.isuo.yw2application.view.main.data.fault_line.FaultLineActivity;
+import com.isuo.yw2application.view.main.data.fault_report.FaultReportActivity;
+import com.isuo.yw2application.view.main.data.fault_type.FaultTypeActivity;
+import com.isuo.yw2application.view.main.data.staff_count.StaffCountActivity;
+import com.isuo.yw2application.view.main.data.statistics.part.StatisticsPartActivity;
+import com.isuo.yw2application.view.main.data.statistics.person.StatisticsPersonActivity;
 import com.sito.library.utils.GlideUtils;
 
 import java.util.ArrayList;
@@ -43,6 +52,14 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_data, container, false);
+        rootView.findViewById(R.id.itemLayout1).setOnClickListener(this);
+        rootView.findViewById(R.id.itemLayout2).setOnClickListener(this);
+        rootView.findViewById(R.id.itemLayout3).setOnClickListener(this);
+        rootView.findViewById(R.id.itemLayout4).setOnClickListener(this);
+        rootView.findViewById(R.id.itemLayout5).setOnClickListener(this);
+        rootView.findViewById(R.id.itemLayout6).setOnClickListener(this);
+        rootView.findViewById(R.id.itemLayout7).setOnClickListener(this);
+        rootView.findViewById(R.id.itemLayout8).setOnClickListener(this);
         convenientBanner = rootView.findViewById(R.id.convenientBanner);
         List<Integer> defaultValue = new ArrayList<>();
         defaultValue.add(R.drawable.banner);
@@ -76,7 +93,30 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
+            case R.id.itemLayout1:
+                startActivity(new Intent(getActivity(), StatisticsPartActivity.class));
+                break;
+            case R.id.itemLayout2:
+                startActivity(new Intent(getContext(), StaffCountActivity.class));
+                break;
+            case R.id.itemLayout3:
+                startActivity(new Intent(getActivity(), FaultReportActivity.class));
+                break;
+            case R.id.itemLayout4:
+                startActivity(new Intent(getContext(), WorkCountActivity.class));
+                break;
+            case R.id.itemLayout5:
+                startActivity(new Intent(getActivity(), FaultTypeActivity.class));
+                break;
+            case R.id.itemLayout6:
+                startActivity(new Intent(getActivity(), DealAlarmCountActivity.class));
+                break;
+            case R.id.itemLayout7:
+                startActivity(new Intent(getActivity(), FaultLineActivity.class));
+                break;
+            case R.id.itemLayout8:
+                startActivity(new Intent(getActivity(), StatisticsPersonActivity.class));
+                break;
         }
     }
 

@@ -307,6 +307,74 @@
             android:configChanges="orientation|keyboardHidden"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!-- 所有工作-->
+        <activity
+            android:name=".view.main.work.all.WorkItemListActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!--数据-->
+        <activity
+            android:name=".view.main.data.fault_report.FaultReportActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.data.fault_time.FaultTimeActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.data.statistics.part.StatisticsPartActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.data.statistics.person.StatisticsPersonActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.data.fault_type.FaultTypeActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.data.staff_time.StaffTimeActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.data.fault_line.FaultLineActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.data.count.alarm.DealAlarmCountActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.data.count.work.WorkCountActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.data.staff_count.StaffCountActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
     </application>
 
