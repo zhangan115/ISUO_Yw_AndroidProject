@@ -352,7 +352,7 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <!-- 所有工作-->
         <activity
-            android:name=".view.main.work.all.WorkItemListActivity"
+            android:name=".view.main.work.all.WorkItemAllActivity"
             android:allowTaskReparenting="true"
             android:configChanges="orientation|keyboardHidden"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"

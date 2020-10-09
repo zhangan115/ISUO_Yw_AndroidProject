@@ -391,8 +391,27 @@ public class WorkRepository implements WorkDataSource {
     @Override
     public void getWorkItems(final WorkItemCallBack callBack) {
         String workItemStr = sp.getString(ConstantStr.WORK_ITEM, "");
-        List<WorkItem> allWorkItems = new ArrayList<>();
         List<WorkItem> myWorkItems = new ArrayList<>();
+
+        myWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
+        myWorkItems.add(new WorkItem(2, "检修工作", R.drawable.overhaul));
+        myWorkItems.add(new WorkItem(3, "指派检修", R.drawable.assign));
+        myWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
+        myWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
+        myWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
+        myWorkItems.add(new WorkItem(7, "企业规范", R.drawable.standard));
+
+        myWorkItems.add(new WorkItem(-1, "全部", R.drawable.all));
+
+        callBack.showWorkItem(myWorkItems);
+    }
+
+    @Override
+    public void getAllWorkItems(WorkItemAllCallBack callBack) {
+        this.getWorkItems(callBack);
+        List<WorkItem> allWorkItems = new ArrayList<>();
+        List<WorkItem> payWorkItems = new ArrayList<>();
+        //可用item
         allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
         allWorkItems.add(new WorkItem(2, "检修工作", R.drawable.overhaul));
         allWorkItems.add(new WorkItem(3, "指派检修", R.drawable.assign));
@@ -400,30 +419,12 @@ public class WorkRepository implements WorkDataSource {
         allWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
         allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
         allWorkItems.add(new WorkItem(7, "企业规范", R.drawable.standard));
-        // TODO: 2020/9/22  
-//        allWorkItems.add(new WorkItem(8, "指派检修", R.drawable.bg_home_icon_zp));
-//        allWorkItems.add(new WorkItem(9, "工具管理", R.drawable.bg_home_icon_gj));
-//        allWorkItems.add(new WorkItem(10, "发布通知", R.drawable.bg_home_icon_fb));
-//        allWorkItems.add(new WorkItem(11, "台账录入", R.drawable.bg_home_icon_tz));
-        if (TextUtils.isEmpty(workItemStr)) {
-            for (int i = 0; i < 7; i++) {
-                myWorkItems.add(allWorkItems.get(i));
-            }
-            myWorkItems.add(new WorkItem(-1, "全部", R.drawable.all));
-        } else {
-            String[] saveItems = workItemStr.split(",");
-            for (String saveItem : saveItems) {
-                for (int j = 0; j < allWorkItems.size(); j++) {
-                    int id = Integer.valueOf(saveItem);
-                    if (id == allWorkItems.get(j).getId()) {
-                        myWorkItems.add(allWorkItems.get(j));
-                        break;
-                    }
-                }
-            }
-            myWorkItems.add(new WorkItem(-1, "全部", R.drawable.all));
-        }
+        allWorkItems.add(new WorkItem(8, "代办事项", R.drawable.to_do_list));
+        allWorkItems.add(new WorkItem(9, "日常巡检", R.drawable.inspecting));
+        //需要付费item
+        payWorkItems.add(new WorkItem(20, "注油管理", R.drawable.oiling));
+        payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
         callBack.showAllWorkItem(allWorkItems);
-        callBack.showWorkItem(myWorkItems);
+        callBack.showPayWorkItem(payWorkItems);
     }
 }

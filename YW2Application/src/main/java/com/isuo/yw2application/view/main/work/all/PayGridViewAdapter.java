@@ -19,13 +19,13 @@ import java.util.List;
  * grid view adapter
  * Created by zhangan on 2018/3/26.
  */
-public class AllGridViewAdapter extends BaseAdapter {
+public class PayGridViewAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<WorkItem> mDatas = new ArrayList<>();
     private int layout;
     private IStateChange iStateChange;
 
-    AllGridViewAdapter(Context context, List<WorkItem> workItems, int layout, IStateChange iStateChange) {
+    PayGridViewAdapter(Context context, List<WorkItem> workItems, int layout, IStateChange iStateChange) {
         this.context = context;
         this.mDatas.clear();
         this.mDatas.addAll(workItems);
@@ -89,7 +89,7 @@ public class AllGridViewAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if (iStateChange != null) {
                     int position = (int) v.getTag();
-                    iStateChange.onStateChange(position);
+                    iStateChange.onPayStateChange(position);
                 }
             }
         });
@@ -105,7 +105,7 @@ public class AllGridViewAdapter extends BaseAdapter {
 
     interface IStateChange {
 
-        void onStateChange(int position);
+        void onPayStateChange(int position);
     }
 
 }

@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.MainActivity;
-import com.isuo.yw2application.view.main.work.all.WorkItemListActivity;
+import com.isuo.yw2application.view.main.work.all.WorkItemAllActivity;
 import com.isuo.yw2application.view.main.work.message.NewsListActivity;
 import com.isuo.yw2application.view.main.work.sos.SOSActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
@@ -218,7 +217,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                 startActivity(intent);
                 break;
             case R.id.workItem8:
-                Intent workItemListInt = new Intent(getActivity(), WorkItemListActivity.class);
+                Intent workItemListInt = new Intent(getActivity(), WorkItemAllActivity.class);
                 workItemListInt.putParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST, showWorkItemList);
                 workItemListInt.putParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST_1, workItemList);
                 startActivityForResult(workItemListInt, WORK_ITEM_CODE);

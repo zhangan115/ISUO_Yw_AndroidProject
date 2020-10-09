@@ -53,10 +53,6 @@ class WorkPresenter implements WorkContract.Presenter {
                 mView.showWorkItemList(workItems);
             }
 
-            @Override
-            public void showAllWorkItem(List<WorkItem> workItems) {
-
-            }
         });
     }
 

@@ -211,6 +211,9 @@ public class SOSActivity extends BaseActivity implements SOSContract.View {
                     jsonObject.put("suggest", voiceStr);
                     if (!TextUtils.isEmpty(mLocalEt.getText().toString())) {
                         jsonObject.put("place", mLocalEt.getText().toString());
+                    }else{
+                        Yw2Application.getInstance().showToast("请输入地点");
+                        return;
                     }
                     if (!TextUtils.isEmpty(voicePath) && !TextUtils.isEmpty(voiceTime)) {
                         jsonObject.put("soundTimescale", voiceTime);

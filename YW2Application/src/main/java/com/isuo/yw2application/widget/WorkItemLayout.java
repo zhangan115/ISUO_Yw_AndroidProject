@@ -1,19 +1,15 @@
 package com.isuo.yw2application.widget;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 import com.isuo.yw2application.R;
-import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
-import com.isuo.yw2application.view.main.work.all.WorkItemListActivity;
 
 /**
  * 选择流程

@@ -100,10 +100,18 @@ public interface WorkDataSource {
 
         void showWorkItem(List<WorkItem> workItems);
 
+    }
+    interface WorkItemAllCallBack extends WorkItemCallBack{
+
         void showAllWorkItem(List<WorkItem> workItems);
+
+        void showPayWorkItem(List<WorkItem> workItems);
+
     }
 
     void getWorkItems(WorkItemCallBack callBack);
+
+    void getAllWorkItems(WorkItemAllCallBack callBack);
 
     void saveWorkItems(List<WorkItem> items);
 

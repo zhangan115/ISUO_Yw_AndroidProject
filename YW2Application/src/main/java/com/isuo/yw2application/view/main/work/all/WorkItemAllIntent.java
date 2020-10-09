@@ -16,7 +16,7 @@ import com.isuo.yw2application.view.main.task.overhaul.WorkOverhaulActivity;
  * Created by zhangan on 2018/3/27.
  */
 
-public class WorkItemIntent {
+public class WorkItemAllIntent {
 
     public static Intent startWorkItem(Activity activity, WorkItem workItem) {
         Intent intent = new Intent();

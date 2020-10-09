@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -45,18 +46,129 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f7f7f7"
+        android:background="@color/color_division"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
+            android:background="@drawable/white_bg_with_shape"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingTop="12dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="我的"
+                    android:textColor="@color/text333"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvNote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:paddingRight="5dp"
+                    android:text="(按住拖动调整排序)"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/gray_666666"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:background="@drawable/shape_green"
+                    android:paddingLeft="10dp"
+                    android:gravity="center"
+                    android:paddingRight="10dp"
+                    android:text="编辑"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+
+            <com.isuo.yw2application.view.main.work.all.widget.ShowWorkItemView
+                android:id="@+id/grid_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:horizontalSpacing="10dp"
+                android:numColumns="4"
+                android:scrollbars="vertical"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/white_bg_with_shape"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="12dp">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="可用功能"
+                android:textColor="@color/text333"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <com.isuo.yw2application.view.main.work.all.widget.WorkItemGridView
+                android:id="@+id/gridView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:horizontalSpacing="10dp"
+                android:numColumns="4"
+                android:scrollbars="vertical"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="5dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/white_bg_with_shape"
             android:orientation="vertical"
             android:paddingLeft="15dp"
@@ -75,44 +187,19 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="8dp"
-                    android:text="我的"
+                    android:text="付费功能"
                     android:textColor="@color/text333"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tvNote"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="5dp"
-                    android:text="(按住拖动调整排序)"
-                    android:textColor="@color/gray_666666"
-                    android:textSize="14sp"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/tvEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shape_green"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="4dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="4dp"
-                    android:text="编辑"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="14dp" />
 
             </LinearLayout>
 
-
-            <com.huxq17.handygridview.HandyGridView
-                android:id="@+id/grid_tips"
+            <com.isuo.yw2application.view.main.work.all.widget.WorkItemGridView
+                android:id="@+id/payGridView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:gravity="center"
@@ -120,48 +207,10 @@
                 android:numColumns="4"
                 android:scrollbars="vertical"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="10dp" />
+                android:verticalSpacing="5dp" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/white_bg_with_shape"
-            android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingTop="5dp"
-            android:paddingRight="15dp"
-            android:paddingBottom="12dp">
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="8dp"
-                android:text="全部"
-                android:textColor="@color/text333"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <GridView
-                android:id="@+id/gridView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:gravity="center"
-                android:horizontalSpacing="10dp"
-                android:numColumns="4"
-                android:scrollbars="vertical"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="10dp" />
         </LinearLayout>
     </LinearLayout>
+
+
 </LinearLayout>

@@ -90,9 +90,9 @@ public class GridViewAdapter extends BaseAdapter implements OnItemMovedListener 
             viewHolder.icon.setImageDrawable(context.getResources().getDrawable(mDatas.get(position).getIcon()));
             viewHolder.text.setText(mDatas.get(position).getName());
             if (mDatas.get(position).isAdd()) {
-                viewHolder.state.setImageDrawable(context.getResources().getDrawable(R.drawable.reduce_icon));
+                viewHolder.state.setImageDrawable(context.getResources().getDrawable(R.drawable.reduce));
             } else {
-                viewHolder.state.setImageDrawable(context.getResources().getDrawable(R.drawable.add_icon));
+                viewHolder.state.setImageDrawable(context.getResources().getDrawable(R.drawable.add));
             }
             if (mDatas.get(position).isEdit()) {
                 viewHolder.state.setVisibility(View.VISIBLE);
