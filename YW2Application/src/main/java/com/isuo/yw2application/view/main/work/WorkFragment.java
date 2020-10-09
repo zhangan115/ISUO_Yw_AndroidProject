@@ -27,6 +27,7 @@ import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.MainActivity;
 import com.isuo.yw2application.view.main.work.all.WorkItemListActivity;
 import com.isuo.yw2application.view.main.work.message.NewsListActivity;
+import com.isuo.yw2application.view.main.work.sos.SOSActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
 import com.sito.library.utils.DataUtil;
 import com.sito.library.utils.GlideUtils;
@@ -149,6 +150,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
             ((WorkItemLayout) getView().findViewById(R.id.workItem9)).setContent(workItem9);
             ((WorkItemLayout) getView().findViewById(R.id.workItem10)).setContent(workItem10);
             getView().findViewById(R.id.workItem8).setOnClickListener(this);
+            getView().findViewById(R.id.workItem9).setOnClickListener(this);
         }
     }
 
@@ -220,6 +222,12 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                 workItemListInt.putParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST, showWorkItemList);
                 workItemListInt.putParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST_1, workItemList);
                 startActivityForResult(workItemListInt, WORK_ITEM_CODE);
+                break;
+            case R.id.workItem9:
+                startActivity(new Intent(getActivity(), SOSActivity.class));
+                break;
+            case R.id.workItem10:
+
                 break;
         }
     }
