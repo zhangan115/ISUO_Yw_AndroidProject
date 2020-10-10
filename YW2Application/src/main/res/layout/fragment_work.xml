@@ -61,6 +61,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp">
@@ -71,7 +73,7 @@
                     android:background="@drawable/white_bg_with_shape"
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
-                    android:paddingTop="8dp"
+                    android:paddingTop="12dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="8dp">
 
@@ -84,12 +86,12 @@
                         android:textStyle="bold" />
 
                     <LinearLayout
+                        android:id="@+id/workMessageLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="0"
-                        android:id="@+id/workMessageLayout"
                         android:layout_marginTop="24dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:tag="0">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -115,18 +117,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
-                                tools:text="工作动态"
                                 android:textColor="@color/gray_999999"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:text="工作动态" />
                         </LinearLayout>
 
                         <TextView
                             android:id="@+id/workContentTimeTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="12:02"
                             android:textColor="@color/gray_999999"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="12:02" />
                     </LinearLayout>
 
                     <View
@@ -136,12 +138,12 @@
                         android:background="#f7f7f7" />
 
                     <LinearLayout
+                        android:id="@+id/alarmMessageLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="1"
-                        android:id="@+id/alarmMessageLayout"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:tag="1">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -167,18 +169,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
-                                tools:text="工作动态"
                                 android:textColor="@color/gray_999999"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:text="工作动态" />
                         </LinearLayout>
 
                         <TextView
                             android:id="@+id/faultContentTimeTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="12:02"
                             android:textColor="@color/gray_999999"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="12:02" />
                     </LinearLayout>
 
                     <View
@@ -188,12 +190,12 @@
                         android:background="#f7f7f7" />
 
                     <LinearLayout
+                        android:id="@+id/enterpriseMessageLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:tag="2"
-                        android:id="@+id/enterpriseMessageLayout"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:tag="2">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -219,18 +221,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
-                                tools:text="工作动态"
                                 android:textColor="@color/gray_999999"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:text="工作动态" />
                         </LinearLayout>
 
                         <TextView
                             android:id="@+id/enterpriseContentTimeTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="12:02"
                             android:textColor="@color/gray_999999"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="12:02" />
                     </LinearLayout>
 
                     <View
@@ -240,12 +242,12 @@
                         android:background="#f7f7f7" />
 
                     <LinearLayout
+                        android:id="@+id/abtMeMessageLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="3"
-                        android:id="@+id/abtMeMessageLayout"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:tag="3">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -271,18 +273,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
-                                tools:text="工作动态"
                                 android:textColor="@color/gray_999999"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:text="工作动态" />
                         </LinearLayout>
 
                         <TextView
                             android:id="@+id/abtMeContentTimeTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="12:02"
                             android:textColor="@color/gray_999999"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="12:02" />
                     </LinearLayout>
 
                     <View
@@ -299,7 +301,7 @@
                     android:background="@drawable/white_bg_with_shape"
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
-                    android:paddingTop="8dp"
+                    android:paddingTop="12dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="8dp">
 
@@ -311,69 +313,19 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <com.isuo.yw2application.view.main.work.all.widget.WorkItemGridView
+                        android:id="@+id/gridView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
-
-                        <com.isuo.yw2application.widget.WorkItemLayout
-                            android:id="@+id/workItem1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <com.isuo.yw2application.widget.WorkItemLayout
-                            android:id="@+id/workItem2"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <com.isuo.yw2application.widget.WorkItemLayout
-                            android:id="@+id/workItem3"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <com.isuo.yw2application.widget.WorkItemLayout
-                            android:id="@+id/workItem4"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="23dp"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
-
-                        <com.isuo.yw2application.widget.WorkItemLayout
-                            android:id="@+id/workItem5"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <com.isuo.yw2application.widget.WorkItemLayout
-                            android:id="@+id/workItem6"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <com.isuo.yw2application.widget.WorkItemLayout
-                            android:id="@+id/workItem7"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <com.isuo.yw2application.widget.WorkItemLayout
-                            android:id="@+id/workItem8"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </LinearLayout>
+                        android:layout_marginTop="10dp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:gravity="center"
+                        android:horizontalSpacing="10dp"
+                        android:numColumns="4"
+                        android:scrollbars="vertical"
+                        android:stretchMode="columnWidth"
+                        android:verticalSpacing="5dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -384,7 +336,7 @@
                     android:background="@drawable/white_bg_with_shape"
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
-                    android:paddingTop="8dp"
+                    android:paddingTop="12dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="8dp">
 

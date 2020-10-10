@@ -73,6 +73,9 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String title = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR);
+        if (TextUtils.isEmpty(title)) {
+            title = "日常巡检";
+        }
         inspectionType = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT, -1);
         setLayoutAndToolbar(R.layout.activivity_inspection_work_list, title);
         new InspectionPresenter(Yw2Application.getInstance().getWorkRepositoryComponent().getRepository(), this);
@@ -178,22 +181,22 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                         tv_executor_inspection_user.setText(sb.toString());
                     }
                     tv_executor_user_type.setText("被指派人:");
-                    actualStartTimeTv.setText("实际开始时间:");
+                    actualStartTimeTv.setText("实际开始:");
                     startTaskTv.setText("领取任务");
                 } else if (data.getTaskState() == ConstantInt.TASK_STATE_2) {
                     ll_actual_time.setVisibility(View.GONE);
                     tv_executor_user_type.setText("领 取 人:");
                     tv_executor_inspection_user.setText(data.getReceiveUser().getRealName());
-                    actualStartTimeTv.setText("实际开始时间:");
+                    actualStartTimeTv.setText("实际开始:");
                     startTaskTv.setText("开始任务");
                 } else if (data.getTaskState() == ConstantInt.TASK_STATE_3) {
                     ll_actual_time.setVisibility(View.GONE);
                     tv_executor_user_type.setText("领 取 人:");
                     tv_executor_inspection_user.setText(data.getReceiveUser().getRealName());
-                    actualStartTimeTv.setText("实际开始时间:");
+                    actualStartTimeTv.setText("实际开始:");
                     startTaskTv.setText("开始任务");
                 } else if (data.getTaskState() == ConstantInt.TASK_STATE_4) {
-                    actualStartTimeTv.setText("巡检截至时间:");
+                    actualStartTimeTv.setText("巡检截至:");
                     ll_actual_time.setVisibility(View.VISIBLE);
                     tv_time_actual.setText(DataUtil.timeFormat(data.getStartTime(), "yyyy-MM-dd HH:mm"));
                     tv_time_actual_end.setText(DataUtil.timeFormat(data.getEndTime(), "yyyy-MM-dd HH:mm"));
@@ -223,7 +226,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                 tv_equip_num.setText(str);
                 if (data.getPlanStartTime() != 0) {
                     tv_time_plan.setVisibility(View.VISIBLE);
-                    planStartTimeTv.setText("计划起止时间:");
+                    planStartTimeTv.setText("计划起止:");
                     tv_time_plan.setText(MessageFormat.format("{0}"
                             , DataUtil.timeFormat(data.getPlanStartTime(), "yyyy-MM-dd HH:mm")));
                 } else {

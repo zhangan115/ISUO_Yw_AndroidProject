@@ -80,27 +80,27 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
         isAwait = getIntent().getBooleanExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, false);
         new AlarmDetailPresenter(Yw2Application.getInstance().getFaultRepositoryComponent().getRepository(), this);
         String mFaultId = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR);
-        alarmCardView = (LinearLayout) findViewById(R.id.card_view_alarm_upload);
-        dealCardView = (LinearLayout) findViewById(R.id.card_view_alarm_deal);
-        careContent = (LinearLayout) findViewById(R.id.ll_care_content);
-        careLayout = (LinearLayout) findViewById(R.id.ll_care);
-        scrollView = (ScrollView) findViewById(R.id.scroll_view);
+        alarmCardView = findViewById(R.id.card_view_alarm_upload);
+        dealCardView = findViewById(R.id.card_view_alarm_deal);
+        careContent = findViewById(R.id.ll_care_content);
+        careLayout = findViewById(R.id.ll_care);
+        scrollView = findViewById(R.id.scroll_view);
         scrollView.setVisibility(View.GONE);
 
-        faultImageLayout = (ShowImageLayout) findViewById(R.id.fault_show_image);
-        repairImageLayout = (ShowImageLayout) findViewById(R.id.repair_show_image);
-        faultPlaySoundLayout = (PlaySoundLayout) findViewById(R.id.fault_sound);
-        repairPlaySoundLayout = (PlaySoundLayout) findViewById(R.id.repair_play_sound);
-        progressTitleLayout1 = (ProgressTitleLayout) findViewById(R.id.progress_1);
-        progressTitleLayout2 = (ProgressTitleLayout) findViewById(R.id.progress_2);
-        progressTitleLayout3 = (ProgressTitleLayout) findViewById(R.id.progress_3);
-        ProgressTitleLayout progressTitleLayout4 = (ProgressTitleLayout) findViewById(R.id.progress_4);
+        faultImageLayout = findViewById(R.id.fault_show_image);
+        repairImageLayout = findViewById(R.id.repair_show_image);
+        faultPlaySoundLayout = findViewById(R.id.fault_sound);
+        repairPlaySoundLayout = findViewById(R.id.repair_play_sound);
+        progressTitleLayout1 = findViewById(R.id.progress_1);
+        progressTitleLayout2 = findViewById(R.id.progress_2);
+        progressTitleLayout3 = findViewById(R.id.progress_3);
+        ProgressTitleLayout progressTitleLayout4 = findViewById(R.id.progress_4);
         progressTitleLayout1.setContent(findDrawById(R.drawable.found_icon_press), "故障上报", true);
         progressTitleLayout2.setContent(findDrawById(R.drawable.assign_icon_press), "指派流转", true);
         progressTitleLayout3.setContent(findDrawById(R.drawable.overhaul_icon_press), "故障检修", true);
         progressTitleLayout4.setContent(findDrawById(R.drawable.result_icon_press), "结果检验", true);
-        ivNo = (ImageView) findViewById(R.id.iv_no);
-        ivYes = (ImageView) findViewById(R.id.iv_yes);
+        ivNo = findViewById(R.id.iv_no);
+        ivYes = findViewById(R.id.iv_yes);
         mPresenter.getFaultDetailData(mFaultId);
         mPresenter.getJobPackage();
     }
@@ -112,13 +112,13 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
         }
         this.mFaultDetail = faultDetail;
         scrollView.setVisibility(View.VISIBLE);
-        TextView id_equip_address = (TextView) findViewById(R.id.id_equip_address);
-        TextView id_equip_state = (TextView) findViewById(R.id.id_equip_state);
-        TextView tv_equip_name = (TextView) findViewById(R.id.tv_equip_name);
-        TextView tv_start_time = (TextView) findViewById(R.id.tv_start_time);
+        TextView id_equip_address = findViewById(R.id.id_equip_address);
+        TextView id_equip_state = findViewById(R.id.id_equip_state);
+        TextView tv_equip_name = findViewById(R.id.tv_equip_name);
+        TextView tv_start_time = findViewById(R.id.tv_start_time);
         findViewById(R.id.tv_upload).setOnClickListener(this);
-        TextView tv_user = (TextView) findViewById(R.id.tv_user);
-        TextView tv_alarm_type = (TextView) findViewById(R.id.tv_alarm_type);
+        TextView tv_user = findViewById(R.id.tv_user);
+        TextView tv_alarm_type = findViewById(R.id.tv_alarm_type);
         id_equip_address.setText(MessageFormat.format("属地:{0}", faultDetail.getEquipment().getRoom().getRoomName()));
         id_equip_state.setText(Yw2Application.getInstance().getMapOption().get("9").get(String.valueOf(faultDetail.getFaultState())));
         if (faultDetail.getEquipment() != null) {
@@ -173,9 +173,9 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
             }
             isToRepair = faultDetail.getDefaultFlowId() != null && faultDetail.getDefaultFlow() != null && faultDetail.getUsersN() != null;
             if (alarmCardView.getVisibility() == View.VISIBLE) {
-                TextView tvLeft = (TextView) findViewById(R.id.tv_left);
-                TextView tvCenter = (TextView) findViewById(R.id.tv_center);
-                TextView tvRight = (TextView) findViewById(R.id.tv_right);
+                TextView tvLeft = findViewById(R.id.tv_left);
+                TextView tvCenter = findViewById(R.id.tv_center);
+                TextView tvRight = findViewById(R.id.tv_right);
                 tvLeft.setOnClickListener(this);
                 tvCenter.setOnClickListener(this);
                 tvRight.setOnClickListener(this);
@@ -232,8 +232,8 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
                 dealCardView.setVisibility(View.GONE);
             } else {
                 dealCardView.setVisibility(View.VISIBLE);
-                TextView tv_time_deal = (TextView) findViewById(R.id.tv_repair_time);
-                TextView tv_repair_state = (TextView) findViewById(R.id.tv_repair_state);
+                TextView tv_time_deal = findViewById(R.id.tv_repair_time);
+                TextView tv_repair_state = findViewById(R.id.tv_repair_state);
                 tv_repair_state.setText(Yw2Application.getInstance().getMapOption().get("4").get(String.valueOf(faultDetail.getRepair().getRepairResult())));
                 tv_time_deal.setText(MessageFormat.format("检修时间:{0}", DataUtil.timeFormat(faultDetail.getRepair().getCommitTime(), "yyyy-MM-dd HH:mm")));
                 repairPlaySoundLayout.setContent(faultDetail.getRepair().getVoiceUrl()
@@ -279,7 +279,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
         });
         final Calendar mCurrentCalender = Calendar.getInstance(Locale.CHINA);
         mCurrentCalender.add(Calendar.DAY_OF_YEAR, 1);
-        final TextView care_end_time = (TextView) findViewById(R.id.tv_care_end_time);
+        final TextView care_end_time = findViewById(R.id.tv_care_end_time);
         care_end_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -319,7 +319,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
             try {
                 jsonObject.put("equipmentId", mFaultDetail.getEquipment().getEquipmentId());
                 jsonObject.put("endTime", careEndTime);
-                EditText et_care_content = (EditText) findViewById(R.id.et_care_content);
+                EditText et_care_content = findViewById(R.id.et_care_content);
                 if (!TextUtils.isEmpty(et_care_content.getText().toString())) {
                     jsonObject.put("description", et_care_content.getText().toString());
                 }
@@ -446,7 +446,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
                             map.put("usersNext", getUserIds());
                         }
                     }
-                    EditText editText = (EditText) findViewById(R.id.et_content);
+                    EditText editText = findViewById(R.id.et_content);
                     if (!TextUtils.isEmpty(editText.getText().toString())) {
                         map.put("flowRemark", editText.getText().toString());
                     }
@@ -471,7 +471,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
                             return;
                         }
                         jsonObject.put("endTime", endTime);
-                        EditText editText = (EditText) findViewById(R.id.et_content);
+                        EditText editText = findViewById(R.id.et_content);
                         if (!TextUtils.isEmpty(editText.getText().toString())) {
                             jsonObject.put("repairIntro", editText.getText().toString());
                         }
@@ -483,7 +483,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
                 } else {
                     Map<String, String> map = new HashMap<>();
                     map.put("faultId", String.valueOf(mFaultDetail.getFaultId()));
-                    EditText editText = (EditText) findViewById(R.id.et_content);
+                    EditText editText = findViewById(R.id.et_content);
                     if (!TextUtils.isEmpty(editText.getText().toString())) {
                         map.put("flowRemark", editText.getText().toString());
                     }
@@ -495,13 +495,13 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
 
     private void showPointView() {
         actionType = 1;
-        LinearLayout to_overhaul = (LinearLayout) findViewById(R.id.to_overhaul);
-        LinearLayout ll_choose_user = (LinearLayout) findViewById(R.id.ll_choose_user);
+        LinearLayout to_overhaul = findViewById(R.id.to_overhaul);
+        LinearLayout ll_choose_user = findViewById(R.id.ll_choose_user);
         to_overhaul.setVisibility(View.GONE);
         ll_choose_user.setVisibility(View.VISIBLE);
-        TextView tv_next_user = (TextView) findViewById(R.id.tv_next_user);
+        TextView tv_next_user = findViewById(R.id.tv_next_user);
         tv_next_user.setText("指派给");
-        LinearLayout ll_add_user = (LinearLayout) findViewById(R.id.ll_add_user);
+        LinearLayout ll_add_user = findViewById(R.id.ll_add_user);
         if (Yw2Application.getInstance().getCurrentUser().getCustomer().getIsOpen() == 1) {
             if (mFaultDetail.getDefaultFlow() != null && mFaultDetail.getUsersN() != null) {
                 tv_next_user.setVisibility(View.GONE);
@@ -524,14 +524,14 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
 
     private void showOverhaulView() {
         actionType = 2;
-        LinearLayout to_overhaul = (LinearLayout) findViewById(R.id.to_overhaul);
-        LinearLayout ll_choose_user = (LinearLayout) findViewById(R.id.ll_choose_user);
+        LinearLayout to_overhaul = findViewById(R.id.to_overhaul);
+        LinearLayout ll_choose_user = findViewById(R.id.ll_choose_user);
         to_overhaul.setVisibility(View.VISIBLE);
         ll_choose_user.setVisibility(View.VISIBLE);
-        TextView tv_next_user = (TextView) findViewById(R.id.tv_next_user);
+        TextView tv_next_user = findViewById(R.id.tv_next_user);
         tv_next_user.setText("指派给");
-        final TextView start_time = (TextView) findViewById(R.id.start_time);
-        final TextView end_time = (TextView) findViewById(R.id.end_time);
+        final TextView start_time = findViewById(R.id.start_time);
+        final TextView end_time = findViewById(R.id.end_time);
         final Calendar mCurrentCalender = Calendar.getInstance(Locale.CHINA);
         start_time.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -573,8 +573,8 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
                         .show();
             }
         });
-        LinearLayout ll_add_user = (LinearLayout) findViewById(R.id.ll_add_user);
-        LinearLayout ll_choose_pack = (LinearLayout) findViewById(R.id.ll_choose_pack);
+        LinearLayout ll_add_user = findViewById(R.id.ll_add_user);
+        LinearLayout ll_choose_pack = findViewById(R.id.ll_choose_pack);
         ll_choose_pack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -598,7 +598,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
                                     return false;
                                 }
                                 chooseWhich = which;
-                                TextView tv_choose_job = (TextView) findViewById(R.id.tv_choose_job);
+                                TextView tv_choose_job = findViewById(R.id.tv_choose_job);
                                 jobId = String.valueOf(jobPackageBeen.getList().get(which).getJobId());
                                 tv_choose_job.setText(MessageFormat.format("作业包:{0}", text));
                                 return true;
@@ -613,8 +613,8 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
 
     private void showCloseView() {
         actionType = 3;
-        LinearLayout to_overhaul = (LinearLayout) findViewById(R.id.to_overhaul);
-        LinearLayout ll_choose_user = (LinearLayout) findViewById(R.id.ll_choose_user);
+        LinearLayout to_overhaul = findViewById(R.id.to_overhaul);
+        LinearLayout ll_choose_user = findViewById(R.id.ll_choose_user);
         to_overhaul.setVisibility(View.GONE);
         ll_choose_user.setVisibility(View.GONE);
     }
@@ -624,7 +624,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_ADD_USER && resultCode == Activity.RESULT_OK) {
             employeeBeen = data.getParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST);
-            LinearLayout ll_add_user = (LinearLayout) findViewById(R.id.ll_add_user);
+            LinearLayout ll_add_user = findViewById(R.id.ll_add_user);
             ll_add_user.removeAllViews();
             if (employeeBeen != null && employeeBeen.size() > 0) {
                 for (int i = 0; i < employeeBeen.size(); i++) {
@@ -641,7 +641,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
         ImageButton imageButton = new ImageButton(this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(this, 45)
                 , DisplayUtil.dip2px(this, 45));
-        imageButton.setBackground(findDrawById(R.drawable.bg_add_user));
+        imageButton.setBackground(findDrawById(R.drawable.add_btn));
         imageButton.setLayoutParams(params);
         imageButton.setOnClickListener(new View.OnClickListener() {
 
@@ -667,7 +667,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
         StringBuilder sb = new StringBuilder();
         if (employeeBeen != null && employeeBeen.size() >= 0) {
             for (int i = 0; i < employeeBeen.size(); i++) {
-                sb.append(String.valueOf(employeeBeen.get(i).getUser().getUserId()));
+                sb.append(employeeBeen.get(i).getUser().getUserId());
                 if (i != employeeBeen.size() - 1) {
                     sb.append(",");
                 }

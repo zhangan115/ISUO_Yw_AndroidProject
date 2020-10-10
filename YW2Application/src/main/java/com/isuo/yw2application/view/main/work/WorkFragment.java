@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +25,10 @@ import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.MainActivity;
+import com.isuo.yw2application.view.main.work.all.PayGridViewAdapter;
 import com.isuo.yw2application.view.main.work.all.WorkItemAllActivity;
+import com.isuo.yw2application.view.main.work.all.WorkItemAllIntent;
+import com.isuo.yw2application.view.main.work.all.widget.WorkItemGridView;
 import com.isuo.yw2application.view.main.work.message.NewsListActivity;
 import com.isuo.yw2application.view.main.work.sos.SOSActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
@@ -37,10 +41,11 @@ import java.util.List;
 
 public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implements WorkContract.View, View.OnClickListener {
 
-    private ArrayList<WorkItem> workItemList;
     private ArrayList<WorkItem> showWorkItemList;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageView userPhoto;
+    private WorkItemGridView gridView;
+    private GridViewAdapter gridViewAdapter;
 
     public interface DrawClickCallBack {
         void onCallBack();
@@ -73,7 +78,6 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        workItemList = new ArrayList<>();
         showWorkItemList = new ArrayList<>();
         new WorkPresenter(Yw2Application.getInstance().getWorkRepositoryComponent().getRepository()
                 , Yw2Application.getInstance().getRepositoryComponent().getRepository(), this);
@@ -107,6 +111,19 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         rootView.findViewById(R.id.rightImage).setOnClickListener(this);
         userPhoto = rootView.findViewById(R.id.leftImage);
         userPhoto.setOnClickListener(this);
+        gridView = rootView.findViewById(R.id.gridView);
+        gridViewAdapter = new GridViewAdapter(this.getActivity(), showWorkItemList, R.layout.work_item);
+        gridView.setAdapter(gridViewAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (id == -1) {
+                    startActivityForResult(new Intent(getActivity(),WorkItemAllActivity.class),WORK_ALL_CODE);
+                } else {
+                    startActivity(WorkItemAllIntent.startWorkItem(getActivity(), showWorkItemList.get(position)));
+                }
+            }
+        });
         rootView.findViewById(R.id.workMessageLayout).setOnClickListener(this);
         rootView.findViewById(R.id.alarmMessageLayout).setOnClickListener(this);
         rootView.findViewById(R.id.enterpriseMessageLayout).setOnClickListener(this);
@@ -125,32 +142,24 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter.getWorkItem();
         mPresenter.getNews();
+        mPresenter.getWorkItem();
     }
 
     @Override
     public void showWorkItemList(List<WorkItem> workItems) {
         showWorkItemList.clear();
         showWorkItemList.addAll(workItems);
-        workItemList.clear();
-        workItemList.addAll(workItems);
-        if (workItems.size() == 8 && getView() != null) {
-            ((WorkItemLayout) getView().findViewById(R.id.workItem1)).setContent(workItems.get(0));
-            ((WorkItemLayout) getView().findViewById(R.id.workItem2)).setContent(workItems.get(1));
-            ((WorkItemLayout) getView().findViewById(R.id.workItem3)).setContent(workItems.get(2));
-            ((WorkItemLayout) getView().findViewById(R.id.workItem4)).setContent(workItems.get(3));
-            ((WorkItemLayout) getView().findViewById(R.id.workItem5)).setContent(workItems.get(4));
-            ((WorkItemLayout) getView().findViewById(R.id.workItem6)).setContent(workItems.get(5));
-            ((WorkItemLayout) getView().findViewById(R.id.workItem7)).setContent(workItems.get(6));
-            ((WorkItemLayout) getView().findViewById(R.id.workItem8)).setContent(workItems.get(7));
-            WorkItem workItem9 = new WorkItem(9, "紧急电话", R.drawable.emergency_call);
-            WorkItem workItem10 = new WorkItem(10, "安全制度管理", R.drawable.security);
-            ((WorkItemLayout) getView().findViewById(R.id.workItem9)).setContent(workItem9);
-            ((WorkItemLayout) getView().findViewById(R.id.workItem10)).setContent(workItem10);
-            getView().findViewById(R.id.workItem8).setOnClickListener(this);
-            getView().findViewById(R.id.workItem9).setOnClickListener(this);
+        if (getView() == null) {
+            return;
         }
+        gridViewAdapter.setData(showWorkItemList);
+        WorkItem workItem9 = new WorkItem(9, "紧急电话", R.drawable.emergency_call);
+        WorkItem workItem10 = new WorkItem(10, "安全制度管理", R.drawable.security);
+        ((WorkItemLayout) getView().findViewById(R.id.workItem9)).setContent(workItem9);
+        ((WorkItemLayout) getView().findViewById(R.id.workItem10)).setContent(workItem10);
+        getView().findViewById(R.id.workItem9).setOnClickListener(this);
+        getView().findViewById(R.id.workItem10).setOnClickListener(this);
     }
 
     @Override
@@ -216,12 +225,6 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                 intent.putExtra(ConstantStr.KEY_BUNDLE_INT, type);
                 startActivity(intent);
                 break;
-            case R.id.workItem8:
-                Intent workItemListInt = new Intent(getActivity(), WorkItemAllActivity.class);
-                workItemListInt.putParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST, showWorkItemList);
-                workItemListInt.putParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST_1, workItemList);
-                startActivityForResult(workItemListInt, WORK_ITEM_CODE);
-                break;
             case R.id.workItem9:
                 startActivity(new Intent(getActivity(), SOSActivity.class));
                 break;
@@ -231,17 +234,15 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         }
     }
 
-    private int WORK_ITEM_CODE = 100;
+    private int WORK_ALL_CODE = 100;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == WORK_ITEM_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            ArrayList<WorkItem> workItems = data.getParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST);
-            showWorkItemList(workItems);
-//            if (workItems != null) {
-//                mPresenter.saveWorkItem(workItems);
-//            }
+        if (requestCode == WORK_ALL_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            if (mPresenter != null) {
+                mPresenter.getWorkItem();
+            }
         }
     }
 

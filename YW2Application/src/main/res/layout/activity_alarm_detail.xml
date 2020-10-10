@@ -23,7 +23,7 @@
                 android:id="@+id/id_equip_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="14sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="7dp"
                 android:drawableLeft="@drawable/position"
@@ -38,14 +38,14 @@
                 android:id="@+id/card_view_alarm_equipment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="14sp"
+                android:layout_marginRight="14sp"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/white_bg_with_shape"
                 android:orientation="vertical"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingRight="15dp"
+                android:paddingLeft="14sp"
+                android:paddingTop="12dp"
+                android:paddingRight="14sp"
                 android:paddingBottom="12dp">
 
                 <LinearLayout
@@ -94,7 +94,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:layout_marginBottom="5dp"
                             android:text="1#出线柜"
                             android:textColor="@color/text333"
                             android:textSize="16sp"
@@ -169,84 +168,89 @@
                 </LinearLayout>
             </LinearLayout>
 
+
             <LinearLayout
                 android:id="@+id/card_view_alarm_deal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
-                android:layout_marginRight="7dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/white_bg_with_shape"
                 android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingTop="12dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="12dp"
                 android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableLeft="@drawable/message_title_tag"
-                            android:drawablePadding="5dp"
-                            android:text="检修结果"
-                            android:textColor="@color/color535862"
-                            android:textSize="16sp" />
-
-
-                        <TextView
-                            android:id="@+id/tv_repair_state"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/news_text_gray"
-                            android:textSize="14sp"
-                            tools:text="转大修" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:background="@color/color_division" />
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_repair_time"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:textColor="@color/news_text_gray"
-                        android:textSize="15sp"
-                        tools:text="检修时间：2017-08-09 10:00" />
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/message_title_tag"
+                        android:drawablePadding="5dp"
+                        android:text="检修结果"
+                        android:textStyle="bold"
+                        android:textColor="@color/text333"
+                        android:textSize="16sp" />
 
-                    <com.isuo.yw2application.widget.PlaySoundLayout
-                        android:id="@+id/repair_play_sound"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
 
-                    <com.isuo.yw2application.widget.ShowImageLayout
-                        android:id="@+id/repair_show_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
+                    <TextView
+                        android:id="@+id/tv_repair_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray_666666"
+                        android:textSize="14sp"
+                        tools:text="转大修" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_division" />
+
+                <TextView
+                    android:id="@+id/tv_repair_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/text333"
+                    android:textSize="15sp"
+                    tools:text="检修时间：2017-08-09 10:00" />
+
+                <com.isuo.yw2application.widget.PlaySoundLayout
+                    android:id="@+id/repair_play_sound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.isuo.yw2application.widget.ShowImageLayout
+                    android:id="@+id/repair_show_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/card_view_alarm_upload"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
-                android:layout_marginRight="7dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/white_bg_with_shape"
                 android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingTop="12dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="12dp"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -267,21 +271,21 @@
                             android:layout_width="70dp"
                             android:layout_height="30dp"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_center"
                             android:layout_width="70dp"
                             android:layout_height="30dp"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_right"
                             android:layout_width="70dp"
                             android:layout_height="30dp"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -297,7 +301,7 @@
                             android:layout_marginTop="6dp"
                             android:layout_marginBottom="6dp"
                             android:textColor="@color/text333"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
 
                         <HorizontalScrollView
                             android:layout_width="wrap_content"
@@ -332,7 +336,8 @@
                             android:layout_marginBottom="6dp"
                             android:text="选择时间"
                             android:textColor="@color/text333"
-                            android:textSize="14dp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -346,15 +351,15 @@
                                 android:layout_height="wrap_content"
                                 android:padding="8dp"
                                 android:text="_年_月_日_时_分"
-                                android:textColor="@color/color6F88A9"
-                                android:textSize="14dp" />
+                                android:textColor="@color/text333"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="——"
-                                android:textColor="@color/color6F88A9"
-                                android:textSize="14dp" />
+                                android:textColor="@color/text333"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/end_time"
@@ -362,8 +367,8 @@
                                 android:layout_height="wrap_content"
                                 android:padding="8dp"
                                 android:text="_年_月_日_时_分"
-                                android:textColor="@color/color6F88A9"
-                                android:textSize="14dp" />
+                                android:textColor="@color/text333"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -371,7 +376,6 @@
                             android:id="@+id/ll_choose_pack"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bg_overhual_detail"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -379,11 +383,11 @@
                                 android:id="@+id/tv_choose_job"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_weight="1"
                                 android:paddingTop="10dp"
                                 android:paddingBottom="10dp"
-                                android:text="选择作业包" />
+                                android:text="选择作业包"
+                                android:textColor="@color/text333" />
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -430,7 +434,7 @@
                             android:paddingBottom="7dp"
                             android:text="重点关注此设备"
                             android:textColor="@color/text333"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
 
                         <LinearLayout
                             android:id="@+id/ll_care_yes"
@@ -443,7 +447,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="是"
-                                android:textSize="14dp" />
+                                android:textSize="14sp" />
 
                             <ImageView
                                 android:id="@+id/iv_yes"
@@ -466,9 +470,9 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
+                                android:layout_marginLeft="14sp"
                                 android:text="否"
-                                android:textSize="14dp" />
+                                android:textSize="14sp" />
 
                             <ImageView
                                 android:id="@+id/iv_no"
@@ -487,7 +491,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -496,7 +500,7 @@
                             android:paddingBottom="10dp"
                             android:text="重点关注截止时间"
                             android:textColor="@color/text333"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_care_end_time"
@@ -506,7 +510,7 @@
                             android:padding="8dp"
                             android:text="_年_月_日"
                             android:textColor="@color/color6F88A9"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
 
                         <EditText
                             android:id="@+id/et_care_content"
@@ -523,18 +527,17 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <Button
+                <TextView
                     android:id="@+id/tv_upload"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/bg_btn_blue"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_green"
                     android:gravity="center"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
                     android:text="提交"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -542,8 +545,8 @@
                 android:id="@+id/ll_add_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="14sp"
+                android:layout_marginRight="14sp"
                 android:orientation="vertical">
 
                 <com.isuo.yw2application.widget.ProgressTitleLayout

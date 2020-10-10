@@ -424,7 +424,74 @@
             android:configChanges="orientation|keyboardHidden"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-
+        <activity
+            android:name=".view.main.work.await.AwaitActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.work.send_message.SendMessageActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!-- 注油管理-->
+        <activity
+            android:name=".view.main.work.inject.oil.InjectOilActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.work.inject.detail.InjectDetailActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.work.inject.filter.InjectFilterActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.work.inject.InjectActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!--工具-->
+        <activity
+            android:name=".view.main.work.tool.ToolsActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.work.tool.add.AddToolsActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.work.tool.borrow.BorrowToolsActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.work.tool.detail.ToolsDetailActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.work.tool.return_tools.ReturnToolsActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
     </application>
 
 </manifest>

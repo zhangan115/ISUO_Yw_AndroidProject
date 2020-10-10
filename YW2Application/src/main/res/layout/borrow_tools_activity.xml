@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f7f7f7">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="14sp"
+                    android:background="@drawable/white_bg_with_shape"
+                    android:orientation="vertical"
+                    android:paddingLeft="14sp"
+                    android:paddingTop="12dp"
+                    android:paddingRight="14sp"
+                    android:paddingBottom="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="13dp"
+                            android:paddingBottom="16dp"
+                            android:text="工具名称"
+                            android:textColor="@color/text333"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvToolsName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="14sp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:gravity="right|center_vertical"
+                            android:textColor="@color/text333" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/color_division" />
+
+                    <LinearLayout
+                        android:id="@+id/llBorrowUser"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp"
+                            android:text="借用人"
+                            android:textColor="@color/text333"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvToolsBorrowUser"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="14sp"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:textColor="@color/text333"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="7dp"
+                            android:src="@drawable/list_arrow" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/color_division" />
+
+                    <LinearLayout
+                        android:id="@+id/llChooseTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp"
+                            android:text="用途"
+                            android:textColor="@color/text333"
+                            android:textSize="14sp" />
+
+
+                        <EditText
+                            android:id="@+id/editToolsUse"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="14sp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:gravity="right|center_vertical"
+                            android:textColor="@color/text333"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="7dp"
+                            android:src="@drawable/edit_icon" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/color_division" />
+
+                    <LinearLayout
+                        android:id="@+id/llBorrowTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp"
+                            android:text="借用时间"
+                            android:textColor="@color/text333"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvBorrowToolsTime"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="14sp"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:textColor="@color/text333"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="7dp"
+                            android:src="@drawable/list_arrow" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/color_division" />
+
+                    <LinearLayout
+                        android:id="@+id/llReturnTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp"
+                            android:text="预计归还时间"
+                            android:textColor="@color/text333"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvToolsReturnTime"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="14sp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:gravity="right|center_vertical"
+                            android:textColor="@color/text333" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="7dp"
+                            android:src="@drawable/list_arrow" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llAllCheckList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="14sp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/white_bg_with_shape"
+                    android:paddingLeft="14sp"
+                    android:paddingTop="12dp"
+                    android:paddingRight="14sp"
+                    android:paddingBottom="12dp"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="7dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="检查项"
+                            android:textColor="@color/text333"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:id="@+id/llCheckList"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnBorrow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="14sp"
+                    android:layout_marginBottom="14sp"
+                    android:background="@drawable/shape_green"
+                    android:gravity="center"
+                    android:text="外借"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </ScrollView>
+
+        <com.sito.customer.widget.DatePick
+            android:id="@+id/date_pick"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>
