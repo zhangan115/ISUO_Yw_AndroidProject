@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
+import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.discover.ValueAddedBean;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.data.count.alarm.DealAlarmCountActivity;
@@ -81,7 +83,7 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-        convenientBanner.startTurning(3500);
+        convenientBanner.startTurning(5000);
     }
 
     @Override
@@ -121,7 +123,7 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
     }
 
     @Override
-    public void showValueAddedData(List<ValueAddedBean.Data> listBean) {
+    public void showValueAddedData(final List<ValueAddedBean.Data> listBean) {
         convenientBanner.setVisibility(View.VISIBLE);
         convenientBanner.setPages(new CBViewHolderCreator<ImageHolderView>() {
             @Override
@@ -132,7 +134,14 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
         convenientBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-
+                Intent intent = new Intent(getActivity(), StandInfoActivity.class);
+                intent.putExtra(ConstantStr.KEY_TITLE, listBean.get(position).getValueAddedTitle());
+                if (!TextUtils.isEmpty(listBean.get(position).getValueUrl())) {
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, listBean.get(position).getValueUrl());
+                } else {
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, listBean.get(position).getValueAddedContent());
+                }
+                startActivity(intent);
             }
         });
     }
@@ -169,7 +178,7 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
         }
     }
 
-    public class ImageHolderView implements Holder<ValueAddedBean.Data> {
+    public static class ImageHolderView implements Holder<ValueAddedBean.Data> {
 
         private ImageView imageView;
 
