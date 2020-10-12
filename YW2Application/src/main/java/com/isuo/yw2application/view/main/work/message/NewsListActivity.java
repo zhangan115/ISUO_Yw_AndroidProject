@@ -34,4 +34,10 @@ public class NewsListActivity extends BaseActivity {
             ActivityUtilsV4.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.frame_container);
         }
     }
+
+    @Override
+    public void toolBarClick() {
+        super.toolBarClick();
+        finish();
+    }
 }
