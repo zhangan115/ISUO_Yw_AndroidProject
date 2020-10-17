@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.zxing.client.android.CaptureActivity;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.BroadcastAction;
@@ -211,6 +212,9 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.rightImage:
+                startActivity(new Intent(getActivity(),CaptureActivity.class));
+                break;
             case R.id.leftImage:
                 if (callBack != null) {
                     callBack.onCallBack();

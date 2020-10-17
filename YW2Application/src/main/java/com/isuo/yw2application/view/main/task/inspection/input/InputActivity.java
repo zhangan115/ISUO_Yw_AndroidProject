@@ -33,6 +33,7 @@ import com.isuo.yw2application.utils.PhotoUtils;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.main.alarm.fault.FaultActivity;
 import com.isuo.yw2application.widget.Type1Layout;
+import com.isuo.yw2application.widget.Type1LayoutNew;
 import com.isuo.yw2application.widget.Type2_4Layout;
 import com.isuo.yw2application.widget.Type3Layout;
 import com.sito.library.utils.ActivityUtils;
@@ -298,7 +299,7 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
                 if (dataItemValueListBean.getDataItem() != null) {
                     switch (dataItemValueListBean.getDataItem().getInspectionType()) {
                         case ConstantInt.DATA_VALUE_TYPE_1:
-                            Type1Layout type1Layout = new Type1Layout(InputActivity.this);
+                            Type1LayoutNew type1Layout = new Type1LayoutNew(InputActivity.this);
                             type1Layout.setDataToView(canEdit, dataItemValueListBean, taskEquipmentBean.getEquipment());
                             inputDataLayout.addView(type1Layout);
                             break;
