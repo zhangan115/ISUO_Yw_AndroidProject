@@ -1,14 +1,19 @@
 package com.isuo.yw2application.view.main.device;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.zxing.client.android.CaptureActivity;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
@@ -96,6 +101,9 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
         }
     }
 
+    private final int SCANNER_CODE = 200;
+
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -110,15 +118,27 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
                 startActivity(createEquipIntent);
                 break;
             case R.id.workItem2:
-//                Intent scannIntent = new Intent();
-//                startActivity(scannIntent);
+                startActivityForResult(new Intent(getActivity(), CaptureActivity.class), SCANNER_CODE);
                 break;
             case R.id.workItem3:
-                Intent importIntent = new Intent(getActivity(),EquipListActivity.class);
-                importIntent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN_1,true);
-                importIntent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN_2,true);
+                Intent importIntent = new Intent(getActivity(), EquipListActivity.class);
+                importIntent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN_1, true);
+                importIntent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN_2, true);
                 startActivity(importIntent);
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == SCANNER_CODE) {
+            if (data != null) {
+                String result = data.getStringExtra(CaptureActivity.RESULT);
+                Intent intent = new Intent(getActivity(), EquipmentArchivesActivity.class);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_STR,result);
+                startActivity(intent);
+            }
         }
     }
 

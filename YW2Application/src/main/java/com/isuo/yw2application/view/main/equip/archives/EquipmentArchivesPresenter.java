@@ -56,7 +56,7 @@ public class EquipmentArchivesPresenter implements EquipmentArchivesContract.Pre
 
             @Override
             public void onError(String message) {
-
+                mView.scannerResultError();
             }
 
             @Override

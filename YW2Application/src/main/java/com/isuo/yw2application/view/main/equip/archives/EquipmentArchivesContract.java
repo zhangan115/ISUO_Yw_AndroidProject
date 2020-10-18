@@ -40,6 +40,8 @@ interface EquipmentArchivesContract {
          */
         void showCareDataFail();
 
+        void scannerResultError();
+
     }
 
 }

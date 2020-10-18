@@ -1,6 +1,7 @@
 package com.isuo.yw2application.view.main.equip.archives;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
@@ -24,16 +25,25 @@ public class EquipmentArchivesActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLayoutAndToolbar(R.layout.activity_container_toolbar, "设备详情");
         EquipmentBean bean = getIntent().getParcelableExtra(ConstantStr.KEY_BUNDLE_OBJECT);
-        if (bean == null) {
+        String equipmentIdResult = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR);
+        if (bean == null && TextUtils.isEmpty(equipmentIdResult)) {
             finish();
             return;
         }
-        setLayoutAndToolbar(R.layout.activity_container_toolbar, "设备详情");
         EquipmentArchivesFragment fragment = (EquipmentArchivesFragment) getFragmentManager().findFragmentById(R.id.frame_container);
-        if (fragment == null) {
-            fragment = EquipmentArchivesFragment.newInstance(bean);
-            ActivityUtils.addFragmentToActivity(getFragmentManager(), fragment, R.id.frame_container);
+        if (!TextUtils.isEmpty(equipmentIdResult)){
+            if (fragment == null) {
+                fragment = EquipmentArchivesFragment.newInstance(equipmentIdResult);
+                ActivityUtils.addFragmentToActivity(getFragmentManager(), fragment, R.id.frame_container);
+            }
+        }
+        if (bean!=null){
+            if (fragment == null) {
+                fragment = EquipmentArchivesFragment.newInstance(bean);
+                ActivityUtils.addFragmentToActivity(getFragmentManager(), fragment, R.id.frame_container);
+            }
         }
         DaggerEquipmentArchivesComponent.builder().customerRepositoryComponent(Yw2Application.getInstance().getRepositoryComponent())
                 .equipmentArchivesModule(new EquipmentArchivesModule(fragment)).build()

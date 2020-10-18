@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.MainActivity;
+import com.isuo.yw2application.view.main.equip.archives.EquipmentArchivesActivity;
 import com.isuo.yw2application.view.main.work.all.PayGridViewAdapter;
 import com.isuo.yw2application.view.main.work.all.WorkItemAllActivity;
 import com.isuo.yw2application.view.main.work.all.WorkItemAllIntent;
@@ -213,7 +215,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rightImage:
-                startActivity(new Intent(getActivity(),CaptureActivity.class));
+                startActivityForResult(new Intent(getActivity(),CaptureActivity.class),SCANNER_CODE);
                 break;
             case R.id.leftImage:
                 if (callBack != null) {
@@ -238,14 +240,21 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         }
     }
 
-    private int WORK_ALL_CODE = 100;
-
+    private final int WORK_ALL_CODE = 100;
+    private final int SCANNER_CODE = 200;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == WORK_ALL_CODE && resultCode == Activity.RESULT_OK && data != null) {
             if (mPresenter != null) {
                 mPresenter.getWorkItem();
+            }
+        } else if (resultCode == Activity.RESULT_OK && requestCode == SCANNER_CODE) {
+            if (data != null) {
+                String result = data.getStringExtra(CaptureActivity.RESULT);
+                Intent intent = new Intent(getActivity(), EquipmentArchivesActivity.class);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_STR,result);
+                startActivity(intent);
             }
         }
     }

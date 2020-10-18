@@ -35,6 +35,7 @@ public class EquipmentArchivesFragment extends MvpFragment<EquipmentArchivesCont
         implements EquipmentArchivesContract.View, View.OnClickListener {
 
     private EquipmentBean bean;
+    private String resultStr;
 
     public static EquipmentArchivesFragment newInstance(EquipmentBean bean) {
         Bundle args = new Bundle();
@@ -44,10 +45,21 @@ public class EquipmentArchivesFragment extends MvpFragment<EquipmentArchivesCont
         return fragment;
     }
 
+    public static EquipmentArchivesFragment newInstance(String result) {
+        Bundle args = new Bundle();
+        args.putString(ConstantStr.KEY_BUNDLE_STR, result);
+        EquipmentArchivesFragment fragment = new EquipmentArchivesFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bean = getArguments().getParcelable(ConstantStr.KEY_BUNDLE_OBJECT);
+        if (bean == null) {
+            resultStr = getArguments().getString(ConstantStr.KEY_BUNDLE_STR);
+        }
     }
 
     @Nullable
@@ -59,8 +71,12 @@ public class EquipmentArchivesFragment extends MvpFragment<EquipmentArchivesCont
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (bean != null && mPresenter != null) {
-            mPresenter.getEquipmentDetail(bean.getEquipmentId());
+        if (mPresenter != null) {
+            if (bean == null) {
+                mPresenter.getEquipmentDetail(Long.parseLong(resultStr));
+            } else {
+                mPresenter.getEquipmentDetail(bean.getEquipmentId());
+            }
         }
     }
 
@@ -199,5 +215,10 @@ public class EquipmentArchivesFragment extends MvpFragment<EquipmentArchivesCont
     public void showCareDataFail() {
         if (getView() == null) return;
         getView().findViewById(R.id.ll_care).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void scannerResultError() {
+        Yw2Application.getInstance().showToast("没有找到设备");
     }
 }
