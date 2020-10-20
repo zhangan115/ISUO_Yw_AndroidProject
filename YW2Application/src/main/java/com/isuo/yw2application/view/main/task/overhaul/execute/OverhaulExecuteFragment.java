@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.task.overhaul.execute;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
@@ -33,9 +34,14 @@ import com.isuo.yw2application.utils.CountDownTimerUtils;
 import com.isuo.yw2application.utils.MediaPlayerManager;
 import com.isuo.yw2application.utils.PhotoUtils;
 import com.isuo.yw2application.view.base.MvpFragment;
+import com.isuo.yw2application.view.main.generate.repair.GenerateRepairFragment;
+import com.isuo.yw2application.view.main.task.increment.submit.IncrementActivity;
 import com.isuo.yw2application.widget.ShowImageLayout;
 import com.isuo.yw2application.widget.SpeechDialog;
 import com.isuo.yw2application.widget.TakePhotoView;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.DataUtil;
 import com.za.aacrecordlibrary.RecordManager;
@@ -47,6 +53,8 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -144,9 +152,26 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
         takePhotoView.setTakePhotoListener(new TakePhotoView.TakePhotoListener() {
             @Override
             public void onTakePhoto() {
-                mImage = null;
-                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                ActivityUtils.startCameraToPhoto(OverhaulExecuteFragment.this, photoFile, ACTION_START_CAMERA);
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        new CheckRequestPermissionListener() {
+                            @Override
+                            public void onPermissionOk(Permission permission) {
+                                mImage = null;
+                                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                ActivityUtils.startCameraToPhoto(OverhaulExecuteFragment.this, photoFile, ACTION_START_CAMERA);
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(getActivity())
+                                        .setRationale(getString(R.string.need_save_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
             }
 
             @Override
@@ -276,21 +301,38 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
                         .show();
                 break;
             case R.id.iv_record:
-                //设置参数
-                setParam();
-                speechDialog = new SpeechDialog(getActivity()) {
-                    @Override
-                    public void result(int time) {
-                        mRecordManager.stop();
-                    }
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.RECORD_AUDIO,
+                        new CheckRequestPermissionListener() {
+                            @Override
+                            public void onPermissionOk(Permission permission) {
+                                //设置参数
+                                setParam();
+                                speechDialog = new SpeechDialog(getActivity()) {
+                                    @Override
+                                    public void result(int time) {
+                                        mRecordManager.stop();
+                                    }
 
-                    @Override
-                    public void noResult() {
-                        mRecordManager.onCancel();
-                    }
-                };
-                speechDialog.show();
-                mRecordManager.start();
+                                    @Override
+                                    public void noResult() {
+                                        mRecordManager.onCancel();
+                                    }
+                                };
+                                speechDialog.show();
+                                mRecordManager.start();
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(getActivity())
+                                        .setRationale(getString(R.string.need_voice_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
                 break;
             case R.id.ll_play_task_sound:
                 if (mFaultPlayTv == null) {

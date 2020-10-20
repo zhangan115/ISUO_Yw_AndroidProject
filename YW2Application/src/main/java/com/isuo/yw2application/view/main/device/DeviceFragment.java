@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.device;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -27,10 +28,15 @@ import com.isuo.yw2application.view.main.device.list.EquipListActivity;
 import com.isuo.yw2application.view.main.device.search.EquipSearchActivity;
 import com.isuo.yw2application.view.main.equip.archives.EquipmentArchivesActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> implements DeviceContract.View, View.OnClickListener {
 
@@ -118,7 +124,24 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
                 startActivity(createEquipIntent);
                 break;
             case R.id.workItem2:
-                startActivityForResult(new Intent(getActivity(), CaptureActivity.class), SCANNER_CODE);
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.CAMERA,
+                        new CheckRequestPermissionListener() {
+                            @Override
+                            public void onPermissionOk(Permission permission) {
+                                startActivityForResult(new Intent(getActivity(), CaptureActivity.class), SCANNER_CODE);
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(getActivity())
+                                        .setRationale(getString(R.string.need_camera_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
                 break;
             case R.id.workItem3:
                 Intent importIntent = new Intent(getActivity(), EquipListActivity.class);

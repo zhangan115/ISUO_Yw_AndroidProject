@@ -112,5 +112,7 @@ dependencies {
     //zxing
     implementation(name: 'ZxingLibrary', ext: 'aar')
     implementation 'com.google.zxing:core:3.3.1'
+    // 权限申请
+    implementation 'com.qw:soulpermission:1.1.8'
 
 }

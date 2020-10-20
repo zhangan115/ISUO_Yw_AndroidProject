@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.generate.increment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.zxing.client.android.CaptureActivity;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
@@ -40,10 +42,14 @@ import com.isuo.yw2application.utils.PhotoUtils;
 import com.isuo.yw2application.view.base.MvpFragment;
 
 import com.isuo.yw2application.view.main.adduser.EmployeeActivity;
+import com.isuo.yw2application.view.main.alarm.fault.FaultActivity;
 import com.isuo.yw2application.view.main.device.list.EquipListActivity;
 import com.isuo.yw2application.widget.SpeechDialog;
 import com.isuo.yw2application.widget.SwitchButton;
 import com.isuo.yw2application.widget.TakePhotoView;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.DataUtil;
 import com.sito.library.utils.DisplayUtil;
@@ -62,6 +68,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -164,23 +172,40 @@ public class GenerateIncrementFragment extends MvpFragment<GenerateIncrementCont
 
             @Override
             public void onTakePhoto() {
-                new MaterialDialog.Builder(getActivity())
-                        .items(R.array.choose_photo)
-                        .itemsCallback(new MaterialDialog.ListCallback() {
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        new CheckRequestPermissionListener() {
                             @Override
-                            public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                                mImage = null;
-                                if (position == 0) {
-                                    photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                                    ActivityUtils.startCameraToPhoto(GenerateIncrementFragment.this, photoFile, ACTION_START_CAMERA);
-                                } else {
-                                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                                    intent.setType("image/*");
-                                    startActivityForResult(intent, ACTION_START_PHOTO);
-                                }
+                            public void onPermissionOk(Permission permission) {
+                                new MaterialDialog.Builder(getActivity())
+                                        .items(R.array.choose_photo)
+                                        .itemsCallback(new MaterialDialog.ListCallback() {
+                                            @Override
+                                            public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                                mImage = null;
+                                                if (position == 0) {
+                                                    photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                                    ActivityUtils.startCameraToPhoto(GenerateIncrementFragment.this, photoFile, ACTION_START_CAMERA);
+                                                } else {
+                                                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                                    intent.setType("image/*");
+                                                    startActivityForResult(intent, ACTION_START_PHOTO);
+                                                }
+                                            }
+                                        })
+                                        .show();
                             }
-                        })
-                        .show();
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(getActivity())
+                                        .setRationale(getString(R.string.need_save_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
             }
 
             @Override
@@ -316,21 +341,38 @@ public class GenerateIncrementFragment extends MvpFragment<GenerateIncrementCont
                         .show();
                 break;
             case R.id.id_increment_speech:
-                setParam();
-                speechDialog = new SpeechDialog(getActivity()) {
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.RECORD_AUDIO,
+                        new CheckRequestPermissionListener() {
+                            @Override
+                            public void onPermissionOk(Permission permission) {
+                                setParam();
+                                speechDialog = new SpeechDialog(getActivity()) {
 
-                    @Override
-                    public void result(int time) {
-                        mRecordManager.stop();
-                    }
+                                    @Override
+                                    public void result(int time) {
+                                        mRecordManager.stop();
+                                    }
 
-                    @Override
-                    public void noResult() {
-                        mRecordManager.onCancel();
-                    }
-                };
-                speechDialog.show();
-                mRecordManager.start();
+                                    @Override
+                                    public void noResult() {
+                                        mRecordManager.onCancel();
+                                    }
+                                };
+                                speechDialog.show();
+                                mRecordManager.start();
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(getActivity())
+                                        .setRationale(getString(R.string.need_voice_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
                 break;
             case R.id.id_increment_device:
                 Intent intent = new Intent(getActivity(), EquipListActivity.class);

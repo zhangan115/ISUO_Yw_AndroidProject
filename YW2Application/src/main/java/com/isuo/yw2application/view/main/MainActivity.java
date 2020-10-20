@@ -26,7 +26,6 @@ import com.isuo.yw2application.common.BroadcastAction;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.NewVersion;
 import com.isuo.yw2application.mode.bean.User;
-import com.isuo.yw2application.mode.bean.count.PartPersonStatistics;
 import com.isuo.yw2application.mode.bean.db.CreateEquipmentDb;
 import com.isuo.yw2application.mode.bean.db.CreateRoomDb;
 import com.isuo.yw2application.mode.bean.db.EquipmentDataDb;
@@ -51,6 +50,9 @@ import com.isuo.yw2application.view.main.forgepassword.ForgePassWordActivity;
 import com.isuo.yw2application.view.main.task.TaskFragment;
 import com.isuo.yw2application.view.main.work.WorkFragment;
 import com.isuo.yw2application.view.share.ShareActivity;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.utils.GlideUtils;
 import com.sito.library.utils.SPHelper;
 import com.sito.library.utils.SystemUtil;
@@ -59,17 +61,14 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
-import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
-import pub.devrel.easypermissions.EasyPermissions;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends BaseActivity implements WorkFragment.DrawClickCallBack, MainContract.View, EasyPermissions.PermissionCallbacks {
+public class MainActivity extends BaseActivity implements WorkFragment.DrawClickCallBack, MainContract.View {
 
     private ArrayList<Fragment> mFragments;
     private AHBottomNavigation bottomNavigation;
@@ -361,7 +360,30 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
 
     @Override
     public void downLoadApp() {
-        checkPermission();
+        SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                new CheckRequestPermissionListener() {
+                    @Override
+                    public void onPermissionOk(Permission permission) {
+                        if (ConstantStr.ALPS.equals(SystemUtil.getDeviceBrand())) {
+                            new UpdateManager(MainActivity.this, mVersion.getSpecialUrl(), null).updateApp();
+                        } else {
+                            new UpdateManager(MainActivity.this, mVersion.getUrl(), null).updateApp();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionDenied(Permission permission) {
+                        new AppSettingsDialog.Builder(MainActivity.this)
+                                .setRationale(getString(R.string.need_save_setting))
+                                .setTitle(getString(R.string.request_permissions))
+                                .setPositiveButton(getString(R.string.sure))
+                                .setNegativeButton(getString(R.string.cancel))
+                                .setRequestCode(REQUEST_EXTERNAL)
+                                .build()
+                                .show();
+                    }
+                });
+
     }
 
     @Override
@@ -382,63 +404,35 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
     private static final int ACTION_START_CAMERA = 100;
     private static final int ACTION_START_PHOTO = 101;
 
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
 
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        if (requestCode == REQUEST_EXTERNAL || requestCode == REQUEST_EXTERNAL_PHOTO) {
-            if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-                new AppSettingsDialog.Builder(this)
-                        .setRationale(getString(R.string.need_save_setting))
-                        .setTitle(getString(R.string.request_permissions))
-                        .setPositiveButton(getString(R.string.sure))
-                        .setNegativeButton(getString(R.string.cancel))
-                        .setRequestCode(REQUEST_EXTERNAL)
-                        .build()
-                        .show();
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-    @AfterPermissionGranted(REQUEST_EXTERNAL)
-    public void checkPermission() {
-        if (EasyPermissions.hasPermissions(this.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            if (ConstantStr.ALPS.equals(SystemUtil.getDeviceBrand())) {
-                new UpdateManager(this, mVersion.getSpecialUrl(), null).updateApp();
-            } else {
-                new UpdateManager(this, mVersion.getUrl(), null).updateApp();
-            }
-        } else {
-            EasyPermissions.requestPermissions(this, "需要请求内存卡权限",
-                    REQUEST_EXTERNAL, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-    }
-
-    @AfterPermissionGranted(REQUEST_EXTERNAL_PHOTO)
     public void checkPermissionPhoto() {
-        if (EasyPermissions.hasPermissions(this.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-            Intent intent = new Intent();
-            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.addCategory(Intent.CATEGORY_DEFAULT);
-            ContentValues contentValues = new ContentValues(1);
-            contentValues.put(MediaStore.Images.Media.DATA, photoFile.getAbsolutePath());
-            Uri uri = this.getApplicationContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-            startActivityForResult(intent, ACTION_START_CAMERA);
-        } else {
-            EasyPermissions.requestPermissions(this, "需要请求内存卡权限",
-                    REQUEST_EXTERNAL_PHOTO, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
+        SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                new CheckRequestPermissionListener() {
+                    @Override
+                    public void onPermissionOk(Permission permission) {
+                        photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                        Intent intent = new Intent();
+                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                        intent.addCategory(Intent.CATEGORY_DEFAULT);
+                        ContentValues contentValues = new ContentValues(1);
+                        contentValues.put(MediaStore.Images.Media.DATA, photoFile.getAbsolutePath());
+                        Uri uri = MainActivity.this.getApplicationContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                        startActivityForResult(intent, ACTION_START_CAMERA);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(Permission permission) {
+                        new AppSettingsDialog.Builder(MainActivity.this)
+                                .setRationale(getString(R.string.need_save_setting))
+                                .setTitle(getString(R.string.request_permissions))
+                                .setPositiveButton(getString(R.string.sure))
+                                .setNegativeButton(getString(R.string.cancel))
+                                .setRequestCode(REQUEST_EXTERNAL)
+                                .build()
+                                .show();
+                    }
+                });
     }
 
     @Override

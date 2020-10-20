@@ -1,6 +1,7 @@
 package com.isuo.yw2application.view.main.work.sos;
 
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -27,6 +28,9 @@ import com.isuo.yw2application.utils.CountDownTimerUtils;
 import com.isuo.yw2application.utils.MediaPlayerManager;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.widget.SpeechDialog;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.adapter.RVAdapter;
 import com.sito.library.widget.ExpendRecycleView;
 import com.za.aacrecordlibrary.RecordManager;
@@ -36,6 +40,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 /**
  * SOS报警
@@ -144,20 +150,37 @@ public class SOSActivity extends BaseActivity implements SOSContract.View {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_record:
-                //设置参数
-                setParam();
-                new SpeechDialog(this) {
-                    @Override
-                    public void result(int time) {
-                        mRecordManager.stop();
-                    }
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.RECORD_AUDIO,
+                        new CheckRequestPermissionListener() {
+                            @Override
+                            public void onPermissionOk(Permission permission) {
+                                //设置参数
+                                setParam();
+                                new SpeechDialog(SOSActivity.this) {
+                                    @Override
+                                    public void result(int time) {
+                                        mRecordManager.stop();
+                                    }
 
-                    @Override
-                    public void noResult() {
-                        mRecordManager.onCancel();
-                    }
-                }.show();
-                mRecordManager.start();
+                                    @Override
+                                    public void noResult() {
+                                        mRecordManager.onCancel();
+                                    }
+                                }.show();
+                                mRecordManager.start();
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(SOSActivity.this)
+                                        .setRationale(getString(R.string.need_voice_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
                 break;
             case R.id.id_work_sound_time:
                 if (mWorkSoundTimeTv == null || TextUtils.isEmpty(voicePath)) {

@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.device.equipment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.zxing.client.android.CaptureActivity;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
@@ -30,6 +32,9 @@ import com.isuo.yw2application.view.base.MvpFragment;
 import com.isuo.yw2application.view.main.device.info.CreateEquipInfoActivity;
 import com.isuo.yw2application.view.photo.ViewPagePhotoActivity;
 import com.isuo.yw2application.widget.SpecialChatView;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.GlideUtils;
 
@@ -40,6 +45,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 /**
  * 创建设备/修改设备信息
@@ -143,23 +150,38 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
                 if (TextUtils.isEmpty(equipmentPhotoUrl)) {
                     return false;
                 }
-                new MaterialDialog.Builder(getActivity())
-                        .items(R.array.choose_condition_2)
-                        .itemsCallback(new MaterialDialog.ListCallback() {
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        new CheckRequestPermissionListener() {
                             @Override
-                            public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                                switch (position) {
-                                    case 0://删除照片
-                                        cleanImage();
-                                        break;
-                                    default://重新拍照
-                                        photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                                        ActivityUtils.startCameraToPhoto(CreateEquipFragment.this, photoFile, ACTION_START_CAMERA);
-                                        break;
-                                }
+                            public void onPermissionOk(Permission permission) {
+                                new MaterialDialog.Builder(getActivity())
+                                        .items(R.array.choose_condition_2)
+                                        .itemsCallback(new MaterialDialog.ListCallback() {
+                                            @Override
+                                            public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                                //重新拍照
+                                                if (position == 0) {//删除照片
+                                                    cleanImage();
+                                                } else {
+                                                    photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                                    ActivityUtils.startCameraToPhoto(CreateEquipFragment.this, photoFile, ACTION_START_CAMERA);
+                                                }
+                                            }
+                                        })
+                                        .show();
                             }
-                        })
-                        .show();
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(getActivity())
+                                        .setRationale(getString(R.string.need_save_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
                 return true;
             }
         });
@@ -345,8 +367,25 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
                 break;
             case R.id.photo_view:
                 if (TextUtils.isEmpty(equipmentLocal) && TextUtils.isEmpty(equipmentPhotoUrl)) {
-                    photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                    ActivityUtils.startCameraToPhoto(CreateEquipFragment.this, photoFile, ACTION_START_CAMERA);
+                    SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            new CheckRequestPermissionListener() {
+                                @Override
+                                public void onPermissionOk(Permission permission) {
+                                    photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                    ActivityUtils.startCameraToPhoto(CreateEquipFragment.this, photoFile, ACTION_START_CAMERA);
+                                }
+
+                                @Override
+                                public void onPermissionDenied(Permission permission) {
+                                    new AppSettingsDialog.Builder(getActivity())
+                                            .setRationale(getString(R.string.need_save_setting))
+                                            .setTitle(getString(R.string.request_permissions))
+                                            .setPositiveButton(getString(R.string.sure))
+                                            .setNegativeButton(getString(R.string.cancel))
+                                            .build()
+                                            .show();
+                                }
+                            });
                 } else {
                     String[] urls = null;
                     if (!TextUtils.isEmpty(equipmentLocal)) {

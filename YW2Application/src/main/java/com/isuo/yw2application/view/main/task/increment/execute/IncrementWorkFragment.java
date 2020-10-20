@@ -1,6 +1,7 @@
 package com.isuo.yw2application.view.main.task.increment.execute;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -30,9 +31,13 @@ import com.isuo.yw2application.utils.CountDownTimerUtils;
 import com.isuo.yw2application.utils.MediaPlayerManager;
 import com.isuo.yw2application.utils.PhotoUtils;
 import com.isuo.yw2application.view.base.MvpFragment;
+import com.isuo.yw2application.view.main.task.increment.submit.IncrementActivity;
 import com.isuo.yw2application.widget.ShowImageLayout;
 import com.isuo.yw2application.widget.SpeechDialog;
 import com.isuo.yw2application.widget.TakePhotoView;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.DataUtil;
 import com.za.aacrecordlibrary.RecordManager;
@@ -44,6 +49,8 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 /**
  * 专项工作详情
@@ -176,9 +183,26 @@ public class IncrementWorkFragment extends MvpFragment<IncrementWorkContract.Pre
         takePhotoView.setTakePhotoListener(new TakePhotoView.TakePhotoListener() {
             @Override
             public void onTakePhoto() {
-                mImage = null;
-                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                ActivityUtils.startCameraToPhoto(IncrementWorkFragment.this, photoFile, ACTION_START_CAMERA);
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        new CheckRequestPermissionListener() {
+                            @Override
+                            public void onPermissionOk(Permission permission) {
+                                mImage = null;
+                                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                ActivityUtils.startCameraToPhoto(IncrementWorkFragment.this, photoFile, ACTION_START_CAMERA);
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(IncrementWorkFragment.this)
+                                        .setRationale(getString(R.string.need_save_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
             }
 
             @Override
@@ -190,10 +214,27 @@ public class IncrementWorkFragment extends MvpFragment<IncrementWorkContract.Pre
             }
 
             @Override
-            public void onTakePhoto(int position, Image image) {
-                mImage = image;
-                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                ActivityUtils.startCameraToPhoto(IncrementWorkFragment.this, photoFile, ACTION_START_CAMERA);
+            public void onTakePhoto(int position,final Image image) {
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        new CheckRequestPermissionListener() {
+                            @Override
+                            public void onPermissionOk(Permission permission) {
+                                mImage = image;
+                                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                ActivityUtils.startCameraToPhoto(IncrementWorkFragment.this, photoFile, ACTION_START_CAMERA);
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(IncrementWorkFragment.this)
+                                        .setRationale(getString(R.string.need_save_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
             }
         });
         mRecordManager = new RecordManager()
@@ -336,20 +377,37 @@ public class IncrementWorkFragment extends MvpFragment<IncrementWorkContract.Pre
                 }
                 break;
             case R.id.iv_record:
-                setParam();
-                speechDialog = new SpeechDialog(getActivity()) {
-                    @Override
-                    public void result(int time) {
-                        mRecordManager.stop();
-                    }
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.RECORD_AUDIO,
+                        new CheckRequestPermissionListener() {
+                            @Override
+                            public void onPermissionOk(Permission permission) {
+                                setParam();
+                                speechDialog = new SpeechDialog(getActivity()) {
+                                    @Override
+                                    public void result(int time) {
+                                        mRecordManager.stop();
+                                    }
 
-                    @Override
-                    public void noResult() {
-                        mRecordManager.onCancel();
-                    }
-                };
-                speechDialog.show();
-                mRecordManager.start();
+                                    @Override
+                                    public void noResult() {
+                                        mRecordManager.onCancel();
+                                    }
+                                };
+                                speechDialog.show();
+                                mRecordManager.start();
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(getActivity())
+                                        .setRationale(getString(R.string.need_voice_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
                 break;
             case R.id.tv_upload:
                 uploadAllData();

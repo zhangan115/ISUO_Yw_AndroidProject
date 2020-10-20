@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.task.inspection.report;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -46,6 +47,9 @@ import com.isuo.yw2application.view.base.MvpFragment;
 import com.isuo.yw2application.view.main.task.increment.submit.IncrementActivity;
 import com.isuo.yw2application.view.main.task.inspection.input.InputActivity;
 import com.isuo.yw2application.view.photo.ViewPagePhotoActivity;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.adapter.RVAdapter;
 import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.GlideUtils;
@@ -54,6 +58,8 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 
 /**
@@ -298,12 +304,29 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                 equipmentTakePhotoIV.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
-                            photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                            ActivityUtils.startCameraToPhoto(ReportFragment.this, photoFile, ACTION_START_CAMERA);
-                        } else {
-                            ViewPagePhotoActivity.startActivity(getActivity(), new String[]{roomDb.getPhotoUrl()}, 0);
-                        }
+                        SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                new CheckRequestPermissionListener() {
+                                    @Override
+                                    public void onPermissionOk(Permission permission) {
+                                        if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
+                                            photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                            ActivityUtils.startCameraToPhoto(ReportFragment.this, photoFile, ACTION_START_CAMERA);
+                                        } else {
+                                            ViewPagePhotoActivity.startActivity(getActivity(), new String[]{roomDb.getPhotoUrl()}, 0);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onPermissionDenied(Permission permission) {
+                                        new AppSettingsDialog.Builder(ReportFragment.this)
+                                                .setRationale(getString(R.string.need_save_setting))
+                                                .setTitle(getString(R.string.request_permissions))
+                                                .setPositiveButton(getString(R.string.sure))
+                                                .setNegativeButton(getString(R.string.cancel))
+                                                .build()
+                                                .show();
+                                    }
+                                });
                     }
                 });
                 equipmentTakePhotoIV.setOnLongClickListener(new View.OnLongClickListener() {
@@ -312,34 +335,51 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                         if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
                             return false;
                         }
-                        new MaterialDialog.Builder(getActivity())
-                                .items(R.array.choose_condition_2)
-                                .itemsCallback(new MaterialDialog.ListCallback() {
+                        SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                new CheckRequestPermissionListener() {
                                     @Override
-                                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                                        switch (position) {
-                                            case 0://删除照片
-                                                roomDb.setUploadPhotoUrl(null);
-                                                roomDb.setPhotoUrl(null);
-                                                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
-                                                if (equipmentTakePhotoIV != null) {
-                                                    GlideUtils.ShowImage(getActivity(), roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photo_button);
-                                                }
-                                                break;
-                                            default://重新拍照
-                                                roomDb.setUploadPhotoUrl(null);
-                                                roomDb.setPhotoUrl(null);
-                                                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
-                                                if (equipmentTakePhotoIV != null) {
-                                                    GlideUtils.ShowImage(getActivity(), roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photo_button);
-                                                }
-                                                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                                                ActivityUtils.startCameraToPhoto(ReportFragment.this, photoFile, ACTION_START_CAMERA);
-                                                break;
-                                        }
+                                    public void onPermissionOk(Permission permission) {
+                                        new MaterialDialog.Builder(getActivity())
+                                                .items(R.array.choose_condition_2)
+                                                .itemsCallback(new MaterialDialog.ListCallback() {
+                                                    @Override
+                                                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                                        switch (position) {
+                                                            case 0://删除照片
+                                                                roomDb.setUploadPhotoUrl(null);
+                                                                roomDb.setPhotoUrl(null);
+                                                                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+                                                                if (equipmentTakePhotoIV != null) {
+                                                                    GlideUtils.ShowImage(getActivity(), roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photo_button);
+                                                                }
+                                                                break;
+                                                            default://重新拍照
+                                                                roomDb.setUploadPhotoUrl(null);
+                                                                roomDb.setPhotoUrl(null);
+                                                                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+                                                                if (equipmentTakePhotoIV != null) {
+                                                                    GlideUtils.ShowImage(getActivity(), roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photo_button);
+                                                                }
+                                                                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                                                ActivityUtils.startCameraToPhoto(ReportFragment.this, photoFile, ACTION_START_CAMERA);
+                                                                break;
+                                                        }
+                                                    }
+                                                })
+                                                .show();
                                     }
-                                })
-                                .show();
+
+                                    @Override
+                                    public void onPermissionDenied(Permission permission) {
+                                        new AppSettingsDialog.Builder(ReportFragment.this)
+                                                .setRationale(getString(R.string.need_save_setting))
+                                                .setTitle(getString(R.string.request_permissions))
+                                                .setPositiveButton(getString(R.string.sure))
+                                                .setNegativeButton(getString(R.string.cancel))
+                                                .build()
+                                                .show();
+                                    }
+                                });
                         return true;
                     }
                 });

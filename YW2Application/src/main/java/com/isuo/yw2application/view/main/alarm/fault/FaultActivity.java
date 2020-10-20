@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.alarm.fault;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
@@ -41,6 +42,9 @@ import com.isuo.yw2application.view.main.device.list.EquipListActivity;
 import com.isuo.yw2application.widget.FlowLayout;
 import com.isuo.yw2application.widget.SpeechDialog;
 import com.isuo.yw2application.widget.TakePhotoView;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.DisplayUtil;
 import com.sito.library.utils.FileFromUri;
@@ -55,6 +59,8 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 public class FaultActivity extends SpeechActivity implements View.OnClickListener, FaultContract.View {
 
@@ -147,24 +153,40 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
         takePhotoView.setTakePhotoListener(new TakePhotoView.TakePhotoListener() {
             @Override
             public void onTakePhoto() {
-                mImage = null;
-                new MaterialDialog.Builder(FaultActivity.this)
-                        .items(R.array.choose_photo)
-                        .itemsCallback(new MaterialDialog.ListCallback() {
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        new CheckRequestPermissionListener() {
                             @Override
-                            public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                                if (position == 0) {
-                                    photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                                    ActivityUtils.startCameraToPhoto(FaultActivity.this, photoFile, ACTION_START_CAMERA);
-                                } else {
-                                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                                    intent.setType("image/*");
-                                    startActivityForResult(intent, ACTION_START_PHOTO);
-                                }
+                            public void onPermissionOk(Permission permission) {
+                                mImage = null;
+                                new MaterialDialog.Builder(FaultActivity.this)
+                                        .items(R.array.choose_photo)
+                                        .itemsCallback(new MaterialDialog.ListCallback() {
+                                            @Override
+                                            public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                                if (position == 0) {
+                                                    photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                                    ActivityUtils.startCameraToPhoto(FaultActivity.this, photoFile, ACTION_START_CAMERA);
+                                                } else {
+                                                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                                    intent.setType("image/*");
+                                                    startActivityForResult(intent, ACTION_START_PHOTO);
+                                                }
+                                            }
+                                        })
+                                        .show();
                             }
-                        })
-                        .show();
 
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(FaultActivity.this)
+                                        .setRationale(getString(R.string.need_save_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
             }
 
             @Override
@@ -292,21 +314,38 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
         super.onClick(v);
         switch (v.getId()) {
             case R.id.id_fault_speech:
-                setParam();
-                speechDialog = new SpeechDialog(FaultActivity.this) {
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.RECORD_AUDIO,
+                        new CheckRequestPermissionListener() {
+                            @Override
+                            public void onPermissionOk(Permission permission) {
+                                setParam();
+                                speechDialog = new SpeechDialog(FaultActivity.this) {
 
-                    @Override
-                    public void result(int time) {
-                        mRecordManager.stop();
-                    }
+                                    @Override
+                                    public void result(int time) {
+                                        mRecordManager.stop();
+                                    }
 
-                    @Override
-                    public void noResult() {
-                        mRecordManager.onCancel();
-                    }
-                };
-                speechDialog.show();
-                mRecordManager.start();
+                                    @Override
+                                    public void noResult() {
+                                        mRecordManager.onCancel();
+                                    }
+                                };
+                                speechDialog.show();
+                                mRecordManager.start();
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(FaultActivity.this)
+                                        .setRationale(getString(R.string.need_voice_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
                 break;
             case R.id.id_fault_time:
                 //开始动画

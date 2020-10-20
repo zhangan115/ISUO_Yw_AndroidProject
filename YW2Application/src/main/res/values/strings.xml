@@ -89,6 +89,8 @@
     <string name="download_prompt">下载进度</string>
     <string name="update_new_version">版本更新</string>
     <string name="need_save_setting">当前App需要申请存储权限,需要打开设置页面么?</string>
+    <string name="need_camera_setting">当前App需要申请拍照权限,需要打开设置页面么?</string>
+    <string name="need_voice_setting">当前App需要申请录音权限,需要打开设置页面么?</string>
     <string name="need_save_state_setting">当前App需要申请存储权限和获取手机状态,需要打开设置页面么?</string>
     <string name="request_permissions">权限申请</string>
     <string name="sure">确认</string>

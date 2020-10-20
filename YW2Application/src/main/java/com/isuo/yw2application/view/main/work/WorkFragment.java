@@ -1,11 +1,15 @@
 package com.isuo.yw2application.view.main.work;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -35,12 +39,18 @@ import com.isuo.yw2application.view.main.work.all.widget.WorkItemGridView;
 import com.isuo.yw2application.view.main.work.message.NewsListActivity;
 import com.isuo.yw2application.view.main.work.sos.SOSActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.utils.DataUtil;
 import com.sito.library.utils.GlideUtils;
 
+import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implements WorkContract.View, View.OnClickListener {
 
@@ -215,7 +225,24 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rightImage:
-                startActivityForResult(new Intent(getActivity(),CaptureActivity.class),SCANNER_CODE);
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.CAMERA,
+                        new CheckRequestPermissionListener() {
+                            @Override
+                            public void onPermissionOk(Permission permission) {
+                                startActivityForResult(new Intent(getActivity(),CaptureActivity.class),SCANNER_CODE);
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(getActivity())
+                                        .setRationale(getString(R.string.need_camera_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
                 break;
             case R.id.leftImage:
                 if (callBack != null) {

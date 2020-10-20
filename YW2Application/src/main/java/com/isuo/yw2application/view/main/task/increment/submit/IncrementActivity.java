@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.task.increment.submit;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -29,10 +30,15 @@ import com.isuo.yw2application.utils.CountDownTimerUtils;
 import com.isuo.yw2application.utils.MediaPlayerManager;
 import com.isuo.yw2application.utils.PhotoUtils;
 import com.isuo.yw2application.view.base.SpeechActivity;
+import com.isuo.yw2application.view.main.alarm.fault.FaultActivity;
+import com.isuo.yw2application.view.main.device.equipment.CreateEquipFragment;
 import com.isuo.yw2application.view.main.device.list.EquipListActivity;
 import com.isuo.yw2application.widget.SpeechDialog;
 import com.isuo.yw2application.widget.SwitchButton;
 import com.isuo.yw2application.widget.TakePhotoView;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.utils.ActivityUtils;
 import com.za.aacrecordlibrary.RecordManager;
 
@@ -43,6 +49,8 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 public class IncrementActivity extends SpeechActivity implements View.OnClickListener, IncrementContract.View {
     //view
@@ -163,9 +171,26 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
         takePhotoView.setTakePhotoListener(new TakePhotoView.TakePhotoListener() {
             @Override
             public void onTakePhoto() {
-                mImage = null;
-                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                ActivityUtils.startCameraToPhoto(IncrementActivity.this, photoFile, ACTION_START_CAMERA);
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        new CheckRequestPermissionListener() {
+                            @Override
+                            public void onPermissionOk(Permission permission) {
+                                mImage = null;
+                                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                ActivityUtils.startCameraToPhoto(IncrementActivity.this, photoFile, ACTION_START_CAMERA);
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(IncrementActivity.this)
+                                        .setRationale(getString(R.string.need_save_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
             }
 
             @Override
@@ -177,11 +202,28 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
             }
 
             @Override
-            public void onTakePhoto(int position, Image image) {
-                mImage = image;
-                takePhotoPosition = position;
-                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                ActivityUtils.startCameraToPhoto(IncrementActivity.this, photoFile, ACTION_START_CAMERA);
+            public void onTakePhoto(final int position, final Image image) {
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        new CheckRequestPermissionListener() {
+                            @Override
+                            public void onPermissionOk(Permission permission) {
+                                mImage = image;
+                                takePhotoPosition = position;
+                                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                ActivityUtils.startCameraToPhoto(IncrementActivity.this, photoFile, ACTION_START_CAMERA);
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(IncrementActivity.this)
+                                        .setRationale(getString(R.string.need_save_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
             }
         });
         mRecordManager = new RecordManager().setFileName(Yw2Application.getInstance().voiceCacheFile())
@@ -260,20 +302,37 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
                         .show();
                 break;
             case R.id.id_increment_speech:
-                speechDialog = new SpeechDialog(IncrementActivity.this) {
+                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.RECORD_AUDIO,
+                        new CheckRequestPermissionListener() {
+                            @Override
+                            public void onPermissionOk(Permission permission) {
+                                speechDialog = new SpeechDialog(IncrementActivity.this) {
 
-                    @Override
-                    public void result(int time) {
-                        mRecordManager.stop();
-                    }
+                                    @Override
+                                    public void result(int time) {
+                                        mRecordManager.stop();
+                                    }
 
-                    @Override
-                    public void noResult() {
-                        mRecordManager.onCancel();
-                    }
-                };
-                speechDialog.show();
-                mRecordManager.start();
+                                    @Override
+                                    public void noResult() {
+                                        mRecordManager.onCancel();
+                                    }
+                                };
+                                speechDialog.show();
+                                mRecordManager.start();
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission permission) {
+                                new AppSettingsDialog.Builder(IncrementActivity.this)
+                                        .setRationale(getString(R.string.need_voice_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
                 break;
             case R.id.id_increment_time:
                 //开始动画
