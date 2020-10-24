@@ -190,54 +190,45 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.layout_1:
-                startActivity(new Intent(this, ContactActivity.class));
-                break;
-            case R.id.layout_2:
-                this.cleanCache();
-                break;
-            case R.id.layout_3:
-                startActivity(new Intent(this, ShareActivity.class));
-                break;
-            case R.id.layout_4:
-                startActivity(new Intent(this, QuestionActivity.class));
-                break;
-            case R.id.layout_5:
-                if (mainPresenter != null) {
-                    mainPresenter.getNewVersion();
-                }
-                break;
-            case R.id.layout_6:
-                startActivity(new Intent(this, AboutActivity.class));
-                break;
-            case R.id.layout_7:
-                startActivity(new Intent(this, ForgePassWordActivity.class));
-                break;
-            case R.id.exitApp:
-                if (mainPresenter!=null){
-                    mainPresenter.exitApp();
-                }
-                MobclickAgent.onProfileSignOff();
-                Yw2Application.getInstance().needLogin();
-                break;
-            case R.id.userImage:
-                new MaterialDialog.Builder(this)
-                        .items(R.array.choose_photo)
-                        .itemsCallback(new MaterialDialog.ListCallback() {
-                            @Override
-                            public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                                if (position == 0) {
-                                    checkPermissionPhoto();
-                                } else {
-                                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                                    intent.setType("image/*");
-                                    startActivityForResult(intent, ACTION_START_PHOTO);
-                                }
+        int id = v.getId();
+        if (id == R.id.layout_1) {
+            startActivity(new Intent(this, ContactActivity.class));
+        } else if (id == R.id.layout_2) {
+            this.cleanCache();
+        } else if (id == R.id.layout_3) {
+            startActivity(new Intent(this, ShareActivity.class));
+        } else if (id == R.id.layout_4) {
+            startActivity(new Intent(this, QuestionActivity.class));
+        } else if (id == R.id.layout_5) {
+            if (mainPresenter != null) {
+                mainPresenter.getNewVersion();
+            }
+        } else if (id == R.id.layout_6) {
+            startActivity(new Intent(this, AboutActivity.class));
+        } else if (id == R.id.layout_7) {
+            startActivity(new Intent(this, ForgePassWordActivity.class));
+        } else if (id == R.id.exitApp) {
+            if (mainPresenter != null) {
+                mainPresenter.exitApp();
+            }
+            MobclickAgent.onProfileSignOff();
+            Yw2Application.getInstance().needLogin();
+        } else if (id == R.id.userImage) {
+            new MaterialDialog.Builder(this)
+                    .items(R.array.choose_photo)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                        @Override
+                        public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                            if (position == 0) {
+                                checkPermissionPhoto();
+                            } else {
+                                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                intent.setType("image/*");
+                                startActivityForResult(intent, ACTION_START_PHOTO);
                             }
-                        })
-                        .show();
-                break;
+                        }
+                    })
+                    .show();
         }
     }
 
