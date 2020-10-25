@@ -12,8 +12,10 @@ import com.isuo.yw2application.view.main.task.increment.WorkIncrementActivity;
 import com.isuo.yw2application.view.main.task.inspection.WorkInspectionActivity;
 import com.isuo.yw2application.view.main.task.overhaul.WorkOverhaulActivity;
 import com.isuo.yw2application.view.main.work.await.AwaitActivity;
+import com.isuo.yw2application.view.main.work.enterprise_standard.EnterpriseStandardActivity;
 import com.isuo.yw2application.view.main.work.inject.InjectActivity;
 import com.isuo.yw2application.view.main.work.send_message.SendMessageActivity;
+import com.isuo.yw2application.view.main.work.sos.SOSActivity;
 import com.isuo.yw2application.view.main.work.tool.ToolsActivity;
 
 
@@ -46,7 +48,7 @@ public class WorkItemAllIntent {
                 intent.setClass(activity, CreateEquipmentActivity.class);
                 break;
             case 7://企业规范
-//                intent.setClass(activity, SOSActivity.class);
+                intent.setClass(activity, EnterpriseStandardActivity.class);
                 break;
             case 8: //代办事项
                 intent.setClass(activity, AwaitActivity.class);

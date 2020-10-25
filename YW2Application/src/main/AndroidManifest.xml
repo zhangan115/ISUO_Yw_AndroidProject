@@ -513,6 +513,13 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <activity
+            android:name=".view.main.work.enterprise_standard.EnterpriseStandardActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <activity
             android:name="com.google.zxing.client.android.CaptureActivity"
             android:allowTaskReparenting="true"
             android:configChanges="orientation|keyboardHidden"
