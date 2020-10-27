@@ -113,6 +113,7 @@
                             <TextView
                                 android:id="@+id/tv_equip_num"
                                 android:layout_width="wrap_content"
+                                android:layout_marginLeft="10dp"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/text333"
                                 android:textSize="14sp"
@@ -216,10 +217,10 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tv_time_actual_start"
+                        android:id="@+id/tv_time_actual_star"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/text333"
                         android:textSize="12sp"
                         tools:text="2017-08-08 9:00" />
