@@ -217,7 +217,7 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tv_time_actual_star"
+                        android:id="@+id/tv_time_actual_start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
