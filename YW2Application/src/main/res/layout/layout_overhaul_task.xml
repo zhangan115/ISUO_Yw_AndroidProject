@@ -10,9 +10,9 @@
     android:background="@drawable/white_bg_with_shape"
     android:orientation="vertical"
     android:paddingLeft="15dp"
-    android:paddingTop="5dp"
+    android:paddingTop="10dp"
     android:paddingRight="15dp"
-    android:paddingBottom="12dp">
+    android:paddingBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,7 +57,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_overhaul_item"
                 android:orientation="vertical">
 
                 <TextView
@@ -121,10 +120,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+                        android:minHeight="44dp"
                         android:lines="1"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="5dp"
                         android:text="检修内容:"
                         android:textColor="@color/color535862"
                         android:textSize="14sp" />
@@ -154,7 +151,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minLines="2"
-                    android:paddingTop="12dp"
+                    android:minHeight="44dp"
+                    android:layout_marginTop="10dp"
                     android:text="语音内容文字展示区域"
                     android:textColor="@color/text333"
                     android:textSize="14sp" />

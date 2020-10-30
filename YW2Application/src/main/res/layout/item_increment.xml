@@ -170,6 +170,7 @@
                             android:layout_height="30dp"
                             android:background="@drawable/voice_three"
                             android:gravity="center"
+                            android:paddingLeft="5dp"
                             android:textColor="@color/gray_999999"
                             android:textSize="12sp"
                             tools:text="60s" />
