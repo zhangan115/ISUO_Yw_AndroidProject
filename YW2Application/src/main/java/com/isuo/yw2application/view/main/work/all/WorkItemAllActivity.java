@@ -159,7 +159,9 @@ public class WorkItemAllActivity extends BaseActivity implements WorkItemAllCont
             return false;
         }
         Intent intent = new Intent();
-        intent.putParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST, showWorkItems);
+        if (mPresenter!=null){
+            mPresenter.saveWorkItem(this.showWorkItems);
+        }
         setResult(Activity.RESULT_OK, intent);
         return true;
     }
@@ -172,7 +174,15 @@ public class WorkItemAllActivity extends BaseActivity implements WorkItemAllCont
 
     @Override
     public void showMyWorkItemList(List<WorkItem> workItems) {
-        workItems.remove(workItems.size() - 1);
+        int position = -1;
+        for (int i = 0;i<workItems.size();i++){
+            if (workItems.get(i).getId() == -1){
+                position = i;
+            }
+        }
+        if (position!=-1){
+            workItems.remove(position);
+        }
         this.showWorkItems.clear();
         this.showWorkItems.addAll(workItems);
         this.adapter.setData(this.showWorkItems);

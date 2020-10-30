@@ -296,19 +296,6 @@ public class WorkRepository implements WorkDataSource {
         }.execute1();
     }
 
-    @Override
-    public void saveWorkItems(List<WorkItem> items) {
-        StringBuilder sb = new StringBuilder();
-        items.remove(items.size() - 1);
-        for (int i = 0; i < items.size(); i++) {
-            sb.append(items.get(i).getId());
-            if (i != items.size() - 1) {
-                sb.append(",");
-            }
-        }
-        sp.edit().putString(ConstantStr.WORK_ITEM, sb.toString()).apply();
-    }
-
     @NonNull
     @Override
     public Subscription getWorkState(final IObjectCallBack<WorkState> callBack) {
@@ -390,19 +377,55 @@ public class WorkRepository implements WorkDataSource {
 
     @Override
     public void getWorkItems(final WorkItemCallBack callBack) {
+        List<WorkItem> allWorkItems = new ArrayList<>();
+        List<WorkItem> payWorkItems = new ArrayList<>();
+        //可用item
+        allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
+        allWorkItems.add(new WorkItem(2, "检修工作", R.drawable.overhaul));
+        allWorkItems.add(new WorkItem(3, "指派检修", R.drawable.assign));
+        allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
+        allWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
+        allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
+        allWorkItems.add(new WorkItem(7, "企业规范", R.drawable.standard));
+        allWorkItems.add(new WorkItem(8, "代办事项", R.drawable.to_do_list));
+        allWorkItems.add(new WorkItem(9, "日常巡检", R.drawable.inspecting));
+        //需要付费item
+        payWorkItems.add(new WorkItem(20, "注油管理", R.drawable.oiling));
+        payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
+
         String workItemStr = sp.getString(ConstantStr.WORK_ITEM, "");
+        String[] items = workItemStr.split(",");
+
         List<WorkItem> myWorkItems = new ArrayList<>();
 
-        myWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
-        myWorkItems.add(new WorkItem(2, "检修工作", R.drawable.overhaul));
-        myWorkItems.add(new WorkItem(3, "指派检修", R.drawable.assign));
-        myWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
-        myWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
-        myWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
-        myWorkItems.add(new WorkItem(7, "企业规范", R.drawable.standard));
-
+        for (String item : items) {
+            if (TextUtils.isEmpty(item)){
+                break;
+            }
+            int id = Integer.parseInt(item);
+            for (WorkItem allItem : allWorkItems) {
+                if (allItem.getId() == id) {
+                    myWorkItems.add(allItem);
+                    break;
+                }
+            }
+            for (WorkItem payItem : payWorkItems) {
+                if (payItem.getId() == id) {
+                    myWorkItems.add(payItem);
+                    break;
+                }
+            }
+        }
+        if (myWorkItems.isEmpty()) {
+            myWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
+            myWorkItems.add(new WorkItem(2, "检修工作", R.drawable.overhaul));
+            myWorkItems.add(new WorkItem(3, "指派检修", R.drawable.assign));
+            myWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
+            myWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
+            myWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
+            myWorkItems.add(new WorkItem(7, "企业规范", R.drawable.standard));
+        }
         myWorkItems.add(new WorkItem(-1, "全部", R.drawable.all));
-
         callBack.showWorkItem(myWorkItems);
     }
 
@@ -426,5 +449,20 @@ public class WorkRepository implements WorkDataSource {
         payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
         callBack.showAllWorkItem(allWorkItems);
         callBack.showPayWorkItem(payWorkItems);
+    }
+
+    @Override
+    public void saveWorkItems(List<WorkItem> items) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId() == -1){
+                continue;
+            }
+            sb.append(items.get(i).getId());
+            if (i != items.size() - 1) {
+                sb.append(",");
+            }
+        }
+        sp.edit().putString(ConstantStr.WORK_ITEM, sb.toString()).apply();
     }
 }

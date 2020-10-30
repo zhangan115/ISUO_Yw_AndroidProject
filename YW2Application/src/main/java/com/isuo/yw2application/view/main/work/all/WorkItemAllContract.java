@@ -7,9 +7,12 @@ import com.sito.library.base.BaseView;
 import java.util.List;
 
 public interface WorkItemAllContract {
+
     interface Presenter extends BasePresenter {
 
         void getWorkItem();
+
+        void saveWorkItem(List<WorkItem> workItems);
 
     }
 

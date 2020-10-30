@@ -11,7 +11,7 @@ public class WorkItemAllPresenter implements WorkItemAllContract.Presenter {
     final private WorkDataSource mRepository;
     final private WorkItemAllContract.View mView;
 
-    public WorkItemAllPresenter(WorkDataSource mRepository, WorkItemAllContract.View mView) {
+    WorkItemAllPresenter(WorkDataSource mRepository, WorkItemAllContract.View mView) {
         this.mRepository = mRepository;
         this.mView = mView;
         this.mView.setPresenter(this);
@@ -37,6 +37,11 @@ public class WorkItemAllPresenter implements WorkItemAllContract.Presenter {
                 mView.showPayWorkItemList(workItems);
             }
         });
+    }
+
+    @Override
+    public void saveWorkItem(List<WorkItem> workItems) {
+        mRepository.saveWorkItems(workItems);
     }
 
     @Override
