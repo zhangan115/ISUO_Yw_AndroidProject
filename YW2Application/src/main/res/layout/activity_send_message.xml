@@ -150,14 +150,14 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
-                android:paddingTop="5dp"
+                android:paddingTop="10dp"
                 android:paddingRight="15dp"
-                android:paddingBottom="5dp">
+                android:paddingBottom="10dp">
 
                 <LinearLayout
                     android:id="@+id/llUser"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="44dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -175,27 +175,26 @@
                         android:id="@+id/tvUserList"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="1"
                         android:gravity="right"
                         android:lines="1"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:text="全部"
-                        android:textColor="@color/text333"
-                        android:textSize="14dp" />
+                        android:textColor="@color/gray_999999"
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="7dp"
                         android:src="@drawable/list_arrow" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llFile"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="44dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -218,8 +217,8 @@
                         android:orientation="vertical"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/text333"
-                        android:textSize="13sp" />
+                        android:textColor="@color/gray_999999"
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:layout_width="wrap_content"

@@ -41,9 +41,9 @@ public class SecurityPackageActivity extends WebActivity implements SecurityPack
         setLayoutAndToolbar(R.layout.security_package_activity, "管理规定");
         mTaskId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG, -1);
         mSecurityId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG_1, -1);
-        mContent = (WebView) findViewById(R.id.id_secure_content);
-        mPrevious = (TextView) findViewById(R.id.id_previous_page);
-        mNext = (TextView) findViewById(R.id.id_next_page);
+        mContent = findViewById(R.id.id_secure_content);
+        mPrevious = findViewById(R.id.id_previous_page);
+        mNext = findViewById(R.id.id_next_page);
         mNext.setOnClickListener(this);
         mPrevious.setOnClickListener(this);
         mList = new ArrayList<>();

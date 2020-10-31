@@ -69,14 +69,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="20dp"
+                            android:layout_width="10dp"
                             android:layout_height="10dp"
-                            android:background="@color/color_fault_pink" />
+                            android:background="@drawable/lin_chart_color_1" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/DP_2"
+                            android:layout_marginLeft="@dimen/DP_5"
                             android:text="总故障数"
                             android:textColor="@color/news_text_black"
                             android:textSize="12sp" />
@@ -90,14 +90,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="20dp"
+                            android:layout_width="10dp"
                             android:layout_height="10dp"
-                            android:background="@color/line_color_4" />
+                            android:background="@drawable/lin_chart_color_2" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/DP_2"
+                            android:layout_marginLeft="@dimen/DP_5"
                             android:text="A类故障"
                             android:textColor="@color/news_text_black"
                             android:textSize="12sp" />
@@ -112,14 +112,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="20dp"
+                            android:layout_width="10dp"
                             android:layout_height="10dp"
-                            android:background="@color/line_color_1" />
+                            android:background="@drawable/lin_chart_color_3" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/DP_2"
+                            android:layout_marginLeft="@dimen/DP_5"
                             android:text="B类故障"
                             android:textColor="@color/news_text_black"
                             android:textSize="12sp" />
@@ -133,14 +133,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="20dp"
+                            android:layout_width="10dp"
                             android:layout_height="10dp"
-                            android:background="@color/line_color_2" />
+                            android:background="@drawable/lin_chart_color_4" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/DP_2"
+                            android:layout_marginLeft="@dimen/DP_5"
                             android:text="C类故障"
                             android:textColor="@color/news_text_black"
                             android:textSize="12sp" />

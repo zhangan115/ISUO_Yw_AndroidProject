@@ -138,7 +138,7 @@ public class WorkIncrementActivity extends BaseActivity implements IncrementCont
                     soundUrl = data.getWorkSound();
                     start_time.setVisibility(View.GONE);
                     end_time.setVisibility(View.GONE);
-                    tv_title_sound.setText("工作内容:");
+                    tv_title_sound.setText("工作内容");
                     ll_start_task.setVisibility(View.GONE);
                     if (data.getIssuedUser() != null && data.getIssuedUser().getUserId() == Yw2Application.getInstance().getCurrentUser().getUserId()) {
                         tvWorkState.setText("我的上报");
@@ -155,7 +155,7 @@ public class WorkIncrementActivity extends BaseActivity implements IncrementCont
                     start_time.setText(DataUtil.timeFormat(data.getStartTime(), null));
                     end_time.setVisibility(View.VISIBLE);
                     end_time.setText(DataUtil.timeFormat(data.getEndTime(), null));
-                    tv_title_sound.setText("工作要求:");
+                    tv_title_sound.setText("工作要求");
                     boolean isIn = false;
                     if (!TextUtils.isEmpty(data.getUserIds())) {
                         String[] userIds = data.getUserIds().split(",");

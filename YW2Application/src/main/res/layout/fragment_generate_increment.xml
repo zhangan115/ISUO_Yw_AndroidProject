@@ -61,7 +61,7 @@
                                 android:drawableRight="@drawable/list_arrow"
                                 android:drawablePadding="4dp"
                                 android:gravity="right|center_vertical"
-                                android:textColor="@color/text333"
+                                android:textColor="@color/gray_999999"
                                 android:textSize="14sp"
                                 tools:text="A类" />
                         </LinearLayout>
@@ -93,7 +93,7 @@
                                 android:drawableRight="@drawable/list_arrow"
                                 android:drawablePadding="4dp"
                                 android:gravity="right|center_vertical"
-                                android:textColor="@color/text333"
+                                android:textColor="@color/gray_999999"
                                 android:textSize="14sp"
                                 tools:text="2017-09-29-10：55" />
                         </LinearLayout>
@@ -126,7 +126,7 @@
                                 android:drawableRight="@drawable/list_arrow"
                                 android:drawablePadding="4dp"
                                 android:gravity="right|center_vertical"
-                                android:textColor="@color/text333"
+                                android:textColor="@color/gray_999999"
                                 android:textSize="14sp"
                                 tools:text="2017-09-29-10：55" />
                         </LinearLayout>
@@ -227,28 +227,30 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="12dp"
                                 android:layout_marginBottom="12dp"
-                                android:orientation="horizontal">
+                                android:orientation="vertical">
+
+                                <EditText
+                                    android:id="@+id/id_increment_content"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:minHeight="44dp"
+                                    android:gravity="top"
+                                    android:hint="语音文字显示区域"
+                                    android:textColor="@color/text333"
+                                    android:textColorHint="@color/gray_999999"
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/id_increment_time"
                                     android:layout_width="70dp"
                                     android:layout_height="30dp"
                                     android:background="@drawable/voice_three"
+                                    android:layout_marginTop="10dp"
                                     android:gravity="center"
                                     android:textColor="@color/gray_999999"
                                     android:textSize="12sp" />
 
-                                <EditText
-                                    android:id="@+id/id_increment_content"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:background="@null"
-                                    android:gravity="center_vertical"
-                                    android:hint="语音文字显示区域"
-                                    android:textColor="@color/text333"
-                                    android:textColorHint="@color/gray_666666"
-                                    android:textSize="14sp" />
                             </LinearLayout>
 
                             <ImageView
@@ -256,7 +258,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal|right"
-                                android:layout_marginRight="15dp"
+                                android:paddingRight="10dp"
+                                android:paddingLeft="10dp"
                                 android:src="@drawable/mic_btn" />
 
                         </LinearLayout>
@@ -282,6 +285,7 @@
                             android:layout_height="44dp"
                             android:gravity="center_vertical"
                             android:text="照片记录"
+                            android:textStyle="bold"
                             android:textColor="@color/text333"
                             android:textSize="14sp" />
 
@@ -304,7 +308,7 @@
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:paddingBottom="20dp"
+                android:paddingBottom="10dp"
                 android:visibility="visible">
 
                 <TextView
@@ -313,6 +317,7 @@
                     android:layout_height="44dp"
                     android:gravity="center_vertical"
                     android:text="指派"
+                    android:textStyle="bold"
                     android:textColor="@color/text333"
                     android:textSize="14sp" />
 

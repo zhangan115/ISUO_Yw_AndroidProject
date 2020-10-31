@@ -99,7 +99,7 @@
                         android:drawableLeft="@drawable/lin_fault_color_1"
                         android:drawablePadding="5dp"
                         android:text="A类"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/text333"
                         android:textSize="14sp" />
 
                     <TextView
@@ -110,7 +110,7 @@
                         android:drawableLeft="@drawable/lin_fault_color_2"
                         android:drawablePadding="5dp"
                         android:text="B类"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/text333"
                         android:textSize="14sp" />
 
                     <TextView
@@ -119,7 +119,7 @@
                         android:drawableLeft="@drawable/lin_fault_color_3"
                         android:drawablePadding="5dp"
                         android:text="C类"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/text333"
                         android:textSize="14sp" />
                 </LinearLayout>
 

@@ -180,10 +180,10 @@
                 android:background="@drawable/white_bg_with_shape"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
-                android:paddingTop="12dp"
+                android:paddingTop="10dp"
                 android:paddingRight="15dp"
-                android:paddingBottom="12dp"
-                android:visibility="gone">
+                android:paddingBottom="10dp"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"

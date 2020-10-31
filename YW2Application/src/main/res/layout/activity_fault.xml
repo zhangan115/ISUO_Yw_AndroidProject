@@ -108,17 +108,16 @@
                         android:gravity="center_vertical"
                         android:text="故障描述"
                         android:textColor="@color/text333"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/id_fault_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:gravity="center_vertical"
+                        android:gravity="top"
                         android:hint="语音文字显示区域"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
+                        android:minHeight="44dp"
                         android:textColor="@color/text333"
                         android:textColorHint="@color/gray_999999"
                         android:textSize="14sp" />
@@ -131,6 +130,7 @@
                         android:background="@drawable/voice_three"
                         android:enabled="false"
                         android:gravity="center"
+                        android:paddingLeft="10dp"
                         android:textColor="@color/gray_999999"
                         android:textSize="12sp"
                         tools:text="20s" />
@@ -140,6 +140,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
                         android:src="@drawable/mic_btn" />
 
                 </LinearLayout>
@@ -193,7 +195,7 @@
                     android:paddingLeft="15dp"
                     android:paddingTop="5dp"
                     android:paddingRight="15dp"
-                    android:paddingBottom="12dp"
+                    android:paddingBottom="10dp"
                     android:visibility="visible">
 
                     <TextView
