@@ -240,6 +240,11 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                 } else {
                     tv_time_plan_end.setVisibility(View.GONE);
                 }
+                if (data.getTaskState() == ConstantInt.TASK_STATE_4){
+                    startTaskLayout.setVisibility(View.GONE);
+                }else{
+                    startTaskLayout.setVisibility(View.VISIBLE);
+                }
                 startTaskLayout.setTag(R.id.tag_position, position);
                 startTaskLayout.setTag(R.id.tag_task, data.getTaskId());
                 startTaskLayout.setTag(R.id.tag_position_1, data.getSecurityPackage() == null ? -1L : data.getSecurityPackage().getSecurityId());
