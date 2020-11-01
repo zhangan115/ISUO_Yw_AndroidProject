@@ -20,21 +20,32 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/leftImage"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="15dp" />
+                android:id="@+id/drawerImage"
+                android:layout_width="44dp"
+                android:layout_height="44dp" />
 
-            <TextView
-                android:id="@+id/userNameTv"
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_weight="1"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:text="欢迎，高卢杰" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/leftImage"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+
+                <TextView
+                    android:id="@+id/userNameTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="欢迎，高卢杰" />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/rightImage"
@@ -80,7 +91,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我的待办"
+                        android:text="最近信息"
                         android:textColor="@color/text333"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -308,7 +319,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我的功能"
+                        android:text="常用功能"
                         android:textColor="@color/text333"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -343,7 +354,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="安全管理中心"
+                        android:text="安全模块"
                         android:textColor="@color/text333"
                         android:textSize="18sp"
                         android:textStyle="bold" />

@@ -78,7 +78,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="我的"
+                    android:text="常用功能"
                     android:textColor="@color/text333"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -142,7 +142,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="可用功能"
+                android:text="已购功能"
                 android:textColor="@color/text333"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -187,7 +187,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="付费功能"
+                    android:text="待购功能"
                     android:textColor="@color/text333"
                     android:textSize="14sp"
                     android:textStyle="bold" />

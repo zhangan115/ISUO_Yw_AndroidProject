@@ -6,61 +6,26 @@
 
     <include layout="@layout/toolbar" />
 
-    <TextView
-        android:id="@+id/tv_host_1"
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:lines="1"
-        android:onClick="onChooseIp"
-        android:paddingBottom="15dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="15dp"
-        android:textColor="@color/color535862"
-        android:textSize="15sp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/color_division" />
-
-    <TextView
-        android:id="@+id/tv_host_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:lines="1"
-        android:paddingBottom="15dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="15dp"
-        android:textColor="@color/color535862"
+        android:layout_height="44dp"
+        android:layout_marginLeft="15dp"
         android:textSize="15sp"
-        android:visibility="gone" />
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:textColor="@color/text333" />
 
-    <View
+    <Button
+        android:id="@+id/sureBtn"
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/color_division"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/tv_host_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:lines="1"
-        android:paddingBottom="15dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="15dp"
-        android:textColor="@color/color535862"
-        android:textSize="15sp"
-        android:visibility="gone" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/color_division"
-        android:visibility="gone" />
-
-
+        android:layout_height="44dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/bg_btn_report"
+        android:text="@string/sure"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 </LinearLayout>

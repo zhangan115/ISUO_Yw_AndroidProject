@@ -41,6 +41,7 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
         View rootView = inflater.inflate(R.layout.fmg_login, container, false);
         mNameEt = rootView.findViewById(R.id.edit_username);
         mPassEt = rootView.findViewById(R.id.edit_password);
+        rootView.findViewById(R.id.setting).setOnClickListener(this);
         rootView.findViewById(R.id.tv_login).setOnClickListener(this);
         rootView.findViewById(R.id.tv_forget_password).setOnClickListener(this);
         rootView.findViewById(R.id.tv_test).setOnClickListener(this);
@@ -86,7 +87,7 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
             case R.id.tv_register:
                 startActivity(new Intent(getActivity(), RegisterActivity.class));
                 break;
-            case R.id.tv_test:
+            case R.id.setting:
                 startTestTimes++;
                 if (startTestTimes > 6) {
                     startActivity(new Intent(getActivity(), TestActivity.class));

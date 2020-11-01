@@ -381,16 +381,16 @@ public class WorkRepository implements WorkDataSource {
         List<WorkItem> payWorkItems = new ArrayList<>();
         //可用item
         allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
-        allWorkItems.add(new WorkItem(2, "检修工作", R.drawable.overhaul));
-        allWorkItems.add(new WorkItem(3, "指派检修", R.drawable.assign));
+        allWorkItems.add(new WorkItem(2, "执行检修", R.drawable.overhaul));
+        allWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
         allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
         allWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
         allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
-        allWorkItems.add(new WorkItem(7, "企业规范", R.drawable.standard));
-        allWorkItems.add(new WorkItem(8, "代办事项", R.drawable.to_do_list));
-        allWorkItems.add(new WorkItem(9, "日常巡检", R.drawable.inspecting));
+        allWorkItems.add(new WorkItem(7, "查看规范", R.drawable.standard));
+        allWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));
+        allWorkItems.add(new WorkItem(9, "执行巡检", R.drawable.inspecting));
         //需要付费item
-        payWorkItems.add(new WorkItem(20, "注油管理", R.drawable.oiling));
+        payWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
         payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
 
         String workItemStr = sp.getString(ConstantStr.WORK_ITEM, "");
@@ -418,12 +418,12 @@ public class WorkRepository implements WorkDataSource {
         }
         if (myWorkItems.isEmpty()) {
             myWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
-            myWorkItems.add(new WorkItem(2, "检修工作", R.drawable.overhaul));
-            myWorkItems.add(new WorkItem(3, "指派检修", R.drawable.assign));
+            myWorkItems.add(new WorkItem(2, "执行检修", R.drawable.overhaul));
+            myWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
             myWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
             myWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
             myWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
-            myWorkItems.add(new WorkItem(7, "企业规范", R.drawable.standard));
+            myWorkItems.add(new WorkItem(7, "查看规范", R.drawable.standard));
         }
         myWorkItems.add(new WorkItem(-1, "全部", R.drawable.all));
         callBack.showWorkItem(myWorkItems);
@@ -436,16 +436,16 @@ public class WorkRepository implements WorkDataSource {
         List<WorkItem> payWorkItems = new ArrayList<>();
         //可用item
         allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
-        allWorkItems.add(new WorkItem(2, "检修工作", R.drawable.overhaul));
-        allWorkItems.add(new WorkItem(3, "指派检修", R.drawable.assign));
+        allWorkItems.add(new WorkItem(2, "执行检修", R.drawable.overhaul));
+        allWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
         allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
         allWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
         allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
-        allWorkItems.add(new WorkItem(7, "企业规范", R.drawable.standard));
-        allWorkItems.add(new WorkItem(8, "代办事项", R.drawable.to_do_list));
-        allWorkItems.add(new WorkItem(9, "日常巡检", R.drawable.inspecting));
+        allWorkItems.add(new WorkItem(7, "查看规范", R.drawable.standard));
+        allWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));
+        allWorkItems.add(new WorkItem(9, "执行巡检", R.drawable.inspecting));
         //需要付费item
-        payWorkItems.add(new WorkItem(20, "注油管理", R.drawable.oiling));
+        payWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
         payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
         callBack.showAllWorkItem(allWorkItems);
         callBack.showPayWorkItem(payWorkItems);

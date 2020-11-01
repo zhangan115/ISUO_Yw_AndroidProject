@@ -123,7 +123,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         userNameTv.setText(String.format("欢迎，%s", user.getRealName()));
         rootView.findViewById(R.id.rightImage).setOnClickListener(this);
         userPhoto = rootView.findViewById(R.id.leftImage);
-        userPhoto.setOnClickListener(this);
+        rootView.findViewById(R.id.drawerImage).setOnClickListener(this);
         gridView = rootView.findViewById(R.id.gridView);
         gridViewAdapter = new GridViewAdapter(this.getActivity(), showWorkItemList, R.layout.work_item);
         gridView.setAdapter(gridViewAdapter);
@@ -244,7 +244,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                             }
                         });
                 break;
-            case R.id.leftImage:
+            case R.id.drawerImage:
                 if (callBack != null) {
                     callBack.onCallBack();
                 }

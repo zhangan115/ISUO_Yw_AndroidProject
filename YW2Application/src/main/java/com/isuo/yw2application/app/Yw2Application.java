@@ -133,7 +133,11 @@ public class Yw2Application extends AbsBaseApp {
 
     @Override
     public String AppHost() {
-        return SPHelper.readString(this, ConstantStr.USER_INFO, ConstantStr.APP_HOST, BuildConfig.HOST);
+        String host =  SPHelper.readString(this, ConstantStr.USER_INFO, ConstantStr.APP_HOST,BuildConfig.HOST);
+        if (TextUtils.isEmpty(host)){
+            host = BuildConfig.HOST;
+        }
+        return host;
     }
 
     public void editHost(String host) {

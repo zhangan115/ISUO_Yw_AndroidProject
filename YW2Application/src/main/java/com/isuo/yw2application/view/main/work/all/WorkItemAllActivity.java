@@ -43,7 +43,7 @@ public class WorkItemAllActivity extends BaseActivity implements WorkItemAllCont
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_work_item_list, "所有工作");
+        setLayoutAndToolbar(R.layout.activity_work_item_list, "功能选择");
         new WorkItemAllPresenter(Yw2Application.getInstance().getWorkRepositoryComponent().getRepository(), this);
         init();
     }

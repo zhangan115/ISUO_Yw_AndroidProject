@@ -63,7 +63,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="已完成任务项"
+                                    android:text="本月已完成任务数"
                                     android:textColor="@color/colorWhite"
                                     android:textSize="16sp" />
 
@@ -78,12 +78,6 @@
                                     android:textSize="24sp"
                                     android:textStyle="bold" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="好棒，点个赞"
-                                    android:textColor="@color/colorWhite"
-                                    android:textSize="16sp" />
                             </LinearLayout>
                         </RelativeLayout>
 
@@ -93,7 +87,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="129dp"
+                        android:layout_marginTop="120dp"
                         android:layout_marginRight="15dp"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/white_bg_with_shape"
