@@ -88,9 +88,9 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
         mFragments = getFragments();
         bottomNavigation = findViewById(R.id.bottom_navigation);
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.str_first_nav_1, R.drawable.work, R.color.colorPrimary);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.str_first_nav_2, R.drawable.drive, R.color.colorPrimary);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.str_first_nav_3, R.drawable.task_g, R.color.colorPrimary);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.str_first_nav_4, R.drawable.fault_bottom, R.color.colorPrimary);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.str_first_nav_3, R.drawable.task_g, R.color.colorPrimary);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.str_first_nav_4, R.drawable.fault_bottom, R.color.colorPrimary);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.str_first_nav_2, R.drawable.drive, R.color.colorPrimary);
         AHBottomNavigationItem item5 = new AHBottomNavigationItem(R.string.str_first_nav_5, R.drawable.board, R.color.colorPrimary);
         bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);
@@ -164,10 +164,6 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
         if (workFragment == null) {
             workFragment = WorkFragment.newInstance();
         }
-        DeviceFragment deviceFragment = (DeviceFragment) getSupportFragmentManager().findFragmentByTag("tag_1");
-        if (deviceFragment == null) {
-            deviceFragment = DeviceFragment.newInstance();
-        }
         TaskFragment taskFragment = (TaskFragment) getSupportFragmentManager().findFragmentByTag("tag_2");
         if (taskFragment == null) {
             taskFragment = TaskFragment.newInstance();
@@ -176,14 +172,18 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
         if (alarmFragment == null) {
             alarmFragment = AlarmFragment.newInstance();
         }
+        DeviceFragment deviceFragment = (DeviceFragment) getSupportFragmentManager().findFragmentByTag("tag_1");
+        if (deviceFragment == null) {
+            deviceFragment = DeviceFragment.newInstance();
+        }
         DataFragment dataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("tag_4");
         if (dataFragment == null) {
             dataFragment = DataFragment.newInstance();
         }
         fragments.add(workFragment);
-        fragments.add(deviceFragment);
         fragments.add(taskFragment);
         fragments.add(alarmFragment);
+        fragments.add(deviceFragment);
         fragments.add(dataFragment);
         return fragments;
     }

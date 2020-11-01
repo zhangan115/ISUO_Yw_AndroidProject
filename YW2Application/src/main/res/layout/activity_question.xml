@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_energe_bg"
+    android:background="@color/color_division"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
@@ -52,6 +52,7 @@
         android:background="@drawable/bg_btn_report"
         android:gravity="center"
         android:text="提交"
-        android:textColor="#ffffff"
-        android:textSize="16sp" />
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:textSize="14sp" />
 </LinearLayout>

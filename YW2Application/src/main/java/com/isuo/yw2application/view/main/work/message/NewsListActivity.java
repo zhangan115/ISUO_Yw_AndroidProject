@@ -11,33 +11,27 @@ public class NewsListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_container_toolbar);
         int type = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT,0);
-        if (getTitleTv()==null)return;
+        String title = "";
         switch (type){
             case 0:
-                getTitleTv().setText("工作动态");
+                title = "工作动态";
                 break;
             case 1:
-                getTitleTv().setText("故障消息");
+                title = "故障消息";
                 break;
             case 2:
-                getTitleTv().setText("企业通知");
+                title = "企业通知";
                 break;
             case 3:
-                getTitleTv().setText("与我相关");
+                title ="与我相关";
                 break;
         }
+        setLayoutAndToolbar(R.layout.activity_container_toolbar,title,true);
         NewsListFragment fragment = (NewsListFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
         if (fragment == null) {
             fragment = NewsListFragment.newInstance(type);
             ActivityUtilsV4.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.frame_container);
         }
-    }
-
-    @Override
-    public void toolBarClick() {
-        super.toolBarClick();
-        finish();
     }
 }

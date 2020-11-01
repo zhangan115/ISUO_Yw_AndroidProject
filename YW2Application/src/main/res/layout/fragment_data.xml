@@ -40,6 +40,7 @@
                     android:layout_marginRight="15dp"
                     android:text="其他服务"
                     android:textColor="@color/colorWhite"
+                    android:visibility="gone"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -66,6 +67,7 @@
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
                     android:paddingTop="8dp"
+                    android:visibility="gone"
                     android:paddingRight="10dp"
                     android:paddingBottom="8dp">
 

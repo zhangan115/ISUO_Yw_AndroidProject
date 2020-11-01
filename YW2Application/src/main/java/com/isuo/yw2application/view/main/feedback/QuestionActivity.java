@@ -30,9 +30,9 @@ public class QuestionActivity extends BaseActivity implements QuestionContract.V
     }
 
     private void initViews() {
-        mTitle = (EditText) findViewById(R.id.id_question_title);
-        mContent = (EditText) findViewById(R.id.id_question_content);
-        Button mButton = (Button) findViewById(R.id.id_question_btn);
+        mTitle = findViewById(R.id.id_question_title);
+        mContent = findViewById(R.id.id_question_content);
+        Button mButton = findViewById(R.id.id_question_btn);
         mButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
