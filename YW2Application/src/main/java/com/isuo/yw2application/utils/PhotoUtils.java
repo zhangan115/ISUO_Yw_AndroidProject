@@ -2,6 +2,11 @@ package com.isuo.yw2application.utils;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.provider.OpenableColumns;
 import android.util.Log;
@@ -51,8 +56,12 @@ public class PhotoUtils {
                             e.printStackTrace();
                         }
                         if (file1 != null && file.exists() && !cleanFile) {
+                            Bitmap bitmap = BitmapFactory.decodeFile(file1.getAbsolutePath());
+                            Bitmap newBitmap = createWatermark(bitmap, "打个水印试一下");
+
                             file.delete();
                         }
+
                         return Observable.just(file1);
                     }
                 })
@@ -103,6 +112,28 @@ public class PhotoUtils {
             }
         }
         return result;
+    }
+
+    // 为图片target添加水印文字
+    // Bitmap target：被添加水印的图片
+    // String mark：水印文章
+    private static Bitmap createWatermark(Bitmap target, String mark) {
+        int w = target.getWidth();
+        int h = target.getHeight();
+        Bitmap bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bmp);
+        Paint p = new Paint();
+        // 水印的颜色
+        p.setColor(Color.WHITE);
+        // 水印的字体大小
+        p.setTextSize(12);
+        p.setAntiAlias(true);// 去锯齿
+        canvas.drawBitmap(target, 0, 0, p);
+        // 在左边的中间位置开始添加水印
+        canvas.drawText(mark, 0, h / 2, p);
+        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.restore();
+        return bmp;
     }
 
 
