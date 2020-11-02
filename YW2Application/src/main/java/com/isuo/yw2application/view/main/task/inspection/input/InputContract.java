@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.task.inspection.input;
 
+import com.isuo.yw2application.mode.bean.db.RoomDb;
 import com.isuo.yw2application.mode.bean.equip.FocusBean;
 import com.isuo.yw2application.mode.bean.inspection.DataItemBean;
 import com.isuo.yw2application.mode.bean.inspection.TaskEquipmentBean;
@@ -56,6 +57,22 @@ public interface InputContract {
          */
         void saveTaskEquipToCache(TaskEquipmentBean taskEquipmentBean);
 
+        /**
+         * 上传需要拍照的设备照片
+         *
+         * @param roomDb room
+         */
+        void uploadRandomImage(RoomDb roomDb);
+
+        /**
+         * 上传需要拍照的设备信息
+         *
+         * @param taskId      任务id
+         * @param equipmentId 设备id
+         * @param url         图片地址
+         */
+        void uploadUserPhoto(long taskId, long equipmentId, String url);
+
     }
 
     interface View extends BaseView<Presenter> {
@@ -93,6 +110,14 @@ public interface InputContract {
          * @param taskEquipmentBean 设备
          */
         void showTaskEquipFromCache(TaskEquipmentBean taskEquipmentBean);
+
+        void uploadRandomSuccess();
+
+        void uploadRandomFail();
+
+        void uploadUserPhotoSuccess();
+
+        void uploadUserPhotoFail();
 
     }
 

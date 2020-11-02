@@ -83,25 +83,6 @@ class ReportPresenter implements ReportContract.Presenter {
         mSubscriptions.add(uploadSub);
     }
 
-    @Override
-    public void uploadRandomImage(RoomDb roomDb) {
-        mSubscriptions.add(mRepository.uploadRandomDataPhoto(roomDb, new InspectionSourceData.UploadPhotoCallBack() {
-
-            @Override
-            public void onSuccess() {
-                mView.uploadRandomSuccess();
-            }
-
-            @Override
-            public void onFail() {
-                mView.uploadRandomFail();
-            }
-
-            @Override
-            public void onFinish() {
-            }
-        }));
-    }
 
     @Override
     public void loadInspectionDataFromDb(long taskId, @NonNull RoomListBean roomListBean) {

@@ -115,4 +115,5 @@ dependencies {
     // 权限申请
     implementation 'com.qw:soulpermission:1.1.8'
 
+    implementation project(':PopupLibrary')
 }

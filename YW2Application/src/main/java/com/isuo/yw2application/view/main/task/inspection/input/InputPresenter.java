@@ -3,6 +3,7 @@ package com.isuo.yw2application.view.main.task.inspection.input;
 import android.support.annotation.NonNull;
 
 import com.isuo.yw2application.mode.IObjectCallBack;
+import com.isuo.yw2application.mode.bean.db.RoomDb;
 import com.isuo.yw2application.mode.bean.equip.FocusBean;
 import com.isuo.yw2application.mode.bean.inspection.DataItemBean;
 import com.isuo.yw2application.mode.bean.inspection.TaskEquipmentBean;
@@ -106,8 +107,48 @@ class InputPresenter implements InputContract.Presenter {
     }
 
     @Override
+    public void uploadUserPhoto(long taskId, long equipmentId, String url) {
+        mSubscriptions.add(mRepository.uploadUserPhotoInfo(taskId, equipmentId, url, new IObjectCallBack<String>() {
+            @Override
+            public void onSuccess(@NonNull String s) {
+                mView.uploadUserPhotoSuccess();
+            }
+
+            @Override
+            public void onError(String message) {
+                mView.uploadUserPhotoFail();
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }));
+    }
+
+    @Override
     public void saveTaskEquipToCache(TaskEquipmentBean taskEquipmentBean) {
         mRepository.saveTaskEquipToRepository(taskEquipmentBean);
+    }
+
+    @Override
+    public void uploadRandomImage(RoomDb roomDb) {
+        mSubscriptions.add(mRepository.uploadRandomDataPhoto(roomDb, new InspectionSourceData.UploadPhotoCallBack() {
+
+            @Override
+            public void onSuccess() {
+                mView.uploadRandomSuccess();
+            }
+
+            @Override
+            public void onFail() {
+                mView.uploadRandomFail();
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        }));
     }
 
     @Override

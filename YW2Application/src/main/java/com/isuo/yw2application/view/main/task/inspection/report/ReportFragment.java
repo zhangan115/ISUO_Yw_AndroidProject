@@ -78,7 +78,6 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     private int roomPosition = -1, editPosition;
     private long takePhotoEquipmentId = -1;
 
-    private static final int ACTION_START_CAMERA = 100;
     private static final int ACTION_START_INPUT = 101;
     private boolean caEdit = true;
     private boolean autoUpload = false, canUpload = true;
@@ -86,9 +85,6 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     private TextView bottomView;
     private TextView mTitleTv;
     private RecyclerView mRecyclerView;
-    private ProgressBar dialogProgressBar;
-    private MaterialDialog takePhotoDialog;
-    private ImageView equipmentTakePhotoIV;
     private RelativeLayout noDataLayout;
 
 
@@ -130,7 +126,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fmg_report, container, false);
         Toolbar toolbar = rootView.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -236,6 +232,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                 mPresenter.saveEditTaskEquipToCache(showBean.get(position));
                 intent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, caEdit);
                 intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, roomDb.getTaskId());
+                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG_1, roomDb.get_id());
                 Yw2Application.getInstance().hideSoftKeyBoard(getActivity());
                 startActivityForResult(intent, ACTION_START_INPUT);
             }
@@ -276,141 +273,16 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                 }
                 if (roomDb.getCheckCount() != mRoomListBean.getTaskEquipment().size()) {
                     getApp().showToast("有漏检项目!请检查");
-                    return;
-                }
-                @SuppressLint("InflateParams")
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_take_photo, null);
-                view.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (takePhotoDialog != null) {
-                            takePhotoDialog.dismiss();
-                        }
-                    }
-                });
-                TextView equipmentName = view.findViewById(R.id.tv_equipment_name);
-                String noteStr = "";
-                for (int i = 0; i < mTaskEquipmentBean.size(); i++) {
-                    if (mTaskEquipmentBean.get(i).getTaskEquipmentId() == roomDb.getTakePhotoPosition()) {
-                        takePhotoEquipmentId = mTaskEquipmentBean.get(i).getEquipment().getEquipmentId();
-                        noteStr = "请拍一张" + mTaskEquipmentBean.get(i).getEquipment().getEquipmentName() + "的照片";
-                        break;
+                } else {
+                    if (mPresenter.checkPhotoNeedUpload(mTaskEquipmentBean) && !TextUtils.isEmpty(roomDb.getUploadPhotoUrl())) {
+                        //图片拍照了，而且上传了，或者没有拍照，走之前的逻辑
+                        uploadInspectionData();
+                    } else {
+                        //有图片没有上传的，上传图片先
+                        showUploadLoading();
+                        mPresenter.uploadPhotoList(roomDb);
                     }
                 }
-                equipmentName.setText(noteStr);
-                equipmentTakePhotoIV = view.findViewById(R.id.iv_take_equipment_photo);
-                dialogProgressBar = view.findViewById(R.id.progressBar);
-                GlideUtils.ShowImage(getActivity(), roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photo_button);
-                equipmentTakePhotoIV.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                new CheckRequestPermissionListener() {
-                                    @Override
-                                    public void onPermissionOk(Permission permission) {
-                                        if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
-                                            photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                                            ActivityUtils.startCameraToPhoto(ReportFragment.this, photoFile, ACTION_START_CAMERA);
-                                        } else {
-                                            ViewPagePhotoActivity.startActivity(getActivity(), new String[]{roomDb.getPhotoUrl()}, 0);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onPermissionDenied(Permission permission) {
-                                        new AppSettingsDialog.Builder(ReportFragment.this)
-                                                .setRationale(getString(R.string.need_save_setting))
-                                                .setTitle(getString(R.string.request_permissions))
-                                                .setPositiveButton(getString(R.string.sure))
-                                                .setNegativeButton(getString(R.string.cancel))
-                                                .build()
-                                                .show();
-                                    }
-                                });
-                    }
-                });
-                equipmentTakePhotoIV.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
-                            return false;
-                        }
-                        SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                new CheckRequestPermissionListener() {
-                                    @Override
-                                    public void onPermissionOk(Permission permission) {
-                                        new MaterialDialog.Builder(getActivity())
-                                                .items(R.array.choose_condition_2)
-                                                .itemsCallback(new MaterialDialog.ListCallback() {
-                                                    @Override
-                                                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                                                        switch (position) {
-                                                            case 0://删除照片
-                                                                roomDb.setUploadPhotoUrl(null);
-                                                                roomDb.setPhotoUrl(null);
-                                                                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
-                                                                if (equipmentTakePhotoIV != null) {
-                                                                    GlideUtils.ShowImage(getActivity(), roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photo_button);
-                                                                }
-                                                                break;
-                                                            default://重新拍照
-                                                                roomDb.setUploadPhotoUrl(null);
-                                                                roomDb.setPhotoUrl(null);
-                                                                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
-                                                                if (equipmentTakePhotoIV != null) {
-                                                                    GlideUtils.ShowImage(getActivity(), roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photo_button);
-                                                                }
-                                                                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                                                                ActivityUtils.startCameraToPhoto(ReportFragment.this, photoFile, ACTION_START_CAMERA);
-                                                                break;
-                                                        }
-                                                    }
-                                                })
-                                                .show();
-                                    }
-
-                                    @Override
-                                    public void onPermissionDenied(Permission permission) {
-                                        new AppSettingsDialog.Builder(ReportFragment.this)
-                                                .setRationale(getString(R.string.need_save_setting))
-                                                .setTitle(getString(R.string.request_permissions))
-                                                .setPositiveButton(getString(R.string.sure))
-                                                .setNegativeButton(getString(R.string.cancel))
-                                                .build()
-                                                .show();
-                                    }
-                                });
-                        return true;
-                    }
-                });
-                view.findViewById(R.id.tv_sure).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (takePhotoDialog != null) {
-                            if (!TextUtils.isEmpty(roomDb.getPhotoUrl())) {
-                                if (isPhotoUpload) {
-                                    getApp().showToast("照片正在上传中...");
-                                    return;
-                                }
-                                if (mPresenter.checkPhotoNeedUpload(mTaskEquipmentBean) && !TextUtils.isEmpty(roomDb.getUploadPhotoUrl())) {
-                                    //图片拍照了，而且上传了，或者没有拍照，走之前的逻辑
-                                    uploadInspectionData();
-                                } else {
-                                    //有图片没有上传的，上传图片先
-                                    showUploadLoading();
-                                    mPresenter.uploadPhotoList(roomDb);
-                                }
-                                takePhotoDialog.dismiss();
-                            } else {
-                                getApp().showToast("请拍照!");
-                            }
-                        }
-                    }
-                });
-                takePhotoDialog = new MaterialDialog.Builder(getActivity())
-                        .customView(view, false)
-                        .build();
-                takePhotoDialog.show();
             }
         });
         if (mPresenter != null && mRoomListBean != null) {
@@ -556,33 +428,10 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
         Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
     }
 
-    //图片正在上传
-    private boolean isPhotoUpload;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ACTION_START_CAMERA && resultCode == Activity.RESULT_OK) {
-            PhotoUtils.cropPhoto(getActivity(), photoFile, new PhotoUtils.PhotoListener() {
-                @Override
-                public void onSuccess(File file) {
-                    if (mPresenter == null) {
-                        return;
-                    }
-                    if (roomDb != null) {
-                        roomDb.setPhotoUrl(file.getAbsolutePath());
-                    }
-                    if (equipmentTakePhotoIV != null) {
-                        GlideUtils.ShowImage(getActivity(), file, equipmentTakePhotoIV, R.drawable.photo_button);
-                    }
-                    if (dialogProgressBar != null) {
-                        dialogProgressBar.setVisibility(View.VISIBLE);
-                    }
-                    isPhotoUpload = true;
-                    mPresenter.uploadRandomImage(roomDb);
-
-                }
-            });
-        } else if (Activity.RESULT_OK == resultCode && requestCode == ACTION_START_INPUT) {
+        if (Activity.RESULT_OK == resultCode && requestCode == ACTION_START_INPUT) {
             if (showBean.size() > 0 && showBean.size() > editPosition) {
                 TaskEquipmentBean taskEquipmentBean = mPresenter.getTaskEquipFromRepository();
                 if (taskEquipmentBean != null) {
@@ -610,22 +459,6 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     @Override
     public void hideLoading() {
         hideEvLoading();
-    }
-
-    @Override
-    public void uploadRandomSuccess() {
-        if (dialogProgressBar != null) {
-            dialogProgressBar.setVisibility(View.GONE);
-        }
-        isPhotoUpload = false;
-    }
-
-    @Override
-    public void uploadRandomFail() {
-        if (dialogProgressBar != null) {
-            dialogProgressBar.setVisibility(View.GONE);
-        }
-        isPhotoUpload = false;
     }
 
     @Override

@@ -31,13 +31,6 @@ public interface ReportContract {
         void uploadData(int position, InspectionDetailBean inspectionDetailBean, boolean isAuto);
 
         /**
-         * 上传room数据
-         *
-         * @param roomDb room
-         */
-        void uploadRandomImage(RoomDb roomDb);
-
-        /**
          * 从数据库获取任务
          *
          * @param taskId       任务id
@@ -105,10 +98,6 @@ public interface ReportContract {
         void showLoading();
 
         void hideLoading();
-
-        void uploadRandomSuccess();
-
-        void uploadRandomFail();
 
         void showData(@NonNull RoomListBean roomListBean);
 

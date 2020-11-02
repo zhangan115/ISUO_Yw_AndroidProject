@@ -1,2 +1,2 @@
-include ':YW2Application'
+include ':YW2Application', ':PopupLibrary'
 include ':DialogLib', ':Library',  ':YwApplication', ':AACRecordLibrary',  'DateTimePicker', ':MPChartLib'

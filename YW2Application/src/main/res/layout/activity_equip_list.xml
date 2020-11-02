@@ -11,8 +11,12 @@
         android:id="@+id/id_equip_room"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/white_bg_with_shape"
+        android:visibility="gone">
 
         <com.sito.library.widget.PinnedHeaderExpandableListView
             android:id="@+id/expandableListView"

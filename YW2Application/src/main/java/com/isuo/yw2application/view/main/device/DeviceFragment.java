@@ -3,12 +3,11 @@ package com.isuo.yw2application.view.main.device;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,17 +22,20 @@ import com.isuo.yw2application.mode.bean.equip.EquipmentBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.device.equipment.CreateEquipmentActivity;
-import com.isuo.yw2application.view.main.device.info.CreateEquipInfoActivity;
 import com.isuo.yw2application.view.main.device.list.EquipListActivity;
 import com.isuo.yw2application.view.main.device.search.EquipSearchActivity;
 import com.isuo.yw2application.view.main.equip.archives.EquipmentArchivesActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -44,7 +46,7 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
     private PinnedHeaderExpandableListView expandableListView;
     private TextView deviceAllCountTv, deviceNormalCountTv;
     private EquipListAdapter equipAdapter;
-    private List<EquipBean> mEquipBeen;
+    private List<EquipBean> mEquipBeen, mAllEquipmentBean;
 
     public static DeviceFragment newInstance() {
         Bundle args = new Bundle();
@@ -57,6 +59,7 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mEquipBeen = new ArrayList<>();
+        mAllEquipmentBean = new ArrayList<>();
         new DevicePresenter(Yw2Application.getInstance().getRepositoryComponent().getRepository(), this);
     }
 
@@ -66,6 +69,9 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
         View rootView = inflater.inflate(R.layout.fragment_device, container, false);
         rootView.findViewById(R.id.searchDeviceLayout).setOnClickListener(this);
         rootView.findViewById(R.id.deviceCountTv).setOnClickListener(this);
+        rootView.findViewById(R.id.type).setOnClickListener(this);
+        rootView.findViewById(R.id.room).setOnClickListener(this);
+        rootView.findViewById(R.id.state).setOnClickListener(this);
         expandableListView = rootView.findViewById(R.id.expandableListView);
         swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout);
         deviceAllCountTv = rootView.findViewById(R.id.deviceAllCountTv);
@@ -109,6 +115,14 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
 
     private final int SCANNER_CODE = 200;
 
+    private String[] deviceCountItems = new String[]{"数量最多", "数量最少", "默认数量"};
+    private ArrayList<String> deviceTypeItems = new ArrayList();
+    private ArrayList<String> deviceRoomItems = new ArrayList();
+    private ArrayList<String> deviceStateItems = new ArrayList();
+
+    private String roomName, typeName, stateName;
+    private int deviceCountSort;
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
@@ -118,6 +132,62 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
                 startActivity(searchIntent);
                 break;
             case R.id.deviceCountTv:
+                new XPopup.Builder(getContext()).atView(view).asAttachList(deviceCountItems, new int[]{},
+                        new OnSelectListener() {
+                            @Override
+                            public void onSelect(int position, String text) {
+                                deviceCountSort = position;
+                                sortDevice();
+                            }
+                        }).show();
+                break;
+            case R.id.type:
+                if (deviceTypeItems.size() > 1) {
+                    new XPopup.Builder(getContext()).atView(view).asBottomList("", deviceTypeItems.toArray(new String[deviceTypeItems.size()]),
+                            new OnSelectListener() {
+                                @Override
+                                public void onSelect(int position, String text) {
+                                    if (position == 0) {
+                                        typeName = null;
+                                    } else {
+                                        typeName = text;
+                                    }
+                                    sortDevice();
+                                }
+                            }).show();
+                }
+                break;
+            case R.id.room:
+                if (deviceRoomItems.size() > 1) {
+                    new XPopup.Builder(getContext()).atView(view).asBottomList("", deviceRoomItems.toArray(new String[deviceRoomItems.size()]),
+                            new OnSelectListener() {
+                                @Override
+                                public void onSelect(int position, String text) {
+                                    if (position == 0) {
+                                        roomName = null;
+                                    } else {
+                                        roomName = text;
+                                    }
+                                    sortDevice();
+                                }
+                            }).show();
+                }
+                break;
+            case R.id.state:
+                if (deviceStateItems.size() > 1) {
+                    new XPopup.Builder(getContext()).atView(view).asAttachList(deviceStateItems.toArray(new String[deviceStateItems.size()]), new int[]{},
+                            new OnSelectListener() {
+                                @Override
+                                public void onSelect(int position, String text) {
+                                    if (position == 0) {
+                                        stateName = null;
+                                    } else {
+                                        stateName = text;
+                                    }
+                                    sortDevice();
+                                }
+                            }).show();
+                }
                 break;
             case R.id.workItem1:
                 Intent createEquipIntent = new Intent(getActivity(), CreateEquipmentActivity.class);
@@ -152,6 +222,91 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
         }
     }
 
+    private void sortDevice() {
+        mEquipBeen.clear();
+        ArrayList<EquipBean> allEquip1 = new ArrayList<>();
+        if (!TextUtils.isEmpty(roomName)) {
+            for (EquipBean bean : mAllEquipmentBean) {
+                if (TextUtils.equals(bean.getRoomName(), roomName)) {
+                    allEquip1.add(bean);
+                    break;
+                }
+            }
+        } else {
+            allEquip1.addAll(mAllEquipmentBean);
+        }
+        ArrayList<EquipBean> allEquip2 = new ArrayList<>();
+        if (!TextUtils.isEmpty(typeName)) {
+            for (EquipBean equipBean : allEquip1) {
+                List<EquipmentBean> equipments = new ArrayList<>();
+                for (EquipmentBean bean : equipBean.getEquipments()) {
+                    String name = bean.getEquipmentType().getEquipmentTypeName();
+                    if (TextUtils.equals(name, typeName)) {
+                        equipments.add(bean);
+                    }
+                }
+                if (equipments.size() > 0) {
+                    equipBean.setEquipments(equipments);
+                    allEquip2.add(equipBean);
+                }
+            }
+        } else {
+            allEquip2.addAll(allEquip1);
+        }
+
+        ArrayList<EquipBean> allEquip3 = new ArrayList<>();
+        if (!TextUtils.isEmpty(stateName)) {
+            for (EquipBean equipBean : allEquip2) {
+                List<EquipmentBean> equipments = new ArrayList<>();
+                for (EquipmentBean bean : equipBean.getEquipments()) {
+                    String name = Yw2Application.getInstance()
+                            .getMapOption().get("14").get(String.valueOf(bean.getEquipmentState()));
+
+                    if (TextUtils.equals(name, stateName)) {
+                        equipments.add(bean);
+                    }
+                }
+                if (equipments.size() > 0) {
+                    equipBean.setEquipments(equipments);
+                    allEquip3.add(equipBean);
+                }
+            }
+        } else {
+            allEquip3.addAll(allEquip2);
+        }
+        mEquipBeen.addAll(allEquip3);
+        if (deviceCountSort == 0) {
+            Collections.sort(mEquipBeen, new Comparator<EquipBean>() {
+                @Override
+                public int compare(EquipBean bean1, EquipBean bean2) {
+                    if (bean1.getEquipments() != null && bean2.getEquipments() != null) {
+                        if (bean1.getEquipments().size() < bean2.getEquipments().size()) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    }
+                    return 0;
+                }
+            });
+        } else if (deviceCountSort == 1) {
+            Collections.sort(mEquipBeen, new Comparator<EquipBean>() {
+                @Override
+                public int compare(EquipBean bean1, EquipBean bean2) {
+                    if (bean1.getEquipments() != null && bean2.getEquipments() != null) {
+                        if (bean1.getEquipments().size() < bean2.getEquipments().size()) {
+                            return -1;
+                        } else {
+                            return 1;
+                        }
+                    }
+                    return 0;
+                }
+            });
+        }
+        equipAdapter.setData(mEquipBeen);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -159,7 +314,7 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
             if (data != null) {
                 String result = data.getStringExtra(CaptureActivity.RESULT);
                 Intent intent = new Intent(getActivity(), EquipmentArchivesActivity.class);
-                intent.putExtra(ConstantStr.KEY_BUNDLE_STR,result);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_STR, result);
                 startActivity(intent);
             }
         }
@@ -168,7 +323,60 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
     @Override
     public void showData(List<EquipBean> list) {
         mEquipBeen.clear();
-        mEquipBeen.addAll(list);
+        mAllEquipmentBean.clear();
+        mAllEquipmentBean.addAll(list);
+        mEquipBeen.addAll(mAllEquipmentBean);
+        this.deviceTypeItems.clear();
+        this.deviceTypeItems.add("全部");
+        this.deviceRoomItems.clear();
+        this.deviceRoomItems.add("全部");
+        this.deviceStateItems.clear();
+        this.deviceStateItems.add("全部");
+        for (EquipBean bean : mAllEquipmentBean) {
+            for (EquipmentBean equipment : bean.getEquipments()) {
+                String equipmentTypeName = equipment.getEquipmentType().getEquipmentTypeName();
+                String equipmentState = Yw2Application.getInstance()
+                        .getMapOption().get("14").get(String.valueOf(equipment.getEquipmentState()));
+
+                if (!TextUtils.isEmpty(equipmentTypeName)) {
+                    boolean haveName = false;
+                    for (String name : deviceTypeItems) {
+                        if (TextUtils.equals(name, equipmentTypeName)) {
+                            haveName = true;
+                            break;
+                        }
+                    }
+                    if (!haveName) {
+                        this.deviceTypeItems.add(equipmentTypeName);
+                    }
+                }
+                if (!TextUtils.isEmpty(equipmentState)) {
+                    boolean haveState = false;
+                    for (String name : deviceStateItems) {
+                        if (TextUtils.equals(name, equipmentState)) {
+                            haveState = true;
+                            break;
+                        }
+                    }
+                    if (!haveState) {
+                        this.deviceStateItems.add(equipmentState);
+                    }
+                }
+            }
+            String roomName = bean.getRoomName();
+            if (!TextUtils.isEmpty(roomName)) {
+                boolean haveName = false;
+                for (String name : deviceRoomItems) {
+                    if (TextUtils.equals(name, roomName)) {
+                        haveName = true;
+                        break;
+                    }
+                }
+                if (!haveName) {
+                    this.deviceRoomItems.add(roomName);
+                }
+            }
+        }
         equipAdapter.setData(mEquipBeen);
     }
 
