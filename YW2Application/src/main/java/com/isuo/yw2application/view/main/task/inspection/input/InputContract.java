@@ -1,8 +1,11 @@
 package com.isuo.yw2application.view.main.task.inspection.input;
 
+import android.support.annotation.Nullable;
+
 import com.isuo.yw2application.mode.bean.db.RoomDb;
 import com.isuo.yw2application.mode.bean.equip.FocusBean;
 import com.isuo.yw2application.mode.bean.inspection.DataItemBean;
+import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
 import com.isuo.yw2application.mode.bean.inspection.TaskEquipmentBean;
 import com.sito.library.base.BasePresenter;
 import com.sito.library.base.BaseView;
@@ -58,34 +61,55 @@ public interface InputContract {
         void saveTaskEquipToCache(TaskEquipmentBean taskEquipmentBean);
 
         /**
+         * 获取任务数据
+         *
+         * @return 任务
+         */
+        @Nullable
+        InspectionDetailBean getInspectionData();
+
+        /**
+         * step 1
          * 上传需要拍照的设备照片
          *
          * @param roomDb room
          */
-        void uploadRandomImage(RoomDb roomDb);
+        void uploadEquipmentPhotoImage(RoomDb roomDb);
 
         /**
+         * step 2
          * 上传需要拍照的设备信息
          *
          * @param taskId      任务id
          * @param equipmentId 设备id
          * @param url         图片地址
          */
-        void uploadUserPhoto(long taskId, long equipmentId, String url);
+        void uploadEquipmentInfo(long taskId, long equipmentId, String url);
+
+        /**
+         * step 3
+         *
+         * @param position             位置
+         * @param inspectionDetailBean 任务
+         * @param equipmentBean        录入的设备
+         */
+        void uploadTaskData(int position, InspectionDetailBean inspectionDetailBean, TaskEquipmentBean equipmentBean);
 
     }
 
     interface View extends BaseView<Presenter> {
 
         /**
-         * 上传照片成功
+         * 显示设备数据
          */
-        void uploadPhotoSuccess();
+        void showTaskEquipmentData();
 
         /**
-         * 上传照片失败
+         * 获取缓存的数据
+         *
+         * @param taskEquipmentBean 设备
          */
-        void uploadPhotoFail();
+        void showTaskEquipFromCache(TaskEquipmentBean taskEquipmentBean);
 
         /**
          * 显示重点关注信息
@@ -100,25 +124,45 @@ public interface InputContract {
         void showCareDataFail();
 
         /**
-         * 显示设备数据
+         * 上传照片完成
+         *
+         * @param isSuccess 是否成功
          */
-        void showTaskEquipmentData();
+        void uploadItemPhotoFinish(boolean isSuccess);
 
         /**
-         * 获取缓存的数据
+         * 上传设备图片完成
          *
-         * @param taskEquipmentBean 设备
+         * @param isSuccess 是否成功
          */
-        void showTaskEquipFromCache(TaskEquipmentBean taskEquipmentBean);
+        void uploadREquipmentPhotoFinish(boolean isSuccess);
 
-        void uploadRandomSuccess();
+        /**
+         * 提交设备图片信息完成
+         *
+         * @param isSuccess 是否成功
+         */
+        void uploadEquipmentInfoFinish(boolean isSuccess);
 
-        void uploadRandomFail();
+        /**
+         * 显示上传loading
+         */
+        void showUploadLoading();
 
-        void uploadUserPhotoSuccess();
+        /**
+         * 隐藏上传loading
+         */
+        void hideUploadLoading();
 
-        void uploadUserPhotoFail();
+        /**
+         * 上传设备录入数据失败
+         */
+        void uploadDataError();
 
+        /**
+         * 上传设备录入数据成功
+         */
+        void uploadDataSuccess();
     }
 
 }

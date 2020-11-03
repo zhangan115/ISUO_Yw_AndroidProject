@@ -1,7 +1,5 @@
 package com.isuo.yw2application.view.main.task.inspection.report;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,11 +25,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.BroadcastAction;
@@ -42,24 +38,15 @@ import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
 import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
 import com.isuo.yw2application.mode.bean.inspection.TaskEquipmentBean;
 import com.isuo.yw2application.mode.inspection.InspectionRepository;
-import com.isuo.yw2application.utils.PhotoUtils;
 import com.isuo.yw2application.view.base.MvpFragment;
 import com.isuo.yw2application.view.main.task.increment.submit.IncrementActivity;
 import com.isuo.yw2application.view.main.task.inspection.input.InputActivity;
-import com.isuo.yw2application.view.photo.ViewPagePhotoActivity;
-import com.qw.soul.permission.SoulPermission;
-import com.qw.soul.permission.bean.Permission;
-import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.adapter.RVAdapter;
-import com.sito.library.utils.ActivityUtils;
-import com.sito.library.utils.GlideUtils;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
-import pub.devrel.easypermissions.AppSettingsDialog;
 
 
 /**
@@ -233,6 +220,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                 intent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, caEdit);
                 intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, roomDb.getTaskId());
                 intent.putExtra(ConstantStr.KEY_BUNDLE_LONG_1, roomDb.get_id());
+                intent.putExtra(ConstantStr.KEY_BUNDLE_INT, roomPosition);
                 Yw2Application.getInstance().hideSoftKeyBoard(getActivity());
                 startActivityForResult(intent, ACTION_START_INPUT);
             }

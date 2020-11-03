@@ -178,6 +178,17 @@ public interface InspectionSourceData {
     @NonNull
     Subscription uploadRoomListData(int position, InspectionDetailBean detailBean, @NonNull UploadRoomListCallBack callBack);
 
+    /**
+     * 上传设备数据
+     *
+     * @param position   位置
+     * @param detailBean 巡检数据
+     * @param callBack   回调
+     * @return 订阅
+     */
+    @NonNull
+    Subscription uploadTaskEquipmentListData(int position, InspectionDetailBean detailBean, TaskEquipmentBean equipmentBean, @NonNull UploadRoomListCallBack callBack);
+
     //上传图片回调
     interface UploadPhotoCallBack {
 

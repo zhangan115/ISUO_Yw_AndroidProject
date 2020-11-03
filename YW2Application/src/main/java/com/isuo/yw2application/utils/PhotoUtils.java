@@ -9,11 +9,19 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.provider.OpenableColumns;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.isuo.yw2application.BuildConfig;
+import com.isuo.yw2application.app.Yw2Application;
 import com.sito.library.luban.Luban;
+import com.sito.library.utils.DataUtil;
+import com.sito.library.utils.DisplayUtil;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -39,10 +47,14 @@ public class PhotoUtils {
     }
 
     public static void cropPhoto(final Context context, File photoFile, final PhotoListener listener) {
-        cropPhoto(context, photoFile, false, listener);
+        cropPhoto(context, photoFile, "", listener);
     }
 
-    public static void cropPhoto(final Context context, File photoFile, final boolean cleanFile, final PhotoListener listener) {
+    public static void cropPhoto(final Context context, File photoFile, String mark, final PhotoListener listener) {
+        cropPhoto(context, photoFile, false, mark, listener);
+    }
+
+    public static void cropPhoto(final Context context, File photoFile, final boolean cleanFile, final String mark, final PhotoListener listener) {
         Observable.just(photoFile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
@@ -50,19 +62,33 @@ public class PhotoUtils {
                     @Override
                     public Observable<File> call(File file) {
                         File file1 = null;
+                        File file2 = null;
                         try {
                             file1 = Luban.with(context).load(file).get().get(0);
+                            file2 = new File(file1.getParent(), System.currentTimeMillis() + ".jpg");
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                         if (file1 != null && file.exists() && !cleanFile) {
-                            Bitmap bitmap = BitmapFactory.decodeFile(file1.getAbsolutePath());
-                            Bitmap newBitmap = createWatermark(bitmap, "打个水印试一下");
-
+                            try {
+                                FileInputStream fi = new FileInputStream(file1);
+                                Bitmap bitmap = BitmapFactory.decodeStream(fi);
+                                Bitmap newBitmap = createWatermark(bitmap, mark);
+                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                newBitmap.compress(Bitmap.CompressFormat.JPEG, 60, stream);
+                                newBitmap.recycle();
+                                FileOutputStream fos = new FileOutputStream(file2);
+                                fos.write(stream.toByteArray());
+                                fos.flush();
+                                fos.close();
+                                stream.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             file.delete();
+                            file1.delete();
                         }
-
-                        return Observable.just(file1);
+                        return Observable.just(file2);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -117,7 +143,7 @@ public class PhotoUtils {
     // 为图片target添加水印文字
     // Bitmap target：被添加水印的图片
     // String mark：水印文章
-    private static Bitmap createWatermark(Bitmap target, String mark) {
+    private static Bitmap createWatermark(Bitmap target, @Nullable String mark) {
         int w = target.getWidth();
         int h = target.getHeight();
         Bitmap bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
@@ -126,11 +152,26 @@ public class PhotoUtils {
         // 水印的颜色
         p.setColor(Color.WHITE);
         // 水印的字体大小
-        p.setTextSize(12);
+        p.setTextSize(DisplayUtil.sp2px(Yw2Application.getInstance(), 14));
         p.setAntiAlias(true);// 去锯齿
         canvas.drawBitmap(target, 0, 0, p);
-        // 在左边的中间位置开始添加水印
-        canvas.drawText(mark, 0, h / 2, p);
+        float textHeight = p.descent() - p.ascent();
+        String appName = "小梭优维+";
+        String appContent = "运维管理系统";
+        canvas.drawText(appName, 20, 20 + textHeight, p);
+        canvas.drawText(appContent, 20, 30 + 2 * textHeight, p);
+        if (!TextUtils.isEmpty(mark)) {
+            float markWidth = p.measureText(mark);
+            canvas.drawText(mark, w - 20 - markWidth, 20 + textHeight, p);
+        }
+        String customerName = Yw2Application.getInstance().getCurrentUser().getCustomer().getCustomerName();
+        canvas.drawText(customerName, 20, h - 20 - textHeight, p);
+        String userName = Yw2Application.getInstance().getCurrentUser().getRealName();
+        float nameWidth = p.measureText(userName);
+        canvas.drawText(userName, w - 50 - nameWidth, h - 20 - 2 * textHeight, p);
+        String date = DataUtil.timeFormat(System.currentTimeMillis(), null);
+        float dateWidth = p.measureText(date);
+        canvas.drawText(date, w - 50 - dateWidth, h - 20 - textHeight, p);
         canvas.save(Canvas.ALL_SAVE_FLAG);
         canvas.restore();
         return bmp;
