@@ -28,6 +28,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.BroadcastAction;
@@ -63,7 +65,6 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     private ArrayList<TaskEquipmentBean> mTaskEquipmentBean;
     private ArrayList<TaskEquipmentBean> showBean;
     private int roomPosition = -1, editPosition;
-    private long takePhotoEquipmentId = -1;
 
     private static final int ACTION_START_INPUT = 101;
     private boolean caEdit = true;
@@ -262,14 +263,17 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                 if (roomDb.getCheckCount() != mRoomListBean.getTaskEquipment().size()) {
                     getApp().showToast("有漏检项目!请检查");
                 } else {
-                    if (mPresenter.checkPhotoNeedUpload(mTaskEquipmentBean) && !TextUtils.isEmpty(roomDb.getUploadPhotoUrl())) {
-                        //图片拍照了，而且上传了，或者没有拍照，走之前的逻辑
-                        uploadInspectionData();
-                    } else {
-                        //有图片没有上传的，上传图片先
-                        showUploadLoading();
-                        mPresenter.uploadPhotoList(roomDb);
-                    }
+                    new MaterialDialog.Builder(getActivity()).content("是否确认完成巡检？")
+                            .negativeText("取消")
+                            .positiveText("确定")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    roomDb.setTaskState(ConstantInt.ROOM_STATE_3);
+                                    getActivity().setResult(Activity.RESULT_OK);
+                                    getActivity().finish();
+                                }
+                            }).show();
                 }
             }
         });
@@ -279,11 +283,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     }
 
     private void uploadInspectionData() {
-        if (mPresenter != null && takePhotoEquipmentId != -1) {
-            mPresenter.uploadUserPhoto(roomDb.getTaskId()
-                    , takePhotoEquipmentId
-                    , roomDb.getUploadPhotoUrl());
-        }
+
     }
 
     @Override

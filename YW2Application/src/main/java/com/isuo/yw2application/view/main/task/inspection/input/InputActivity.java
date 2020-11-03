@@ -575,7 +575,6 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
             mPresenter.saveData(taskEquipmentBean, false);
             mPresenter.saveTaskEquipToCache(taskEquipmentBean);
         }
-        roomDb.setTaskState(ConstantInt.ROOM_STATE_3);
         setResult(Activity.RESULT_OK);
         finish();
     }
