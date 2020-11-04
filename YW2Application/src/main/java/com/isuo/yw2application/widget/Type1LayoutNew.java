@@ -44,6 +44,14 @@ public class Type1LayoutNew extends LinearLayout {
 
     public void setDataToView(boolean canEdit, DataItemValueListBean bean, EquipmentBean equipmentBean) {
         this.canEdit = canEdit;
+        if (canEdit) {
+            long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
+            if (!TextUtils.isEmpty(bean.getValue())) {
+                if (currentUserId != bean.getUserId()) {
+                    this.canEdit = false;
+                }
+            }
+        }
         this.dataItemBean = bean.getDataItem();
         this.equipmentBean = equipmentBean;
         TextView tv_value_title = findViewById(R.id.tv_value_title);
@@ -81,11 +89,11 @@ public class Type1LayoutNew extends LinearLayout {
             params.setMargins(0, DisplayUtil.dip2px(getContext(), 10), 0, 0);
             button.setLayoutParams(params);
             button.setTag(i);
-            button.setPadding(0,DisplayUtil.dip2px(getContext(),8),0,DisplayUtil.dip2px(getContext(),8));
+            button.setPadding(0, DisplayUtil.dip2px(getContext(), 8), 0, DisplayUtil.dip2px(getContext(), 8));
             button.setBackgroundColor(getContext().getResources().getColor(R.color.colorWhite));
-            button.setGravity(Gravity.START|Gravity.CENTER_VERTICAL);
+            button.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
             button.setTextColor(getContext().getResources().getColor(R.color.gray_999999));
-            button.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14);
+            button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
             button.setTag(R.id.tag_object, dataItemBean.getInspectionItemOptionList().get(i).getId());
             button.setText(name);
             button.setOnClickListener(new OnClickListener() {

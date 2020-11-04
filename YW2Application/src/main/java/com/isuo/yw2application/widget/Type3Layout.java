@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
+import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.mode.bean.inspection.DataItemBean;
 import com.isuo.yw2application.mode.bean.inspection.DataItemValueListBean;
 import com.isuo.yw2application.view.photo.ViewPagePhotoActivity;
@@ -26,6 +27,7 @@ public class Type3Layout extends LinearLayout {
     private DataItemBean dataItemBean;
     private ProgressBar progressBar;
     private ImageView iv_take_photo;
+    private boolean canEdit = false;
 
     public Type3Layout(Context context) {
         super(context);
@@ -37,9 +39,18 @@ public class Type3Layout extends LinearLayout {
         this.mContext = context;
     }
 
-    public void setDataToView(final boolean canEdit, final DataItemValueListBean bean, final OnTakePhotoListener onTakePhotoListener) {
+    public void setDataToView(boolean canEdit, final DataItemValueListBean bean, final OnTakePhotoListener onTakePhotoListener) {
         dataItemBean = bean.getDataItem();
         progressBar = findViewById(R.id.progressBar);
+        this.canEdit=canEdit;
+        if (canEdit) {
+            long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
+            if (!TextUtils.isEmpty(bean.getValue())) {
+                if (currentUserId != bean.getUserId()) {
+                    this.canEdit = false;
+                }
+            }
+        }
         TextView tv_title = findViewById(R.id.tv_title);
         iv_take_photo = findViewById(R.id.iv_take_photo);
         tv_title.setText(dataItemBean.getInspectionName());
@@ -58,7 +69,7 @@ public class Type3Layout extends LinearLayout {
                     ViewPagePhotoActivity.startActivity(mContext, new String[]{dataItemBean.getLocalFile()}, 0);
                     return;
                 }
-                if (!canEdit) {
+                if (!Type3Layout.this.canEdit) {
                     return;
                 }
                 if (onTakePhotoListener != null) {
@@ -80,7 +91,7 @@ public class Type3Layout extends LinearLayout {
                                 if (onTakePhotoListener == null) {
                                     return;
                                 }
-                                if (!canEdit) {
+                                if (!Type3Layout.this.canEdit) {
                                     return;
                                 }
                                 switch (position) {

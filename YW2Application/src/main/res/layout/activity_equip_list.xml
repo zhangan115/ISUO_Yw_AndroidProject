@@ -16,7 +16,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/white_bg_with_shape"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <com.sito.library.widget.PinnedHeaderExpandableListView
             android:id="@+id/expandableListView"
@@ -46,7 +46,7 @@
         android:layout_marginBottom="12dp"
         android:background="@drawable/white_bg_with_shape"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <com.sito.library.widget.RecycleRefreshLoadLayout
             android:id="@+id/refreshLoadLayoutId"

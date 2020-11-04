@@ -13,6 +13,24 @@ public class DataItemValueListBean implements Parcelable {
     private int dataItemValueId;
     private String lastValue;
     private DataItemBean dataItem;
+    private String value;
+    private long userId;
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public int getDataItemValueId() {
         return dataItemValueId;
@@ -39,6 +57,9 @@ public class DataItemValueListBean implements Parcelable {
     }
 
 
+    public DataItemValueListBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -49,15 +70,16 @@ public class DataItemValueListBean implements Parcelable {
         dest.writeInt(this.dataItemValueId);
         dest.writeString(this.lastValue);
         dest.writeParcelable(this.dataItem, flags);
-    }
-
-    public DataItemValueListBean() {
+        dest.writeString(this.value);
+        dest.writeLong(this.userId);
     }
 
     protected DataItemValueListBean(Parcel in) {
         this.dataItemValueId = in.readInt();
         this.lastValue = in.readString();
         this.dataItem = in.readParcelable(DataItemBean.class.getClassLoader());
+        this.value = in.readString();
+        this.userId = in.readLong();
     }
 
     public static final Creator<DataItemValueListBean> CREATOR = new Creator<DataItemValueListBean>() {

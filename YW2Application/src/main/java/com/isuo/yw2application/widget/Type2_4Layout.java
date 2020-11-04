@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.isuo.yw2application.R;
+import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.mode.bean.inspection.DataItemBean;
 import com.isuo.yw2application.mode.bean.inspection.DataItemValueListBean;
@@ -45,6 +46,14 @@ public class Type2_4Layout extends LinearLayout {
     public void setDataToView(boolean canEdit, DataItemValueListBean bean, EquipmentBean equipmentBean) {
         this.dataItemBean = bean.getDataItem();
         this.equipmentBean = equipmentBean;
+        if (canEdit) {
+            long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
+            if (!TextUtils.isEmpty(bean.getValue())) {
+                if (currentUserId != bean.getUserId()) {
+                    canEdit = false;
+                }
+            }
+        }
         TextView iv_value = findViewById(R.id.iv_value);
         TextView tv_value_title_2 = findViewById(R.id.tv_value_title_2);
         TextView tv_last_value = findViewById(R.id.tv_last_value);

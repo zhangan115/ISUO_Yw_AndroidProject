@@ -142,9 +142,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/white_bg_with_shape"
                             android:orientation="vertical"
-                            android:paddingLeft="10dp"
                             android:paddingTop="8dp"
-                            android:paddingRight="10dp"
                             android:paddingBottom="8dp">
 
                             <TextView
@@ -152,6 +150,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="设备列表"
                                 android:textColor="@color/text333"
+                                android:paddingLeft="10dp"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -159,6 +158,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
                                 android:orientation="vertical">
 
                                 <RelativeLayout
@@ -262,9 +263,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp">
+                                android:layout_marginTop="10dp">
 
                                 <com.sito.library.widget.PinnedHeaderExpandableListView
                                     android:id="@+id/expandableListView"
