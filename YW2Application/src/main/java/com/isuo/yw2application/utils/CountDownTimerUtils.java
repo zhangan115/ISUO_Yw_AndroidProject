@@ -59,7 +59,7 @@ public class CountDownTimerUtils extends CountDownTimer {
          * http://blog.csdn.net/ah200614435/article/details/7914459
          */
         SpannableString spannableString = new SpannableString(mTextView.getText().toString());  //获取按钮上的文字
-        String str = "#58CAF0";
+        String str = "#333333";
         if (!TextUtils.isEmpty(mColorStr)) {
             str = mColorStr;
         }

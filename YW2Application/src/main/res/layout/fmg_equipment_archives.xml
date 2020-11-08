@@ -450,9 +450,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableTop="@drawable/overhaul_record"
+                        android:drawableTop="@drawable/equipment_drawings"
                         android:drawablePadding="15dp"
-                        android:text="大修记录"
+                        android:text="设备图纸"
                         android:textColor="@color/color535862"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -478,9 +478,9 @@
                         android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableTop="@drawable/electrified"
+                        android:drawableTop="@drawable/maintenance_plan"
                         android:drawablePadding="15dp"
-                        android:text="带电检测"
+                        android:text="维修方案"
                         android:textColor="@color/color535862"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -490,6 +490,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:gravity="center">
 
                     <TextView

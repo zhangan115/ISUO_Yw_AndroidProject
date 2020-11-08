@@ -4,15 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginTop="5dp"
+        android:id="@+id/no_data_text"
+        android:drawableTop="@drawable/empty_default"
+        android:drawablePadding="16dp"
+        android:gravity="center_horizontal"
         android:text="@string/no_data_now"
-        android:textColor="#bdc6cd"
+        android:textColor="#999999"
         android:textSize="14sp" />
 
 </RelativeLayout>

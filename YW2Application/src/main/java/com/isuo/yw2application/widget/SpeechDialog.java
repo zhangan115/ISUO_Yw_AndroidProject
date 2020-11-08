@@ -28,8 +28,8 @@ import java.util.TimerTask;
 public abstract class SpeechDialog extends Dialog implements View.OnClickListener, Runnable {
     private Activity activity;
     private TextView mTime;
-    private ImageView mFinish;
-    private ImageView mCancel;
+    private TextView mFinish;
+    private TextView mCancel;
     private int recLen = 59;
     private Timer timer;
     private Handler handler = new Handler() {
@@ -61,9 +61,9 @@ public abstract class SpeechDialog extends Dialog implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.speech_dialog);
-        mTime = (TextView) findViewById(R.id.id_speech_time);
-        mFinish = (ImageView) findViewById(R.id.id_speech_finish);
-        mCancel = (ImageView) findViewById(R.id.id_speech_cancle);
+        mTime =  findViewById(R.id.id_speech_time);
+        mFinish = findViewById(R.id.id_speech_finish);
+        mCancel =  findViewById(R.id.id_speech_cancle);
         mFinish.setOnClickListener(this);
         mCancel.setOnClickListener(this);
         timer = new Timer();

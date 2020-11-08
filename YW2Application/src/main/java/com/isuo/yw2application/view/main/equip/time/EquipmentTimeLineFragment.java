@@ -66,9 +66,9 @@ public class EquipmentTimeLineFragment extends MvpFragment<EquipmentTimeLineCont
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fmg_recycle_with_bg, container, false);
-        mExpendRecycleView = (ExpendRecycleView) rootView.findViewById(R.id.recycleViewId);
-        mNoDataLayout = (RelativeLayout) rootView.findViewById(R.id.layout_no_data);
-        mRecycleRefreshLoadLayout = (RecycleRefreshLoadLayout) rootView.findViewById(R.id.refreshLoadLayoutId);
+        mExpendRecycleView = rootView.findViewById(R.id.recycleViewId);
+        mNoDataLayout = rootView.findViewById(R.id.layout_no_data);
+        mRecycleRefreshLoadLayout = rootView.findViewById(R.id.refreshLoadLayoutId);
         mExpendRecycleView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         mRecycleRefreshLoadLayout.setColorSchemeColors(findColorById(R.color.colorPrimary));
         mRecycleRefreshLoadLayout.setOnRefreshListener(this);

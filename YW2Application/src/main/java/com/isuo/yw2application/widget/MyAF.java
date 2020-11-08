@@ -81,7 +81,7 @@ public class MyAF extends View {
         // 获取画布的宽
         mWidth = getWidth();
         if (mWidth <= 300) {
-            offset = 30;
+            offset = 60;
         }
         //300
         // 获取矩形的最大高度

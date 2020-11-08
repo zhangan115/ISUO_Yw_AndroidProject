@@ -26,9 +26,9 @@ public class EquipmentTimeLineActivity extends BaseActivity {
         if (showType == 1) {
             title = "大修记录";
         } else if (showType == 2) {
-            title = "带电检测";
+            title = "维修方案";
         } else {
-            title = "实验数据";
+            title = "设备图纸";
         }
         setLayoutAndToolbar(R.layout.activity_container_toolbar, title);
         EquipmentTimeLineFragment fragment = (EquipmentTimeLineFragment) getFragmentManager().findFragmentById(R.id.frame_container);

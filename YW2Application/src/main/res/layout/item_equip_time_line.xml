@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="7dp"
-    android:layout_marginRight="7dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:textColor="@color/color6983A5"
+            android:textColor="@color/gray_999999"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -70,11 +70,11 @@
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
             android:lines="1"
-            android:textColor="@color/color535862"
-            android:textSize="15sp" />
+            android:textColor="@color/text333"
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>
