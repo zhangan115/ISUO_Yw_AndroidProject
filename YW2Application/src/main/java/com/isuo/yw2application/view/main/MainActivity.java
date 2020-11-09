@@ -83,6 +83,7 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.useAnimToBack = false;
         setContentView(R.layout.activity_main);
         drawer = findViewById(R.id.drawer_layout);
         mFragments = getFragments();
@@ -164,15 +165,15 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
         if (workFragment == null) {
             workFragment = WorkFragment.newInstance();
         }
-        TaskFragment taskFragment = (TaskFragment) getSupportFragmentManager().findFragmentByTag("tag_2");
+        TaskFragment taskFragment = (TaskFragment) getSupportFragmentManager().findFragmentByTag("tag_1");
         if (taskFragment == null) {
             taskFragment = TaskFragment.newInstance();
         }
-        AlarmFragment alarmFragment = (AlarmFragment) getSupportFragmentManager().findFragmentByTag("tag_3");
+        AlarmFragment alarmFragment = (AlarmFragment) getSupportFragmentManager().findFragmentByTag("tag_2");
         if (alarmFragment == null) {
             alarmFragment = AlarmFragment.newInstance();
         }
-        DeviceFragment deviceFragment = (DeviceFragment) getSupportFragmentManager().findFragmentByTag("tag_1");
+        DeviceFragment deviceFragment = (DeviceFragment) getSupportFragmentManager().findFragmentByTag("tag_3");
         if (deviceFragment == null) {
             deviceFragment = DeviceFragment.newInstance();
         }

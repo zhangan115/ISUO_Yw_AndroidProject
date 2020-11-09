@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +19,9 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.check.FaultList;
+import com.isuo.yw2application.mode.bean.fault.AlarmCount;
+import com.isuo.yw2application.mode.bean.fault.FaultDayCountBean;
+import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.isuo.yw2application.utils.CountDownTimerUtils;
 import com.isuo.yw2application.utils.MediaPlayerManager;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
@@ -30,18 +32,18 @@ import com.isuo.yw2application.view.main.alarm.list.AlarmListActivity;
 import com.isuo.yw2application.widget.ShowImageLayout;
 import com.sito.library.adapter.RVAdapter;
 import com.sito.library.utils.DataUtil;
-import com.sito.library.widget.TextViewVertical;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implements View.OnClickListener, AlarmContract.View {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private List<FaultList> alarmList;
+    private TextView[] alarmCount = new TextView[5];
 
     private CountDownTimerUtils mCountDownTimerUtils;
     private AnimationDrawable animation;
@@ -58,8 +60,9 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         alarmList = new ArrayList<>();
-        new AlarmPresenter(Yw2Application.getInstance().getRepositoryComponent().getRepository(),
-                Yw2Application.getInstance().getFaultRepositoryComponent().getRepository(), this);
+        new AlarmPresenter(Yw2Application.getInstance().getRepositoryComponent().getRepository()
+                , Yw2Application.getInstance().getFaultRepositoryComponent().getRepository()
+                , Yw2Application.getInstance().getWorkRepositoryComponent().getRepository(), this);
     }
 
     @Nullable
@@ -81,9 +84,17 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
                 if (mPresenter != null) {
                     mPresenter.getAlarmList();
                     mPresenter.getAlarmCount();
+                    Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+                    mPresenter.getFaultDayCount(DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd"));
+                    mPresenter.getWorkCount();
                 }
             }
         });
+        alarmCount[0] = rootView.findViewById(R.id.alarmTv1);
+        alarmCount[1] = rootView.findViewById(R.id.alarmTv2);
+        alarmCount[2] = rootView.findViewById(R.id.alarmTv3);
+        alarmCount[3] = rootView.findViewById(R.id.alarmTv4);
+        alarmCount[4] = rootView.findViewById(R.id.alarmTv5);
         recyclerView = rootView.findViewById(R.id.recycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         recyclerView.setNestedScrollingEnabled(false);
@@ -138,7 +149,8 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
                 if (data.isPlay() && isPlay) {
                     mVoiceTime.setBackgroundResource(R.drawable.play_anim);
                     animation = (AnimationDrawable) mVoiceTime.getBackground();
-                    mCountDownTimerUtils = new CountDownTimerUtils(mVoiceTime, data.getSoundTimescale() * 1000, 1000, data.getSoundTimescale() + "s", "#999999");
+                    mCountDownTimerUtils = new CountDownTimerUtils(mVoiceTime, data.getSoundTimescale() * 1000, 1000
+                            , data.getSoundTimescale() + "s", "#999999");
                     MediaPlayerManager.playSound(data.getVoiceUrl(), new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
@@ -197,8 +209,32 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
         if (mPresenter != null) {
             mPresenter.getAlarmList();
             mPresenter.getAlarmCount();
+            Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+            mPresenter.getFaultDayCount(DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd"));
+            mPresenter.getWorkCount();
         }
     }
+
+    @Override
+    public void showFaultDayCount(FaultDayCountBean bean) {
+        if (getView() == null) {
+            return;
+        }
+        alarmCount[0].setText(String.valueOf(bean.getAllFault()));
+        alarmCount[1].setText(String.valueOf(bean.getPendingCount()));
+        alarmCount[2].setText(String.valueOf(bean.getFlowingCount()));
+    }
+
+    @Override
+    public void showWorkState(WorkState workState) {
+        alarmCount[3].setText(String.valueOf(workState.getFaultFinishCount()));
+    }
+
+    @Override
+    public void showAlarmCount(AlarmCount bean) {
+        alarmCount[4].setText(String.valueOf(bean.getAllCount()));
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -233,27 +269,6 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
         }
     }
 
-    @NonNull
-    private String getDataStr(Calendar calendar) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(calendar.get(Calendar.YEAR));
-        sb.append("-");
-        int month = calendar.get(Calendar.MONTH) + 1;
-        if (month < 10) {
-            sb.append("0").append(month);
-        } else {
-            sb.append(month);
-        }
-        sb.append("-");
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        if (day < 10) {
-            sb.append("0").append(day);
-        } else {
-            sb.append(day);
-        }
-        return sb.toString();
-    }
-
     @Override
     public void showLoading() {
         swipeRefreshLayout.setRefreshing(true);
@@ -262,11 +277,6 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
     @Override
     public void hideLoading() {
         swipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void showAlarmCount() {
-
     }
 
     @Override

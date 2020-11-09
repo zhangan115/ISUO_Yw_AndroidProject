@@ -41,6 +41,7 @@ import com.isuo.yw2application.view.main.work.inject.InjectActivity;
 import com.isuo.yw2application.view.main.work.safe.NewsSafeActivity;
 import com.isuo.yw2application.widget.MessageItemLayout;
 import com.sito.library.adapter.RVAdapter;
+import com.sito.library.adapter.VRVAdapter;
 import com.sito.library.widget.ExpendRecycleView;
 import com.sito.library.widget.RecycleRefreshLoadLayout;
 
@@ -118,6 +119,18 @@ public class NewsListFragment extends LazyLoadFragmentV4<NewsListContract.Presen
                             , data.getMessageItemList().get(i).getCreateTime());
                     itemLayout.addView(layout);
                 }
+            }
+        };
+        VRVAdapter<MessageListBean> rvAdapter = new VRVAdapter<MessageListBean>(expendRecycleView,messageListBeans,new int[]{R.layout.item_news_list}) {
+
+            @Override
+            public int getItemViewType(int position) {
+                return 0;
+            }
+
+            @Override
+            public void showData(ViewHolder vHolder, MessageListBean data, int position, int type) {
+
             }
         };
         expendRecycleView.setAdapter(adapter);

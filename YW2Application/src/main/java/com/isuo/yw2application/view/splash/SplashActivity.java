@@ -24,6 +24,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        useAnimToBack = false;
         transparentStatusBar();
         setDarkStatusIcon(true);
         new SplashPresenter(Yw2Application.getInstance().getRepositoryComponent().getRepository(), this);

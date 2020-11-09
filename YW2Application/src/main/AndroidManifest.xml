@@ -195,8 +195,10 @@
             android:name=".view.main.device.equipment.CreateEquipmentActivity"
             android:allowTaskReparenting="true"
             android:configChanges="orientation|keyboardHidden"
-            android:taskAffinity="${TASK_AFFINITY_VALUE}"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:launchMode="standard"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateUnchanged"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}" />
         <activity
             android:name=".view.main.device.info.CreateEquipInfoActivity"
             android:allowTaskReparenting="true"
@@ -443,7 +445,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <!-- 注油管理-->
+        <!-- 润油管理-->
         <activity
             android:name=".view.main.work.inject.oil.InjectOilActivity"
             android:allowTaskReparenting="true"

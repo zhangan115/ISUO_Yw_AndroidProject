@@ -86,4 +86,16 @@ public class BaseFragmentV4 extends AbsBaseFragmentV4 implements BaseActivity.On
     public void onToolBarBackClick() {
 
     }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
+        getActivity().overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
+    }
 }

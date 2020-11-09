@@ -52,13 +52,14 @@
 
                 <android.support.v4.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:scrollbars="none"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:descendantFocusability="blocksDescendants"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:orientation="vertical"
@@ -70,11 +71,10 @@
                             android:layout_height="90dp"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/white_bg_with_shape"
+                            android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:paddingLeft="10dp"
-                            android:paddingTop="8dp"
                             android:paddingRight="10dp"
-                            android:paddingBottom="8dp"
                             android:weightSum="2">
 
                             <LinearLayout
@@ -148,9 +148,9 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
                                 android:text="设备列表"
                                 android:textColor="@color/text333"
-                                android:paddingLeft="10dp"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -158,9 +158,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
+                                android:orientation="vertical"
                                 android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:orientation="vertical">
+                                android:paddingRight="10dp">
 
                                 <RelativeLayout
                                     android:id="@+id/searchDeviceLayout"
@@ -188,25 +188,36 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="44dp"
                                     android:gravity="center"
                                     android:orientation="horizontal"
                                     android:weightSum="4">
 
-                                    <TextView
+                                    <LinearLayout
                                         android:id="@+id/deviceCountTv"
                                         android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:drawableRight="@drawable/drop_down_arrow"
-                                        android:drawablePadding="22dp"
-                                        android:gravity="center"
-                                        android:paddingTop="8dp"
-                                        android:paddingRight="10dp"
-                                        android:paddingBottom="8dp"
-                                        android:text="数量"
-                                        android:textColor="@color/text333"
-                                        android:textSize="12sp" />
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:paddingLeft="10dp"
+                                            android:text="数量"
+                                            android:textColor="@color/text333"
+                                            android:textSize="12sp" />
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginRight="15dp"
+                                            android:src="@drawable/drop_down_arrow" />
+
+
+                                    </LinearLayout>
 
                                     <View
                                         android:layout_width="1px"
@@ -216,11 +227,9 @@
                                     <TextView
                                         android:id="@+id/type"
                                         android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:layout_weight="1"
                                         android:gravity="center"
-                                        android:paddingTop="8dp"
-                                        android:paddingBottom="8dp"
                                         android:text="类型"
                                         android:textColor="@color/text333"
                                         android:textSize="12sp" />
@@ -233,7 +242,7 @@
                                     <TextView
                                         android:id="@+id/room"
                                         android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:layout_weight="1"
                                         android:gravity="center"
                                         android:text="区域"
@@ -248,11 +257,9 @@
                                     <TextView
                                         android:id="@+id/state"
                                         android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:layout_weight="1"
                                         android:gravity="center"
-                                        android:paddingTop="8dp"
-                                        android:paddingBottom="8dp"
                                         android:text="状态"
                                         android:textColor="@color/text333"
                                         android:textSize="12sp" />

@@ -3,10 +3,8 @@ package com.isuo.yw2application.view.main.task.inspection;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
@@ -74,7 +72,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         super.onCreate(savedInstanceState);
         String title = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR);
         if (TextUtils.isEmpty(title)) {
-            title = "日常巡检";
+            title = "执行巡检";
         }
         inspectionType = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT, -1);
         setLayoutAndToolbar(R.layout.activivity_inspection_work_list, title);

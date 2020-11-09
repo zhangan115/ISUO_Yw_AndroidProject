@@ -19,6 +19,7 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulBean;
 import com.isuo.yw2application.view.base.MvpFragment;
+import com.isuo.yw2application.view.main.task.overhaul.detail.OverhaulDetailActivity;
 import com.sito.library.adapter.RVAdapter;
 import com.sito.library.utils.DataUtil;
 import com.sito.library.widget.ExpendRecycleView;
@@ -64,9 +65,9 @@ public class EquipmentRecordFragment extends MvpFragment<EquipmentRecordContact.
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fmg_equip_data, container, false);
-        mExpendRecycleView = (ExpendRecycleView) rootView.findViewById(R.id.recycleViewId);
-        mNoDataLayout = (RelativeLayout) rootView.findViewById(R.id.layout_no_data);
-        mRecycleRefreshLoadLayout = (RecycleRefreshLoadLayout) rootView.findViewById(R.id.refreshLoadLayoutId);
+        mExpendRecycleView = rootView.findViewById(R.id.recycleViewId);
+        mNoDataLayout = rootView.findViewById(R.id.layout_no_data);
+        mRecycleRefreshLoadLayout = rootView.findViewById(R.id.refreshLoadLayoutId);
         mExpendRecycleView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         mRecycleRefreshLoadLayout.setColorSchemeColors(findColorById(R.color.colorPrimary));
         mRecycleRefreshLoadLayout.setOnRefreshListener(this);
@@ -87,8 +88,9 @@ public class EquipmentRecordFragment extends MvpFragment<EquipmentRecordContact.
                 TextView tv_user = (TextView) vHolder.getView(R.id.tv_user);
                 TextView tv_start_time = (TextView) vHolder.getView(R.id.tv_start_time);
                 TextView tv_repair_result = (TextView) vHolder.getView(R.id.tv_repair_result);
-                TextViewVertical tv_alarm = (TextViewVertical) vHolder.getView(R.id.tv_alarm);
+                TextView tv_alarm = (TextView) vHolder.getView(R.id.tv_alarm);
                 ImageView iv_state = (ImageView) vHolder.getView(R.id.iv_state);
+                vHolder.getView(R.id.ll_start_task).setVisibility(View.GONE);
                 if (data.getEquipment() != null) {
                     tv_equip_name.setText(data.getEquipment().getEquipmentName());
                     tv_belong_place.setText(data.getEquipment().getRoom().getRoomName());
@@ -124,8 +126,6 @@ public class EquipmentRecordFragment extends MvpFragment<EquipmentRecordContact.
                     tv_user.setText(sb.toString());
                 }
                 tv_repair_name.setText(data.getRepairName());
-
-                LinearLayout startLayout = (LinearLayout) vHolder.getView(R.id.ll_start_task);
                 String state;
                 switch (data.getRepairState()) {
                     case 1:
@@ -144,11 +144,9 @@ public class EquipmentRecordFragment extends MvpFragment<EquipmentRecordContact.
                 tv_state.setText(state);
                 if (!TextUtils.isEmpty(Yw2Application.getInstance().getMapOption().get("4").get(String.valueOf(data.getRepairResult())))) {
                     tv_repair_result.setVisibility(View.VISIBLE);
-                    startLayout.setVisibility(View.VISIBLE);
                     tv_repair_result.setText(MessageFormat.format("检修结果:{0}"
                             , Yw2Application.getInstance().getMapOption().get("4").get(String.valueOf(data.getRepairResult()))));
                 } else {
-                    startLayout.setVisibility(View.GONE);
                     tv_repair_result.setVisibility(View.GONE);
                 }
             }
@@ -158,9 +156,9 @@ public class EquipmentRecordFragment extends MvpFragment<EquipmentRecordContact.
             @Override
             public void onItemClick(View view, int position) {
                 long repairId = mList.get(position).getRepairId();
-//                Intent intent = new Intent(getActivity(), OverhaulDetailActivity.class);
-//                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, repairId);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), OverhaulDetailActivity.class);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, repairId);
+                startActivity(intent);
             }
         });
         if (mPresenter != null) {

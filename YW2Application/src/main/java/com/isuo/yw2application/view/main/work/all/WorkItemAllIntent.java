@@ -56,7 +56,7 @@ public class WorkItemAllIntent {
             case 9://日常巡检
                 intent.setClass(activity, WorkInspectionActivity.class);
                 break;
-            case 20://注油管理
+            case 20://润油管理
                 intent.setClass(activity, InjectActivity.class);
                 break;
             case 21://工具管理

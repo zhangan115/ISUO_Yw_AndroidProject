@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F7F7"
+    android:background="@color/color_division"
     android:orientation="vertical">
 
     <ScrollView
@@ -24,9 +24,9 @@
                 android:background="@drawable/white_bg_with_shape"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
-                android:paddingTop="5dp"
+                android:paddingTop="10dp"
                 android:paddingRight="15dp"
-                android:paddingBottom="12dp">
+                android:paddingBottom="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                             android:gravity="center_vertical"
                             android:text="属地名称"
                             android:textColor="@color/text333"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_create_room"
@@ -55,8 +55,8 @@
                             android:drawableRight="@drawable/list_arrow"
                             android:drawablePadding="4dp"
                             android:gravity="right|center_vertical"
-                            android:textColor="@color/color6983A5"
-                            android:textSize="16sp" />
+                            android:textColor="@color/gray_999999"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <View
@@ -76,7 +76,7 @@
                             android:gravity="center_vertical"
                             android:text="设备类型"
                             android:textColor="@color/text333"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_create_equip_type"
@@ -86,8 +86,8 @@
                             android:drawableRight="@drawable/list_arrow"
                             android:drawablePadding="4dp"
                             android:gravity="right|center_vertical"
-                            android:textColor="@color/color6983A5"
-                            android:textSize="16sp" />
+                            android:textColor="@color/gray_999999"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <View
@@ -107,7 +107,7 @@
                             android:gravity="center_vertical"
                             android:text="设备等级"
                             android:textColor="@color/text333"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_create_equip_level"
@@ -117,8 +117,8 @@
                             android:drawableRight="@drawable/list_arrow"
                             android:drawablePadding="4dp"
                             android:gravity="right|center_vertical"
-                            android:textColor="@color/color6983A5"
-                            android:textSize="16sp" />
+                            android:textColor="@color/gray_999999"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -133,9 +133,9 @@
                 android:background="@drawable/white_bg_with_shape"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
-                android:paddingTop="5dp"
+                android:paddingTop="10dp"
                 android:paddingRight="15dp"
-                android:paddingBottom="12dp">
+                android:paddingBottom="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -155,7 +155,7 @@
                             android:gravity="center_vertical"
                             android:text="设备名称"
                             android:textColor="@color/text333"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_create_equip_name"
@@ -163,8 +163,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
-                            android:textColor="@color/color6983A5"
-                            android:textSize="16sp" />
+                            android:textColor="@color/gray_999999"
+                            android:textSize="14sp" />
 
                         <ImageView
                             android:id="@+id/iv_equipment_name"
@@ -192,7 +192,7 @@
                             android:gravity="center_vertical"
                             android:text="设备位号"
                             android:textColor="@color/text333"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_create_equip_num"
@@ -201,8 +201,8 @@
                             android:layout_weight="1"
                             android:drawablePadding="4dp"
                             android:gravity="right|center_vertical"
-                            android:textColor="@color/color6983A5"
-                            android:textSize="16sp" />
+                            android:textColor="@color/gray_999999"
+                            android:textSize="14sp" />
 
                         <ImageView
                             android:id="@+id/iv_equipment_num"
@@ -233,7 +233,7 @@
                         android:layout_weight="1"
                         android:text="双重命名"
                         android:textColor="@color/text333"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <android.support.v7.widget.SwitchCompat
                         android:id="@+id/switchCompat"
@@ -253,9 +253,9 @@
                 android:background="@drawable/white_bg_with_shape"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
-                android:paddingTop="5dp"
+                android:paddingTop="10dp"
                 android:paddingRight="15dp"
-                android:paddingBottom="16dp">
+                android:paddingBottom="10dp">
 
                 <LinearLayout
                     android:id="@+id/ll_equip_grade"
@@ -268,8 +268,8 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:text="电压等级"
-                        android:textColor="#535761"
-                        android:textSize="16sp" />
+                        android:textColor="@color/text333"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_equip_grade"
@@ -279,8 +279,8 @@
                         android:drawableRight="@drawable/list_arrow"
                         android:drawablePadding="4dp"
                         android:gravity="right|center_vertical"
-                        android:textColor="@color/color6983A5"
-                        android:textSize="16sp" />
+                        android:textColor="@color/gray_999999"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <View
@@ -293,8 +293,8 @@
                     android:layout_height="44dp"
                     android:gravity="center_vertical"
                     android:text="设备铭牌"
-                    android:textColor="#535761"
-                    android:textSize="16sp" />
+                    android:textColor="@color/text333"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/photo_view"
@@ -309,14 +309,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/shape_green"
                 android:gravity="center"
                 android:text="提交"
                 android:textColor="@color/colorWhite"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
     </ScrollView>
@@ -368,8 +368,8 @@
                     android:maxLines="1"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:textColor="@color/color9B9B9B"
-                    android:textSize="16sp" />
+                    android:textColor="@color/text333"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/iv_clean_edit"
@@ -387,10 +387,10 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/bg_btn_upload"
+                android:background="@drawable/bg_btn_report"
                 android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:text="确定"
                 android:textColor="@color/colorWhite"
                 android:textSize="14sp" />

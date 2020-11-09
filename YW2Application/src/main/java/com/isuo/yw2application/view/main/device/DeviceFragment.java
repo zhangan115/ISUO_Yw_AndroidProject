@@ -48,6 +48,16 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
     private EquipListAdapter equipAdapter;
     private List<EquipBean> mEquipBeen, mAllEquipmentBean;
 
+    private final int SCANNER_CODE = 200;
+
+    private String[] deviceCountItems = new String[]{"数量最多", "数量最少", "默认数量"};
+    private ArrayList<String> deviceTypeItems;
+    private ArrayList<String> deviceRoomItems;
+    private ArrayList<String> deviceStateItems;
+
+    private String roomName, typeName, stateName;
+    private int deviceCountSort;
+
     public static DeviceFragment newInstance() {
         Bundle args = new Bundle();
         DeviceFragment fragment = new DeviceFragment();
@@ -59,7 +69,10 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mEquipBeen = new ArrayList<>();
+        deviceTypeItems = new ArrayList<>();
         mAllEquipmentBean = new ArrayList<>();
+        deviceRoomItems = new ArrayList<>();
+        deviceStateItems = new ArrayList<>();
         new DevicePresenter(Yw2Application.getInstance().getRepositoryComponent().getRepository(), this);
     }
 
@@ -91,7 +104,7 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getView() != null) {
-            ((WorkItemLayout) getView().findViewById(R.id.workItem1)).setContent(new WorkItem(0, "设备录入", R.drawable.drive_input));
+            ((WorkItemLayout) getView().findViewById(R.id.workItem1)).setContent(new WorkItem(0, "台账录入", R.drawable.drive_input));
             getView().findViewById(R.id.workItem1).setOnClickListener(this);
             ((WorkItemLayout) getView().findViewById(R.id.workItem2)).setContent(new WorkItem(1, "设备扫码", R.drawable.drive_scan));
             getView().findViewById(R.id.workItem2).setOnClickListener(this);
@@ -112,16 +125,6 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
             mPresenter.getEquipInfo();
         }
     }
-
-    private final int SCANNER_CODE = 200;
-
-    private String[] deviceCountItems = new String[]{"数量最多", "数量最少", "默认数量"};
-    private ArrayList<String> deviceTypeItems = new ArrayList();
-    private ArrayList<String> deviceRoomItems = new ArrayList();
-    private ArrayList<String> deviceStateItems = new ArrayList();
-
-    private String roomName, typeName, stateName;
-    private int deviceCountSort;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -332,12 +335,17 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
         this.deviceRoomItems.add("全部");
         this.deviceStateItems.clear();
         this.deviceStateItems.add("全部");
+
+        int allDeviceCount = 0;
+        int normalDeviceCount = 0;
         for (EquipBean bean : mAllEquipmentBean) {
             for (EquipmentBean equipment : bean.getEquipments()) {
                 String equipmentTypeName = equipment.getEquipmentType().getEquipmentTypeName();
                 String equipmentState = Yw2Application.getInstance()
                         .getMapOption().get("14").get(String.valueOf(equipment.getEquipmentState()));
-
+                if (equipment.getEquipmentState() == 1 || TextUtils.isEmpty(equipmentState)) {
+                    normalDeviceCount++;
+                }
                 if (!TextUtils.isEmpty(equipmentTypeName)) {
                     boolean haveName = false;
                     for (String name : deviceTypeItems) {
@@ -376,7 +384,12 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
                     this.deviceRoomItems.add(roomName);
                 }
             }
+
+            allDeviceCount = allDeviceCount + bean.getEquipments().size();
+
         }
+        this.deviceAllCountTv.setText(String.valueOf(allDeviceCount));
+        this.deviceNormalCountTv.setText(String.valueOf(normalDeviceCount));
         equipAdapter.setData(mEquipBeen);
     }
 

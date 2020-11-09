@@ -3,7 +3,7 @@
     <string name="home_account">切换账号</string>
     <string name="home_tv_repair">检修工作</string>
     <string name="home_tv_energy">能量隔离</string>
-    <string name="home_tv_greasing">注油管理</string>
+    <string name="home_tv_greasing">润油管理</string>
     <string name="home_tv_increment">专项工作</string>
     <string name="home_tv_fault">故障上报</string>
     <string name="home_tv_sos">SOS</string>
@@ -121,7 +121,7 @@
     <string name="room_type_1">电力配电室</string>
     <string name="room_type_2">电机区域</string>
 
-    <string name="toolbar_title_create_equip">设备录入</string>
+    <string name="toolbar_title_create_equip">台账录入</string>
     <string name="toolbar_title_equip_info">设备信息</string>
 
     <string name="chat_10kv">10kV</string>

@@ -34,6 +34,8 @@ import org.w3c.dom.Text;
  */
 public abstract class BaseActivity extends AbsBaseActivity implements OnClickListener {
     protected boolean isDestroy = false;
+    protected boolean useAnimToBack = true;
+    protected boolean useAnimToNewAct = true;
     protected MaterialDialog loadingDialog = null;
     private TextView mTitleTv;
     protected OnToolbarClickListener onToolbarClickListener;
@@ -242,6 +244,30 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
 
     protected void onCancel() {
 
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent,requestCode);
+        if (useAnimToNewAct){
+            overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
+        }
+    }
+
+    @Override
+    public void startActivity(Intent intent, @Nullable Bundle options) {
+        super.startActivity(intent, options);
+        if (useAnimToNewAct){
+            overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
+        }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        if (useAnimToBack){
+            overridePendingTransition(R.anim.slideinleft, R.anim.slideoutright);
+        }
     }
 
 }

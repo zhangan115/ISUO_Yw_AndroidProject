@@ -16,7 +16,7 @@ import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
- * 注油管理
+ * 润油管理
  * Created by zhangan on 2018/4/12.
  */
 

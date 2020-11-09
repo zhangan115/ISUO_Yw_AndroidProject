@@ -186,6 +186,7 @@
                                 android:tag="1">
 
                                 <TextView
+                                    android:id="@+id/alarmTv4"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="#499bfe"
@@ -194,7 +195,6 @@
                                     tools:text="5" />
 
                                 <TextView
-                                    android:id="@+id/alarmTv4"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="7dp"

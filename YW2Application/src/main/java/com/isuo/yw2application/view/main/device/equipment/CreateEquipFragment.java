@@ -188,6 +188,9 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
         iv_change.setOnClickListener(this);
         iv_clean_edit.setOnClickListener(this);
         initSpecialView(layout_contain);
+        edit_content.setFocusable(true);
+        edit_content.setFocusableInTouchMode(true);
+        edit_content.requestFocus();
         edit_content.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

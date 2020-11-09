@@ -17,7 +17,7 @@ public class OverhaulExecuteActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_container_toolbar, "检修");
+        setLayoutAndToolbar(R.layout.activity_container_toolbar, "执行检修");
         long repairId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG, -1);
         OverhaulExecuteFragment fragment = (OverhaulExecuteFragment) getFragmentManager().findFragmentById(R.id.frame_container);
         if (fragment == null) {

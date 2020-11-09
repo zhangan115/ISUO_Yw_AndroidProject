@@ -28,7 +28,7 @@ public class EnterpriseStandardActivity extends BaseActivity implements Enterpri
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_enterprise_standard, "企业规范");
+        setLayoutAndToolbar(R.layout.activity_enterprise_standard, "查看规范");
         new EnterpriseStandardPresenter(Yw2Application.getInstance().getRepositoryComponent().getRepository(), this);
         RecycleRefreshLoadLayout refreshLoadLayout = findViewById(R.id.refreshLoadLayoutId);
         refreshLoadLayout.setColorSchemeColors(findColorById(R.color.colorPrimary));
