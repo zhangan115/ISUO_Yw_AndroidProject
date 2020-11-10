@@ -1,4 +1,4 @@
-package com.isuo.yw2application.widget;
+package com.isuo.yw2application.view.main.task.inspection.input.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -44,6 +44,8 @@ public class Type1LayoutNew extends LinearLayout {
 
     public void setDataToView(boolean canEdit, DataItemValueListBean bean, EquipmentBean equipmentBean) {
         this.canEdit = canEdit;
+        this.dataItemBean = bean.getDataItem();
+        this.equipmentBean = equipmentBean;
         if (canEdit) {
             long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
             if (!TextUtils.isEmpty(bean.getValue())) {
@@ -52,8 +54,6 @@ public class Type1LayoutNew extends LinearLayout {
                 }
             }
         }
-        this.dataItemBean = bean.getDataItem();
-        this.equipmentBean = equipmentBean;
         TextView tv_value_title = findViewById(R.id.tv_value_title);
         TextView tv_last_time = findViewById(R.id.tv_last_time);
 
@@ -99,6 +99,9 @@ public class Type1LayoutNew extends LinearLayout {
             button.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (!Type1LayoutNew.this.canEdit) {
+                        return;
+                    }
                     int position = (int) view.getTag();
                     if (view instanceof TextView) {
                         String text = (((TextView) view).getText()).toString();

@@ -6,6 +6,7 @@ import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.check.FaultList;
 import com.isuo.yw2application.mode.bean.fault.AlarmCount;
+import com.isuo.yw2application.mode.bean.fault.FaultCount;
 import com.isuo.yw2application.mode.bean.fault.FaultDayCountBean;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.isuo.yw2application.mode.customer.CustomerRepository;
@@ -48,10 +49,10 @@ public class AlarmPresenter implements AlarmContract.Presenter {
 
     @Override
     public void getAlarmCount() {
-        mSubscription.add(mRepository.getAlarmCount(new IObjectCallBack<AlarmCount>() {
+        mSubscription.add(mFaultRepository.getFaultCount(new IObjectCallBack<FaultCount>() {
             @Override
-            public void onSuccess(@NonNull AlarmCount alarmCount) {
-                mView.showAlarmCount(alarmCount);
+            public void onSuccess(@NonNull FaultCount s) {
+                mView.showFaultCount(s);
             }
 
             @Override
@@ -95,7 +96,7 @@ public class AlarmPresenter implements AlarmContract.Presenter {
         mSubscription.add(mRepository.getFaultDayCount(time, new IObjectCallBack<FaultDayCountBean>() {
             @Override
             public void onSuccess(@NonNull FaultDayCountBean bean) {
-                mView.showFaultDayCount(bean);
+
             }
 
             @Override
@@ -115,7 +116,7 @@ public class AlarmPresenter implements AlarmContract.Presenter {
         mWorkDataRepository.getWorkState(new IObjectCallBack<WorkState>() {
             @Override
             public void onSuccess(@NonNull WorkState workState) {
-                mView.showWorkState(workState);
+
             }
 
             @Override

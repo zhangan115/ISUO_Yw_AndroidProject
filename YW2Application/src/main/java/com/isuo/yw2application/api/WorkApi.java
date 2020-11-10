@@ -129,5 +129,4 @@ public interface WorkApi {
     @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
     @POST("increment/add.json")
     Observable<Bean<String>> generateIncrement(@Body() String info);
-
 }

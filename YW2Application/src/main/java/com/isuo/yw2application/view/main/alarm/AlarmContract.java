@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.isuo.yw2application.mode.bean.check.FaultList;
 import com.isuo.yw2application.mode.bean.fault.AlarmCount;
+import com.isuo.yw2application.mode.bean.fault.FaultCount;
 import com.isuo.yw2application.mode.bean.fault.FaultDayCountBean;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.sito.library.base.BasePresenter;
@@ -36,11 +37,7 @@ interface AlarmContract {
 
         void showFaultList(List<FaultList> list);
 
-        void showAlarmCount(AlarmCount bean);
-
-        void showFaultDayCount(FaultDayCountBean bean);
-
-        void showWorkState(WorkState workState);
+        void showFaultCount(FaultCount bean);
 
     }
 

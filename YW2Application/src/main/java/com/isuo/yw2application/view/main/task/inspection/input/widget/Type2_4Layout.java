@@ -1,4 +1,4 @@
-package com.isuo.yw2application.widget;
+package com.isuo.yw2application.view.main.task.inspection.input.widget;
 
 import android.content.Context;
 import android.text.Editable;

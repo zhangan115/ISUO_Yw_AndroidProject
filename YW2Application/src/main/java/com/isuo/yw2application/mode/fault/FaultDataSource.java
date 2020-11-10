@@ -12,6 +12,7 @@ import com.isuo.yw2application.mode.bean.db.Image;
 import com.isuo.yw2application.mode.bean.employee.DepartmentBean;
 import com.isuo.yw2application.mode.bean.equip.EquipType;
 import com.isuo.yw2application.mode.bean.fault.DefaultFlowBean;
+import com.isuo.yw2application.mode.bean.fault.FaultCount;
 import com.isuo.yw2application.mode.bean.fault.FaultDetail;
 import com.isuo.yw2application.mode.bean.fault.JobPackageBean;
 
@@ -75,4 +76,6 @@ public interface FaultDataSource {
     @NonNull
     Subscription careEquipment(JSONObject jsonObject, @NonNull IObjectCallBack<String> callBack);
 
+    @NonNull
+    Subscription getFaultCount(@NonNull IObjectCallBack<FaultCount> callBack);
 }

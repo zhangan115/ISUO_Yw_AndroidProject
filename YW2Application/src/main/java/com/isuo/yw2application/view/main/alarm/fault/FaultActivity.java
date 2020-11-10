@@ -92,7 +92,7 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
     private TextView chooseTitleType1, chooseTitleType2;
     private LinearLayout mFlowLayout;
     private HorizontalScrollView mHSView;
-    private List<FlowLayout> mFlowLayoutList = new ArrayList<>();
+    private final List<FlowLayout> mFlowLayoutList = new ArrayList<>();
     private TakePhotoView takePhotoView;
     @Nullable
     private Image mImage;
@@ -129,14 +129,14 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
     }
 
     private void initView() {
-        mDeviceName = (TextView) findViewById(R.id.id_fault_devicename);
-        mFaultType = (TextView) findViewById(R.id.id_fault_type);
-        mSpeech = (ImageView) findViewById(R.id.id_fault_speech);
-        mContent = (EditText) findViewById(R.id.id_fault_content);
-        mVoiceTime = (TextView) findViewById(R.id.id_fault_time);
-        mFlowLayout = (LinearLayout) findViewById(R.id.ll_flow_layout);
-        mLLDevice = (LinearLayout) findViewById(R.id.id_fault_ll_device);
-        mLLType = (LinearLayout) findViewById(R.id.id_fault_ll_type);
+        mDeviceName = findViewById(R.id.id_fault_devicename);
+        mFaultType = findViewById(R.id.id_fault_type);
+        mSpeech = findViewById(R.id.id_fault_speech);
+        mContent = findViewById(R.id.id_fault_content);
+        mVoiceTime = findViewById(R.id.id_fault_time);
+        mFlowLayout = findViewById(R.id.ll_flow_layout);
+        mLLDevice = findViewById(R.id.id_fault_ll_device);
+        mLLType = findViewById(R.id.id_fault_ll_type);
         String equipmentName = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR);
         long equipmentId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG_1, -1);
         if (equipmentId != -1 && !TextUtils.isEmpty(equipmentName)) {
@@ -145,11 +145,11 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
             isChooseEquip = false;//无法选择其他设备
             mDeviceName.setCompoundDrawables(null, null, null, null);
         }
-        addEmployeeLayout = (LinearLayout) findViewById(R.id.ll_employee_add);
-        mHSView = (HorizontalScrollView) findViewById(R.id.id_hs_employee);
-        chooseTitleType1 = (TextView) findViewById(R.id.tv_type_1);
-        chooseTitleType2 = (TextView) findViewById(R.id.tv_type_2);
-        takePhotoView = (TakePhotoView) findViewById(R.id.take_photo_view);
+        addEmployeeLayout = findViewById(R.id.ll_employee_add);
+        mHSView = findViewById(R.id.id_hs_employee);
+        chooseTitleType1 = findViewById(R.id.tv_type_1);
+        chooseTitleType2 = findViewById(R.id.tv_type_2);
+        takePhotoView = findViewById(R.id.take_photo_view);
         takePhotoView.setTakePhotoListener(new TakePhotoView.TakePhotoListener() {
             @Override
             public void onTakePhoto() {
@@ -687,7 +687,7 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
         }
     }
 
-    private View.OnClickListener flowClickListener = new View.OnClickListener() {
+    private final View.OnClickListener flowClickListener = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {

@@ -24,6 +24,7 @@ public class WorkState {
     private int incrAllCount;
     private int weekAllCount;
     private int relicIncrCount;
+    private int allTaskCount;
 
     public int getFaultFinishCount() {
         return faultFinishCount;
@@ -159,5 +160,13 @@ public class WorkState {
 
     public void setRelicIncrCount(int relicIncrCount) {
         this.relicIncrCount = relicIncrCount;
+    }
+
+    public int getAllTaskCount() {
+        return allTaskCount;
+    }
+
+    public void setAllTaskCount(int allTaskCount) {
+        this.allTaskCount = allTaskCount;
     }
 }

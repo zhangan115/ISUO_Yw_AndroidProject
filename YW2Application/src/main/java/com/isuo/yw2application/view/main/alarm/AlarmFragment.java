@@ -20,6 +20,7 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.check.FaultList;
 import com.isuo.yw2application.mode.bean.fault.AlarmCount;
+import com.isuo.yw2application.mode.bean.fault.FaultCount;
 import com.isuo.yw2application.mode.bean.fault.FaultDayCountBean;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.isuo.yw2application.utils.CountDownTimerUtils;
@@ -85,9 +86,6 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
                 if (mPresenter != null) {
                     mPresenter.getAlarmList();
                     mPresenter.getAlarmCount();
-                    Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-                    mPresenter.getFaultDayCount(DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd"));
-                    mPresenter.getWorkCount();
                 }
             }
         });
@@ -210,32 +208,18 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
         if (mPresenter != null) {
             mPresenter.getAlarmList();
             mPresenter.getAlarmCount();
-            Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-            mPresenter.getFaultDayCount(DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd"));
-            mPresenter.getWorkCount();
         }
     }
 
-    @Override
-    public void showFaultDayCount(FaultDayCountBean bean) {
-        if (getView() == null) {
-            return;
-        }
-        alarmCount[0].setText(String.valueOf(bean.getAllFault()));
-        alarmCount[1].setText(String.valueOf(bean.getPendingCount()));
-        alarmCount[2].setText(String.valueOf(bean.getFlowingCount()));
-    }
 
     @Override
-    public void showWorkState(WorkState workState) {
-        alarmCount[3].setText(String.valueOf(workState.getFaultFinishCount()));
+    public void showFaultCount(FaultCount bean) {
+        alarmCount[0].setText(String.valueOf(bean.getDayCount()));
+        alarmCount[1].setText(String.valueOf(bean.getFlowingCount()));
+        alarmCount[2].setText(String.valueOf(bean.getCloseCount()));
+        alarmCount[3].setText(String.valueOf(bean.getRepairCount()));
+        alarmCount[4].setText(String.valueOf(bean.getPendingCount()));
     }
-
-    @Override
-    public void showAlarmCount(AlarmCount bean) {
-        alarmCount[4].setText(String.valueOf(bean.getAllCount()));
-    }
-
 
     @Override
     public void onClick(View view) {

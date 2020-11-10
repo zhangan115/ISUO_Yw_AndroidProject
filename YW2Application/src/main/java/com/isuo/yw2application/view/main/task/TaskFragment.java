@@ -51,7 +51,6 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
             public void onRefresh() {
                 if (mPresenter != null) {
                     mPresenter.getWorkCount();
-                    mPresenter.getFinishWorkCount();
                 }
             }
         });
@@ -80,7 +79,6 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
         super.onResume();
         if (mPresenter != null) {
             mPresenter.getWorkCount();
-            mPresenter.getFinishWorkCount();
         }
     }
 
@@ -132,17 +130,17 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
 
     @Override
     public void showWorkCount(WorkState workState) {
+        finishCountTv.setText(String.valueOf(workState.getAllTaskCount()));
         monthCountTv.setText(String.format("%s/%s", workState.getMonthFinishCount(), workState.getMonthAllCount()));
         weakCountTv.setText(String.format("%s/%s", workState.getWeekFinishCount(), workState.getWeekAllCount()));
         dayCountTv.setText(String.format("%s/%s", workState.getDayFinishCount(), workState.getDayAllCount()));
-
-        this.swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
-    public void showFinishWorkCount(int count) {
+    public void showWorkCountFinish() {
         this.swipeRefreshLayout.setRefreshing(false);
     }
+
 
     @Override
     public void setPresenter(TaskContract.Presenter presenter) {

@@ -28,6 +28,7 @@ public class EquipmentDataDb implements Parcelable {
     private String localPhoto;
     private long inspectionId;
     private int isShareValue;
+    private long userId;
     private long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
 
     public Long get_id() {
@@ -126,13 +127,21 @@ public class EquipmentDataDb implements Parcelable {
         this.currentUserId = currentUserId;
     }
 
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
     public EquipmentDataDb() {
     }
 
-    @Generated(hash = 1159023055)
+    @Generated(hash = 600471602)
     public EquipmentDataDb(Long _id, String value, int type, long taskId, long roomId, long equipmentId,
-            String chooseInspectionName, long dataItemId, String localPhoto, long inspectionId,
-            int isShareValue, long currentUserId) {
+            String chooseInspectionName, long dataItemId, String localPhoto, long inspectionId, int isShareValue,
+            long userId, long currentUserId) {
         this._id = _id;
         this.value = value;
         this.type = type;
@@ -144,6 +153,7 @@ public class EquipmentDataDb implements Parcelable {
         this.localPhoto = localPhoto;
         this.inspectionId = inspectionId;
         this.isShareValue = isShareValue;
+        this.userId = userId;
         this.currentUserId = currentUserId;
     }
 
@@ -165,6 +175,7 @@ public class EquipmentDataDb implements Parcelable {
         dest.writeString(this.localPhoto);
         dest.writeLong(this.inspectionId);
         dest.writeInt(this.isShareValue);
+        dest.writeLong(this.userId);
         dest.writeLong(this.currentUserId);
     }
 
@@ -180,6 +191,7 @@ public class EquipmentDataDb implements Parcelable {
         this.localPhoto = in.readString();
         this.inspectionId = in.readLong();
         this.isShareValue = in.readInt();
+        this.userId =in.readInt();
         this.currentUserId = in.readLong();
     }
 

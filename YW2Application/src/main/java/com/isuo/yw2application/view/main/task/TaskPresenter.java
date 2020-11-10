@@ -35,12 +35,6 @@ class TaskPresenter implements TaskContract.Presenter {
         subscription.clear();
     }
 
-
-    @Override
-    public void getFinishWorkCount() {
-
-    }
-
     @Override
     public void getWorkCount() {
         subscription.add(mRepository.getWorkState(new IObjectCallBack<WorkState>() {
@@ -57,7 +51,7 @@ class TaskPresenter implements TaskContract.Presenter {
 
             @Override
             public void onFinish() {
-
+                mView.showWorkCountFinish();
             }
         }));
     }

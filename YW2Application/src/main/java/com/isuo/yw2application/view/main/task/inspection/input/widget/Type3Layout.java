@@ -1,4 +1,4 @@
-package com.isuo.yw2application.widget;
+package com.isuo.yw2application.view.main.task.inspection.input.widget;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -40,8 +40,8 @@ public class Type3Layout extends LinearLayout {
     }
 
     public void setDataToView(boolean canEdit, final DataItemValueListBean bean, final OnTakePhotoListener onTakePhotoListener) {
-        dataItemBean = bean.getDataItem();
-        progressBar = findViewById(R.id.progressBar);
+        this.dataItemBean = bean.getDataItem();
+        this.progressBar = findViewById(R.id.progressBar);
         this.canEdit=canEdit;
         if (canEdit) {
             long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
@@ -58,9 +58,9 @@ public class Type3Layout extends LinearLayout {
             dataItemBean.setLocalFile(dataItemBean.getEquipmentDataDb().getLocalPhoto());
         }
         if (TextUtils.isEmpty(dataItemBean.getLocalFile())) {
-            iv_take_photo.setImageDrawable(mContext.getResources().getDrawable(R.drawable.photo_button));
+            iv_take_photo.setImageDrawable(mContext.getResources().getDrawable(R.drawable.photograph));
         } else {
-            GlideUtils.ShowImage(mContext, dataItemBean.getLocalFile(), iv_take_photo, R.drawable.picture_default);
+            GlideUtils.ShowImage(mContext, dataItemBean.getLocalFile(), iv_take_photo, R.drawable.img_default);
         }
         iv_take_photo.setOnClickListener(new OnClickListener() {
             @Override

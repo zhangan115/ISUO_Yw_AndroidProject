@@ -8,6 +8,7 @@ import com.isuo.yw2application.mode.bean.check.FaultList;
 import com.isuo.yw2application.mode.bean.employee.DepartmentBean;
 import com.isuo.yw2application.mode.bean.fault.AlarmCount;
 import com.isuo.yw2application.mode.bean.fault.DefaultFlowBean;
+import com.isuo.yw2application.mode.bean.fault.FaultCount;
 import com.isuo.yw2application.mode.bean.fault.FaultCountBean;
 import com.isuo.yw2application.mode.bean.fault.FaultDayCountBean;
 import com.isuo.yw2application.mode.bean.fault.FaultDetail;
@@ -49,6 +50,9 @@ public interface FaultApi {
 
     @GET("statistics/relic/fault.json")
     Observable<Bean<AlarmCount>> getAlarmCount();
+
+    @GET("fault/homepage/count.json")
+    Observable<Bean<FaultCount>> getHomePageFaultCount();
 
 
     /**

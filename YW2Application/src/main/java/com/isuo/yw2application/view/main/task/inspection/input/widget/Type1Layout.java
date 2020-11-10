@@ -1,4 +1,4 @@
-package com.isuo.yw2application.widget;
+package com.isuo.yw2application.view.main.task.inspection.input.widget;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -86,7 +86,7 @@ public class Type1Layout extends LinearLayout {
         findViewById(R.id.ll_check_result).setOnClickListener(onType1ClickListener);
     }
 
-    private OnClickListener onType1ClickListener = new OnClickListener() {
+    private final OnClickListener onType1ClickListener = new OnClickListener() {
 
         @Override
         public void onClick(View v) {

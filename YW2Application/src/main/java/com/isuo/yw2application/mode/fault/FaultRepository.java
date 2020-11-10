@@ -24,6 +24,7 @@ import com.isuo.yw2application.mode.bean.db.VoiceDao;
 import com.isuo.yw2application.mode.bean.employee.DepartmentBean;
 import com.isuo.yw2application.mode.bean.equip.EquipType;
 import com.isuo.yw2application.mode.bean.fault.DefaultFlowBean;
+import com.isuo.yw2application.mode.bean.fault.FaultCount;
 import com.isuo.yw2application.mode.bean.fault.FaultDetail;
 import com.isuo.yw2application.mode.bean.fault.JobPackageBean;
 
@@ -439,6 +440,26 @@ public class FaultRepository implements FaultDataSource {
             public void onSuccess(@Nullable String s) {
                 callBack.onFinish();
                 callBack.onSuccess("");
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription getFaultCount(@NonNull final IObjectCallBack<FaultCount> callBack) {
+        Observable<Bean<FaultCount>> observable = Api.createRetrofit().create(FaultApi.class).getHomePageFaultCount();
+        return new ApiCallBack<FaultCount>(observable) {
+
+            @Override
+            public void onSuccess(@Nullable FaultCount s) {
+                callBack.onFinish();
+                callBack.onSuccess(s);
             }
 
             @Override

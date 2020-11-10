@@ -434,6 +434,12 @@ public class InspectionRepository implements InspectionSourceData {
                                     equipmentData.setIsShareValue(dataItemValueListBean.getDataItem().getIsShareValue());
                                     equipmentData.setInspectionId(dataItemValueListBean.getDataItem().getInspectionId());
                                     dataItemValueListBean.getDataItem().setEquipmentDataDb(equipmentData);
+                                    String value = taskEquipmentBean.get(i).getDataList().get(0).getDataItemValueList().get(j).getValue();
+                                    long userId = taskEquipmentBean.get(i).getDataList().get(0).getDataItemValueList().get(j).getUserId();
+                                    if (!TextUtils.isEmpty(value)) {
+                                        equipmentData.setValue(value);
+                                        equipmentData.setUserId(userId);
+                                    }
                                     if (isAutoSetValue) {
                                         switch (dataItemValueListBean.getDataItem().getInspectionType()) {
                                             case ConstantInt.DATA_VALUE_TYPE_1:

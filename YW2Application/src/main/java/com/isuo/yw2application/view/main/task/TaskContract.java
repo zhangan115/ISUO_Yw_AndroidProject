@@ -12,8 +12,6 @@ interface TaskContract {
 
     interface Presenter extends BasePresenter {
 
-        void getFinishWorkCount();
-
         void getWorkCount();
     }
 
@@ -21,7 +19,8 @@ interface TaskContract {
 
         void showWorkCount(WorkState workState);
 
-        void showFinishWorkCount(int count);
+        void showWorkCountFinish();
+
     }
 
 }
