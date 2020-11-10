@@ -178,27 +178,20 @@ public class EquipSearchActivity extends BaseActivity implements View.OnClickLis
                 typePosition = 0;
                 mSearchName.setText("");
                 mTypeDatas.clear();
-                if (mTempType != null) {
-                    if (mTempType.size() > 4) {
-                        for (int i = 0; i < 4; i++) {
-                            mTypeDatas.add(mTempType.get(i));
-                        }
-                    } else {
-                        mTypeDatas.addAll(mTempType);
-                    }
+                for (EquipType type:mTempType){
+                    type.setSelect(false);
                 }
+                for (EquipRoom room:mTempPlace){
+                    room.setSelect(false);
+                }
+                mTypeDatas.addAll(mTempType);
                 mPlaceDatas.clear();
-                if (mTempPlace != null) {
-                    if (mTempPlace.size() > 4) {
-                        for (int i = 0; i < 4; i++) {
-                            mPlaceDatas.add(mTempPlace.get(i));
-                        }
-                    } else {
-                        mPlaceDatas.addAll(mTempPlace);
-                    }
-                }
+                mPlaceDatas.addAll(mTempPlace);
                 mPlaceList.getAdapter().notifyDataSetChanged();
                 mTypeList.getAdapter().notifyDataSetChanged();
+                mEquipTypeId = 0;
+                mEquipRoomId = 0;
+                mRoomName = "";
                 break;
             case R.id.id_equip_commit:
                 Intent intent = new Intent(this, EquipListActivity.class);

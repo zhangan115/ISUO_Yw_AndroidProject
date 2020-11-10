@@ -309,6 +309,12 @@
             android:configChanges="orientation|keyboardHidden"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.alarm.fault.today.TodayFaultActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <!--巡检-->
         <activity
             android:name=".view.main.task.inspection.WorkInspectionActivity"

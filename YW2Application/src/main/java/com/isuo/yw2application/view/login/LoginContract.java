@@ -26,5 +26,9 @@ interface LoginContract {
 
         void loginHideLoading();
 
+        void showDialog(String message);
+
+        void showFreezeDialog(String message);
+
     }
 }

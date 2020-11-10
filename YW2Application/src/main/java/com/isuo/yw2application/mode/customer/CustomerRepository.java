@@ -157,9 +157,14 @@ public class CustomerRepository implements CustomerDataSource {
         }.execute1();
     }
 
+    private boolean canAutoLogin = false;
+    private String message = "";
+
     @NonNull
     @Override
     public Subscription login(@NonNull final String name, @NonNull final String pass, @NonNull final LoadUserCallBack callBack) {
+        canAutoLogin = false;
+        message = "";
         final JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("userName", name);
@@ -187,7 +192,8 @@ public class CustomerRepository implements CustomerDataSource {
 
                     @Override
                     public void call(Bean<User> userBean) {
-                        if (userBean.getErrorCode() == 0) {
+                        if (userBean.getErrorCode() == 0 || userBean.getErrorCode() == 10001 || userBean.getErrorCode() == 10002) {
+                            canAutoLogin = userBean.getErrorCode() == 0;
                             saveUserInfo(name, pass);
                             sp.edit().putBoolean(ConstantStr.USE_APP, true).apply();
                             Yw2Application.getInstance().setCurrentUser(userBean.getData());
@@ -197,6 +203,12 @@ public class CustomerRepository implements CustomerDataSource {
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
                             }
+                            if (userBean.getErrorCode() == 10001 || userBean.getErrorCode() == 10002) {
+                                message = userBean.getMessage();
+                            }
+                        } else if (userBean.getErrorCode() == 1002) {
+                            callBack.onFinish();
+                            callBack.showFreezeMessage(userBean.getMessage());
                         } else {
                             Yw2Application.getInstance().showToast(userBean.getMessage());
                             callBack.onFinish();
@@ -208,7 +220,7 @@ public class CustomerRepository implements CustomerDataSource {
                 .flatMap(new Func1<Bean<User>, Observable<Bean<List<OptionBean>>>>() {
                     @Override
                     public Observable<Bean<List<OptionBean>>> call(Bean<User> userBean) {
-                        if (userBean.getErrorCode() == 0) {
+                        if (userBean.getErrorCode() == 0 || userBean.getErrorCode() == 10001 || userBean.getErrorCode() == 10002) {
                             return Api.createRetrofit().create(Api.Login.class).getOptionInfo();
                         }
                         return Observable.just(null);
@@ -239,7 +251,11 @@ public class CustomerRepository implements CustomerDataSource {
                         }
                         if (listBean.getErrorCode() == 0) {
                             Yw2Application.getInstance().setOptionInfo(listBean.getData());
-                            callBack.onLoginSuccess(Yw2Application.getInstance().getCurrentUser());
+                            if (canAutoLogin) {
+                                callBack.onLoginSuccess(Yw2Application.getInstance().getCurrentUser());
+                            } else {
+                                callBack.showMessage(message);
+                            }
                             Map<String, Map<String, String>> mOption = new HashMap<>();
                             for (int i = 0; i < listBean.getData().size(); i++) {
                                 Map<String, String> map = new HashMap<>();
@@ -317,7 +333,7 @@ public class CustomerRepository implements CustomerDataSource {
                     .doOnNext(new Action1<Bean<User>>() {
                         @Override
                         public void call(Bean<User> userBean) {
-                            if (userBean.getErrorCode() == 0) {
+                            if (userBean.getErrorCode() == 0 || userBean.getErrorCode() == 10001 || userBean.getErrorCode() == 10002) {
                                 Yw2Application.getInstance().setCurrentUser(userBean.getData());
                             } else {
                                 Yw2Application.getInstance().showToast(userBean.getMessage());
@@ -329,7 +345,7 @@ public class CustomerRepository implements CustomerDataSource {
                     .flatMap(new Func1<Bean<User>, Observable<Bean<List<OptionBean>>>>() {
                         @Override
                         public Observable<Bean<List<OptionBean>>> call(Bean<User> userBean) {
-                            if (userBean.getErrorCode() == 0) {
+                            if (userBean.getErrorCode() == 0 || userBean.getErrorCode() == 10001 || userBean.getErrorCode() == 10002) {
                                 return Api.createRetrofit().create(Api.Login.class).getOptionInfo();
                             }
                             return Observable.just(null);
@@ -1057,7 +1073,7 @@ public class CustomerRepository implements CustomerDataSource {
             @Override
             public void onSuccess(List<String> strings) {
                 if (strings != null && strings.size() > 0) {
-                   final String userPhotoUrl = strings.get(0);
+                    final String userPhotoUrl = strings.get(0);
                     JSONObject jsonObject = new JSONObject();
                     try {
                         jsonObject.put("portraitUrl", userPhotoUrl);

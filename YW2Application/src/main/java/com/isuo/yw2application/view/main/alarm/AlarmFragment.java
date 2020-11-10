@@ -28,6 +28,7 @@ import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.alarm.detail.AlarmDetailActivity;
 import com.isuo.yw2application.view.main.alarm.equipalarm.EquipAlarmActivity;
 import com.isuo.yw2application.view.main.alarm.fault.FaultActivity;
+import com.isuo.yw2application.view.main.alarm.fault.today.TodayFaultActivity;
 import com.isuo.yw2application.view.main.alarm.list.AlarmListActivity;
 import com.isuo.yw2application.widget.ShowImageLayout;
 import com.sito.library.adapter.RVAdapter;
@@ -253,9 +254,11 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
                 int type = Integer.parseInt(view.getTag().toString());
                 Intent intent = new Intent(getActivity(), EquipAlarmActivity.class);
                 if (type == 0) {
-                    Calendar calendar = Calendar.getInstance();
-                    intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd"));
-                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "今日故障");
+//                    Calendar calendar = Calendar.getInstance();
+//                    intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd"));
+//                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "今日故障");
+                    startActivity(new Intent(getActivity(),TodayFaultActivity.class));
+                    return;
                 } else if (type == 1) {
                     Calendar calendar = Calendar.getInstance();
                     intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd"));

@@ -38,10 +38,10 @@ import com.isuo.yw2application.view.main.task.overhaul.WorkOverhaulActivity;
 import com.isuo.yw2application.view.main.task.overhaul.detail.OverhaulDetailActivity;
 import com.isuo.yw2application.view.main.work.enterprise.EnterpriseActivity;
 import com.isuo.yw2application.view.main.work.inject.InjectActivity;
+import com.isuo.yw2application.view.main.work.message.widget.MessageType4Layout;
 import com.isuo.yw2application.view.main.work.safe.NewsSafeActivity;
-import com.isuo.yw2application.widget.MessageItemLayout;
+import com.isuo.yw2application.view.main.work.message.widget.MessageItemLayout;
 import com.sito.library.adapter.RVAdapter;
-import com.sito.library.adapter.VRVAdapter;
 import com.sito.library.widget.ExpendRecycleView;
 import com.sito.library.widget.RecycleRefreshLoadLayout;
 
@@ -111,108 +111,150 @@ public class NewsListFragment extends LazyLoadFragmentV4<NewsListContract.Presen
             public void showData(ViewHolder vHolder, MessageListBean data, int position) {
                 TextView title = (TextView) vHolder.getView(R.id.id_news_title);
                 LinearLayout itemLayout = (LinearLayout) vHolder.getView(R.id.llItems);
+                LinearLayout itemLayout4 = (LinearLayout) vHolder.getView(R.id.llItems4);
                 title.setText(data.getTitle());
                 itemLayout.removeAllViews();
-                for (int i = 0; i < data.getMessageItemList().size(); i++) {
-                    MessageItemLayout layout = new MessageItemLayout(getActivity());
-                    layout.setData(data.getMessageItemList().get(i).getSmallType(), data.getMessageItemList().get(i).getContent()
-                            , data.getMessageItemList().get(i).getCreateTime());
-                    itemLayout.addView(layout);
+                itemLayout4.removeAllViews();
+                int messageType = data.getMessageType();
+                if (messageType == 1 || messageType == 2) {
+                    int type = data.getMessageItemList().get(0).getSmallType();
+                    if (type == 201 || type == 204 || type == 207) {
+                        MessageListBean.MessageItemListBean bean1 = new MessageListBean.MessageItemListBean();
+                        bean1.setSmallType(type + 1);
+                        MessageListBean.MessageItemListBean bean2 = new MessageListBean.MessageItemListBean();
+                        bean2.setSmallType(type + 2);
+                        if (data.getMessageItemList().size() == 1) {
+                            data.getMessageItemList().add(bean1);
+                            data.getMessageItemList().add(bean2);
+                        } else if (data.getMessageItemList().size() == 2) {
+                            data.getMessageItemList().add(bean2);
+                        }
+                    } else if (type == 208 || type == 205) {
+                        MessageListBean.MessageItemListBean bean1 = new MessageListBean.MessageItemListBean();
+                        bean1.setSmallType(type + 1);
+                        if (data.getMessageItemList().size() == 1) {
+                            data.getMessageItemList().add(bean1);
+                        }
+                    }
+                    for (int i = 0; i < data.getMessageItemList().size(); i++) {
+                        MessageItemLayout layout = new MessageItemLayout(getActivity());
+                        layout.setData(data.getMessageItemList().get(i).getSmallType(), data.getMessageItemList().get(i).getContent()
+                                , data.getMessageItemList().get(i).getCreateTime());
+                        if (i == 0) {
+                            layout.hideLineView();
+                        }
+                        itemLayout.addView(layout);
+                    }
+                } else if (messageType == 4 || messageType == 3) {
+                    for (int i = 0; i < data.getMessageItemList().size(); i++) {
+                        MessageType4Layout layout = new MessageType4Layout(getActivity());
+                        layout.setData(data.getMessageItemList().get(i).getSmallType(), data.getMessageItemList().get(i).getContent()
+                                , data.getMessageItemList().get(i).getCreateTime());
+                        itemLayout4.addView(layout);
+                    }
                 }
-            }
-        };
-        VRVAdapter<MessageListBean> rvAdapter = new VRVAdapter<MessageListBean>(expendRecycleView,messageListBeans,new int[]{R.layout.item_news_list}) {
-
-            @Override
-            public int getItemViewType(int position) {
-                return 0;
-            }
-
-            @Override
-            public void showData(ViewHolder vHolder, MessageListBean data, int position, int type) {
-
+                itemLayout.setTag(position);
+                itemLayout4.setTag(position);
+                itemLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = (int) v.getTag();
+                        itemClick(position);
+                    }
+                });
+                itemLayout4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = (int) v.getTag();
+                        itemClick(position);
+                    }
+                });
             }
         };
         expendRecycleView.setAdapter(adapter);
         adapter.setOnItemClickListener(new RVAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-                if (messageListBeans.get(position).getMessageItemList().size() > 0) {
-                    for (int i = 0; i < messageListBeans.get(position).getMessageItemList().size(); i++) {
-                        int type = messageListBeans.get(position).getMessageItemList().get(i).getSmallType();
-                        if (type == 401 || type == 402) {
-                            Intent toSafe = new Intent(getActivity(), NewsSafeActivity.class);
-                            if (messageListBeans.get(position).getMessageItemList().size() == 1) {
-                                toSafe.putExtra(ConstantStr.KEY_BUNDLE_LONG, messageListBeans.get(position).getMessageId());
-                                startActivity(toSafe);
-                            }
-                            break;
-                        } else if (type == 101 || type == 102 || type == 103 || type == 104) {
-                            Intent intent = new Intent(getActivity(), AlarmDetailActivity.class);
-                            intent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, NewsListFragment.this.type == 3);
-                            intent.putExtra(ConstantStr.KEY_BUNDLE_STR, String.valueOf(messageListBeans.get(position).getTaskId()));
-                            startActivity(intent);
-                            break;
-                        } else if (type == 201 || type == 202 || type == 203) {
-                            Intent intent = new Intent(getActivity(), InspectDetailActivity.class);
-                            intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, messageListBeans.get(position).getTaskId());
-                            startActivity(intent);
-                            break;
-                        } else if (type == 204 || type == 205 || type == 206) {
-                            Intent intent = new Intent(getActivity(), OverhaulDetailActivity.class);
-                            intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, messageListBeans.get(position).getTaskId());
-                            startActivity(intent);
-                            break;
-                        } else if (type == 207 || type == 208 || type == 209) {
-                            Intent intent = new Intent(getActivity(), IncrementDetailActivity.class);
-                            intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, messageListBeans.get(position).getTaskId());
-                            startActivity(intent);
-                            break;
-                        } else if (type == 601) {
-                            new MaterialDialog.Builder(getActivity())
-                                    .content("是否确定借用该工具")
-                                    .negativeText("不借了")
-                                    .positiveText("确定借用")
-                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            if (mPresenter != null) {
-                                                mPresenter.borrowSure(messageListBeans.get(position).getTaskId(), 1);
-                                            }
-                                        }
-                                    })
-                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            if (mPresenter != null) {
-                                                mPresenter.borrowSure(messageListBeans.get(position).getTaskId(), 0);
-                                            }
-                                        }
-                                    })
-                                    .show();
-                            break;
-                        } else if (type == 602) {
-                            break;
-                        } else if (type == 701) {
-                            startActivity(new Intent(getActivity(), InjectActivity.class));
-                            break;
-                        } else if (type == 301) {
-                            Intent intent = new Intent(getActivity(), EnterpriseActivity.class);
-                            intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, Long.valueOf(messageListBeans.get(position).getTaskId()));
-                            startActivity(intent);
-                        } else if (type == 501) {
-                            startActivity(new Intent(getActivity(), WorkInspectionActivity.class));
-                        } else if (type == 502) {
-                            startActivity(new Intent(getActivity(), WorkOverhaulActivity.class));
-                        } else if (type == 503) {
-                            startActivity(new Intent(getActivity(), WorkIncrementActivity.class));
-                        }
-                    }
-                }
+                itemClick(position);
             }
         });
         return rootView;
+    }
+
+    private void itemClick(final int position) {
+        if (messageListBeans.get(position).getMessageItemList().size() > 0) {
+            for (int i = 0; i < messageListBeans.get(position).getMessageItemList().size(); i++) {
+                int type = messageListBeans.get(position).getMessageItemList().get(i).getSmallType();
+                if (type == 401 || type == 402) {
+                    Intent toSafe = new Intent(getActivity(), NewsSafeActivity.class);
+                    if (messageListBeans.get(position).getMessageItemList().size() == 1) {
+                        toSafe.putExtra(ConstantStr.KEY_BUNDLE_LONG, messageListBeans.get(position).getMessageId());
+                        startActivity(toSafe);
+                    }
+                    break;
+                } else if (type == 101 || type == 102 || type == 103 || type == 104) {
+                    Intent intent = new Intent(getActivity(), AlarmDetailActivity.class);
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, NewsListFragment.this.type == 3);
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, String.valueOf(messageListBeans.get(position).getTaskId()));
+                    startActivity(intent);
+                    break;
+                } else if (type == 201 || type == 202 || type == 203) {
+                    Intent intent = new Intent(getActivity(), InspectDetailActivity.class);
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, messageListBeans.get(position).getTaskId());
+                    startActivity(intent);
+                    break;
+                } else if (type == 204 || type == 205 || type == 206) {
+                    Intent intent = new Intent(getActivity(), OverhaulDetailActivity.class);
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, messageListBeans.get(position).getTaskId());
+                    startActivity(intent);
+                    break;
+                } else if (type == 207 || type == 208 || type == 209) {
+                    Intent intent = new Intent(getActivity(), IncrementDetailActivity.class);
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, messageListBeans.get(position).getTaskId());
+                    startActivity(intent);
+                    break;
+                } else if (type == 601) {
+                    new MaterialDialog.Builder(getActivity())
+                            .content("是否确定借用该工具")
+                            .negativeText("不借了")
+                            .positiveText("确定借用")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    if (mPresenter != null) {
+                                        mPresenter.borrowSure(messageListBeans.get(position).getTaskId(), 1);
+                                    }
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    if (mPresenter != null) {
+                                        mPresenter.borrowSure(messageListBeans.get(position).getTaskId(), 0);
+                                    }
+                                }
+                            })
+                            .show();
+                    break;
+                } else if (type == 602) {
+                    break;
+                } else if (type == 701) {
+                    startActivity(new Intent(getActivity(), InjectActivity.class));
+                    break;
+                } else if (type == 301) {
+                    Intent intent = new Intent(getActivity(), EnterpriseActivity.class);
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, Long.valueOf(messageListBeans.get(position).getTaskId()));
+                    startActivity(intent);
+                } else if (type == 501) {
+                    startActivity(new Intent(getActivity(), WorkInspectionActivity.class));
+                } else if (type == 502) {
+                    startActivity(new Intent(getActivity(), WorkOverhaulActivity.class));
+                } else if (type == 503) {
+                    startActivity(new Intent(getActivity(), WorkIncrementActivity.class));
+                }
+            }
+        }
     }
 
     @Override

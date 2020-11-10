@@ -2,6 +2,7 @@ package com.isuo.yw2application.view.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatMultiAutoCompleteTextView;
 import android.text.TextUtils;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.view.main.MainActivity;
@@ -28,6 +31,7 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
 
     private AppCompatMultiAutoCompleteTextView mNameEt;
     private EditText mPassEt;
+
     public static LoginFragment newInstance() {
         Bundle args = new Bundle();
         LoginFragment fragment = new LoginFragment();
@@ -67,6 +71,24 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
     @Override
     public void loginHideLoading() {
         hideProgressDialog();
+    }
+
+    @Override
+    public void showDialog(String message) {
+        new MaterialDialog.Builder(getActivity()).content(message)
+                .positiveText("确定")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        startHomeActivity();
+                    }
+                }).show();
+    }
+
+    @Override
+    public void showFreezeDialog(String message) {
+        new MaterialDialog.Builder(getActivity()).content(message)
+                .positiveText("确定").show();
     }
 
 

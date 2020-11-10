@@ -2,7 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/lineView"
+        android:layout_width="50dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="6dp"
+        android:background="#d9d9d9" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -15,10 +24,9 @@
             android:id="@+id/tv_1"
             android:layout_width="37dp"
             android:layout_height="37dp"
-            android:layout_marginTop="10dp"
             android:gravity="center"
             android:textColor="@color/colorWhite"
-            android:textSize="12dp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_2"
@@ -27,7 +35,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="3dp"
             android:textColor="@color/text333"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvTime"

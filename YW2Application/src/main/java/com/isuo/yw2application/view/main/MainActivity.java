@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -135,7 +136,9 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
         User user = Yw2Application.getInstance().getCurrentUser();
         mUserPhoto = findViewById(R.id.userImage);
         mUserPhoto.setOnClickListener(this);
-        GlideUtils.ShowCircleImage(this, user.getPortraitUrl(), mUserPhoto, R.drawable.mine_head_default);
+        if (!TextUtils.isEmpty(user.getPortraitUrl())) {
+            GlideUtils.ShowCircleImage(this, user.getPortraitUrl(), mUserPhoto, R.drawable.mine_head_default);
+        }
         TextView userNameTv = findViewById(R.id.textUserName);
         userNameTv.setText(user.getRealName());
         TextView userInfoTv = findViewById(R.id.textUserInfo);
@@ -389,6 +392,7 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
     public void uploadUserPhotoFail() {
         Yw2Application.getInstance().showToast("图片上传失败");
     }
+
     private File photoFile;
     public static final int REQUEST_EXTERNAL = 10;
     public static final int REQUEST_EXTERNAL_PHOTO = 11;

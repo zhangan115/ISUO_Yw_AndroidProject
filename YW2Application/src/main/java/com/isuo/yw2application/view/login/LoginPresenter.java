@@ -57,6 +57,15 @@ final class LoginPresenter implements LoginContract.Presenter {
                 mView.loginHideLoading();
             }
 
+            @Override
+            public void showMessage(String message) {
+                mView.showDialog(message);
+            }
+
+            @Override
+            public void showFreezeMessage(String message) {
+                mView.showFreezeDialog(message);
+            }
         }));
     }
 

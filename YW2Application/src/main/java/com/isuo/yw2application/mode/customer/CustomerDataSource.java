@@ -64,6 +64,10 @@ public interface CustomerDataSource {
         void onLoginFail();
 
         void onFinish();
+
+        void showMessage(String message);
+
+        void showFreezeMessage(String message);
     }
 
     interface AutoLoginCallBack {
