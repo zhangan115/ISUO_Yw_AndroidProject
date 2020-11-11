@@ -494,6 +494,9 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
                 canScan = false;
             }
         }
+        if (mPresenter != null && mList.size() > 0) {
+            mPresenter.loadRoomDataFromDb(taskId, mList);
+        }
     }
 
     @Override

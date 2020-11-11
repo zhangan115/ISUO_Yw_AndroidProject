@@ -739,18 +739,20 @@ public class InspectionRepository implements InspectionSourceData {
                         .doOnNext(new Action1<List<TaskEquipmentBean>>() {
                             @Override
                             public void call(List<TaskEquipmentBean> taskEquipmentBeen) {
+
                                 List<EquipmentDb> equipmentDbs = new ArrayList<>();
+                                List<EquipmentDataDb> equipmentDataDbs = new ArrayList<>();
                                 for (int i = 0; i < needUploadEquip.size(); i++) {
                                     needUploadEquip.get(i).getEquipment().getEquipmentDb().setUploadState(true);
                                     equipmentDbs.add(needUploadEquip.get(i).getEquipment().getEquipmentDb());
+                                    for(DataItemValueListBean itemValueList:needUploadEquip.get(i).getDataList().get(0).getDataItemValueList()){
+                                        EquipmentDataDb equipmentDataDb = itemValueList.getDataItem().getEquipmentDataDb();
+                                        equipmentDataDb.setUpload(true);
+                                        equipmentDataDbs.add(equipmentDataDb);
+                                    }
                                 }
                                 Yw2Application.getInstance().getDaoSession().getEquipmentDbDao().insertOrReplaceInTx(equipmentDbs);
-                                long uploadCount = Yw2Application.getInstance().getDaoSession().getEquipmentDbDao().queryBuilder()
-                                        .where(EquipmentDbDao.Properties.CurrentUserId.eq(Yw2Application.getInstance().getCurrentUser().getUserId())
-                                                , EquipmentDbDao.Properties.TaskId.eq(detailBean.getTaskId())
-                                                , EquipmentDbDao.Properties.RoomId.eq(roomDataList.getTaskRoomId())
-                                                , EquipmentDbDao.Properties.UploadState.eq(true)).count();
-                                roomDataList.getRoomDb().setCheckCount((int) uploadCount);
+                                Yw2Application.getInstance().getDaoSession().getEquipmentDataDbDao().insertOrReplaceInTx(equipmentDataDbs);
                             }
                         })
                         .doOnError(new Action1<Throwable>() {
