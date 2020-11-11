@@ -51,6 +51,25 @@ public interface ReportContract {
          */
         @Nullable
         InspectionDetailBean getInspectionData();
+
+        /**
+         * 获取设备完成的数量
+         *
+         * @param taskId       任务id
+         * @param roomListBean 配电室
+         * @return 数量
+         */
+        int getEquipmentFinishCount(long taskId, @NonNull RoomListBean roomListBean);
+
+        /**
+         * 获取设备录入项目的完成数量
+         *
+         * @param taskId      任务id
+         * @param roomId      配电室id
+         * @param equipmentId 设备id
+         * @return 数量
+         */
+        long getEquipmentDataFinishCount(long taskId, long roomId, long equipmentId);
     }
 
     interface View extends BaseView<Presenter> {

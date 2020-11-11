@@ -154,6 +154,23 @@ public class InspectionRepository implements InspectionSourceData {
                                         roomDb.setEndTime(inspectionDetailBean.getRoomList().get(i).getEndTime());
                                         roomDb.setLastSaveTime(System.currentTimeMillis());
                                         inspectionDetailBean.getRoomList().get(i).setRoomDb(roomDb);
+                                        int count = getEquipmentFinishCount(taskId, inspectionDetailBean.getRoomList().get(i));
+                                        if (count == 0) {
+                                            RoomListBean roomListBean = inspectionDetailBean.getRoomList().get(i);
+                                            for (TaskEquipmentBean equipmentBean : roomListBean.getTaskEquipment()) {
+                                                boolean isFinish = true;
+                                                for (DataItemValueListBean dataItemValue : equipmentBean.getDataList().get(0).getDataItemValueList()) {
+                                                    if (TextUtils.isEmpty(dataItemValue.getValue())) {
+                                                        isFinish = false;
+                                                        break;
+                                                    }
+                                                }
+                                                if (isFinish) {
+                                                    ++count;
+                                                }
+                                            }
+                                        }
+                                        roomDb.setCheckCount(count);
                                         needSaveRoomDbs.add(roomDb);
                                     }
                                     if (needSaveRoomDbs.size() > 0) {
@@ -476,7 +493,10 @@ public class InspectionRepository implements InspectionSourceData {
                                         equipmentData.setValue(dataItemValueListBean.getValue());
                                         equipmentData.setUserId(dataItemValueListBean.getUserId());
                                         equipmentData.setUpload(true);
-                                        ++uploadDataCount;
+                                    }else{
+                                        if (!TextUtils.isEmpty(equipmentData.getValue())){
+                                            dataItem.setValue(equipmentData.getValue());
+                                        }
                                     }
                                     if (dataItemValueListBean.getDataItem().getInspectionType() == ConstantInt.DATA_VALUE_TYPE_3
                                             && !TextUtils.isEmpty(equipmentData.getLocalPhoto())) {
@@ -612,17 +632,18 @@ public class InspectionRepository implements InspectionSourceData {
                             @Override
                             public void call(List<TaskEquipmentBean> taskEquipmentBeen) {
                                 List<EquipmentDb> equipmentDbs = new ArrayList<>();
+                                List<EquipmentDataDb> equipmentDataDbs = new ArrayList<>();
                                 for (int i = 0; i < needUploadEquip.size(); i++) {
                                     needUploadEquip.get(i).getEquipment().getEquipmentDb().setUploadState(true);
                                     equipmentDbs.add(needUploadEquip.get(i).getEquipment().getEquipmentDb());
+                                    for(DataItemValueListBean itemValueList:needUploadEquip.get(i).getDataList().get(0).getDataItemValueList()){
+                                        EquipmentDataDb equipmentDataDb = itemValueList.getDataItem().getEquipmentDataDb();
+                                        equipmentDataDb.setUpload(true);
+                                        equipmentDataDbs.add(equipmentDataDb);
+                                    }
                                 }
                                 Yw2Application.getInstance().getDaoSession().getEquipmentDbDao().insertOrReplaceInTx(equipmentDbs);
-                                long uploadCount = Yw2Application.getInstance().getDaoSession().getEquipmentDbDao().queryBuilder()
-                                        .where(EquipmentDbDao.Properties.CurrentUserId.eq(Yw2Application.getInstance().getCurrentUser().getUserId())
-                                                , EquipmentDbDao.Properties.TaskId.eq(detailBean.getTaskId())
-                                                , EquipmentDbDao.Properties.RoomId.eq(roomDataList.getTaskRoomId())
-                                                , EquipmentDbDao.Properties.UploadState.eq(true)).count();
-                                roomDataList.getRoomDb().setCheckCount((int) uploadCount);
+                                Yw2Application.getInstance().getDaoSession().getEquipmentDataDbDao().insertOrReplaceInTx(equipmentDataDbs);
                             }
                         })
                         .doOnError(new Action1<Throwable>() {
@@ -1063,6 +1084,43 @@ public class InspectionRepository implements InspectionSourceData {
     @Override
     public void removeTaskEquipFormCache() {
         sp.edit().remove(ConstantStr.INSPECTION_KEY_EQUIP).apply();
+    }
+
+    @Override
+    public int getEquipmentFinishCount(long taskId, RoomListBean roomBean) {
+        RoomDb roomDb = roomBean.getRoomDb();
+        int count = 0;
+        for (TaskEquipmentBean bean : roomBean.getTaskEquipment()) {
+            long equipmentCount = Yw2Application.getInstance().getDaoSession().getEquipmentDataDbDao().queryBuilder()
+                    .where(EquipmentDataDbDao.Properties.CurrentUserId.eq(Yw2Application.getInstance().getCurrentUser().getUserId())
+                            , EquipmentDataDbDao.Properties.EquipmentId.eq(bean.getTaskEquipmentId())
+                            , EquipmentDataDbDao.Properties.RoomId.eq(roomBean.getTaskRoomId())
+                            , EquipmentDataDbDao.Properties.TaskId.eq(taskId)
+                            , EquipmentDataDbDao.Properties.IsUpload.eq(true))
+                    .count();
+            if (equipmentCount == bean.getDataList().get(0).getDataItemValueList().size()) {
+                count++;
+            }
+        }
+        roomDb.setCheckCount(count);
+        Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+        return count;
+    }
+
+    @Override
+    public long getEquipmentInputCount(long taskId, long roomId, long equipmentId) {
+        List<EquipmentDataDb> list = Yw2Application.getInstance().getDaoSession().getEquipmentDataDbDao().queryBuilder()
+                .where(EquipmentDataDbDao.Properties.CurrentUserId.eq(Yw2Application.getInstance().getCurrentUser().getUserId())
+                        , EquipmentDataDbDao.Properties.EquipmentId.eq(equipmentId)
+                        , EquipmentDataDbDao.Properties.RoomId.eq(roomId)
+                        , EquipmentDataDbDao.Properties.TaskId.eq(taskId)).list();
+        int count = 0;
+        for (EquipmentDataDb bean:list){
+            if (!TextUtils.isEmpty(bean.getValue())){
+                ++count;
+            }
+        }
+        return count;
     }
 
 

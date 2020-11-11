@@ -346,4 +346,18 @@ public interface InspectionSourceData {
      * 移除cache中的设备信息
      */
     void removeTaskEquipFormCache();
+
+    /**
+     * 获取设备完成的数量
+     *
+     * @return 数量
+     */
+    int getEquipmentFinishCount(long taskId, RoomListBean roomListBean);
+
+    /**
+     * 获取设备录入项的完成数量
+     *
+     * @return 数量
+     */
+    long getEquipmentInputCount(long taskId, long roomId, long equipmentId);
 }

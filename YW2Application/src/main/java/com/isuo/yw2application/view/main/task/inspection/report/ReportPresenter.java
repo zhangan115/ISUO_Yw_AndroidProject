@@ -80,4 +80,14 @@ class ReportPresenter implements ReportContract.Presenter {
     public InspectionDetailBean getInspectionData() {
         return mRepository.getInspectionDataFromCache();
     }
+
+    @Override
+    public int getEquipmentFinishCount(long taskId, @NonNull RoomListBean roomListBean) {
+        return mRepository.getEquipmentFinishCount(taskId,roomListBean);
+    }
+
+    @Override
+    public long getEquipmentDataFinishCount(long taskId, long roomId, long equipmentId) {
+        return mRepository.getEquipmentInputCount(taskId,roomId,equipmentId);
+    }
 }

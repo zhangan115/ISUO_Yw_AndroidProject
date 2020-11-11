@@ -175,6 +175,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                 TextView tv_equipment_name = (TextView) vHolder.getView(R.id.tv_equipment_name);
                 TextView tv_equipment_state = (TextView) vHolder.getView(R.id.tv_equipment_state);
                 ImageView iv_state = (ImageView) vHolder.getView(R.id.iv_state);
+                ImageView haveDataIv = (ImageView)vHolder.getView(R.id.haveDataIv);
                 View view_division = vHolder.getView(R.id.view_division);
                 String str = position + 1 + ".  " + data.getEquipment().getEquipmentName().replace("\n", "");
                 tv_equipment_name.setText(str);
@@ -183,10 +184,16 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                 } else {
                     iv_state.setVisibility(View.GONE);
                 }
-                if (data.getEquipment().getEquipmentDb().getCanUpload()) {
+                long count = mPresenter.getEquipmentDataFinishCount(inspectionDetailBean.getTaskId(), mRoomListBean.getTaskRoomId(), data.getTaskEquipmentId());
+                if (count == 0){
+                    tv_equipment_state.setVisibility(View.GONE);
+                    haveDataIv.setVisibility(View.GONE);
+                }else if(count > 0 && count < data.getDataList().get(0).getDataItemValueList().size()){
+                    tv_equipment_state.setVisibility(View.GONE);
+                    haveDataIv.setVisibility(View.VISIBLE);
+                }else{
                     tv_equipment_state.setVisibility(View.VISIBLE);
-                } else {
-                    tv_equipment_state.setVisibility(View.INVISIBLE);
+                    haveDataIv.setVisibility(View.GONE);
                 }
                 if (position == showBean.size() - 1) {
                     view_division.setVisibility(View.GONE);
@@ -293,19 +300,10 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     }
 
     public void onDataChange() {
-        int checkCount = 0;
-        for (int i = 0; i < mTaskEquipmentBean.size(); i++) {
-            if (mTaskEquipmentBean.get(i).getEquipment().getEquipmentDb() == null) {
-                return;
-            }
-            if (mTaskEquipmentBean.get(i).getEquipment().getEquipmentDb().getCanUpload()) {
-                ++checkCount;
-            }
-        }
+        int checkCount = mPresenter.getEquipmentFinishCount(this.inspectionDetailBean.getTaskId(), mRoomListBean);
+        roomDb.setCheckCount(checkCount);
         String str = "开始巡检(" + checkCount + "/" + mRoomListBean.getTaskEquipment().size() + ")";
         mTitleTv.setText(str);
-        roomDb.setCheckCount(checkCount);
-        Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
     }
 
 
