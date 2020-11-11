@@ -19,15 +19,18 @@ public class EquipmentDataDb implements Parcelable {
     @Id(autoincrement = true)
     private Long _id;
     private String value;//值
+    private String chooseInspectionName;
+    private String localPhoto;
+
     private int type;//类型
     private long taskId;
     private long roomId;
     private long equipmentId;
-    private String chooseInspectionName;
     private long dataItemId;
-    private String localPhoto;
     private long inspectionId;
     private int isShareValue;
+
+    private boolean isUpload;
     private long userId;
     private long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
 
@@ -135,24 +138,33 @@ public class EquipmentDataDb implements Parcelable {
         this.userId = userId;
     }
 
+    public boolean isUpload() {
+        return isUpload;
+    }
+
+    public void setUpload(boolean upload) {
+        isUpload = upload;
+    }
+
     public EquipmentDataDb() {
     }
 
-    @Generated(hash = 600471602)
-    public EquipmentDataDb(Long _id, String value, int type, long taskId, long roomId, long equipmentId,
-            String chooseInspectionName, long dataItemId, String localPhoto, long inspectionId, int isShareValue,
-            long userId, long currentUserId) {
+    @Generated(hash = 1543051859)
+    public EquipmentDataDb(Long _id, String value, String chooseInspectionName, String localPhoto, int type,
+            long taskId, long roomId, long equipmentId, long dataItemId, long inspectionId, int isShareValue,
+            boolean isUpload, long userId, long currentUserId) {
         this._id = _id;
         this.value = value;
+        this.chooseInspectionName = chooseInspectionName;
+        this.localPhoto = localPhoto;
         this.type = type;
         this.taskId = taskId;
         this.roomId = roomId;
         this.equipmentId = equipmentId;
-        this.chooseInspectionName = chooseInspectionName;
         this.dataItemId = dataItemId;
-        this.localPhoto = localPhoto;
         this.inspectionId = inspectionId;
         this.isShareValue = isShareValue;
+        this.isUpload = isUpload;
         this.userId = userId;
         this.currentUserId = currentUserId;
     }
@@ -177,6 +189,14 @@ public class EquipmentDataDb implements Parcelable {
         dest.writeInt(this.isShareValue);
         dest.writeLong(this.userId);
         dest.writeLong(this.currentUserId);
+    }
+
+    public boolean getIsUpload() {
+        return this.isUpload;
+    }
+
+    public void setIsUpload(boolean isUpload) {
+        this.isUpload = isUpload;
     }
 
     protected EquipmentDataDb(Parcel in) {

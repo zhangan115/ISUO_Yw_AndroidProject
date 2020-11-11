@@ -137,7 +137,7 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
         mUserPhoto = findViewById(R.id.userImage);
         mUserPhoto.setOnClickListener(this);
         if (!TextUtils.isEmpty(user.getPortraitUrl())) {
-            GlideUtils.ShowCircleImage(this, user.getPortraitUrl(), mUserPhoto, R.drawable.mine_head_default);
+            GlideUtils.ShowCircleImage(this, user.getPortraitUrl(), mUserPhoto, R.drawable.avater);
         }
         TextView userNameTv = findViewById(R.id.textUserName);
         userNameTv.setText(user.getRealName());

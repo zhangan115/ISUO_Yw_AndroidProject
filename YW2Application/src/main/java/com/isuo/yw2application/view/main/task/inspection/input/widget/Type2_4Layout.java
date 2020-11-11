@@ -46,13 +46,8 @@ public class Type2_4Layout extends LinearLayout {
     public void setDataToView(boolean canEdit, DataItemValueListBean bean, EquipmentBean equipmentBean) {
         this.dataItemBean = bean.getDataItem();
         this.equipmentBean = equipmentBean;
-        if (canEdit) {
-            long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
-            if (!TextUtils.isEmpty(bean.getValue())) {
-                if (currentUserId != bean.getUserId()) {
-                    canEdit = false;
-                }
-            }
+        if (canEdit && !TextUtils.isEmpty(bean.getValue())) {
+            canEdit = false;
         }
         TextView iv_value = findViewById(R.id.iv_value);
         TextView tv_value_title_2 = findViewById(R.id.tv_value_title_2);

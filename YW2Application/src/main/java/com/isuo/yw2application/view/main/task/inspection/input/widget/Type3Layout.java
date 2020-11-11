@@ -43,13 +43,8 @@ public class Type3Layout extends LinearLayout {
         this.dataItemBean = bean.getDataItem();
         this.progressBar = findViewById(R.id.progressBar);
         this.canEdit=canEdit;
-        if (canEdit) {
-            long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
-            if (!TextUtils.isEmpty(bean.getValue())) {
-                if (currentUserId != bean.getUserId()) {
-                    this.canEdit = false;
-                }
-            }
+        if (canEdit && !TextUtils.isEmpty(bean.getValue())) {
+            this.canEdit = false;
         }
         TextView tv_title = findViewById(R.id.tv_title);
         iv_take_photo = findViewById(R.id.iv_take_photo);
@@ -58,6 +53,9 @@ public class Type3Layout extends LinearLayout {
             dataItemBean.setLocalFile(dataItemBean.getEquipmentDataDb().getLocalPhoto());
         }
         if (TextUtils.isEmpty(dataItemBean.getLocalFile())) {
+            if (!TextUtils.isEmpty(dataItemBean.getEquipmentDataDb().getValue())){
+                GlideUtils.ShowImage(mContext, dataItemBean.getEquipmentDataDb().getValue(), iv_take_photo, R.drawable.img_default);
+            }
             iv_take_photo.setImageDrawable(mContext.getResources().getDrawable(R.drawable.photograph));
         } else {
             GlideUtils.ShowImage(mContext, dataItemBean.getLocalFile(), iv_take_photo, R.drawable.img_default);
@@ -67,6 +65,9 @@ public class Type3Layout extends LinearLayout {
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(dataItemBean.getLocalFile())) {
                     ViewPagePhotoActivity.startActivity(mContext, new String[]{dataItemBean.getLocalFile()}, 0);
+                    return;
+                }else if (!TextUtils.isEmpty(dataItemBean.getEquipmentDataDb().getValue())){
+                    ViewPagePhotoActivity.startActivity(mContext, new String[]{dataItemBean.getEquipmentDataDb().getValue()}, 0);
                     return;
                 }
                 if (!Type3Layout.this.canEdit) {

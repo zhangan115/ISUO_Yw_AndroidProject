@@ -411,9 +411,7 @@ public class InspectionRepository implements InspectionSourceData {
                             } else {
                                 taskEquipmentBean.get(i).getEquipment().setEquipmentDb(equipmentDb);
                             }
-                            if (equipmentDb.getUploadState()) {
-                                uploadCount++;
-                            }
+                            int uploadDataCount = 0;
                             for (int j = 0; j < taskEquipmentBean.get(i).getDataList().get(0).getDataItemValueList().size(); j++) {
                                 DataItemValueListBean dataItemValueListBean = taskEquipmentBean.get(i).getDataList().get(0).getDataItemValueList().get(j);
                                 EquipmentDataDb equipmentData = Yw2Application.getInstance().getDaoSession().getEquipmentDataDbDao().queryBuilder()
@@ -424,6 +422,7 @@ public class InspectionRepository implements InspectionSourceData {
                                                 , EquipmentDataDbDao.Properties.DataItemId.eq(dataItemValueListBean.getDataItemValueId())
                                                 , EquipmentDataDbDao.Properties.Type.eq(dataItemValueListBean.getDataItem().getInspectionType()))
                                         .unique();
+                                DataItemBean dataItem = dataItemValueListBean.getDataItem();
                                 if (equipmentData == null) {
                                     equipmentData = new EquipmentDataDb();
                                     equipmentData.setRoomId(roomId);
@@ -437,8 +436,10 @@ public class InspectionRepository implements InspectionSourceData {
                                     String value = taskEquipmentBean.get(i).getDataList().get(0).getDataItemValueList().get(j).getValue();
                                     long userId = taskEquipmentBean.get(i).getDataList().get(0).getDataItemValueList().get(j).getUserId();
                                     if (!TextUtils.isEmpty(value)) {
+                                        dataItem.setValue(dataItemValueListBean.getValue());
                                         equipmentData.setValue(value);
                                         equipmentData.setUserId(userId);
+                                        equipmentData.setUpload(true);
                                     }
                                     if (isAutoSetValue) {
                                         switch (dataItemValueListBean.getDataItem().getInspectionType()) {
@@ -469,14 +470,13 @@ public class InspectionRepository implements InspectionSourceData {
                                                 break;
                                         }
                                     }
-                                    equipmentDataDbToSave.add(equipmentData);
                                 } else {
-                                    DataItemBean dataItem = dataItemValueListBean.getDataItem();
-                                    if (!TextUtils.isEmpty(equipmentData.getValue())) {
-                                        dataItem.setValue(equipmentData.getValue());
-                                    }
-                                    if (!TextUtils.isEmpty(equipmentData.getChooseInspectionName())) {
-                                        dataItem.setChooseInspectionName(equipmentData.getChooseInspectionName());
+                                    if (!TextUtils.isEmpty(dataItemValueListBean.getValue())) {
+                                        dataItem.setValue(dataItemValueListBean.getValue());
+                                        equipmentData.setValue(dataItemValueListBean.getValue());
+                                        equipmentData.setUserId(dataItemValueListBean.getUserId());
+                                        equipmentData.setUpload(true);
+                                        ++uploadDataCount;
                                     }
                                     if (dataItemValueListBean.getDataItem().getInspectionType() == ConstantInt.DATA_VALUE_TYPE_3
                                             && !TextUtils.isEmpty(equipmentData.getLocalPhoto())) {
@@ -484,6 +484,14 @@ public class InspectionRepository implements InspectionSourceData {
                                     }
                                     dataItem.setEquipmentDataDb(equipmentData);
                                 }
+                                if (equipmentData.getIsUpload()) {
+                                    ++uploadDataCount;
+                                }
+                                equipmentDataDbToSave.add(equipmentData);
+                            }
+                            if (taskEquipmentBean.get(i).getDataList().get(0).getDataItemValueList().size() == uploadDataCount) {
+                                ++uploadCount;
+                                equipmentDb.setUploadState(true);
                             }
                         }
                         roomListBean.getRoomDb().setCheckCount(uploadCount);
@@ -494,6 +502,7 @@ public class InspectionRepository implements InspectionSourceData {
                         if (equipmentDataDbToSave.size() > 0) {
                             Yw2Application.getInstance().getDaoSession().getEquipmentDataDbDao().insertOrReplaceInTx(equipmentDataDbToSave);
                         }
+                        Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomListBean.getRoomDb());
                     }
                 })
                 .subscribeOn(Schedulers.io())

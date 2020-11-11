@@ -1,13 +1,8 @@
 package com.isuo.yw2application.view.main.task.inspection.report;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -32,9 +27,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
-import com.isuo.yw2application.common.BroadcastAction;
 import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.common.ConstantStr;
+import com.isuo.yw2application.mode.bean.db.EquipmentDataDb;
 import com.isuo.yw2application.mode.bean.db.RoomDb;
 import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
 import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
@@ -45,8 +40,6 @@ import com.isuo.yw2application.view.main.task.increment.submit.IncrementActivity
 import com.isuo.yw2application.view.main.task.inspection.input.InputActivity;
 import com.sito.library.adapter.RVAdapter;
 
-import java.io.File;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +51,6 @@ import java.util.List;
 
 public class ReportFragment extends MvpFragment<ReportContract.Presenter> implements ReportContract.View {
     //data
-    private File photoFile;
     private RoomDb roomDb;
     private RoomListBean mRoomListBean;
     private InspectionDetailBean inspectionDetailBean;
@@ -68,7 +60,6 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
 
     private static final int ACTION_START_INPUT = 101;
     private boolean caEdit = true;
-    private boolean autoUpload = false, canUpload = true;
     //view
     private TextView bottomView;
     private TextView mTitleTv;
@@ -103,13 +94,6 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
             roomDb = mRoomListBean.getRoomDb();
             caEdit = !(mRoomListBean.getTaskRoomState() == ConstantInt.ROOM_STATE_3);
         }
-        myHandle = new MyHandle(new WeakReference<>(getActivity()));
-        uploadReceiver = new UploadReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(BroadcastAction.AUTO_REFRESH_UI);
-        getActivity().registerReceiver(uploadReceiver, filter);
-        autoUpload = true;
-        new Thread(new MyRunnable()).start();
     }
 
     @Nullable
@@ -282,16 +266,6 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
         }
     }
 
-    private void uploadInspectionData() {
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        canUpload = false;
-    }
-
     @Override
     public void setPresenter(ReportContract.Presenter presenter) {
         mPresenter = presenter;
@@ -313,91 +287,9 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     }
 
     @Override
-    public void showUploadLoading() {
-        showProgressDialog("上传中...");
-    }
-
-    @Override
-    public void hideUploadLoading() {
-        hideProgressDialog();
-    }
-
-    @Override
-    public void uploadError() {
-        getApp().showToast("上传失败了");
-    }
-
-    @Override
-    public void showUploadSuccess(boolean isAuto) {
-        if (!isAuto) {
-            getApp().showToast("上传成功");
-            roomDb.setTaskState(ConstantInt.ROOM_STATE_3);
-            getActivity().setResult(Activity.RESULT_OK);
-            getActivity().finish();
-        }
-    }
-
-    @Override
-    public void noDataUpload() {
-        getApp().showToast("存在漏检项,不能完成巡检");
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        canUpload = true;
         onDataChange();
-    }
-
-    private MyHandle myHandle;
-
-    public static class MyHandle extends Handler {
-
-        private final WeakReference<Activity> activity;
-
-        MyHandle(WeakReference<Activity> activity) {
-            this.activity = activity;
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 1 && activity != null && activity.get() != null) {
-                Intent intent = new Intent();
-                intent.setAction(BroadcastAction.AUTO_REFRESH_UI);
-                activity.get().sendBroadcast(intent);
-            }
-        }
-    }
-
-    private class MyRunnable implements Runnable {
-
-        @Override
-        public void run() {
-            while (autoUpload) {
-                try {
-                    Thread.sleep(ConstantInt.AUTO_UPLOAD_TIME);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (mPresenter != null && mPresenter.isUploading()
-                        && canUpload && myHandle != null) {
-                    myHandle.sendEmptyMessage(1);
-                }
-            }
-        }
-    }
-
-    private UploadReceiver uploadReceiver;
-
-    private class UploadReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (mPresenter != null && roomPosition != -1 && inspectionDetailBean != null) {
-                mPresenter.uploadData(roomPosition, inspectionDetailBean, true);
-            }
-        }
     }
 
     public void onDataChange() {
@@ -450,49 +342,9 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     }
 
     @Override
-    public void uploadUserPhotoSuccess() {
-        if (mPresenter != null) {
-            mPresenter.uploadData(roomPosition, inspectionDetailBean, false);
-        }
-    }
-
-    @Override
-    public void uploadUserPhotoFail() {
-        roomDb.setPhotoUrl(null);
-        roomDb.setUploadPhotoUrl(null);
-        Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplace(roomDb);
-        getApp().showToast("上传图片失败了!");
-    }
-
-    @Override
-    public void uploadOfflinePhotoFinish() {
-        uploadInspectionData();
-    }
-
-    @Override
-    public void uploadOfflinePhotoFail() {
-        getApp().showToast("上传图片失败了!");
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("editPosition", editPosition);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        autoUpload = false;
-        try {
-            if (myHandle != null) {
-                myHandle.removeCallbacksAndMessages(null);
-            }
-            if (uploadReceiver != null) {
-                getActivity().unregisterReceiver(uploadReceiver);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

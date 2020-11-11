@@ -123,7 +123,7 @@
                     android:layout_marginBottom="12dp"
                     android:background="@drawable/bg_btn_report"
                     android:gravity="center"
-                    android:text="确定完成"
+                    android:text="上传数据"
                     android:textColor="@color/colorWhite"
                     android:textSize="14sp"
                     android:textStyle="bold"

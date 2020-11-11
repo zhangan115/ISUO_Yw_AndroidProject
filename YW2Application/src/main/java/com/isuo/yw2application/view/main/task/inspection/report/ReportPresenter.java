@@ -45,44 +45,6 @@ class ReportPresenter implements ReportContract.Presenter {
         mSubscriptions.clear();
     }
 
-    private boolean canUpload = true;
-
-    @Override
-    public void uploadData(final int position, final InspectionDetailBean inspectionDetailBean, final boolean isAuto) {
-        canUpload = false;
-        Subscription uploadSub = mRepository.uploadRoomListData(position, inspectionDetailBean
-                , new InspectionSourceData.UploadRoomListCallBack() {
-
-                    @Override
-                    public void onSuccess() {
-                        canUpload = true;
-                        if (!isAuto) {
-                            mView.hideUploadLoading();
-                        }
-                        mView.showUploadSuccess(isAuto);
-                    }
-
-                    @Override
-                    public void noDataUpload() {
-                        canUpload = true;
-                        if (!isAuto) {
-                            mView.hideUploadLoading();
-                            mView.noDataUpload();
-                        }
-                    }
-
-                    @Override
-                    public void onError() {
-                        canUpload = true;
-                        if (!isAuto) {
-                            mView.hideUploadLoading();
-                            mView.uploadError();
-                        }
-                    }
-                });
-        mSubscriptions.add(uploadSub);
-    }
-
 
     @Override
     public void loadInspectionDataFromDb(long taskId, @NonNull RoomListBean roomListBean) {
@@ -101,51 +63,6 @@ class ReportPresenter implements ReportContract.Presenter {
         }));
     }
 
-    @Override
-    public void uploadUserPhoto(long taskId, long equipmentId, String url) {
-        mSubscriptions.add(mRepository.uploadUserPhotoInfo(taskId, equipmentId, url, new IObjectCallBack<String>() {
-            @Override
-            public void onSuccess(@NonNull String s) {
-                mView.uploadUserPhotoSuccess();
-            }
-
-            @Override
-            public void onError(String message) {
-                mView.uploadUserPhotoFail();
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        }));
-    }
-
-    @Override
-    public boolean checkPhotoNeedUpload(List<TaskEquipmentBean> taskEquipmentBeans) {
-        return mRepository.checkPhotoInspectionData(taskEquipmentBeans);
-    }
-
-    @Override
-    public void uploadPhotoList(RoomDb roomDb) {
-        mRepository.uploadPhotoList(roomDb, new InspectionSourceData.IUploadOfflineCallBack() {
-            @Override
-            public void onFinish() {
-                mView.uploadOfflinePhotoFinish();
-            }
-
-            @Override
-            public void onFail() {
-                mView.hideUploadLoading();
-                mView.uploadOfflinePhotoFail();
-            }
-        });
-    }
-
-    @Override
-    public boolean isUploading() {
-        return canUpload;
-    }
 
     @Override
     public void saveEditTaskEquipToCache(TaskEquipmentBean taskEquipmentBean) {

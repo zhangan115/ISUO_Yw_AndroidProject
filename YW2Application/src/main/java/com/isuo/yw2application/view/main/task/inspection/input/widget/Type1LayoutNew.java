@@ -46,13 +46,8 @@ public class Type1LayoutNew extends LinearLayout {
         this.canEdit = canEdit;
         this.dataItemBean = bean.getDataItem();
         this.equipmentBean = equipmentBean;
-        if (canEdit) {
-            long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
-            if (!TextUtils.isEmpty(bean.getValue())) {
-                if (currentUserId != bean.getUserId()) {
-                    this.canEdit = false;
-                }
-            }
+        if (canEdit && !TextUtils.isEmpty(bean.getValue())) {
+            this.canEdit = false;
         }
         TextView tv_value_title = findViewById(R.id.tv_value_title);
         TextView tv_last_time = findViewById(R.id.tv_last_time);

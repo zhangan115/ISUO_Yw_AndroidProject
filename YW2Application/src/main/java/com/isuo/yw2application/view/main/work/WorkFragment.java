@@ -141,14 +141,14 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         rootView.findViewById(R.id.alarmMessageLayout).setOnClickListener(this);
         rootView.findViewById(R.id.enterpriseMessageLayout).setOnClickListener(this);
         rootView.findViewById(R.id.abtMeMessageLayout).setOnClickListener(this);
-        GlideUtils.ShowCircleImage(this.getActivity(), user.getPortraitUrl(), userPhoto, R.drawable.mine_head_default);
+        GlideUtils.ShowCircleImage(this.getActivity(), user.getPortraitUrl(), userPhoto, R.drawable.avater);
         return rootView;
     }
 
     private void userPhotoUpdate() {
         User user = Yw2Application.getInstance().getCurrentUser();
         if (userPhoto != null) {
-            GlideUtils.ShowCircleImage(this.getActivity(), user.getPortraitUrl(), userPhoto, R.drawable.mine_head_default);
+            GlideUtils.ShowCircleImage(this.getActivity(), user.getPortraitUrl(), userPhoto, R.drawable.avater);
         }
     }
 
