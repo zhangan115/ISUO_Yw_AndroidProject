@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="getui.permission.GetuiService.${applicationId}" />
     <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <permission
         android:name="getui.permission.GetuiService.${applicationId}"
@@ -534,6 +535,16 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:taskAffinity="${TASK_AFFINITY_VALUE}" />
+
+        <provider
+            android:name=".utils.AppFileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

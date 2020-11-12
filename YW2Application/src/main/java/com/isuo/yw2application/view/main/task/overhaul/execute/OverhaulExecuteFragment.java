@@ -41,7 +41,9 @@ import com.isuo.yw2application.widget.SpeechDialog;
 import com.isuo.yw2application.widget.TakePhotoView;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.bean.Permissions;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
 import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.DataUtil;
 import com.za.aacrecordlibrary.RecordManager;
@@ -152,17 +154,18 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
         takePhotoView.setTakePhotoListener(new TakePhotoView.TakePhotoListener() {
             @Override
             public void onTakePhoto() {
-                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        new CheckRequestPermissionListener() {
+                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                        new CheckRequestPermissionsListener() {
                             @Override
-                            public void onPermissionOk(Permission permission) {
+                            public void onAllPermissionOk(Permission[] allPermissions) {
                                 mImage = null;
                                 photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
                                 ActivityUtils.startCameraToPhoto(OverhaulExecuteFragment.this, photoFile, ACTION_START_CAMERA);
                             }
 
                             @Override
-                            public void onPermissionDenied(Permission permission) {
+                            public void onPermissionDenied(Permission[] refusedPermissions) {
                                 new AppSettingsDialog.Builder(getActivity())
                                         .setRationale(getString(R.string.need_save_setting))
                                         .setTitle(getString(R.string.request_permissions))
@@ -184,10 +187,28 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
             }
 
             @Override
-            public void onTakePhoto(int position, Image image) {
-                mImage = image;
-                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                ActivityUtils.startCameraToPhoto(OverhaulExecuteFragment.this, photoFile, ACTION_START_CAMERA);
+            public void onTakePhoto(int position,final Image image) {
+                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                        new CheckRequestPermissionsListener() {
+                            @Override
+                            public void onAllPermissionOk(Permission[] allPermissions) {
+                                mImage = image;
+                                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                ActivityUtils.startCameraToPhoto(OverhaulExecuteFragment.this, photoFile, ACTION_START_CAMERA);
+                            }
+
+                            @Override
+                            public void onPermissionDenied(Permission[] refusedPermissions) {
+                                new AppSettingsDialog.Builder(getActivity())
+                                        .setRationale(getString(R.string.need_save_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
             }
         });
         mRecordManager = new RecordManager().setFileName(Yw2Application.getInstance().voiceCacheFile())

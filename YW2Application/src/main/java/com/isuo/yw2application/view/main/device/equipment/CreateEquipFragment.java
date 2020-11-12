@@ -34,7 +34,9 @@ import com.isuo.yw2application.view.photo.ViewPagePhotoActivity;
 import com.isuo.yw2application.widget.SpecialChatView;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.bean.Permissions;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
 import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.GlideUtils;
 
@@ -150,10 +152,11 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
                 if (TextUtils.isEmpty(equipmentPhotoUrl)) {
                     return false;
                 }
-                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        new CheckRequestPermissionListener() {
+                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                        new CheckRequestPermissionsListener() {
                             @Override
-                            public void onPermissionOk(Permission permission) {
+                            public void onAllPermissionOk(Permission[] allPermissions) {
                                 new MaterialDialog.Builder(getActivity())
                                         .items(R.array.choose_condition_2)
                                         .itemsCallback(new MaterialDialog.ListCallback() {
@@ -172,7 +175,7 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
                             }
 
                             @Override
-                            public void onPermissionDenied(Permission permission) {
+                            public void onPermissionDenied(Permission[] refusedPermissions) {
                                 new AppSettingsDialog.Builder(getActivity())
                                         .setRationale(getString(R.string.need_save_setting))
                                         .setTitle(getString(R.string.request_permissions))
@@ -370,16 +373,17 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
                 break;
             case R.id.photo_view:
                 if (TextUtils.isEmpty(equipmentLocal) && TextUtils.isEmpty(equipmentPhotoUrl)) {
-                    SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            new CheckRequestPermissionListener() {
+                    Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                    SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                            new CheckRequestPermissionsListener() {
                                 @Override
-                                public void onPermissionOk(Permission permission) {
+                                public void onAllPermissionOk(Permission[] allPermissions) {
                                     photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
                                     ActivityUtils.startCameraToPhoto(CreateEquipFragment.this, photoFile, ACTION_START_CAMERA);
                                 }
 
                                 @Override
-                                public void onPermissionDenied(Permission permission) {
+                                public void onPermissionDenied(Permission[] refusedPermissions) {
                                     new AppSettingsDialog.Builder(getActivity())
                                             .setRationale(getString(R.string.need_save_setting))
                                             .setTitle(getString(R.string.request_permissions))

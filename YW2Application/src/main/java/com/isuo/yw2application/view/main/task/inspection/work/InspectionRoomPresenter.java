@@ -143,6 +143,11 @@ class InspectionRoomPresenter implements InspectionRoomContract.Presenter {
     }
 
     @Override
+    public int getEquipmentFinishCount(long taskId, @NonNull RoomListBean roomListBean) {
+        return mSourceData.getEquipmentFinishCount(taskId,roomListBean);
+    }
+
+    @Override
     public void subscribe() {
 
     }

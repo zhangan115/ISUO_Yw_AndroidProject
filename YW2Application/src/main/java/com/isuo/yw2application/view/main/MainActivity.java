@@ -50,7 +50,9 @@ import com.isuo.yw2application.view.main.feedback.QuestionActivity;
 import com.isuo.yw2application.view.main.forgepassword.ForgePassWordActivity;
 import com.isuo.yw2application.view.main.task.TaskFragment;
 import com.isuo.yw2application.view.main.work.WorkFragment;
+import com.isuo.yw2application.view.photo.ViewPagePhotoActivity;
 import com.isuo.yw2application.view.share.ShareActivity;
+import com.isuo.yw2application.widget.ShowImageLayout;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
@@ -218,21 +220,13 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
             MobclickAgent.onProfileSignOff();
             Yw2Application.getInstance().needLogin();
         } else if (id == R.id.userImage) {
-            new MaterialDialog.Builder(this)
-                    .items(R.array.choose_photo)
-                    .itemsCallback(new MaterialDialog.ListCallback() {
-                        @Override
-                        public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                            if (position == 0) {
-                                checkPermissionPhoto();
-                            } else {
-                                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                                intent.setType("image/*");
-                                startActivityForResult(intent, ACTION_START_PHOTO);
-                            }
-                        }
-                    })
-                    .show();
+            photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+            showPhotoDialog(this, photoFile, ACTION_START_CAMERA,ACTION_START_PHOTO, new OnPhotoShowListener() {
+                @Override
+                public void showPhoto() {
+                    ViewPagePhotoActivity.startActivity(MainActivity.this, new String[]{Yw2Application.getInstance().getCurrentUser().getPortraitUrl()}, 0);
+                }
+            });
         }
     }
 
@@ -399,37 +393,6 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
 
     private static final int ACTION_START_CAMERA = 100;
     private static final int ACTION_START_PHOTO = 101;
-
-
-    public void checkPermissionPhoto() {
-        SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                new CheckRequestPermissionListener() {
-                    @Override
-                    public void onPermissionOk(Permission permission) {
-                        photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                        Intent intent = new Intent();
-                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                        intent.addCategory(Intent.CATEGORY_DEFAULT);
-                        ContentValues contentValues = new ContentValues(1);
-                        contentValues.put(MediaStore.Images.Media.DATA, photoFile.getAbsolutePath());
-                        Uri uri = MainActivity.this.getApplicationContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                        startActivityForResult(intent, ACTION_START_CAMERA);
-                    }
-
-                    @Override
-                    public void onPermissionDenied(Permission permission) {
-                        new AppSettingsDialog.Builder(MainActivity.this)
-                                .setRationale(getString(R.string.need_save_setting))
-                                .setTitle(getString(R.string.request_permissions))
-                                .setPositiveButton(getString(R.string.sure))
-                                .setNegativeButton(getString(R.string.cancel))
-                                .setRequestCode(REQUEST_EXTERNAL)
-                                .build()
-                                .show();
-                    }
-                });
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.base;
 
+import android.annotation.SuppressLint;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.JsPromptResult;
@@ -14,6 +15,7 @@ import android.webkit.WebViewClient;
  * Created by zhangan on 2017/10/25.
  */
 
+@SuppressLint("Registered")
 public class WebActivity extends BaseActivity {
     protected WebView webView;
 
@@ -47,8 +49,8 @@ public class WebActivity extends BaseActivity {
         WebSettings ws = webView.getSettings();
         ws.setJavaScriptEnabled(true); // 设置支持javascript脚本
         ws.setAllowFileAccess(true); // 允许访问文件
-        ws.setBuiltInZoomControls(true); // 设置显示缩放按钮
-        ws.setSupportZoom(true); // 支持缩放 <span style="color:#337fe5;"> /**
+        ws.setBuiltInZoomControls(false); // 设置显示缩放按钮
+        ws.setSupportZoom(false); // 支持缩放 <span style="color:#337fe5;"> /**
         // * 用WebView显示图片，可使用这个参数
         // * 设置网页布局类型：
         // * 1、LayoutAlgorithm.NARROW_COLUMNS ： 适应内容大小

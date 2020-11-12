@@ -44,7 +44,9 @@ import com.isuo.yw2application.view.main.task.inspection.input.widget.Type2_4Lay
 import com.isuo.yw2application.view.main.task.inspection.input.widget.Type3Layout;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.bean.Permissions;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
 import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.DataUtil;
 import com.sito.library.utils.GlideUtils;
@@ -282,17 +284,18 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
     /*****录入数据拍照******/
     @Override
     public void onTakePhoto(final DataItemBean dataItemBean) {
-        SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                new CheckRequestPermissionListener() {
+        Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+        SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                new CheckRequestPermissionsListener() {
                     @Override
-                    public void onPermissionOk(Permission permission) {
+                    public void onAllPermissionOk(Permission[] allPermissions) {
                         InputActivity.this.mDataItemBean = dataItemBean;
                         photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
                         ActivityUtils.startCameraToPhoto(InputActivity.this, photoFile, ACTION_START_CAMERA);
                     }
 
                     @Override
-                    public void onPermissionDenied(Permission permission) {
+                    public void onPermissionDenied(Permission[] refusedPermissions) {
                         new AppSettingsDialog.Builder(InputActivity.this)
                                 .setRationale(getString(R.string.need_save_setting))
                                 .setTitle(getString(R.string.request_permissions))
@@ -351,14 +354,15 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
         equipmentName.setText(noteStr);
         equipmentTakePhotoIV = view.findViewById(R.id.iv_take_equipment_photo);
         dialogProgressBar = view.findViewById(R.id.progressBar);
-        GlideUtils.ShowImage(this, roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photo_button);
+        GlideUtils.ShowImage(this, roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photograph);
         equipmentTakePhotoIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        new CheckRequestPermissionListener() {
+                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                        new CheckRequestPermissionsListener() {
                             @Override
-                            public void onPermissionOk(Permission permission) {
+                            public void onAllPermissionOk(Permission[] allPermissions) {
                                 if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
                                     photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
                                     ActivityUtils.startCameraToPhoto(InputActivity.this, photoFile, ACTION_START_EQUIPMENT);
@@ -368,7 +372,7 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
                             }
 
                             @Override
-                            public void onPermissionDenied(Permission permission) {
+                            public void onPermissionDenied(Permission[] refusedPermissions) {
                                 new AppSettingsDialog.Builder(InputActivity.this)
                                         .setRationale(getString(R.string.need_save_setting))
                                         .setTitle(getString(R.string.request_permissions))
@@ -386,10 +390,11 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
                 if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
                     return false;
                 }
-                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        new CheckRequestPermissionListener() {
+                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                        new CheckRequestPermissionsListener() {
                             @Override
-                            public void onPermissionOk(Permission permission) {
+                            public void onAllPermissionOk(Permission[] allPermissions) {
                                 new MaterialDialog.Builder(InputActivity.this)
                                         .items(R.array.choose_condition_2)
                                         .itemsCallback(new MaterialDialog.ListCallback() {
@@ -401,14 +406,14 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
                                                     roomDb.setPhotoUrl(null);
                                                     Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
                                                     if (equipmentTakePhotoIV != null) {
-                                                        GlideUtils.ShowImage(InputActivity.this, roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photo_button);
+                                                        GlideUtils.ShowImage(InputActivity.this, roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photograph);
                                                     }
                                                 } else {
                                                     roomDb.setUploadPhotoUrl(null);
                                                     roomDb.setPhotoUrl(null);
                                                     Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
                                                     if (equipmentTakePhotoIV != null) {
-                                                        GlideUtils.ShowImage(InputActivity.this, roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photo_button);
+                                                        GlideUtils.ShowImage(InputActivity.this, roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photograph);
                                                     }
                                                     photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
                                                     ActivityUtils.startCameraToPhoto(InputActivity.this, photoFile, ACTION_START_EQUIPMENT);
@@ -419,7 +424,7 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
                             }
 
                             @Override
-                            public void onPermissionDenied(Permission permission) {
+                            public void onPermissionDenied(Permission[] refusedPermissions) {
                                 new AppSettingsDialog.Builder(InputActivity.this)
                                         .setRationale(getString(R.string.need_save_setting))
                                         .setTitle(getString(R.string.request_permissions))

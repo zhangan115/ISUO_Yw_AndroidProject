@@ -1,12 +1,17 @@
 package com.isuo.yw2application.view.base;
 
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -16,12 +21,18 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.orhanobut.logger.Logger;
 
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.bean.Permissions;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
 import com.sito.library.base.AbsBaseActivity;
 import com.umeng.analytics.MobclickAgent;
 
-import org.w3c.dom.Text;
+import java.io.File;
 
 
 /**
@@ -50,8 +61,8 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
         this.onToolbarClickListener = onToolbarClickListener;
     }
 
-   public interface OnToolbarClickListener {
-       void onToolBarBackClick();
+    public interface OnToolbarClickListener {
+        void onToolBarBackClick();
     }
 
     @Override
@@ -133,10 +144,6 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
                 }
             });
         }
-    }
-
-    public TextView getTitleTv(){
-        return findViewById(R.id.titleId);
     }
 
     /**
@@ -248,8 +255,8 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
 
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
-        super.startActivityForResult(intent,requestCode);
-        if (useAnimToNewAct){
+        super.startActivityForResult(intent, requestCode);
+        if (useAnimToNewAct) {
             overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
         }
     }
@@ -257,7 +264,7 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
     @Override
     public void startActivity(Intent intent, @Nullable Bundle options) {
         super.startActivity(intent, options);
-        if (useAnimToNewAct){
+        if (useAnimToNewAct) {
             overridePendingTransition(R.anim.slideinright, R.anim.slideoutleft);
         }
     }
@@ -265,9 +272,64 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
     @Override
     public void finish() {
         super.finish();
-        if (useAnimToBack){
+        if (useAnimToBack) {
             overridePendingTransition(R.anim.slideinleft, R.anim.slideoutright);
         }
     }
 
+    public interface OnPhotoShowListener {
+        void showPhoto();
+    }
+
+    public void showPhotoDialog(final Activity activity,final File photoFile, final int REQUEST_CODE,final int ACTION_START_PHOTO,final OnPhotoShowListener listener) {
+        Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+        SoulPermission.getInstance().checkAndRequestPermissions(permissions, new CheckRequestPermissionsListener() {
+            @Override
+            public void onAllPermissionOk(Permission[] allPermissions) {
+                String[] array = new String[]{"查看", "拍照", "相册"};
+                new XPopup.Builder(activity).asCenterList("", array, new OnSelectListener() {
+                    @Override
+                    public void onSelect(int position, String text) {
+                        if (position == 0) {
+                            listener.showPhoto();
+                        } else if (position == 1) {
+                            startCameraToPhoto(activity,photoFile, REQUEST_CODE);
+                        } else {
+                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                            intent.setType("image/*");
+                            activity.startActivityForResult(intent,ACTION_START_PHOTO);
+                        }
+                    }
+                }).show();
+            }
+
+            @Override
+            public void onPermissionDenied(Permission[] refusedPermissions) {
+
+            }
+        });
+    }
+
+    /**
+     * 启动相机拍摄照片
+     *
+     * @param photoFile    文件
+     * @param REQUEST_CODE 请求code
+     */
+    public void startCameraToPhoto(Activity activity,File photoFile, int REQUEST_CODE) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this, "com.isuo.yw2application.fileprovider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                activity.startActivityForResult(takePictureIntent, REQUEST_CODE);
+            }
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

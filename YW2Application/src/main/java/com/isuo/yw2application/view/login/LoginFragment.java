@@ -15,11 +15,14 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
+import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.view.main.MainActivity;
 import com.isuo.yw2application.view.base.MvpFragment;
+import com.isuo.yw2application.view.main.data.StandInfoActivity;
 import com.isuo.yw2application.view.pass.ForgePassActivity;
 import com.isuo.yw2application.view.register.RegisterActivity;
 import com.isuo.yw2application.view.test.TestActivity;
+import com.orhanobut.logger.Logger;
 
 
 /**
@@ -50,6 +53,7 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
         rootView.findViewById(R.id.tv_forget_password).setOnClickListener(this);
         rootView.findViewById(R.id.tv_test).setOnClickListener(this);
         rootView.findViewById(R.id.tv_register).setOnClickListener(this);
+        rootView.findViewById(R.id.agree).setOnClickListener(this);
         return rootView;
     }
 
@@ -115,6 +119,15 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
                     startActivity(new Intent(getActivity(), TestActivity.class));
                     startTestTimes = 0;
                 }
+                break;
+            case R.id.agree:
+                Intent intent = new Intent(getActivity(), StandInfoActivity.class);
+                intent.putExtra(ConstantStr.KEY_TITLE, "平台使用协议及隐私条款");
+                String url = Yw2Application.getInstance().AppHost();
+                int lastPosition = url.lastIndexOf("/");
+                String newUrl = url.substring(0,lastPosition) + "/info.html" ;
+                intent.putExtra(ConstantStr.KEY_BUNDLE_STR, newUrl);
+                startActivity(intent);
                 break;
         }
     }

@@ -163,7 +163,34 @@
             </LinearLayout>
         </ScrollView>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/agree"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/system_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="登录即代表你同意"
+                android:textColor="#ff888888"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="《平台使用协议及隐私条款》"
+                android:textColor="#ff00a0ff"
+                android:textSize="12sp" />
+        </LinearLayout>
+
         <TextView
+            android:id="@+id/system_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/tv_test"

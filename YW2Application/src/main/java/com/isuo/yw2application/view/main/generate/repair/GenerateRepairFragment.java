@@ -42,7 +42,9 @@ import com.isuo.yw2application.widget.SpeechDialog;
 import com.isuo.yw2application.widget.TakePhotoView;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.bean.Permissions;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
 import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.DataUtil;
 import com.sito.library.utils.DisplayUtil;
@@ -139,10 +141,11 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
 
             @Override
             public void onTakePhoto() {
-                SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        new CheckRequestPermissionListener() {
+                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                        new CheckRequestPermissionsListener() {
                             @Override
-                            public void onPermissionOk(Permission permission) {
+                            public void onAllPermissionOk(Permission[] allPermissions) {
                                 new MaterialDialog.Builder(getActivity())
                                         .items(R.array.choose_photo)
                                         .itemsCallback(new MaterialDialog.ListCallback() {
@@ -163,7 +166,7 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
                             }
 
                             @Override
-                            public void onPermissionDenied(Permission permission) {
+                            public void onPermissionDenied(Permission[] refusedPermissions) {
                                 new AppSettingsDialog.Builder(getActivity())
                                         .setRationale(getString(R.string.need_save_setting))
                                         .setTitle(getString(R.string.request_permissions))
@@ -184,23 +187,41 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
 
             @Override
             public void onTakePhoto(int position, final Image image) {
-                new MaterialDialog.Builder(getActivity())
-                        .items(R.array.choose_photo)
-                        .itemsCallback(new MaterialDialog.ListCallback() {
+                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                        new CheckRequestPermissionsListener() {
                             @Override
-                            public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                                mImage = image;
-                                if (position == 0) {
-                                    photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                                    ActivityUtils.startCameraToPhoto(GenerateRepairFragment.this, photoFile, ACTION_START_CAMERA);
-                                } else {
-                                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                                    intent.setType("image/*");
-                                    startActivityForResult(intent, ACTION_START_PHOTO);
-                                }
+                            public void onAllPermissionOk(Permission[] allPermissions) {
+                                new MaterialDialog.Builder(getActivity())
+                                        .items(R.array.choose_photo)
+                                        .itemsCallback(new MaterialDialog.ListCallback() {
+                                            @Override
+                                            public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                                mImage = image;
+                                                if (position == 0) {
+                                                    photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                                    ActivityUtils.startCameraToPhoto(GenerateRepairFragment.this, photoFile, ACTION_START_CAMERA);
+                                                } else {
+                                                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                                    intent.setType("image/*");
+                                                    startActivityForResult(intent, ACTION_START_PHOTO);
+                                                }
+                                            }
+                                        })
+                                        .show();
                             }
-                        })
-                        .show();
+
+                            @Override
+                            public void onPermissionDenied(Permission[] refusedPermissions) {
+                                new AppSettingsDialog.Builder(getActivity())
+                                        .setRationale(getString(R.string.need_save_setting))
+                                        .setTitle(getString(R.string.request_permissions))
+                                        .setPositiveButton(getString(R.string.sure))
+                                        .setNegativeButton(getString(R.string.cancel))
+                                        .build()
+                                        .show();
+                            }
+                        });
             }
         });
         mRecordManager = new RecordManager().setFileName(Yw2Application.getInstance().voiceCacheFile())

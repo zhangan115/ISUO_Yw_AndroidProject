@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.work.tool.add;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -20,7 +21,12 @@ import com.isuo.yw2application.mode.tools.ToolsRepository;
 import com.isuo.yw2application.mode.tools.bean.Tools;
 import com.isuo.yw2application.utils.PhotoUtils;
 import com.isuo.yw2application.view.base.BaseActivity;
+import com.isuo.yw2application.view.main.task.increment.submit.IncrementActivity;
 import com.isuo.yw2application.view.photo.ViewPagePhotoActivity;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.bean.Permissions;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
 import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.DataUtil;
 import com.sito.library.utils.FileFromUri;
@@ -31,6 +37,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 /**
  * 新增tools
@@ -243,22 +251,40 @@ public class AddToolsActivity extends BaseActivity implements AddToolsContract.V
     }
 
     private void takePhoto() {
-        new MaterialDialog.Builder(this)
-                .items(R.array.choose_photo)
-                .itemsCallback(new MaterialDialog.ListCallback() {
+        Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+        SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                new CheckRequestPermissionsListener() {
                     @Override
-                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                        if (position == 0) {
-                            photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                            ActivityUtils.startCameraToPhoto(AddToolsActivity.this, photoFile, ACTION_START_CAMERA);
-                        } else {
-                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                            intent.setType("image/*");
-                            startActivityForResult(intent, ACTION_START_PHOTO);
-                        }
+                    public void onAllPermissionOk(Permission[] allPermissions) {
+                        new MaterialDialog.Builder(AddToolsActivity.this)
+                                .items(R.array.choose_photo)
+                                .itemsCallback(new MaterialDialog.ListCallback() {
+                                    @Override
+                                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                        if (position == 0) {
+                                            photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                            ActivityUtils.startCameraToPhoto(AddToolsActivity.this, photoFile, ACTION_START_CAMERA);
+                                        } else {
+                                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                            intent.setType("image/*");
+                                            startActivityForResult(intent, ACTION_START_PHOTO);
+                                        }
+                                    }
+                                })
+                                .show();
                     }
-                })
-                .show();
+
+                    @Override
+                    public void onPermissionDenied(Permission[] refusedPermissions) {
+                        new AppSettingsDialog.Builder(AddToolsActivity.this)
+                                .setRationale(getString(R.string.need_save_setting))
+                                .setTitle(getString(R.string.request_permissions))
+                                .setPositiveButton(getString(R.string.sure))
+                                .setNegativeButton(getString(R.string.cancel))
+                                .build()
+                                .show();
+                    }
+                });
     }
 
     private String getDataStr(Calendar calendar) {

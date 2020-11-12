@@ -83,6 +83,15 @@ interface InspectionRoomContract {
          * @param bean 任务
          */
         void saveInspectionToCache(@Nullable InspectionDetailBean bean);
+
+        /**
+         * 获取设备完成的数量
+         *
+         * @param taskId       任务id
+         * @param roomListBean 配电室
+         * @return 数量
+         */
+        int getEquipmentFinishCount(long taskId, @NonNull RoomListBean roomListBean);
     }
 
     interface View extends BaseView<Presenter> {
