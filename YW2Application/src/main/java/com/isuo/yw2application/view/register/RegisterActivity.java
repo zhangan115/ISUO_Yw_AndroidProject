@@ -10,23 +10,27 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import  com.isuo.yw2application.R;
-import  com.isuo.yw2application.app.Yw2Application;
-import  com.isuo.yw2application.utils.CountDownTimerUtils;
-import  com.isuo.yw2application.view.base.BaseActivity;
+import com.isuo.yw2application.R;
+import com.isuo.yw2application.app.Yw2Application;
+import com.isuo.yw2application.common.ConstantStr;
+import com.isuo.yw2application.utils.CountDownTimerUtils;
+import com.isuo.yw2application.view.base.BaseActivity;
+import com.isuo.yw2application.view.register.user_info.RegisterUserInfoActivity;
 import com.sito.library.utils.CheckInput;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener, RegisterContract.View {
 
-    private EditText mUserPhoneNumEt, mRealNameEt, mUnitNameEt, mCodeEt;
+    private EditText mUserPhoneNumEt, mCodeEt;
     private TextView mGetCode;
     private ImageView mCleanPs1Iv, mCleanPs2Iv, mCleanPhoneNumIv;
-    private String mPhoneNumStr, mRealNameStr, mUnitNameStr, mCodeStr;
+    private String mPhoneNumStr, mCodeStr;
     @Inject
     RegisterPresenter registerPresenter;
     RegisterContract.Presenter mPresenter;
@@ -46,8 +50,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void initViews() {
         mUserPhoneNumEt = findViewById(R.id.user_phone_et);
-        mRealNameEt = findViewById(R.id.realName_et);
-        mUnitNameEt = findViewById(R.id.unitName_et);
         mCodeEt = findViewById(R.id.code_et);
         mCleanPhoneNumIv = findViewById(R.id.clean_phone_iv);
         mCleanPs1Iv = findViewById(R.id.password_iv);
@@ -61,7 +63,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         mGetCode.setOnClickListener(this);
         mCleanPs1Iv.setOnClickListener(this);
         mCleanPs2Iv.setOnClickListener(this);
-        mUnitNameEt.setOnClickListener(this);
         mCleanPhoneNumIv.setOnClickListener(this);
         findViewById(R.id.tv_sure).setOnClickListener(this);
     }
@@ -77,46 +78,26 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         Yw2Application.getInstance().showToast(CheckInput.checkPhoneNum(mPhoneNumStr));
                         return;
                     }
-
                     mPresenter.getVerificationCode(mPhoneNumStr);
                 }
                 break;
             case R.id.tv_sure:
-                mRealNameStr = mRealNameEt.getText().toString();
-                mUnitNameStr = mUnitNameEt.getText().toString();
                 mCodeStr = mCodeEt.getText().toString();
                 if (CheckInput.checkIdeCode(mCodeStr) != null) {
-                    Yw2Application.getInstance().showToast(CheckInput.checkIdeCode(mCodeStr));
-                    return;
-                }
-                if (TextUtils.isEmpty(mRealNameStr)) {
-                    Yw2Application.getInstance().showToast("请输入真实姓名");
-                    return;
-                }
-                if (TextUtils.isEmpty(mUnitNameStr)) {
-                    Yw2Application.getInstance().showToast("请输入公司名称");
+                    Yw2Application.getInstance().showToast(Objects.requireNonNull(CheckInput.checkIdeCode(mCodeStr)));
                     return;
                 }
                 if (TextUtils.isEmpty(mPhoneNumStr)) {
                     Yw2Application.getInstance().showToast("请输入手机号码");
                     return;
                 }
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("realName", mRealNameStr);
-                    jsonObject.put("unitName", mUnitNameStr);
-                    jsonObject.put("phone", mPhoneNumStr);
-                    jsonObject.put("validateCode", mCodeStr);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                mPresenter.toRegister(jsonObject);
+                Intent intent = new Intent(this, RegisterUserInfoActivity.class);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_STR,mPhoneNumStr);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_STR_1,mCodeStr);
+                startActivity(intent);
                 break;
             case R.id.clean_phone_iv:
                 mUserPhoneNumEt.setText("");
-                break;
-            case R.id.password_iv:
-                mRealNameEt.setText("");
                 break;
         }
     }
@@ -184,42 +165,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     mCleanPhoneNumIv.setVisibility(View.GONE);
                 } else {
                     mCleanPhoneNumIv.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-        mRealNameEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (mRealNameEt.getText().toString().isEmpty()) {
-                    mCleanPs1Iv.setVisibility(View.GONE);
-                } else {
-                    mCleanPs1Iv.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-        mUnitNameEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (mUnitNameEt.getText().toString().isEmpty()) {
-                    mCleanPs2Iv.setVisibility(View.GONE);
-                } else {
-                    mCleanPs2Iv.setVisibility(View.VISIBLE);
                 }
             }
         });

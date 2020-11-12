@@ -80,6 +80,7 @@ public interface ConstantStr {
     String KEY_BUNDLE_STR = "key_str";
     String KEY_BUNDLE_STR_1 = "key_str_1";
     String KEY_BUNDLE_STR_2 = "key_str_2";
+    String KEY_BUNDLE_STR_3 = "key_str_3";
     String KEY_BUNDLE_INT = "key_int";
     String KEY_BUNDLE_INT_1 = "key_int_1";
     String KEY_BUNDLE_INT_2 = "key_int_2";
