@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
 import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.orhanobut.logger.Logger;
 
@@ -55,6 +56,20 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.d(TAG);
+    }
+
+    private BasePopupView popupView;
+
+    public void showPopupLoading() {
+        popupView = new XPopup.Builder(this)
+                .asLoading("正在加载...")
+                .show();
+    }
+
+    public void hidePopupLoading() {
+        if (popupView != null) {
+            popupView.doDismissAnimation();
+        }
     }
 
     public void setOnToolbarClickListener(OnToolbarClickListener onToolbarClickListener) {
@@ -281,8 +296,8 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
         void showPhoto();
     }
 
-    public void showPhotoDialog(final Activity activity,final File photoFile, final int REQUEST_CODE,final int ACTION_START_PHOTO,final OnPhotoShowListener listener) {
-        Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+    public void showPhotoDialog(final Activity activity, final File photoFile, final int REQUEST_CODE, final int ACTION_START_PHOTO, final OnPhotoShowListener listener) {
+        Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
         SoulPermission.getInstance().checkAndRequestPermissions(permissions, new CheckRequestPermissionsListener() {
             @Override
             public void onAllPermissionOk(Permission[] allPermissions) {
@@ -293,11 +308,11 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
                         if (position == 0) {
                             listener.showPhoto();
                         } else if (position == 1) {
-                            startCameraToPhoto(activity,photoFile, REQUEST_CODE);
+                            startCameraToPhoto(activity, photoFile, REQUEST_CODE);
                         } else {
                             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                             intent.setType("image/*");
-                            activity.startActivityForResult(intent,ACTION_START_PHOTO);
+                            activity.startActivityForResult(intent, ACTION_START_PHOTO);
                         }
                     }
                 }).show();
@@ -316,7 +331,7 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
      * @param photoFile    文件
      * @param REQUEST_CODE 请求code
      */
-    public void startCameraToPhoto(Activity activity,File photoFile, int REQUEST_CODE) {
+    public void startCameraToPhoto(Activity activity, File photoFile, int REQUEST_CODE) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
             if (photoFile != null) {

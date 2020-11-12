@@ -11,6 +11,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.view.base.BaseActivity;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 import com.sito.library.base.AbsBaseFragment;
 
 
@@ -39,6 +41,20 @@ public class BaseFragment extends AbsBaseFragment implements DialogInterface.OnC
 
     protected MaterialDialog loadingDialog = null;
     protected AlertDialog evLoading = null;
+
+    private BasePopupView popupView;
+
+    public void showPopupLoading() {
+        popupView = new XPopup.Builder(getActivity())
+                .asLoading("正在加载...")
+                .show();
+    }
+
+    public void hidePopupLoading() {
+        if (popupView != null) {
+            popupView.doDismissAnimation();
+        }
+    }
 
     public Dialog showProgressDialog() {
         return showProgressDialog("加载中...");

@@ -396,10 +396,10 @@ public class WorkRepository implements WorkDataSource {
         List<WorkItem> myWorkItems = new ArrayList<>();
         allWorkItems.add(new WorkItem(1, "待办事项", R.drawable.bg_home_icon_db));
         allWorkItems.add(new WorkItem(2, "故障上报", R.drawable.bg_home_icon_gz));
-        allWorkItems.add(new WorkItem(3, "日常巡检", R.drawable.bg_home_icon_rc));
+        allWorkItems.add(new WorkItem(3, "执行巡检", R.drawable.bg_home_icon_rc));
         allWorkItems.add(new WorkItem(4, "检修工作", R.drawable.bg_home_icon_jx));
         allWorkItems.add(new WorkItem(5, "专项工作", R.drawable.bg_home_icon_zx));
-        allWorkItems.add(new WorkItem(6, "注油管理", R.drawable.bg_home_icon_zy));
+        allWorkItems.add(new WorkItem(6, "润油管理", R.drawable.bg_home_icon_zy));
         allWorkItems.add(new WorkItem(7, "紧急电话", R.drawable.bg_home_icon_soe));
         allWorkItems.add(new WorkItem(8, "指派检修", R.drawable.bg_home_icon_zp));
         allWorkItems.add(new WorkItem(9, "工具管理", R.drawable.bg_home_icon_gj));

@@ -58,7 +58,7 @@
     <string name="str_login_btn">登录</string>
     <string name="hit_login_user">请输入手机号</string>
     <string name="hit_login_pass">请输入密码</string>
-    <string name="tab_inspection">日常巡检</string>
+    <string name="tab_inspection">执行巡检</string>
     <string name="tab_overhaul">检修工作</string>
     <string name="tab_increment">专项工作</string>
 
