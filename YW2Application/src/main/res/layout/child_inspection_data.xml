@@ -39,7 +39,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="巡检自拍"
+                    android:text="任务自拍"
                     android:textColor="@color/color969696"
                     android:textSize="14sp" />
 
