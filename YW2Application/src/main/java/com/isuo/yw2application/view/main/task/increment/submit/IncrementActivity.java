@@ -206,7 +206,7 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
 
             @Override
             public void onTakePhoto(final int position, final Image image) {
-                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
                 SoulPermission.getInstance().checkAndRequestPermissions(permissions,
                         new CheckRequestPermissionsListener() {
                             @Override
@@ -284,6 +284,8 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
                                     mLLChooseQuarantine.setVisibility(View.GONE);
                                 } else {
                                     mIncrementState.setVisibility(View.GONE);
+                                    mDeviceName.setText("");
+                                    equipId = "";
                                 }
                             }
                         })
@@ -471,7 +473,7 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTION_START_CAMERA && resultCode == RESULT_OK) {
-            PhotoUtils.cropPhoto(this, photoFile, new PhotoUtils.PhotoListener() {
+            PhotoUtils.cropPhoto(this, photoFile, "", new PhotoUtils.PhotoListener() {
                 @Override
                 public void onSuccess(File file) {
                     if (mPresenter != null) {
@@ -495,7 +497,6 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
             String equipmentName = data.getStringExtra(EquipListActivity.NAME);
             mDeviceName.setText(equipmentName);
             equipId = equipmentId;
-
         }
     }
 

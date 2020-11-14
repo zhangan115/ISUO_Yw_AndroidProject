@@ -47,14 +47,14 @@ public class PhotoUtils {
     }
 
     public static void cropPhoto(final Context context, File photoFile, final PhotoListener listener) {
-        cropPhoto(context, photoFile, "", listener);
+        cropPhoto(context, photoFile,false, "",false, listener);
     }
 
     public static void cropPhoto(final Context context, File photoFile, String mark, final PhotoListener listener) {
-        cropPhoto(context, photoFile, false, mark, listener);
+        cropPhoto(context, photoFile, false, mark, true,listener);
     }
 
-    public static void cropPhoto(final Context context, File photoFile, final boolean cleanFile, final String mark, final PhotoListener listener) {
+    public static void cropPhoto(final Context context, File photoFile, final boolean cleanFile, final String mark,final boolean showMark, final PhotoListener listener) {
         Observable.just(photoFile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
@@ -65,6 +65,10 @@ public class PhotoUtils {
                         File file2 = null;
                         try {
                             file1 = Luban.with(context).load(file).get().get(0);
+                            if (!showMark){
+                                file.delete();
+                                return Observable.just(file1);
+                            }
                             file2 = new File(file1.getParent(), System.currentTimeMillis() + ".jpg");
                         } catch (IOException e) {
                             e.printStackTrace();

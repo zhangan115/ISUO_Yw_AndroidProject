@@ -507,7 +507,7 @@ public class GenerateIncrementFragment extends MvpFragment<GenerateIncrementCont
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTION_START_CAMERA && resultCode == RESULT_OK) {
-            PhotoUtils.cropPhoto(getActivity(), photoFile, new PhotoUtils.PhotoListener() {
+            PhotoUtils.cropPhoto(getActivity(), photoFile,"", new PhotoUtils.PhotoListener() {
                 @Override
                 public void onSuccess(File file) {
                     uploadPhoto(file);
@@ -553,7 +553,7 @@ public class GenerateIncrementFragment extends MvpFragment<GenerateIncrementCont
             }
             try {
                 File photo = FileFromUri.from(getActivity().getApplicationContext(), data.getData());
-                PhotoUtils.cropPhoto(getActivity(), photo, new PhotoUtils.PhotoListener() {
+                PhotoUtils.cropPhoto(getActivity(), photo, "",new PhotoUtils.PhotoListener() {
                     @Override
                     public void onSuccess(File file) {
                         uploadPhoto(file);

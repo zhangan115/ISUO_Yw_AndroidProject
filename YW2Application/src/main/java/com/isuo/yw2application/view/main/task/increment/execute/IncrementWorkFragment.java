@@ -566,7 +566,7 @@ public class IncrementWorkFragment extends MvpFragment<IncrementWorkContract.Pre
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTION_START_CAMERA && resultCode == Activity.RESULT_OK) {
-            PhotoUtils.cropPhoto(getActivity(), photoFile, new PhotoUtils.PhotoListener() {
+            PhotoUtils.cropPhoto(getActivity(), photoFile,"", new PhotoUtils.PhotoListener() {
                 @Override
                 public void onSuccess(File file) {
                     if (mPresenter != null) {

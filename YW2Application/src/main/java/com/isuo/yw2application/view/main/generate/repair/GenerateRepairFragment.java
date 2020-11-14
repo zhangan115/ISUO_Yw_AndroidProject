@@ -187,7 +187,7 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
 
             @Override
             public void onTakePhoto(int position, final Image image) {
-                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
                 SoulPermission.getInstance().checkAndRequestPermissions(permissions,
                         new CheckRequestPermissionsListener() {
                             @Override
@@ -468,7 +468,7 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTION_START_CAMERA && resultCode == RESULT_OK) {
-            PhotoUtils.cropPhoto(getActivity(), photoFile, new PhotoUtils.PhotoListener() {
+            PhotoUtils.cropPhoto(getActivity(), photoFile, "", new PhotoUtils.PhotoListener() {
                 @Override
                 public void onSuccess(File file) {
                     uploadPhoto(file);
@@ -514,7 +514,7 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
             }
             try {
                 File photo = FileFromUri.from(getActivity().getApplicationContext(), data.getData());
-                PhotoUtils.cropPhoto(getActivity(), photo, new PhotoUtils.PhotoListener() {
+                PhotoUtils.cropPhoto(getActivity(), photo, "", new PhotoUtils.PhotoListener() {
                     @Override
                     public void onSuccess(File file) {
                         uploadPhoto(file);

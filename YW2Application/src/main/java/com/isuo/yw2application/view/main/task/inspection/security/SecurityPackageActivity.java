@@ -38,7 +38,7 @@ public class SecurityPackageActivity extends WebActivity implements SecurityPack
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new SecurityPackagePresenter(InspectionRepository.getRepository(this), this);
-        setLayoutAndToolbar(R.layout.security_package_activity, "管理规定");
+        setLayoutAndToolbar(R.layout.security_package_activity, "",true);
         mTaskId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG, -1);
         mSecurityId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG_1, -1);
         mContent = findViewById(R.id.id_secure_content);
@@ -59,6 +59,9 @@ public class SecurityPackageActivity extends WebActivity implements SecurityPack
     public void showData(SecureBean secureBean) {
         if (secureBean != null && secureBean.getPageList() != null
                 && secureBean.getPageList().size() > 0) {
+            if (mTitleTv!=null){
+                mTitleTv.setText(secureBean.getSecurityName());
+            }
             next = 0;
             previous = 0;
             mList.clear();
@@ -69,6 +72,7 @@ public class SecurityPackageActivity extends WebActivity implements SecurityPack
             if (mList != null && mList.size() == 1) {
                 mNext.setText("确定");
             }
+
         }
     }
 
@@ -127,7 +131,7 @@ public class SecurityPackageActivity extends WebActivity implements SecurityPack
     }
 
     private void startRoomList() {
-        SPHelper.write(this, ConstantStr.SECURITY_INFO, String.valueOf(mTaskId), true);
+//        SPHelper.write(this, ConstantStr.SECURITY_INFO, String.valueOf(mTaskId), true);
         Intent intent = new Intent(this, InspectionRoomActivity.class);
         intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, mTaskId);
         intent.putExtra(ConstantStr.KEY_BUNDLE_LONG_1, mSecurityId);

@@ -528,7 +528,7 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTION_START_CAMERA && resultCode == RESULT_OK) {
-            PhotoUtils.cropPhoto(this, photoFile, new PhotoUtils.PhotoListener() {
+            PhotoUtils.cropPhoto(this, photoFile, "",new PhotoUtils.PhotoListener() {
                 @Override
                 public void onSuccess(File file) {
                     uploadPhoto(file);
@@ -537,7 +537,7 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
         } else if (requestCode == ACTION_START_PHOTO && resultCode == RESULT_OK) {
             try {
                 File photo = FileFromUri.from(this, data.getData());
-                PhotoUtils.cropPhoto(this, photo, new PhotoUtils.PhotoListener() {
+                PhotoUtils.cropPhoto(this, photo,"",new PhotoUtils.PhotoListener() {
                     @Override
                     public void onSuccess(File file) {
                         uploadPhoto(file);

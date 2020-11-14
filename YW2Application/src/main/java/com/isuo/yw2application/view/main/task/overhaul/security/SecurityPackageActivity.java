@@ -38,7 +38,7 @@ public class SecurityPackageActivity extends WebActivity implements SecurityPack
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new SecurityPackagePresenter(OverhaulRepository.getRepository(this), this);
-        setLayoutAndToolbar(R.layout.security_package_activity, "管理规定");
+        setLayoutAndToolbar(R.layout.security_package_activity, "",true);
         mTaskId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG, -1);
         mSecurityId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG_1, -1);
         mContent = findViewById(R.id.id_secure_content);
@@ -59,6 +59,7 @@ public class SecurityPackageActivity extends WebActivity implements SecurityPack
     public void showData(OverhaulNoteBean secureBean) {
         if (secureBean != null && secureBean.getPageList() != null
                 && secureBean.getPageList().size() > 0) {
+            mTitleTv.setText(secureBean.getJobName());
             next = 0;
             previous = 0;
             mList.clear();

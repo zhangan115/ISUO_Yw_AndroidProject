@@ -49,7 +49,7 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
     protected boolean useAnimToBack = true;
     protected boolean useAnimToNewAct = true;
     protected MaterialDialog loadingDialog = null;
-    private TextView mTitleTv;
+    protected TextView mTitleTv;
     protected OnToolbarClickListener onToolbarClickListener;
 
     @Override
@@ -146,7 +146,9 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
             if (mTitleTv == null) {
                 mTitleTv = toolbar.findViewById(R.id.titleId);
             }
-            mTitleTv.setText(titleResId);
+            if (titleResId != -1){
+                mTitleTv.setText(titleResId);
+            }
             setSupportActionBar(toolbar);
             final ActionBar ab = getSupportActionBar();
             assert ab != null;
