@@ -152,7 +152,7 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
                 if (TextUtils.isEmpty(equipmentPhotoUrl)) {
                     return false;
                 }
-                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
                 SoulPermission.getInstance().checkAndRequestPermissions(permissions,
                         new CheckRequestPermissionsListener() {
                             @Override
@@ -373,7 +373,7 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
                 break;
             case R.id.photo_view:
                 if (TextUtils.isEmpty(equipmentLocal) && TextUtils.isEmpty(equipmentPhotoUrl)) {
-                    Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                    Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
                     SoulPermission.getInstance().checkAndRequestPermissions(permissions,
                             new CheckRequestPermissionsListener() {
                                 @Override
@@ -456,7 +456,7 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTION_START_CAMERA && resultCode == Activity.RESULT_OK) {
-            PhotoUtils.cropPhoto(getActivity(), photoFile, new PhotoUtils.PhotoListener() {
+            PhotoUtils.cropPhoto(getActivity(), photoFile, "", new PhotoUtils.PhotoListener() {
                 @Override
                 public void onSuccess(File file) {
                     if (mPresenter != null) {

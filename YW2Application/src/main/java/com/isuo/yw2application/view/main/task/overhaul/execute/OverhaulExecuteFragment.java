@@ -362,8 +362,8 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
                 isPlayRep = false;
                 int timeScale = mRepairWorkBean.getAddType() == 0 ? mRepairWorkBean.getFault().getSoundTimescale() : mRepairWorkBean.getSoundTimescaleAdd();
                 String url = mRepairWorkBean.getAddType() == 0 ? mRepairWorkBean.getFault().getVoiceUrl() : mRepairWorkBean.getVoiceUrlAdd();
-                mFaultPlayTv.setText(timeScale + "''");
-                mFaultPlayTv.setBackgroundResource(R.drawable.record_play_3);
+                mFaultPlayTv.setText(timeScale + "s");
+                mFaultPlayTv.setBackgroundResource(R.drawable.voice_three);
                 if (!isPlayFault) {
                     isPlayFault = true;
                     //开始动画
@@ -372,14 +372,14 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
 
                     //播放故障语音
                     mFaultTimer = new CountDownTimerUtils(mFaultPlayTv, timeScale * 1000, 1000
-                            , timeScale + "''", "#ffffff");
+                            , timeScale + "s", "#999999");
                     MediaPlayerManager.playSound(url, new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
                             MediaPlayerManager.release();
                             mFaultTimer.cancel();
                             mFaultPlayTv.clearAnimation();
-                            mFaultPlayTv.setBackgroundResource(R.drawable.record_play_3);
+                            mFaultPlayTv.setBackgroundResource(R.drawable.voice_three);
                             isPlayFault = false;
                         }
                     }, new MediaPlayer.OnPreparedListener() {
@@ -394,7 +394,7 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
                     MediaPlayerManager.release();
                     mFaultTimer.cancel();
                     mFaultPlayTv.clearAnimation();
-                    mFaultPlayTv.setBackgroundResource(R.drawable.record_play_3);
+                    mFaultPlayTv.setBackgroundResource(R.drawable.voice_three);
                     isPlayFault = false;
                 }
                 break;
@@ -403,32 +403,39 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
                     return;
                 }
                 isPlayFault = false;
-                mWorkSoundTimeTv.setText(mWorkBean.getVoice().getVoiceTime() + "''");
-                mWorkSoundTimeTv.setBackgroundResource(R.drawable.record_play_3);
+                mWorkSoundTimeTv.setText(mWorkBean.getVoice().getVoiceTime() + "s");
+                mWorkSoundTimeTv.setBackgroundResource(R.drawable.voice_three);
                 MediaPlayerManager.release();
                 if (!isPlayRep) {
                     isPlayRep = true;
                     //开始动画
                     mWorkSoundTimeTv.setBackgroundResource(R.drawable.play_anim);
-                    AnimationDrawable animation = (AnimationDrawable) mWorkSoundTimeTv.getBackground();
+                   final AnimationDrawable animation = (AnimationDrawable) mWorkSoundTimeTv.getBackground();
                     animation.start();
                     //播放故障语音
                     mRepairTimer = new CountDownTimerUtils(mWorkSoundTimeTv, Integer.valueOf(mWorkBean.getVoice().getVoiceTime()) * 1000, 1000
-                            , Integer.valueOf(mWorkBean.getVoice().getVoiceTime()) + "''", "#ffffff");
-                    mRepairTimer.start();
+                            , Integer.valueOf(mWorkBean.getVoice().getVoiceTime()) + "s", "#999999");
                     MediaPlayerManager.playSound(mWorkBean.getVoice().getVoiceLocal(), new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
+                            MediaPlayerManager.release();
                             mRepairTimer.cancel();
                             mWorkSoundTimeTv.clearAnimation();
-                            mWorkSoundTimeTv.setBackgroundResource(R.drawable.record_play_3);
+                            mWorkSoundTimeTv.setBackgroundResource(R.drawable.voice_three);
                             isPlayRep = false;
+                        }
+                    }, new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            mp.start();
+                            animation.start();
+                            mRepairTimer.start();
                         }
                     });
                 } else {
                     mRepairTimer.cancel();
                     mWorkSoundTimeTv.clearAnimation();
-                    mWorkSoundTimeTv.setBackgroundResource(R.drawable.record_play_3);
+                    mWorkSoundTimeTv.setBackgroundResource(R.drawable.voice_three);
                     isPlayRep = false;
                 }
                 break;
@@ -482,7 +489,7 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
                 faultPicUrl[i] = mRepairWorkBean.getFault().getFaultPics().get(i).getPicUrl();
             }
             ((TextView) getView().findViewById(R.id.tv_play_text)).setText(mRepairWorkBean.getFault().getFaultDescript());
-            mFaultPlayTv.setText(mRepairWorkBean.getFault().getSoundTimescale() + "''");
+            mFaultPlayTv.setText(mRepairWorkBean.getFault().getSoundTimescale() + "s");
             if (mRepairWorkBean.getFault().getSoundTimescale() == 0 || TextUtils.isEmpty(mRepairWorkBean.getFault().getVoiceUrl())) {
                 mFaultPlayTv.setVisibility(View.GONE);
             } else {
@@ -494,7 +501,7 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
                 faultPicUrl[i] = mRepairWorkBean.getRepairPicsAdd().get(i).getPicUrl();
             }
             ((TextView) getView().findViewById(R.id.tv_play_text)).setText(mRepairWorkBean.getRepairIntro());
-            mFaultPlayTv.setText(mRepairWorkBean.getSoundTimescaleAdd() + "''");
+            mFaultPlayTv.setText(mRepairWorkBean.getSoundTimescaleAdd() + "s");
             if (mRepairWorkBean.getSoundTimescaleAdd() == 0 || TextUtils.isEmpty(mRepairWorkBean.getVoiceUrlAdd())) {
                 mFaultPlayTv.setVisibility(View.GONE);
             } else {
@@ -513,7 +520,7 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
             mWorkResultTv.setText(Yw2Application.getInstance().getMapOption().get("4").get(mWorkBean.getRepairResult()));
         }
         if (mWorkBean.getVoice() != null) {
-            mWorkSoundTimeTv.setText(mWorkBean.getVoice().getVoiceTime() + "''");
+            mWorkSoundTimeTv.setText(mWorkBean.getVoice().getVoiceTime() + "s");
             mWorkSoundTv.setText(mWorkBean.getVoice().getMContent());
             mWorkSoundTv.setSelection(mWorkSoundTv.getText().toString().length());
         }
@@ -607,15 +614,14 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
         voice.setSaveTime(System.currentTimeMillis());
         voice.setWorkType(ConstantInt.CHECKPAIR);
         mWorkBean.setVoice(voice);
-        mWorkSoundTimeTv.setText(time + "''");
+        mWorkSoundTimeTv.setText(time + "s");
         Yw2Application.getInstance().getDaoSession().getVoiceDao().insertOrReplaceInTx(voice);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ACTION_START_CAMERA && resultCode == RESULT_OK) {
-            PhotoUtils.cropPhoto(getActivity(), photoFile, new PhotoUtils.PhotoListener() {
-
+            PhotoUtils.cropPhoto(getActivity(), photoFile,mRepairWorkBean.getEquipment().getEquipmentName(), new PhotoUtils.PhotoListener() {
                 @Override
                 public void onSuccess(File file) {
                     if (mPresenter != null) {
