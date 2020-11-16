@@ -1634,7 +1634,30 @@ public class CustomerRepository implements CustomerDataSource {
             @Override
             public void onSuccess(@Nullable EnterpriseCustomer list) {
                 callBack.onFinish();
-                callBack.onSuccess(list);
+                if (list != null) {
+                    callBack.onSuccess(list);
+                }else {
+                    callBack.onError("");
+                }
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+    @NonNull
+    @Override
+    public Subscription joinCustomer(JSONObject json, final IObjectCallBack<String> callBack) {
+        Observable<Bean<String>> observable = Api.createRetrofit()
+                .create(Api.Login.class).joinCustomer(json.toString());
+        return new ApiCallBack<String>(observable) {
+            @Override
+            public void onSuccess(@Nullable String list) {
+                callBack.onFinish();
+                callBack.onSuccess("");
             }
 
             @Override

@@ -43,9 +43,15 @@ public class RegisterEnterpriseActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 100) {
-
+                useAnimToBack = false;
+                setResult(Activity.RESULT_OK);
+                finish();
+                overridePendingTransition(0, 0);
             } else if (requestCode == 101) {
-
+                useAnimToBack = false;
+                setResult(Activity.RESULT_OK);
+                finish();
+                overridePendingTransition(0, 0);
             }
         }
     }

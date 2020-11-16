@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.register;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -148,11 +149,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void registerSuccess() {
         Yw2Application.getInstance().showToast("注册成功");
         Intent intent = new Intent(this, RegisterEnterpriseActivity.class);
-//        intent.putExtra(ConstantStr.KEY_BUNDLE_STR, name);
-//        intent.putExtra(ConstantStr.KEY_BUNDLE_STR_1, pass);
-//        intent.putExtra(ConstantStr.KEY_BUNDLE_STR_2,phoneNum);
-//        intent.putExtra(ConstantStr.KEY_BUNDLE_STR_3,codeStr);
-        startActivity(intent);
+        startActivityForResult(intent, 100);
     }
 
     @Override
@@ -174,6 +171,17 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     protected void onCancel() {
         super.onCancel();
         mPresenter.unSubscribe();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
+            useAnimToBack = false;
+            setResult(Activity.RESULT_OK);
+            finish();
+            overridePendingTransition(0, 0);
+        }
     }
 
     /**

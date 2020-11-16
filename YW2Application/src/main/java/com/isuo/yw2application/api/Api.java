@@ -193,6 +193,15 @@ public class Api {
         Observable<Bean<String>> addUserRegister(@Body() String info);
 
         /**
+         * 申请加入企业
+         *
+         * @param info 数据
+         */
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("weixin/apply/join.json")
+        Observable<Bean<String>> joinCustomer(@Body() String info);
+
+        /**
          * 获取
          * @param info
          * @return

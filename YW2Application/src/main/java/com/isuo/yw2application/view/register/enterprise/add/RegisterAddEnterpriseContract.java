@@ -14,11 +14,17 @@ public interface RegisterAddEnterpriseContract {
 
         void getEnterpriseCustomerList(JSONObject json);
 
+        void askCustomer(JSONObject jsonObject);
+
     }
 
     interface View extends BaseView<Presenter> {
 
         void showData(List<User.CustomerBean> list);
+
+        void joinAskSuccess();
+
+        void joinAskError();
 
         void showLoading();
 

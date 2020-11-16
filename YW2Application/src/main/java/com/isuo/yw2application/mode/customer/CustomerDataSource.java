@@ -298,4 +298,7 @@ public interface CustomerDataSource {
     @NonNull
     Subscription createCustomer(JSONObject json, IObjectCallBack<String> callBack);
 
+    @NonNull
+    Subscription joinCustomer(JSONObject json, IObjectCallBack<String> callBack);
+
 }

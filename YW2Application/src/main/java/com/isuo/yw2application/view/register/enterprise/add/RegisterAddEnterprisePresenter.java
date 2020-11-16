@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.EnterpriseCustomer;
 import com.isuo.yw2application.mode.customer.CustomerRepository;
+import com.umeng.commonsdk.debug.I;
 
 import org.json.JSONObject;
 
@@ -46,6 +47,26 @@ public class RegisterAddEnterprisePresenter implements RegisterAddEnterpriseCont
             @Override
             public void onError(String message) {
                 mView.noData();
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }));
+    }
+
+    @Override
+    public void askCustomer(JSONObject jsonObject) {
+        mSubscription.add(mRepository.joinCustomer(jsonObject, new IObjectCallBack<String>() {
+            @Override
+            public void onSuccess(@NonNull String s) {
+                mView.joinAskSuccess();
+            }
+
+            @Override
+            public void onError(String message) {
+                mView.joinAskError();
             }
 
             @Override

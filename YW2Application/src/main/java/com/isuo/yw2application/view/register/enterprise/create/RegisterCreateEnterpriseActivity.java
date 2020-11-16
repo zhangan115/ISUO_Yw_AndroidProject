@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.register.enterprise.create;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -56,12 +57,13 @@ public class RegisterCreateEnterpriseActivity extends BaseActivity implements Re
     @Override
     public void createSuccess() {
         Yw2Application.getInstance().showToast("创建成功");
-
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 
     @Override
     public void createError() {
-
+        Yw2Application.getInstance().showToast("创建失败");
     }
 
     @Override
