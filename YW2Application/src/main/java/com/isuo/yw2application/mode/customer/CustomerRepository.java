@@ -19,8 +19,10 @@ import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.Bean;
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
+import com.isuo.yw2application.mode.bean.EnterpriseCustomer;
 import com.isuo.yw2application.mode.bean.NewVersion;
 import com.isuo.yw2application.mode.bean.User;
+import com.isuo.yw2application.mode.bean.VerificationCode;
 import com.isuo.yw2application.mode.bean.check.CheckBean;
 import com.isuo.yw2application.mode.bean.check.FaultList;
 import com.isuo.yw2application.mode.bean.count.ComeCount;
@@ -1566,7 +1568,87 @@ public class CustomerRepository implements CustomerDataSource {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Observable<Bean<String>> observable = Api.createRetrofit().create(Api.Login.class).getRegisterCode(jsonObject.toString());
+        Observable<Bean<VerificationCode>> observable = Api.createRetrofit().create(Api.Login.class).getRegisterCode(jsonObject.toString());
+        return new ApiCallBack<VerificationCode>(observable) {
+            @Override
+            public void onSuccess(@Nullable VerificationCode s) {
+                callBack.onFinish();
+                if (s != null) {
+                    callBack.onSuccess(s.getCode());
+                }else {
+                    callBack.onError("");
+                }
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription addCustomer(JSONObject json, final IObjectCallBack<String> callBack) {
+        Observable<Bean<String>> observable = Api.createRetrofit().create(Api.Login.class).addCustomer(json.toString());
+        return new ApiCallBack<String>(observable) {
+            @Override
+            public void onSuccess(@Nullable String s) {
+                callBack.onFinish();
+                callBack.onSuccess("");
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription addUserRegister(JSONObject json, final IObjectCallBack<String> callBack) {
+        Observable<Bean<String>> observable = Api.createRetrofit().create(Api.Login.class).addUserRegister(json.toString());
+        return new ApiCallBack<String>(observable) {
+            @Override
+            public void onSuccess(@Nullable String s) {
+                callBack.onFinish();
+                callBack.onSuccess("");
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription getCustomerList(JSONObject json, final IObjectCallBack<EnterpriseCustomer> callBack) {
+        Observable<Bean<EnterpriseCustomer>> observable = Api.createRetrofit().create(Api.Login.class).getCustomerList(json.toString());
+        return new ApiCallBack<EnterpriseCustomer>(observable) {
+            @Override
+            public void onSuccess(@Nullable EnterpriseCustomer list) {
+                callBack.onFinish();
+                callBack.onSuccess(list);
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription createCustomer(JSONObject json, final IObjectCallBack<String> callBack) {
+        Observable<Bean<String>> observable = Api.createRetrofit().create(Api.Login.class).addCustomer(json.toString());
         return new ApiCallBack<String>(observable) {
             @Override
             public void onSuccess(@Nullable String s) {

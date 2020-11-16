@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
+import com.isuo.yw2application.mode.bean.EnterpriseCustomer;
 import com.isuo.yw2application.mode.bean.NewVersion;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.check.CheckBean;
@@ -284,5 +285,17 @@ public interface CustomerDataSource {
 
     @NonNull
     Subscription getRegisterCode(String phoneNum, IObjectCallBack<String> callBack);
+
+    @NonNull
+    Subscription addCustomer(JSONObject json, IObjectCallBack<String> callBack);
+
+    @NonNull
+    Subscription addUserRegister(JSONObject json, IObjectCallBack<String> callBack);
+
+    @NonNull
+    Subscription getCustomerList(JSONObject json, IObjectCallBack<EnterpriseCustomer> callBack);
+
+    @NonNull
+    Subscription createCustomer(JSONObject json, IObjectCallBack<String> callBack);
 
 }

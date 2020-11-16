@@ -6,8 +6,10 @@ import com.isuo.yw2application.BuildConfig;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.Bean;
+import com.isuo.yw2application.mode.bean.EnterpriseCustomer;
 import com.isuo.yw2application.mode.bean.NewVersion;
 import com.isuo.yw2application.mode.bean.User;
+import com.isuo.yw2application.mode.bean.VerificationCode;
 import com.isuo.yw2application.mode.bean.check.CheckBean;
 import com.isuo.yw2application.mode.bean.check.CheckValue;
 import com.isuo.yw2application.mode.bean.check.FaultList;
@@ -163,10 +165,41 @@ public class Api {
         @POST("application/record/add.json")
         Observable<Bean<String>> userRegister(@Body() String info);
 
+        /**
+         * 获取验证码
+         *
+         * @param info 数据
+         */
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
-        @POST("application/record/sendCode.json")
-        Observable<Bean<String>> getRegisterCode(@Body() String info);
+        @POST("weixin/sendCode.json")
+        Observable<Bean<VerificationCode>> getRegisterCode(@Body() String info);
 
+        /**
+         * 增加客户
+         *
+         * @param info 数据
+         */
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("weixin/customer/add.json")
+        Observable<Bean<String>> addCustomer(@Body() String info);
+
+        /**
+         * 增加用户
+         *
+         * @param info 数据
+         */
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("weixin/user/add.json")
+        Observable<Bean<String>> addUserRegister(@Body() String info);
+
+        /**
+         * 获取
+         * @param info
+         * @return
+         */
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("customer/list.json")
+        Observable<Bean<EnterpriseCustomer>> getCustomerList(@Body() String info);
     }
 
     public interface MessageApi {

@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.register.enterprise;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,11 +16,8 @@ public class RegisterEnterpriseActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_register_enterprise, "注册提示");
-        String name = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR);
-        String pass = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR_1);
-        String phoneNum = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR_2);
-        String codeStr = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR_3);
+        setLayoutAndToolbar(R.layout.activity_register_enterprise, "加入企业");
+
 
         findViewById(R.id.tv_add).setOnClickListener(this);
         findViewById(R.id.tv_create).setOnClickListener(this);
@@ -28,13 +26,27 @@ public class RegisterEnterpriseActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_add:
-                startActivityForResult(new Intent(this, RegisterAddEnterpriseActivity.class),100);
+                Intent intent1 = new Intent(this, RegisterAddEnterpriseActivity.class);
+                startActivityForResult(intent1, 100);
                 break;
             case R.id.tv_create:
-                startActivityForResult(new Intent(this, RegisterCreateEnterpriseActivity.class),101);
+                Intent intent2 = new Intent(this, RegisterCreateEnterpriseActivity.class);
+                startActivityForResult(intent2, 101);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 100) {
+
+            } else if (requestCode == 101) {
+
+            }
         }
     }
 }

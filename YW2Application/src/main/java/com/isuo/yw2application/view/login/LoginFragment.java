@@ -69,12 +69,12 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
 
     @Override
     public void loginLoading() {
-        showProgressDialog("登陆中...");
+//        showProgressDialog("登陆中...");
     }
 
     @Override
     public void loginHideLoading() {
-        hideProgressDialog();
+//        hideProgressDialog();
     }
 
     @Override

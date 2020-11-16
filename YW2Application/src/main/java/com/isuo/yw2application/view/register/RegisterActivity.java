@@ -15,7 +15,7 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.utils.CountDownTimerUtils;
 import com.isuo.yw2application.view.base.BaseActivity;
-import com.isuo.yw2application.view.register.user_info.RegisterUserInfoActivity;
+import com.isuo.yw2application.view.register.enterprise.RegisterEnterpriseActivity;
 import com.sito.library.utils.CheckInput;
 
 import org.json.JSONException;
@@ -27,10 +27,10 @@ import javax.inject.Inject;
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener, RegisterContract.View {
 
-    private EditText mUserPhoneNumEt, mCodeEt;
+    private EditText mUserPhoneNumEt, mCodeEt, mRealNameEt, mUSerPwsEt;
     private TextView mGetCode;
-    private ImageView mCleanPs1Iv, mCleanPs2Iv, mCleanPhoneNumIv;
-    private String mPhoneNumStr, mCodeStr;
+    private ImageView mCleanPsIv, mCleanPhoneNumIv, mCleanUserNameIv;
+    private String mPhoneNumStr, mCodeStr, mRealNameStr, mUserPws;
     @Inject
     RegisterPresenter registerPresenter;
     RegisterContract.Presenter mPresenter;
@@ -51,9 +51,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void initViews() {
         mUserPhoneNumEt = findViewById(R.id.user_phone_et);
         mCodeEt = findViewById(R.id.code_et);
+        mRealNameEt = findViewById(R.id.realName_et);
+        mUSerPwsEt = findViewById(R.id.userPws_et);
+
+        mCleanUserNameIv = findViewById(R.id.username_iv);
         mCleanPhoneNumIv = findViewById(R.id.clean_phone_iv);
-        mCleanPs1Iv = findViewById(R.id.password_iv);
-        mCleanPs2Iv = findViewById(R.id.clean_password_2_iv);
+        mCleanPsIv = findViewById(R.id.password_iv);
         mGetCode = findViewById(R.id.get_code_tv);
         timerUtils = new CountDownTimerUtils(mGetCode, 60000, 1000, "重新获取", "");
     }
@@ -61,8 +64,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void initEvents() {
         mGetCode.setOnClickListener(this);
-        mCleanPs1Iv.setOnClickListener(this);
-        mCleanPs2Iv.setOnClickListener(this);
+        mCleanUserNameIv.setOnClickListener(this);
+        mCleanPsIv.setOnClickListener(this);
         mCleanPhoneNumIv.setOnClickListener(this);
         findViewById(R.id.tv_sure).setOnClickListener(this);
     }
@@ -75,35 +78,59 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     mPhoneNumStr = mUserPhoneNumEt.getText().toString();
                     //获取验证码
                     if (CheckInput.checkPhoneNum(mPhoneNumStr) != null) {
-                        Yw2Application.getInstance().showToast(CheckInput.checkPhoneNum(mPhoneNumStr));
+                        Yw2Application.getInstance().showToast(Objects.requireNonNull(CheckInput.checkPhoneNum(mPhoneNumStr)));
                         return;
                     }
                     mPresenter.getVerificationCode(mPhoneNumStr);
                 }
                 break;
             case R.id.tv_sure:
+                mPhoneNumStr = mUserPhoneNumEt.getText().toString();
                 mCodeStr = mCodeEt.getText().toString();
+                mRealNameStr = mRealNameEt.getText().toString();
+                mUserPws = mUSerPwsEt.getText().toString();
                 if (CheckInput.checkIdeCode(mCodeStr) != null) {
                     Yw2Application.getInstance().showToast(Objects.requireNonNull(CheckInput.checkIdeCode(mCodeStr)));
+                    return;
+                }
+                if (TextUtils.isEmpty(mRealNameStr)) {
+                    Yw2Application.getInstance().showToast("请输入真实姓名");
                     return;
                 }
                 if (TextUtils.isEmpty(mPhoneNumStr)) {
                     Yw2Application.getInstance().showToast("请输入手机号码");
                     return;
                 }
-                Intent intent = new Intent(this, RegisterUserInfoActivity.class);
-                intent.putExtra(ConstantStr.KEY_BUNDLE_STR,mPhoneNumStr);
-                intent.putExtra(ConstantStr.KEY_BUNDLE_STR_1,mCodeStr);
-                startActivity(intent);
+                if (TextUtils.isEmpty(mUserPws)) {
+                    Yw2Application.getInstance().showToast("请输入密码");
+                    return;
+                }
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("realName", mRealNameStr);
+                    jsonObject.put("userPhone", mPhoneNumStr);
+                    jsonObject.put("userPwd", mUserPws);
+                    jsonObject.put("code", mCodeStr);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                mPresenter.toRegister(jsonObject);
                 break;
             case R.id.clean_phone_iv:
                 mUserPhoneNumEt.setText("");
+                break;
+            case R.id.password_iv:
+                mUSerPwsEt.setText("");
+                break;
+            case R.id.username_iv:
+                mRealNameEt.setText("");
                 break;
         }
     }
 
     @Override
-    public void getSuccess() {
+    public void getSuccess(String code) {
+        Yw2Application.getInstance().showToast("发送成功");
         timerUtils.start();
     }
 
@@ -119,10 +146,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void registerSuccess() {
-        Intent intent = new Intent();
         Yw2Application.getInstance().showToast("注册成功");
-        setResult(RESULT_OK, intent);//发送返回码
-        finish();
+        Intent intent = new Intent(this, RegisterEnterpriseActivity.class);
+//        intent.putExtra(ConstantStr.KEY_BUNDLE_STR, name);
+//        intent.putExtra(ConstantStr.KEY_BUNDLE_STR_1, pass);
+//        intent.putExtra(ConstantStr.KEY_BUNDLE_STR_2,phoneNum);
+//        intent.putExtra(ConstantStr.KEY_BUNDLE_STR_3,codeStr);
+        startActivity(intent);
     }
 
     @Override
@@ -165,6 +195,42 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     mCleanPhoneNumIv.setVisibility(View.GONE);
                 } else {
                     mCleanPhoneNumIv.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        mRealNameEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mRealNameEt.getText().toString().isEmpty()) {
+                    mCleanUserNameIv.setVisibility(View.GONE);
+                } else {
+                    mCleanUserNameIv.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        mUSerPwsEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mUSerPwsEt.getText().toString().isEmpty()) {
+                    mCleanPsIv.setVisibility(View.GONE);
+                } else {
+                    mCleanPsIv.setVisibility(View.VISIBLE);
                 }
             }
         });

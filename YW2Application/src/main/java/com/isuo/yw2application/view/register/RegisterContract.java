@@ -18,7 +18,7 @@ interface RegisterContract {
 
     interface View extends BaseView<Presenter> {
 
-        void getSuccess();
+        void getSuccess(String code);
 
         void getFail();
 

@@ -1,6 +1,7 @@
 package com.sito.library.utils;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 /**
  * Created by Administrator on 2016/6/3.
@@ -14,8 +15,8 @@ public class CheckInput {
      */
     @Nullable
     public static String checkPhoneNum(String phoneNum) {
-        String compare = "1[3|4|5|7|8][0-9]{9}";
-        if (phoneNum.equals("")) {
+        String compare = "1[0-9]{10}";
+        if (TextUtils.isEmpty(phoneNum)) {
             return "请输入正确的手机号";
         } else if (phoneNum.length() != 11) {
             return "请输入正确的手机号";

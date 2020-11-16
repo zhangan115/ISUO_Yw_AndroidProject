@@ -37,7 +37,7 @@ final class RegisterPresenter implements RegisterContract.Presenter {
         mSubscription.add(mRepository.getRegisterCode(phoneNum, new IObjectCallBack<String>() {
             @Override
             public void onSuccess(@NonNull String s) {
-                mView.getSuccess();
+                mView.getSuccess(s);
             }
 
             @Override
@@ -55,7 +55,7 @@ final class RegisterPresenter implements RegisterContract.Presenter {
 
     @Override
     public void toRegister(@NonNull JSONObject json) {
-        mSubscription.add(mRepository.register(json, new IObjectCallBack<String>() {
+        mSubscription.add(mRepository.addUserRegister(json, new IObjectCallBack<String>() {
             @Override
             public void onSuccess(@NonNull String s) {
                 mView.registerSuccess();
