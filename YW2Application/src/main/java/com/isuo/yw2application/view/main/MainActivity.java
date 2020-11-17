@@ -145,7 +145,9 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
         userNameTv.setText(user.getRealName());
         TextView userInfoTv = findViewById(R.id.textUserInfo);
         if (user.getCustomer() != null) {
-            userInfoTv.setText(String.format("%s-%s", user.getCustomer().getCustomerName(), user.getUserRoleNames()));
+            if (!TextUtils.isEmpty(user.getUserRoleNames())) {
+                userInfoTv.setText(String.format("%s-%s", user.getCustomer().getCustomerName(), user.getUserRoleNames()));
+            }
         } else {
             userInfoTv.setText(user.getUserRoleNames());
         }
@@ -221,7 +223,7 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
             Yw2Application.getInstance().needLogin();
         } else if (id == R.id.userImage) {
             photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-            showPhotoDialog(this, photoFile, ACTION_START_CAMERA,ACTION_START_PHOTO, new OnPhotoShowListener() {
+            showPhotoDialog(this, photoFile, ACTION_START_CAMERA, ACTION_START_PHOTO, new OnPhotoShowListener() {
                 @Override
                 public void showPhoto() {
                     ViewPagePhotoActivity.startActivity(MainActivity.this, new String[]{Yw2Application.getInstance().getCurrentUser().getPortraitUrl()}, 0);

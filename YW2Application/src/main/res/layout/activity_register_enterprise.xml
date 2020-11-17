@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="我公司还没有创建使用小梭优维企业，我来创建"
+            android:text="我的公司已经是小梭优维+的企业，申请加入"
             android:textColor="@color/text333"
             android:textSize="14sp" />
 
@@ -37,7 +37,7 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/bg_btn_report"
             android:gravity="center"
-            android:text="我要加入已有的企业"
+            android:text="加入已有的企业"
             android:textColor="#fff"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -58,7 +58,7 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/bg_btn_report"
             android:gravity="center"
-            android:text="创建新的使用企业"
+            android:text="创建新的企业"
             android:textColor="#fff"
             android:textSize="14sp"
             android:textStyle="bold" />

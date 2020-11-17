@@ -69,6 +69,8 @@ public interface CustomerDataSource {
         void showMessage(String message);
 
         void showFreezeMessage(String message);
+
+        void needJoinCustomer(String message);
     }
 
     interface AutoLoginCallBack {

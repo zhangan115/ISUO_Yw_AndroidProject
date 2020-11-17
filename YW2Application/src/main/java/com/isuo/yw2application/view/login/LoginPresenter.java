@@ -66,6 +66,11 @@ final class LoginPresenter implements LoginContract.Presenter {
             public void showFreezeMessage(String message) {
                 mView.showFreezeDialog(message);
             }
+
+            @Override
+            public void needJoinCustomer(String message) {
+                mView.showJoinDialog(message);
+            }
         }));
     }
 

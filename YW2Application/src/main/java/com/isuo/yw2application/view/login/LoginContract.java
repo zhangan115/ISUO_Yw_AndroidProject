@@ -30,5 +30,7 @@ interface LoginContract {
 
         void showFreezeDialog(String message);
 
+        void showJoinDialog(String message);
+
     }
 }

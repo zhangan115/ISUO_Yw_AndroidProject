@@ -21,6 +21,8 @@ import com.isuo.yw2application.view.base.MvpFragment;
 import com.isuo.yw2application.view.main.data.StandInfoActivity;
 import com.isuo.yw2application.view.pass.ForgePassActivity;
 import com.isuo.yw2application.view.register.RegisterActivity;
+import com.isuo.yw2application.view.register.enterprise.RegisterEnterpriseActivity;
+import com.isuo.yw2application.view.register.enterprise.add.RegisterAddEnterpriseActivity;
 import com.isuo.yw2application.view.test.TestActivity;
 import com.orhanobut.logger.Logger;
 
@@ -95,6 +97,18 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
                 .positiveText("确定").show();
     }
 
+    @Override
+    public void showJoinDialog(String message) {
+        new MaterialDialog.Builder(getActivity()).content(message)
+                .positiveText("确定")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        startActivity(new Intent(getActivity(), RegisterEnterpriseActivity.class));
+                    }
+                }).show();
+    }
+
 
     @Override
     public void setPresenter(LoginContract.Presenter presenter) {
@@ -125,7 +139,7 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
                 intent.putExtra(ConstantStr.KEY_TITLE, "平台使用协议及隐私条款");
                 String url = Yw2Application.getInstance().AppHost();
                 int lastPosition = url.lastIndexOf("/");
-                String newUrl = url.substring(0,lastPosition) + "/info.html" ;
+                String newUrl = url.substring(0, lastPosition) + "/info.html";
                 intent.putExtra(ConstantStr.KEY_BUNDLE_STR, newUrl);
                 startActivity(intent);
                 break;

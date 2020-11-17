@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,41 +43,54 @@ public class RegisterAddEnterpriseActivity extends BaseActivity implements Regis
         setLayoutAndToolbar(R.layout.activity_register_add_enterprise, "申请注册企业");
         enterpriseNameEt = findViewById(R.id.enterpriseNameEt);
         cleanIv = findViewById(R.id.clean_name_iv);
+        cleanIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                enterpriseNameEt.setText("");
+            }
+        });
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         RVAdapter<User.CustomerBean> adapter = new RVAdapter<User.CustomerBean>(recyclerView, data, R.layout.item_enterprise_name) {
             @Override
             public void showData(ViewHolder vHolder, User.CustomerBean data, int position) {
                 TextView nameTv = (TextView) vHolder.getView(R.id.nameTv);
-                nameTv.setText(String.format("%s%s", String.valueOf(position + 1), data.getCustomerName()));
+                nameTv.setText(String.format("%s. %s", String.valueOf(position + 1), data.getCustomerName()));
+                Button button = (Button) vHolder.getView(R.id.btn);
+                button.setTag(position);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = (int) v.getTag();
+                        joinCustomer(position);
+                    }
+                });
             }
         };
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new RVAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, final int position) {
-                String text = RegisterAddEnterpriseActivity.this.data.get(position).getCustomerName();
-                text = "是否申请加入" + text + "?";
-                new MaterialDialog.Builder(RegisterAddEnterpriseActivity.this)
-                        .content(text)
-                        .negativeText("取消")
-                        .positiveText("确定")
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                JSONObject jsonObject = new JSONObject();
-                                try {
-                                    jsonObject.put("", RegisterAddEnterpriseActivity.this.data.get(position).getCustomerId());
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                mPresenter.askCustomer(jsonObject);
-                            }
-                        }).show();
-            }
-        });
         etListener();
         new RegisterAddEnterprisePresenter(Yw2Application.getInstance().getRepositoryComponent().getRepository(), this);
+    }
+
+    private void joinCustomer(final int position) {
+        String text = RegisterAddEnterpriseActivity.this.data.get(position).getCustomerName();
+        text = "是否申请加入" + text + "?";
+        new MaterialDialog.Builder(RegisterAddEnterpriseActivity.this)
+                .content(text)
+                .negativeText("取消")
+                .positiveText("确定")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("customerId", RegisterAddEnterpriseActivity.this.data.get(position).getCustomerId());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        mPresenter.askCustomer(jsonObject);
+                    }
+                }).show();
     }
 
     private void etListener() {

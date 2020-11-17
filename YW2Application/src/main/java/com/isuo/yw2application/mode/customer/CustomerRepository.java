@@ -208,9 +208,12 @@ public class CustomerRepository implements CustomerDataSource {
                             if (userBean.getErrorCode() == 10001 || userBean.getErrorCode() == 10002) {
                                 message = userBean.getMessage();
                             }
-                        } else if (userBean.getErrorCode() == 1002) {
+                        } else if (userBean.getErrorCode() == 1002 || userBean.getErrorCode() == 1055) {
                             callBack.onFinish();
                             callBack.showFreezeMessage(userBean.getMessage());
+                        } else if (userBean.getErrorCode() == 1054) {
+                            callBack.onFinish();
+                            callBack.needJoinCustomer(userBean.getMessage());
                         } else {
                             Yw2Application.getInstance().showToast(userBean.getMessage());
                             callBack.onFinish();
@@ -339,6 +342,7 @@ public class CustomerRepository implements CustomerDataSource {
                                 Yw2Application.getInstance().setCurrentUser(userBean.getData());
                             } else {
                                 Yw2Application.getInstance().showToast(userBean.getMessage());
+                                Yw2Application.getInstance().exitCurrentUser();
                                 callBack.onNeedLogin();
                             }
                         }
@@ -1575,7 +1579,7 @@ public class CustomerRepository implements CustomerDataSource {
                 callBack.onFinish();
                 if (s != null) {
                     callBack.onSuccess(s.getCode());
-                }else {
+                } else {
                     callBack.onError("");
                 }
             }
@@ -1636,7 +1640,7 @@ public class CustomerRepository implements CustomerDataSource {
                 callBack.onFinish();
                 if (list != null) {
                     callBack.onSuccess(list);
-                }else {
+                } else {
                     callBack.onError("");
                 }
             }
@@ -1648,6 +1652,7 @@ public class CustomerRepository implements CustomerDataSource {
             }
         }.execute1();
     }
+
     @NonNull
     @Override
     public Subscription joinCustomer(JSONObject json, final IObjectCallBack<String> callBack) {
