@@ -10,17 +10,11 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingBottom="20dip">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dip"
-            android:src="@mipmap/ic_launcher"
-            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_content"
@@ -29,9 +23,9 @@
             android:layout_marginTop="20dp"
             android:gravity="top"
             android:lineSpacingExtra="1dip"
-            android:paddingBottom="20dip"
             android:paddingLeft="10dip"
             android:paddingRight="6dip"
+            android:paddingBottom="20dip"
             android:text="@string/mine_about_content"
             android:textColor="#5f5f5f"
             android:textSize="16sp" />
@@ -59,4 +53,13 @@
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:gravity="center"
+        android:text="Copyright@2018-2020小梭易智出品"
+        android:textColor="@color/gray_999999"
+        android:textSize="12sp" />
 </LinearLayout>
