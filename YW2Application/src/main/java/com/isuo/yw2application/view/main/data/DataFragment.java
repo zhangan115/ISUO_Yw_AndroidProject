@@ -62,6 +62,7 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
         rootView.findViewById(R.id.itemLayout6).setOnClickListener(this);
         rootView.findViewById(R.id.itemLayout7).setOnClickListener(this);
         rootView.findViewById(R.id.itemLayout8).setOnClickListener(this);
+        rootView.findViewById(R.id.itemLayout9).setOnClickListener(this);
         convenientBanner = rootView.findViewById(R.id.convenientBanner);
         List<Integer> defaultValue = new ArrayList<>();
         defaultValue.add(R.drawable.banner);
@@ -117,6 +118,9 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
                 startActivity(new Intent(getActivity(), FaultLineActivity.class));
                 break;
             case R.id.itemLayout8:
+                startActivity(new Intent(getActivity(), StatisticsPersonActivity.class));
+                break;
+            case R.id.itemLayout9:
                 startActivity(new Intent(getActivity(), StatisticsPersonActivity.class));
                 break;
         }

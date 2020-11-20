@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="getui.permission.GetuiService.${applicationId}" />
     <uses-permission android:name="android.permission.NFC" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <permission
         android:name="getui.permission.GetuiService.${applicationId}"
@@ -225,9 +225,9 @@
             android:allowTaskReparenting="true"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateUnchanged"
-            android:taskAffinity="${TASK_AFFINITY_VALUE}" />
+            android:windowSoftInputMode="stateUnchanged" />
         <activity
             android:name=".view.main.device.info.CreateEquipInfoActivity"
             android:allowTaskReparenting="true"
@@ -307,6 +307,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+
         <!--故障类型-->
         <activity
             android:name=".view.main.alarm.list.AlarmListActivity"
@@ -390,6 +391,12 @@
         <!-- 所有工作-->
         <activity
             android:name=".view.main.work.all.WorkItemAllActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.main.work.safe_manager.SafeManagerActivity"
             android:allowTaskReparenting="true"
             android:configChanges="orientation|keyboardHidden"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"

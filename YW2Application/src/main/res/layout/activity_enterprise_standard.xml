@@ -24,5 +24,7 @@
                 android:scrollbars="none"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
         </com.sito.library.widget.RecycleRefreshLoadLayout>
+
+        <include layout="@layout/layout_no_data" />
     </RelativeLayout>
 </LinearLayout>

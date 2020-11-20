@@ -37,6 +37,7 @@ import com.isuo.yw2application.view.main.work.all.WorkItemAllActivity;
 import com.isuo.yw2application.view.main.work.all.WorkItemAllIntent;
 import com.isuo.yw2application.view.main.work.all.widget.WorkItemGridView;
 import com.isuo.yw2application.view.main.work.message.NewsListActivity;
+import com.isuo.yw2application.view.main.work.safe_manager.SafeManagerActivity;
 import com.isuo.yw2application.view.main.work.sos.SOSActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
 import com.qw.soul.permission.SoulPermission;
@@ -262,7 +263,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                 startActivity(new Intent(getActivity(), SOSActivity.class));
                 break;
             case R.id.workItem10:
-
+                startActivity(new Intent(getActivity(), SafeManagerActivity.class));
                 break;
         }
     }
