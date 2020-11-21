@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.EnterpriseCustomer;
+import com.isuo.yw2application.mode.bean.JoinBean;
 import com.isuo.yw2application.mode.bean.NewVersion;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.check.CheckBean;
@@ -302,5 +303,11 @@ public interface CustomerDataSource {
 
     @NonNull
     Subscription joinCustomer(JSONObject json, IObjectCallBack<String> callBack);
+
+    @NonNull
+    Subscription getJoinList(JSONObject json, IObjectCallBack<JoinBean> callBack);
+
+    @NonNull
+    Subscription joinAgree(JSONObject json, IObjectCallBack<String> callBack);
 
 }

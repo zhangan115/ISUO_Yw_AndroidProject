@@ -38,6 +38,7 @@ import com.isuo.yw2application.view.main.task.overhaul.WorkOverhaulActivity;
 import com.isuo.yw2application.view.main.task.overhaul.detail.OverhaulDetailActivity;
 import com.isuo.yw2application.view.main.work.enterprise.EnterpriseActivity;
 import com.isuo.yw2application.view.main.work.inject.InjectActivity;
+import com.isuo.yw2application.view.main.work.message.join.JoinEnterpriseActivity;
 import com.isuo.yw2application.view.main.work.message.widget.MessageType4Layout;
 import com.isuo.yw2application.view.main.work.safe.NewsSafeActivity;
 import com.isuo.yw2application.view.main.work.message.widget.MessageItemLayout;
@@ -252,6 +253,8 @@ public class NewsListFragment extends LazyLoadFragmentV4<NewsListContract.Presen
                     startActivity(new Intent(getActivity(), WorkOverhaulActivity.class));
                 } else if (type == 503) {
                     startActivity(new Intent(getActivity(), WorkIncrementActivity.class));
+                }else if (type == 801) {
+                    startActivity(new Intent(getActivity(), JoinEnterpriseActivity.class));
                 }
             }
         }

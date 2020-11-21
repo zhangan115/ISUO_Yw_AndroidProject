@@ -28,6 +28,7 @@ public class User implements Parcelable {
     private int isRepair;
     private String userRoleNames;
     private String portraitUrl;
+    private long createTime;
     private List<ResTree> resTreeList;
 
     public String getPortraitUrl() {
@@ -132,6 +133,14 @@ public class User implements Parcelable {
 
     public void setResTreeList(List<ResTree> resTreeList) {
         this.resTreeList = resTreeList;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 
     public static class CustomerBean implements Parcelable {

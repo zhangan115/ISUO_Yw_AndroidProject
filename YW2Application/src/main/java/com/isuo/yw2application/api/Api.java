@@ -7,6 +7,7 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.Bean;
 import com.isuo.yw2application.mode.bean.EnterpriseCustomer;
+import com.isuo.yw2application.mode.bean.JoinBean;
 import com.isuo.yw2application.mode.bean.NewVersion;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.VerificationCode;
@@ -203,6 +204,7 @@ public class Api {
 
         /**
          * 获取
+         *
          * @param info
          * @return
          */
@@ -221,6 +223,24 @@ public class Api {
 
         @GET("message/readMessage.json")
         Observable<Bean<MessageListBean>> getFireSaveMessage(@Query("messageId") long id);
+
+        /**
+         * 申请列表
+         *
+         * @param info 参数
+         */
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("user/list.json")
+        Observable<Bean<JoinBean>> getJoinList(@Body() String info);
+
+        /**
+         * 同意申请
+         *
+         * @param info 参数
+         */
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("weixin/agree/join.json")
+        Observable<Bean<String>> agree(@Body() String info);
     }
 
     //获取设备

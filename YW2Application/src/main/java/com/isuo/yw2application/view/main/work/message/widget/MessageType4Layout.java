@@ -41,7 +41,6 @@ public class MessageType4Layout extends LinearLayout {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         tv_2.setText(content);
         String name = null;
         int backGround = -1;
@@ -122,10 +121,6 @@ public class MessageType4Layout extends LinearLayout {
                 name = "专项";
                 backGround = R.drawable.message_green;
                 break;
-            case 701:
-                name = "注油";
-                backGround = R.drawable.message_purple;
-                break;
             case 601:
                 name = "借用";
                 backGround = R.drawable.message_blue;
@@ -133,6 +128,14 @@ public class MessageType4Layout extends LinearLayout {
             case 602:
                 name = "催还";
                 backGround = R.drawable.message_yellow;
+                break;
+            case 701:
+                name = "注油";
+                backGround = R.drawable.message_purple;
+                break;
+            case 801:
+                name = "申请";
+                backGround = R.drawable.message_blue;
                 break;
         }
         if (!TextUtils.isEmpty(name)) {

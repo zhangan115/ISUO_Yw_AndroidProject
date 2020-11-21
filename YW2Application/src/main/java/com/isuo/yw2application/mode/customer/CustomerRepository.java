@@ -20,6 +20,7 @@ import com.isuo.yw2application.mode.Bean;
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.EnterpriseCustomer;
+import com.isuo.yw2application.mode.bean.JoinBean;
 import com.isuo.yw2application.mode.bean.NewVersion;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.VerificationCode;
@@ -1658,6 +1659,49 @@ public class CustomerRepository implements CustomerDataSource {
     public Subscription joinCustomer(JSONObject json, final IObjectCallBack<String> callBack) {
         Observable<Bean<String>> observable = Api.createRetrofit()
                 .create(Api.Login.class).joinCustomer(json.toString());
+        return new ApiCallBack<String>(observable) {
+            @Override
+            public void onSuccess(@Nullable String list) {
+                callBack.onFinish();
+                callBack.onSuccess("");
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription getJoinList(JSONObject json,final IObjectCallBack<JoinBean> callBack) {
+        Observable<Bean<JoinBean>> observable = Api.createRetrofit().create(Api.MessageApi.class).getJoinList(json.toString());
+        return new ApiCallBack<JoinBean>(observable) {
+            @Override
+            public void onSuccess(@Nullable JoinBean bean) {
+                callBack.onFinish();
+                if (bean != null && bean.getList() != null && !bean.getList().isEmpty()) {
+                    callBack.onSuccess(bean);
+                } else {
+                    callBack.onError("");
+                }
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription joinAgree(JSONObject json, final IObjectCallBack<String> callBack) {
+        Observable<Bean<String>> observable = Api.createRetrofit()
+                .create(Api.MessageApi.class).agree(json.toString());
         return new ApiCallBack<String>(observable) {
             @Override
             public void onSuccess(@Nullable String list) {
