@@ -1,6 +1,5 @@
 package com.isuo.yw2application.view.main.data.fault_type;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.view.View;
@@ -16,9 +15,8 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.mode.bean.ChartData;
 import com.isuo.yw2application.mode.bean.discover.FaultLevel;
-import com.isuo.yw2application.utils.Utils;
+import com.isuo.yw2application.utils.ChooseDateDialog;
 import com.isuo.yw2application.view.base.BaseActivity;
-import com.sito.library.widget.DateDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,7 +29,6 @@ public class FaultTypeActivity extends BaseActivity implements FaultTypeContract
     private LineChart mLineChart;
     private TextView mTime;
     private int mYear;
-    private boolean isExp;
     List<String> month;
     @Inject
     FaultTypePresenter mFaultTypePresenter;
@@ -57,36 +54,16 @@ public class FaultTypeActivity extends BaseActivity implements FaultTypeContract
         mTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isExp) {
-                    isExp = true;
-                    //箭头向上
-                    Utils.setDrawable(FaultTypeActivity.this, R.drawable.up_arrow, mTime, 2);
-                } else {
-                    isExp = false;
-                    Utils.setDrawable(FaultTypeActivity.this, R.drawable.drop_down_arrow, mTime, 2);
-                }
-                final DateDialog dateDlg = new DateDialog(FaultTypeActivity.this, R.style.MyDateDialog, mYear, 1, 1);
-                dateDlg.setConfirmButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Calendar calendar = dateDlg.getDate();
-                        mYear = calendar.get(Calendar.YEAR);
-                        mTime.setText(String.valueOf(mYear));
-                        isExp = false;
-                        Utils.setDrawable(FaultTypeActivity.this, R.drawable.drop_down_arrow, mTime, 2);
-                        mPresenter.getChartData(String.valueOf(mYear));
-                    }
-                });
-                dateDlg.setBackButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dateDlg.cancel();
-                        isExp = false;
-                        Utils.setDrawable(FaultTypeActivity.this, R.drawable.drop_down_arrow, mTime, 2);
-                    }
-                });
-                dateDlg.pickYear();
-                dateDlg.show();
+                new ChooseDateDialog(FaultTypeActivity.this, R.style.MyDateDialog)
+                        .pickYear()
+                        .setResultListener(new ChooseDateDialog.OnDateChooseListener() {
+                            @Override
+                            public void onDate(Calendar calendar) {
+                                mYear = calendar.get(Calendar.YEAR);
+                                mTime.setText(String.valueOf(mYear));
+                                mPresenter.getChartData(String.valueOf(mYear));
+                            }
+                        }).show();
             }
         });
         mPresenter.getChartData(mTime.getText().toString());

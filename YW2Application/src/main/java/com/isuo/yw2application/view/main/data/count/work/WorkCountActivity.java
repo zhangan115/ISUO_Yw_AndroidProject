@@ -2,6 +2,7 @@ package com.isuo.yw2application.view.main.data.count.work;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -12,6 +13,7 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.mode.bean.count.WorkCount;
 import com.isuo.yw2application.mode.bean.discover.DeptType;
+import com.isuo.yw2application.utils.ChooseDateDialog;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.sito.library.chart.ChartData;
 import com.sito.library.chart.ChartView;
@@ -88,26 +90,19 @@ public class WorkCountActivity extends BaseActivity implements WorkCountContract
                         .show();
                 break;
             case R.id.tv_choose_time:
-                final DateDialog dateDlg = new DateDialog(this, R.style.MyDateDialog, mCurrentCalendar.get(Calendar.YEAR)
-                        , mCurrentCalendar.get(Calendar.MONTH) + 1
-                        , mCurrentCalendar.get(Calendar.DAY_OF_MONTH));
-                dateDlg.setConfirmButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        mCurrentCalendar = dateDlg.getDate();
-                        chooseTime.setText(getDate(mCurrentCalendar));
-                        mPresenter.getWorkCountData(mDeptId, getDate(mCurrentCalendar));
-                    }
-                });
-                dateDlg.setBackButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dateDlg.cancel();
-                    }
-                });
-                dateDlg.pickMonth();
-                dateDlg.show();
+                new ChooseDateDialog(this, R.style.MyDateDialog)
+                        .pickMonth()
+                        .setCurrent(mCurrentCalendar)
+                        .setResultListener(new ChooseDateDialog.OnDateChooseListener() {
+                            @Override
+                            public void onDate(Calendar calendar) {
+                                mCurrentCalendar = calendar;
+                                chooseTime.setText(getDate(mCurrentCalendar));
+                                if (!TextUtils.isEmpty(mDeptId)) {
+                                    mPresenter.getWorkCountData(mDeptId, getDate(mCurrentCalendar));
+                                }
+                            }
+                        }).show();
                 break;
         }
     }
@@ -121,6 +116,9 @@ public class WorkCountActivity extends BaseActivity implements WorkCountContract
         }
         mDeptId = String.valueOf(mDeptTypes.get(0).getDeptId());
         chooseDept.setText(mDeptTypes.get(0).getDeptName());
+        if (!mDeptTypes.isEmpty()) {
+            chooseDept.setVisibility(View.VISIBLE);
+        }
         mPresenter.getWorkCountData(mDeptId, getDate(mCurrentCalendar));
     }
 

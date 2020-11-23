@@ -80,7 +80,6 @@ public class DealAlarmCountActivity extends BaseActivity implements FaultCountCo
                 new ChooseDateDialog(this, R.style.MyDateDialog)
                         .pickMonth()
                         .setCurrent(mCurrentCalendar)
-                        .setMaxDate(Calendar.getInstance(Locale.CHINA))
                         .setResultListener(new ChooseDateDialog.OnDateChooseListener() {
                             @Override
                             public void onDate(Calendar calendar) {

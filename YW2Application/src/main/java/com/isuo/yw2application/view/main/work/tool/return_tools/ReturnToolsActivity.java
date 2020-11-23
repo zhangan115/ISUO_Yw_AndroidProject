@@ -1,15 +1,11 @@
 package com.isuo.yw2application.view.main.work.tool.return_tools;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.isuo.yw2application.R;
@@ -19,6 +15,7 @@ import com.isuo.yw2application.mode.tools.ToolsRepository;
 import com.isuo.yw2application.mode.tools.bean.CheckListBean;
 import com.isuo.yw2application.mode.tools.bean.Tools;
 import com.isuo.yw2application.mode.tools.bean.ToolsLog;
+import com.isuo.yw2application.utils.ChooseDateDialog;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.widget.CheckListItemLayout;
 import com.sito.library.utils.DataUtil;
@@ -91,13 +88,12 @@ public class ReturnToolsActivity extends BaseActivity implements ReturnToolsCont
                 mPresenter.returnTools(jsonObject);
                 break;
             case R.id.llReturnTime:
-                new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
-                        new TimePickerDialog(ReturnToolsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                new ChooseDateDialog(this, R.style.MyDateDialog)
+                        .setCurrent(mCreateCalender)
+                        .setResultListener(new ChooseDateDialog.OnDateChooseListener() {
                             @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                mCreateCalender.set(year, month, dayOfMonth, hourOfDay, minute);
+                            public void onDate(Calendar calendar) {
+                                mCreateCalender = calendar;
                                 String time = getDataStr(mCreateCalender);
                                 tvToolsReturnTime.setText(time);
                                 try {
@@ -106,11 +102,7 @@ public class ReturnToolsActivity extends BaseActivity implements ReturnToolsCont
                                     e.printStackTrace();
                                 }
                             }
-                        }, mCreateCalender.get(Calendar.HOUR_OF_DAY), mCreateCalender.get(Calendar.MINUTE), true).show();
-                    }
-                }, mCreateCalender.get(Calendar.YEAR), mCreateCalender.get(Calendar.MONTH)
-                        , mCreateCalender.get(Calendar.DAY_OF_MONTH))
-                        .show();
+                        }).show();
                 break;
         }
     }

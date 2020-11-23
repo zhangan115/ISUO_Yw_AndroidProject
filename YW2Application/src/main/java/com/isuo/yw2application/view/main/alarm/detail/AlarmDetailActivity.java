@@ -2,7 +2,6 @@ package com.isuo.yw2application.view.main.alarm.detail;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
@@ -24,6 +22,7 @@ import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.employee.EmployeeBean;
 import com.isuo.yw2application.mode.bean.fault.FaultDetail;
 import com.isuo.yw2application.mode.bean.fault.JobPackageBean;
+import com.isuo.yw2application.utils.ChooseDateDialog;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.main.adduser.EmployeeActivity;
 import com.isuo.yw2application.widget.FlowLayout;
@@ -72,6 +71,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
     private String jobId;
     private int actionType, careType;
     private String careEndTime;
+    private Calendar mCurrentCalender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -532,45 +532,35 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
         tv_next_user.setText("指派给");
         final TextView start_time = findViewById(R.id.start_time);
         final TextView end_time = findViewById(R.id.end_time);
-        final Calendar mCurrentCalender = Calendar.getInstance(Locale.CHINA);
+        mCurrentCalender = Calendar.getInstance(Locale.CHINA);
         start_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(AlarmDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
-                        new TimePickerDialog(AlarmDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                new ChooseDateDialog(AlarmDetailActivity.this)
+                        .setCurrent(mCurrentCalender)
+                        .setResultListener(new ChooseDateDialog.OnDateChooseListener() {
                             @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                mCurrentCalender.set(year, month, dayOfMonth, hourOfDay, minute);
+                            public void onDate(Calendar calendar) {
+                                mCurrentCalender = calendar;
                                 startTime = getDataStr(mCurrentCalender);
                                 start_time.setText(getShowDataStr(mCurrentCalender));
                             }
-                        }, 0, 0, true).show();
-                    }
-                }, mCurrentCalender.get(Calendar.YEAR), mCurrentCalender.get(Calendar.MONTH)
-                        , mCurrentCalender.get(Calendar.DAY_OF_MONTH))
-                        .show();
+                        }).show();
             }
         });
         end_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(AlarmDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
-                        new TimePickerDialog(AlarmDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                new ChooseDateDialog(AlarmDetailActivity.this)
+                        .setCurrent(mCurrentCalender)
+                        .setResultListener(new ChooseDateDialog.OnDateChooseListener() {
                             @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                mCurrentCalender.set(year, month, dayOfMonth, hourOfDay, minute);
+                            public void onDate(Calendar calendar) {
+                                mCurrentCalender = calendar;
                                 endTime = getDataStr(mCurrentCalender);
                                 end_time.setText(getShowDataStr(mCurrentCalender));
                             }
-                        }, 0, 0, true).show();
-                    }
-                }, mCurrentCalender.get(Calendar.YEAR), mCurrentCalender.get(Calendar.MONTH)
-                        , mCurrentCalender.get(Calendar.DAY_OF_MONTH))
-                        .show();
+                        }).show();
             }
         });
         LinearLayout ll_add_user = findViewById(R.id.ll_add_user);

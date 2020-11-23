@@ -1,6 +1,5 @@
 package com.isuo.yw2application.view.main.data.fault_report;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,11 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.mode.bean.discover.DeptType;
 import com.isuo.yw2application.mode.bean.discover.FaultReport;
+import com.isuo.yw2application.utils.ChooseDateDialog;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.sito.library.chart.ChartView;
 import com.sito.library.chart.ChartXYView;
 import com.sito.library.utils.DisplayUtil;
-import com.sito.library.widget.DateDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +27,7 @@ import javax.inject.Inject;
 public class FaultReportActivity extends BaseActivity implements FaultReportContract.View {
 
     private String deptType = "1,2";//部门ID
-    private long mDeptId;
+    private long mDeptId = -1;
     private LinearLayout addViewLayout;
     private List<DeptType> mDeptTypes;
     private TextView chooseDept, chooseTime;
@@ -77,26 +76,20 @@ public class FaultReportActivity extends BaseActivity implements FaultReportCont
                         .show();
                 break;
             case R.id.id_fault_time:
-                final DateDialog dateDlg = new DateDialog(this, R.style.MyDateDialog, mCurrentCalendar.get(Calendar.YEAR)
-                        , mCurrentCalendar.get(Calendar.MONTH) + 1
-                        , mCurrentCalendar.get(Calendar.DAY_OF_MONTH));
-                dateDlg.setConfirmButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        mCurrentCalendar = dateDlg.getDate();
-                        chooseTime.setText(getDate(mCurrentCalendar));
-                        mPresenter.getChartData(mDeptId, getDate(mCurrentCalendar));
-                    }
-                });
-                dateDlg.setBackButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dateDlg.cancel();
-                    }
-                });
-                dateDlg.pickMonth();
-                dateDlg.show();
+                new ChooseDateDialog(this, R.style.MyDateDialog)
+                        .pickMonth()
+                        .setCurrent(mCurrentCalendar)
+                        .setResultListener(new ChooseDateDialog.OnDateChooseListener() {
+                            @Override
+                            public void onDate(Calendar calendar) {
+                                mCurrentCalendar = calendar;
+                                chooseTime.setText(getDate(mCurrentCalendar));
+                                if (mDeptId==-1){
+                                    return;
+                                }
+                                mPresenter.getChartData(mDeptId, getDate(mCurrentCalendar));
+                            }
+                        }).show();
                 break;
         }
     }
@@ -107,6 +100,9 @@ public class FaultReportActivity extends BaseActivity implements FaultReportCont
         listStr = new ArrayList<>();
         for (int i = 0; i < mDeptTypes.size(); i++) {
             listStr.add(mDeptTypes.get(i).getDeptName());
+        }
+        if (!mDeptTypes.isEmpty()){
+            chooseDept.setVisibility(View.VISIBLE);
         }
         mDeptId = mDeptTypes.get(0).getDeptId();
         chooseDept.setText(mDeptTypes.get(0).getDeptName());

@@ -2,8 +2,6 @@ package com.isuo.yw2application.view.main.generate.increment;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
@@ -14,16 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.zxing.client.android.CaptureActivity;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
@@ -36,13 +31,12 @@ import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.db.Image;
 import com.isuo.yw2application.mode.bean.employee.EmployeeBean;
 import com.isuo.yw2application.mode.bean.option.OptionBean;
+import com.isuo.yw2application.utils.ChooseDateDialog;
 import com.isuo.yw2application.utils.CountDownTimerUtils;
 import com.isuo.yw2application.utils.MediaPlayerManager;
 import com.isuo.yw2application.utils.PhotoUtils;
 import com.isuo.yw2application.view.base.MvpFragment;
-
 import com.isuo.yw2application.view.main.adduser.EmployeeActivity;
-import com.isuo.yw2application.view.main.alarm.fault.FaultActivity;
 import com.isuo.yw2application.view.main.device.list.EquipListActivity;
 import com.isuo.yw2application.widget.SpeechDialog;
 import com.isuo.yw2application.widget.SwitchButton;
@@ -312,35 +306,29 @@ public class GenerateIncrementFragment extends MvpFragment<GenerateIncrementCont
                         .show();
                 break;
             case R.id.ll_increment_start_time:
-                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
-                        new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                new ChooseDateDialog(getActivity(),R.style.MyDateDialog)
+                        .setCurrent(mStartCalender)
+                        .setResultListener(new ChooseDateDialog.OnDateChooseListener() {
                             @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                mStartCalender.set(year, month, dayOfMonth, hourOfDay, minute);
+                            public void onDate(Calendar calendar) {
+                                mStartCalender = calendar;
                                 startTime = getDataStr(mStartCalender);
                                 startTimeTv.setText(startTime);
                             }
-                        }, 0, 0, true).show();
-                    }
-                }, mStartCalender.get(Calendar.YEAR), mStartCalender.get(Calendar.MONTH), mStartCalender.get(Calendar.DAY_OF_MONTH))
+                        })
                         .show();
                 break;
             case R.id.ll_increment_end_time:
-                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
-                        new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                new ChooseDateDialog(getActivity(),R.style.MyDateDialog)
+                        .setCurrent(mEndCalender)
+                        .setResultListener(new ChooseDateDialog.OnDateChooseListener() {
                             @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                mEndCalender.set(year, month, dayOfMonth, hourOfDay, minute);
+                            public void onDate(Calendar calendar) {
+                                mEndCalender = calendar;
                                 endTime = getDataStr(mEndCalender);
                                 endTimeTv.setText(endTime);
                             }
-                        }, 0, 0, true).show();
-                    }
-                }, mEndCalender.get(Calendar.YEAR), mEndCalender.get(Calendar.MONTH), mEndCalender.get(Calendar.DAY_OF_MONTH))
+                        })
                         .show();
                 break;
             case R.id.id_increment_speech:

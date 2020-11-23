@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
@@ -39,7 +40,7 @@
                         android:id="@+id/tv_choose_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_speech_item"
+                        android:background="@drawable/bg_item_shape"
                         android:drawableRight="@drawable/list_arrow"
                         android:drawablePadding="4dp"
                         android:padding="10dp"
@@ -51,12 +52,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:background="@drawable/bg_speech_item"
+                        android:background="@drawable/bg_item_shape"
                         android:drawableRight="@drawable/list_arrow"
                         android:drawablePadding="4dp"
                         android:lines="1"
                         android:padding="10dp"
-                        android:text="运行一班"
+                        android:visibility="gone"
+                        tools:text="运行一班"
                         android:textColor="@color/text333"
                         android:textSize="14sp" />
 

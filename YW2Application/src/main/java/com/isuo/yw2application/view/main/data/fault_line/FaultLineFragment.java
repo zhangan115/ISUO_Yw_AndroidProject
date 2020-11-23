@@ -8,6 +8,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.isuo.yw2application.mode.bean.fault.AlarmCount;
 import com.isuo.yw2application.mode.bean.fault.FaultCountBean;
 import com.isuo.yw2application.mode.bean.fault.FaultDayCountBean;
 import com.isuo.yw2application.mode.bean.fault.FaultYearCountBean;
+import com.isuo.yw2application.utils.ChooseDateDialog;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.alarm.equipalarm.EquipAlarmActivity;
 import com.isuo.yw2application.view.main.alarm.list.AlarmListActivity;
@@ -196,26 +198,19 @@ public class FaultLineFragment extends MvpFragmentV4<FaultLineContract.Presenter
                 alarmView.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_choose_year:
-                final DateDialog dateDlg = new DateDialog(getActivity(), R.style.MyDateDialog, mCurrentCalendar.get(Calendar.YEAR), 1, 1);
-                dateDlg.setConfirmButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        mCurrentCalendar = dateDlg.getDate();
-                        chooseYear.setText(String.valueOf(mCurrentCalendar.get(Calendar.YEAR)));
-                        if (mPresenter != null) {
-                            mPresenter.getFaultYearCount(String.valueOf(mCurrentCalendar.get(Calendar.YEAR)));
-                        }
-                    }
-                });
-                dateDlg.setBackButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dateDlg.cancel();
-                    }
-                });
-                dateDlg.pickYear();
-                dateDlg.show();
+                new ChooseDateDialog(getActivity(), R.style.MyDateDialog)
+                        .pickYear()
+                        .setCurrent(mCurrentCalendar)
+                        .setResultListener(new ChooseDateDialog.OnDateChooseListener() {
+                            @Override
+                            public void onDate(Calendar calendar) {
+                                mCurrentCalendar = calendar;
+                                chooseYear.setText(String.valueOf(mCurrentCalendar.get(Calendar.YEAR)));
+                                if (mPresenter != null) {
+                                    mPresenter.getFaultYearCount(String.valueOf(mCurrentCalendar.get(Calendar.YEAR)));
+                                }
+                            }
+                        }).show();
                 break;
         }
     }
