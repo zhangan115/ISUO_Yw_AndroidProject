@@ -16,16 +16,13 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
-import com.isuo.yw2application.view.main.MainActivity;
 import com.isuo.yw2application.view.base.MvpFragment;
+import com.isuo.yw2application.view.main.MainActivity;
 import com.isuo.yw2application.view.main.data.StandInfoActivity;
 import com.isuo.yw2application.view.pass.ForgePassActivity;
 import com.isuo.yw2application.view.register.RegisterActivity;
 import com.isuo.yw2application.view.register.enterprise.RegisterEnterpriseActivity;
-import com.isuo.yw2application.view.register.enterprise.add.RegisterAddEnterpriseActivity;
 import com.isuo.yw2application.view.test.TestActivity;
-import com.orhanobut.logger.Logger;
-
 
 /**
  * 登陆界面

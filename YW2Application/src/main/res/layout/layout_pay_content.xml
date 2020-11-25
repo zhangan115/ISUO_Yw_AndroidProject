@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_height="match_parent"
+    android:background="#DDECFF"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/payTitle"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/white_bg_with_shape"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxxxx"
+            android:textColor="@color/gray_666666"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/colorPrimary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="元"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/checkDetail"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/bg_btn_report"
+            android:gravity="center"
+            android:text="查询详情"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#D4FECA" />
+
+    <TextView
+        android:id="@+id/content1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="功能"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="工作看板"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content3"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="故障闭环"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content4"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="消息管理"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content5"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="数据备份"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content6"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="规范管理"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content7"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="安全管理"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content8"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="计划管理"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content9"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="巡检点管理"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content10"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="指派检修"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content11"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="故障报修"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content12"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="多功能模块"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content13"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="专项功能模块"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content14"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="固定数据统计"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/content15"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="高级数据查询"
+        android:textColor="@color/text333"
+        android:textSize="14sp" />
+</LinearLayout>

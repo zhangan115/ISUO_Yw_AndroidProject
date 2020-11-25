@@ -1,11 +1,9 @@
 package com.isuo.yw2application.view.main;
 
 import android.Manifest;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -50,9 +48,9 @@ import com.isuo.yw2application.view.main.feedback.QuestionActivity;
 import com.isuo.yw2application.view.main.forgepassword.ForgePassWordActivity;
 import com.isuo.yw2application.view.main.task.TaskFragment;
 import com.isuo.yw2application.view.main.work.WorkFragment;
+import com.isuo.yw2application.view.main.work.pay.PayActivity;
 import com.isuo.yw2application.view.photo.ViewPagePhotoActivity;
 import com.isuo.yw2application.view.share.ShareActivity;
-import com.isuo.yw2application.widget.ShowImageLayout;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
@@ -134,6 +132,7 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
         findViewById(R.id.layout_5).setOnClickListener(this);
         findViewById(R.id.layout_6).setOnClickListener(this);
         findViewById(R.id.layout_7).setOnClickListener(this);
+        findViewById(R.id.layout_8).setOnClickListener(this);
         findViewById(R.id.exitApp).setOnClickListener(this);
         User user = Yw2Application.getInstance().getCurrentUser();
         mUserPhoto = findViewById(R.id.userImage);
@@ -215,6 +214,8 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
             startActivity(new Intent(this, AboutActivity.class));
         } else if (id == R.id.layout_7) {
             startActivity(new Intent(this, ForgePassWordActivity.class));
+        } else if (id == R.id.layout_8) {
+            startActivity(new Intent(this, PayActivity.class));
         } else if (id == R.id.exitApp) {
             if (mainPresenter != null) {
                 mainPresenter.exitApp();
