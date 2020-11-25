@@ -7,8 +7,12 @@ import android.widget.LinearLayout;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.view.base.BaseActivity;
+import com.isuo.yw2application.widget.PayBottomView;
 import com.isuo.yw2application.widget.PayContentView;
+import com.lxj.xpopup.XPopup;
 import com.sito.library.utils.DisplayUtil;
+
+import org.json.JSONObject;
 
 
 public class PayActivity extends BaseActivity implements PayContract.View {
@@ -27,7 +31,7 @@ public class PayActivity extends BaseActivity implements PayContract.View {
         btn_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showPayView();
             }
         });
         for (int i = 0; i < 5; i++) {
@@ -35,6 +39,20 @@ public class PayActivity extends BaseActivity implements PayContract.View {
             view.setLayoutParams(new LinearLayout.LayoutParams(DisplayUtil.dip2px(this, 160), LinearLayout.LayoutParams.WRAP_CONTENT));
             layoutContent.addView(view);
         }
+    }
+
+    private void showPayView() {
+        new XPopup.Builder(PayActivity.this)
+                .atView(btn_buy)
+                .asCustom(new PayBottomView(PayActivity.this
+                        , "支付信息:小梭优维免费版0元套餐", "支付金额:0元"
+                        , new PayBottomView.PayClickListener() {
+                    @Override
+                    public void onPay(int type) {
+                        mPresenter.pay(new JSONObject());
+                    }
+                }))
+                .show();
     }
 
     @Override
