@@ -19,7 +19,6 @@ public class User implements Parcelable {
     private CustomerBean customer;
     private int deleteState;
     private long joinTime;
-    private String realName;
     private int userId;
     private int userIdentity;
     private String userName;
@@ -30,6 +29,17 @@ public class User implements Parcelable {
     private String portraitUrl;
     private long createTime;
     private List<ResTree> resTreeList;
+
+    private String realName;
+    private String birthDay;
+    private int age = -1;
+    private int sex = -1;
+    private String height;
+    private String post;
+    private String ability;
+    private String entryTime;
+    private String userCode;
+
 
     public String getPortraitUrl() {
         return portraitUrl;
@@ -141,6 +151,70 @@ public class User implements Parcelable {
 
     public void setCreateTime(long createTime) {
         this.createTime = createTime;
+    }
+
+    public String getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(String birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
+
+    public String getAbility() {
+        return ability;
+    }
+
+    public void setAbility(String ability) {
+        this.ability = ability;
+    }
+
+    public String getEntryTime() {
+        return entryTime;
+    }
+
+    public void setEntryTime(String entryTime) {
+        this.entryTime = entryTime;
+    }
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 
     public static class CustomerBean implements Parcelable {
@@ -402,7 +476,6 @@ public class User implements Parcelable {
         dest.writeParcelable(this.customer, flags);
         dest.writeInt(this.deleteState);
         dest.writeLong(this.joinTime);
-        dest.writeString(this.realName);
         dest.writeInt(this.userId);
         dest.writeInt(this.userIdentity);
         dest.writeString(this.userName);
@@ -411,14 +484,23 @@ public class User implements Parcelable {
         dest.writeInt(this.isRepair);
         dest.writeString(this.userRoleNames);
         dest.writeString(this.portraitUrl);
+        dest.writeLong(this.createTime);
         dest.writeTypedList(this.resTreeList);
+        dest.writeString(this.realName);
+        dest.writeString(this.birthDay);
+        dest.writeInt(this.age);
+        dest.writeInt(this.sex);
+        dest.writeString(this.height);
+        dest.writeString(this.post);
+        dest.writeString(this.ability);
+        dest.writeString(this.entryTime);
+        dest.writeString(this.userCode);
     }
 
     protected User(Parcel in) {
         this.customer = in.readParcelable(CustomerBean.class.getClassLoader());
         this.deleteState = in.readInt();
         this.joinTime = in.readLong();
-        this.realName = in.readString();
         this.userId = in.readInt();
         this.userIdentity = in.readInt();
         this.userName = in.readString();
@@ -427,7 +509,17 @@ public class User implements Parcelable {
         this.isRepair = in.readInt();
         this.userRoleNames = in.readString();
         this.portraitUrl = in.readString();
+        this.createTime = in.readLong();
         this.resTreeList = in.createTypedArrayList(ResTree.CREATOR);
+        this.realName = in.readString();
+        this.birthDay = in.readString();
+        this.age = in.readInt();
+        this.sex = in.readInt();
+        this.height = in.readString();
+        this.post = in.readString();
+        this.ability = in.readString();
+        this.entryTime = in.readString();
+        this.userCode = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

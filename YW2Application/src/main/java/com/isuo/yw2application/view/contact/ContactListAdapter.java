@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
+import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.employee.DepartmentBean;
+import com.isuo.yw2application.view.contact.detail.UserDetailActivity;
 import com.sito.library.utils.GlideUtils;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 
@@ -91,11 +93,11 @@ class ContactListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             holder = new GroupViewHolder();
             convertView = LayoutInflater.from(context).inflate(groupLayout, null);
-            holder.bgLayout = (LinearLayout) convertView.findViewById(R.id.ll_item_group);
+            holder.bgLayout = convertView.findViewById(R.id.ll_item_group);
             holder.division = convertView.findViewById(R.id.division_id);
-            holder.stateIv = (ImageView) convertView.findViewById(R.id.iv_state);
-            holder.nameTv = (TextView) convertView.findViewById(R.id.tv_name);
-            holder.countTv = (TextView) convertView.findViewById(R.id.tv_count);
+            holder.stateIv = convertView.findViewById(R.id.iv_state);
+            holder.nameTv = convertView.findViewById(R.id.tv_name);
+            holder.countTv = convertView.findViewById(R.id.tv_count);
             convertView.setTag(holder);
         } else {
             holder = (GroupViewHolder) convertView.getTag();
@@ -105,7 +107,7 @@ class ContactListAdapter extends BaseExpandableListAdapter {
         } else if (groupPosition == 0) {
             holder.division.setVisibility(View.VISIBLE);
         } else if (groupPosition == data.size() - 1) {
-            holder.division.setVisibility(View.GONE);;
+            holder.division.setVisibility(View.GONE);
         } else {
             holder.division.setVisibility(View.VISIBLE);
         }
@@ -129,11 +131,11 @@ class ContactListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             holder = new ChildViewHolder();
             convertView = LayoutInflater.from(context).inflate(childLayout, null);
-            holder.nameTv = (TextView) convertView.findViewById(R.id.tv_name);
-            holder.positionTV = (TextView) convertView.findViewById(R.id.tv_position);
-            holder.callTv = (TextView) convertView.findViewById(R.id.tv_call);
-            holder.ll_child_layout = (LinearLayout) convertView.findViewById(R.id.ll_child_layout);
-            holder.stateIv = (ImageView) convertView.findViewById(R.id.iv_icon);
+            holder.nameTv = convertView.findViewById(R.id.tv_name);
+            holder.positionTV = convertView.findViewById(R.id.tv_position);
+            holder.callTv = convertView.findViewById(R.id.tv_call);
+            holder.ll_child_layout = convertView.findViewById(R.id.ll_child_layout);
+            holder.stateIv = convertView.findViewById(R.id.iv_icon);
             convertView.setTag(holder);
         } else {
             holder = (ChildViewHolder) convertView.getTag();
@@ -151,6 +153,7 @@ class ContactListAdapter extends BaseExpandableListAdapter {
         holder.positionTV.setText(data.get(groupPosition).getUserList().get(childPosition).getUser().getUserRoleNames());
         holder.callTv.setText(data.get(groupPosition).getUserList().get(childPosition).getUser().getUserPhone());
         holder.ll_child_layout.setTag(R.id.tag_position, data.get(groupPosition).getUserList().get(childPosition).getUser().getUserPhone());
+        holder.ll_child_layout.setTag(R.id.tag_position_1, data.get(groupPosition).getUserList().get(childPosition).getUser().getUserId());
         holder.ll_child_layout.setOnClickListener(call);
         return convertView;
     }
@@ -163,8 +166,12 @@ class ContactListAdapter extends BaseExpandableListAdapter {
     private View.OnClickListener call = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            call((String) v.getTag(R.id.tag_position));
+            int userId = (int) v.getTag(R.id.tag_position_1);
+            Intent intent = new Intent(context, UserDetailActivity.class);
+            intent.putExtra(ConstantStr.KEY_BUNDLE_INT, userId);
+            context.startActivity(intent);
         }
+
     };
 
     private void call(String phone) {

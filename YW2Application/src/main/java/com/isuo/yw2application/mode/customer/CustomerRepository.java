@@ -1676,7 +1676,7 @@ public class CustomerRepository implements CustomerDataSource {
 
     @NonNull
     @Override
-    public Subscription getJoinList(JSONObject json,final IObjectCallBack<JoinBean> callBack) {
+    public Subscription getJoinList(JSONObject json, final IObjectCallBack<JoinBean> callBack) {
         Observable<Bean<JoinBean>> observable = Api.createRetrofit().create(Api.MessageApi.class).getJoinList(json.toString());
         return new ApiCallBack<JoinBean>(observable) {
             @Override
@@ -1705,6 +1705,44 @@ public class CustomerRepository implements CustomerDataSource {
         return new ApiCallBack<String>(observable) {
             @Override
             public void onSuccess(@Nullable String list) {
+                callBack.onFinish();
+                callBack.onSuccess("");
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription getUserInfo(JSONObject json, final IObjectCallBack<User> callBack) {
+        Observable<Bean<User>> observable = Api.createRetrofit().create(Api.Login.class).getUserInfo(json.toString());
+        return new ApiCallBack<User>(observable) {
+            @Override
+            public void onSuccess(@Nullable User s) {
+                callBack.onFinish();
+                callBack.onSuccess(s);
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription saveUserInfo(JSONObject json, final IObjectCallBack<String> callBack) {
+        Observable<Bean<String>> observable = Api.createRetrofit().create(Api.Login.class).saveUserInfo(json.toString());
+        return new ApiCallBack<String>(observable) {
+            @Override
+            public void onSuccess(@Nullable String s) {
                 callBack.onFinish();
                 callBack.onSuccess("");
             }

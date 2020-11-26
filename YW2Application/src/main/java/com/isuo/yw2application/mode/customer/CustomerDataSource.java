@@ -310,4 +310,10 @@ public interface CustomerDataSource {
     @NonNull
     Subscription joinAgree(JSONObject json, IObjectCallBack<String> callBack);
 
+    @NonNull
+    Subscription getUserInfo(JSONObject json, IObjectCallBack<User> callBack);
+
+    @NonNull
+    Subscription saveUserInfo(JSONObject json, IObjectCallBack<String> callBack);
+
 }

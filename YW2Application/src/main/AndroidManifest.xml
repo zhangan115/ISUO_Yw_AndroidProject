@@ -161,6 +161,12 @@
             android:configChanges="orientation|keyboardHidden"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.contact.detail.UserDetailActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <!--消息列表-->
         <activity
             android:name=".view.main.work.message.NewsListActivity"

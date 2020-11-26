@@ -211,6 +211,24 @@ public class Api {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("customer/list.json")
         Observable<Bean<EnterpriseCustomer>> getCustomerList(@Body() String info);
+
+        /**
+         * 获取用户信息
+         *
+         * @param info 数据
+         */
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("user/load.json")
+        Observable<Bean<User>> getUserInfo(@Body() String info);
+
+        /**
+         * 保存用户信息
+         *
+         * @param info 数据
+         */
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("user/edit.json")
+        Observable<Bean<String>> saveUserInfo(@Body() String info);
     }
 
     public interface MessageApi {
