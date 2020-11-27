@@ -176,6 +176,30 @@ public class WorkRepository implements WorkDataSource {
 
     @NonNull
     @Override
+    public Subscription getInspectionData(JSONObject jsonObject, @NonNull final IListCallBack<InspectionBean> callBack) {
+        Observable<Bean<List<InspectionBean>>> observable =
+                Api.createRetrofit().create(WorkApi.class).getInspection(jsonObject.toString());
+        return new ApiCallBack<List<InspectionBean>>(observable) {
+            @Override
+            public void onSuccess(List<InspectionBean> been) {
+                callBack.onFinish();
+                if (been == null || been.size() == 0) {
+                    callBack.onError("");
+                } else {
+                    callBack.onSuccess(been);
+                }
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
     public Subscription getOverhaulData(@NonNull String data, @Nullable String lastId, @NonNull final IListCallBack<OverhaulBean> callBack) {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -399,7 +423,7 @@ public class WorkRepository implements WorkDataSource {
         List<WorkItem> myWorkItems = new ArrayList<>();
 
         for (String item : items) {
-            if (TextUtils.isEmpty(item)){
+            if (TextUtils.isEmpty(item)) {
                 break;
             }
             int id = Integer.parseInt(item);
@@ -455,7 +479,7 @@ public class WorkRepository implements WorkDataSource {
     public void saveWorkItems(List<WorkItem> items) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getId() == -1){
+            if (items.get(i).getId() == -1) {
                 continue;
             }
             sb.append(items.get(i).getId());

@@ -8,6 +8,7 @@ import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.EnterpriseCustomer;
 import com.isuo.yw2application.mode.bean.JoinBean;
 import com.isuo.yw2application.mode.bean.NewVersion;
+import com.isuo.yw2application.mode.bean.PayMenuBean;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.check.CheckBean;
 import com.isuo.yw2application.mode.bean.check.FaultList;
@@ -249,7 +250,7 @@ public interface CustomerDataSource {
     Subscription getPartData(String startTime, String endTime, IObjectCallBack<PartPersonStatistics> callBack);
 
     @NonNull
-    Subscription getPerson(String startTime, String endTime, IObjectCallBack<PartPersonStatistics> callBack);
+    Subscription getPerson(String startTime, String endTime,int userId, IObjectCallBack<PartPersonStatistics> callBack);
 
     @NonNull
     Subscription borrowedSure(long id, int state, IObjectCallBack<String> callBack);
@@ -315,5 +316,9 @@ public interface CustomerDataSource {
 
     @NonNull
     Subscription saveUserInfo(JSONObject json, IObjectCallBack<String> callBack);
+
+    @NonNull
+    Subscription getMenuList(JSONObject json, IListCallBack<PayMenuBean> callBack);
+
 
 }

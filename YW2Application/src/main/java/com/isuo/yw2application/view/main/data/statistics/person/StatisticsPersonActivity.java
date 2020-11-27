@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
+import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.count.PartPersonStatistics;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.widget.ChooseTimeLayout;
@@ -24,12 +25,14 @@ public class StatisticsPersonActivity extends BaseActivity implements ChooseTime
     private StatisticsPersonContract.Presenter mPresenter;
     private TextView tvTime;
     private ImageView ivTime;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new StatisticsPersonPresenter(Yw2Application.getInstance().getRepositoryComponent().getRepository(), this);
         setLayoutAndToolbar(R.layout.statistics_person_acivitiy, "工作量");
+        userId = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT, -1);
         findViewById(R.id.llEmpty).setOnClickListener(this);
         findViewById(R.id.llOpenChooseTime).setOnClickListener(this);
         llChooseTime = findViewById(R.id.llChooseTime);
@@ -70,7 +73,7 @@ public class StatisticsPersonActivity extends BaseActivity implements ChooseTime
         llEmpty.setVisibility(View.GONE);
         ivTime.setImageDrawable(findDrawById(R.drawable.drop_down));
         tvTime.setText(title);
-        mPresenter.getCStatisticsPersonData(startTime, endTime);
+        mPresenter.getCStatisticsPersonData(startTime, endTime,userId);
     }
 
     @Override

@@ -365,6 +365,12 @@
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
+            android:name=".view.main.task.inspection.user_list.InspectionTaskListActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
             android:name=".view.main.task.inspection.detial.InspectDetailActivity"
             android:allowTaskReparenting="true"
             android:configChanges="orientation|keyboardHidden"

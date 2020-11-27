@@ -22,6 +22,7 @@ import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.EnterpriseCustomer;
 import com.isuo.yw2application.mode.bean.JoinBean;
 import com.isuo.yw2application.mode.bean.NewVersion;
+import com.isuo.yw2application.mode.bean.PayMenuBean;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.VerificationCode;
 import com.isuo.yw2application.mode.bean.check.CheckBean;
@@ -1305,7 +1306,7 @@ public class CustomerRepository implements CustomerDataSource {
     @Override
     public Subscription getPartData(String startTime, String endTime, final IObjectCallBack<PartPersonStatistics> callBack) {
         return new ApiCallBack<PartPersonStatistics>(Api.createRetrofit().create(Api.Count.class)
-                .getStatisticsUserAndPart(startTime, endTime, 0)) {
+                .getStatisticsUserAndPart(startTime, endTime, null, 0)) {
             @Override
             public void onSuccess(@Nullable PartPersonStatistics statistics) {
                 callBack.onFinish();
@@ -1326,9 +1327,13 @@ public class CustomerRepository implements CustomerDataSource {
 
     @NonNull
     @Override
-    public Subscription getPerson(String startTime, String endTime, final IObjectCallBack<PartPersonStatistics> callBack) {
+    public Subscription getPerson(String startTime, String endTime, int userId, final IObjectCallBack<PartPersonStatistics> callBack) {
+        String userStr = null;
+        if (userId != -1) {
+            userStr = String.valueOf(userId);
+        }
         return new ApiCallBack<PartPersonStatistics>(Api.createRetrofit().create(Api.Count.class)
-                .getStatisticsUserAndPart(startTime, endTime, 1)) {
+                .getStatisticsUserAndPart(startTime, endTime, userStr, 1)) {
             @Override
             public void onSuccess(@Nullable PartPersonStatistics statistics) {
                 callBack.onFinish();
@@ -1745,6 +1750,27 @@ public class CustomerRepository implements CustomerDataSource {
             public void onSuccess(@Nullable String s) {
                 callBack.onFinish();
                 callBack.onSuccess("");
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription getMenuList(JSONObject json, final IListCallBack<PayMenuBean> callBack) {
+        Observable<Bean<List<PayMenuBean>>> observable = Api.createRetrofit().create(Api.Login.class).getMenuList(json.toString());
+        return new ApiCallBack<List<PayMenuBean>>(observable) {
+            @Override
+            public void onSuccess(@Nullable List<PayMenuBean> s) {
+                callBack.onFinish();
+                if (s != null) {
+                    callBack.onSuccess(s);
+                }
             }
 
             @Override

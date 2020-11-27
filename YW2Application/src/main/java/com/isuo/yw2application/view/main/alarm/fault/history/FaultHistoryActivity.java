@@ -49,12 +49,14 @@ public class FaultHistoryActivity extends BaseActivity implements FaultHistoryCo
     private AnimationDrawable animation;
     private boolean isPlay;
     private FaultHistoryContract.Presenter mPresenter;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutAndToolbar(R.layout.activity_fault_history, "历史故障");
         new FaultHistoryPresenter(Yw2Application.getInstance().getFaultRepositoryComponent().getRepository(), this);
+        userId = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT, -1);
         initView();
         initData();
     }
@@ -162,7 +164,7 @@ public class FaultHistoryActivity extends BaseActivity implements FaultHistoryCo
                 }
             }
         });
-        mPresenter.getFaultList(ConstantInt.PAGE_SIZE);
+        mPresenter.getFaultList(userId, ConstantInt.PAGE_SIZE);
     }
 
     private ImageView getImageView(int position, String[] url) {
@@ -266,13 +268,13 @@ public class FaultHistoryActivity extends BaseActivity implements FaultHistoryCo
         isRefresh = true;
         mNoDataLayout.setVisibility(View.GONE);
         mRecycleRefreshLoadLayout.setNoMoreData(false);
-        mPresenter.getFaultList(ConstantInt.PAGE_SIZE);
+        mPresenter.getFaultList(userId, ConstantInt.PAGE_SIZE);
     }
 
     @Override
     public void onLoadMore() {
         if (mList.size() > 1 && !isRefresh) {
-            mPresenter.getMoreFaultList(ConstantInt.PAGE_SIZE, mList.get(mList.size() - 1).getFaultId());
+            mPresenter.getMoreFaultList(userId, ConstantInt.PAGE_SIZE, mList.get(mList.size() - 1).getFaultId());
         }
     }
 

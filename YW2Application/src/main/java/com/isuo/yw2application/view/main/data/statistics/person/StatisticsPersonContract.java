@@ -13,7 +13,7 @@ interface StatisticsPersonContract {
 
     interface Presenter extends BasePresenter {
 
-        void getCStatisticsPersonData(String startTime, String endTime);
+        void getCStatisticsPersonData(String startTime, String endTime,int userId);
     }
 
     interface View extends BaseView<Presenter> {

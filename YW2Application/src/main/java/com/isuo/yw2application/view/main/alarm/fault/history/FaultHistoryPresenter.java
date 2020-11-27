@@ -37,9 +37,9 @@ final class FaultHistoryPresenter implements FaultHistoryContract.Presenter {
     }
 
     @Override
-    public void getFaultList(int count) {
+    public void getFaultList(int userId, int count) {
         mView.showLoading();
-        subscription.add(mRepository.getHistoryList(count, new IListCallBack<FaultList>() {
+        subscription.add(mRepository.getHistoryList(userId,count, new IListCallBack<FaultList>() {
             @Override
             public void onSuccess(@NonNull List<FaultList> list) {
                 mView.showData(list);
@@ -58,8 +58,8 @@ final class FaultHistoryPresenter implements FaultHistoryContract.Presenter {
     }
 
     @Override
-    public void getMoreFaultList(int count, long lastId) {
-        subscription.add(mRepository.getMoreHistoryList(count, lastId, new IListCallBack<FaultList>() {
+    public void getMoreFaultList(int userId, int count, long lastId) {
+        subscription.add(mRepository.getMoreHistoryList(userId,count, lastId, new IListCallBack<FaultList>() {
             @Override
             public void onSuccess(@NonNull List<FaultList> list) {
                 mView.showMoreData(list);

@@ -12,12 +12,14 @@ import java.util.List;
 interface FaultHistoryContract {
 
     interface Presenter extends BasePresenter {
-        void getFaultList(int count);
 
-        void getMoreFaultList(int count, long lastId);
+        void getFaultList(int userId, int count);
+
+        void getMoreFaultList(int userId, int count, long lastId);
     }
 
     interface View extends BaseView<Presenter> {
+
         void showData(List<FaultList> lists);
 
         void showMoreData(List<FaultList> lists);

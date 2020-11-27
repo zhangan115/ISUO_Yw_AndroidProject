@@ -1,26 +1,24 @@
 package com.isuo.yw2application.view.contact.detail;
 
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.iflytek.cloud.thirdparty.V;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.utils.ChooseDateDialog;
 import com.isuo.yw2application.view.base.BaseActivity;
+import com.isuo.yw2application.view.main.alarm.fault.history.FaultHistoryActivity;
+import com.isuo.yw2application.view.main.data.statistics.person.StatisticsPersonActivity;
+import com.isuo.yw2application.view.main.task.inspection.user_list.InspectionTaskListActivity;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
-import com.orhanobut.logger.Logger;
 import com.sito.library.utils.DataUtil;
-import com.sito.library.widget.DateDialog;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +27,6 @@ import java.util.Calendar;
 
 public class UserDetailActivity extends BaseActivity implements UserDetailContract.View {
 
-    private User user;
     private int userId;
     private UserDetailContract.Presenter mPresenter;
     private TextView[] texts = new TextView[10];
@@ -84,6 +81,10 @@ public class UserDetailActivity extends BaseActivity implements UserDetailContra
         chooseTx[2].setOnClickListener(this);
         editInfoTv = findViewById(R.id.editInfoTv);
         editInfoTv.setOnClickListener(this);
+
+        findViewById(R.id.ll_1).setOnClickListener(this);
+        findViewById(R.id.ll_2).setOnClickListener(this);
+        findViewById(R.id.ll_3).setOnClickListener(this);
         mPresenter.subscribe();
         mPresenter.getUserInfo(userId);
     }
@@ -174,6 +175,21 @@ public class UserDetailActivity extends BaseActivity implements UserDetailContra
                 }
                 editTypeChange();
                 break;
+            case R.id.ll_1:
+                Intent intent = new Intent(this, StatisticsPersonActivity.class);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_INT, userId);
+                startActivity(intent);
+                break;
+            case R.id.ll_2:
+                Intent intent1 = new Intent(this, InspectionTaskListActivity.class);
+                intent1.putExtra(ConstantStr.KEY_BUNDLE_INT, userId);
+                startActivity(intent1);
+                break;
+            case R.id.ll_3:
+                Intent intent2 = new Intent(this, FaultHistoryActivity.class);
+                intent2.putExtra(ConstantStr.KEY_BUNDLE_INT, userId);
+                startActivity(intent2);
+                break;
         }
     }
 
@@ -210,7 +226,6 @@ public class UserDetailActivity extends BaseActivity implements UserDetailContra
 
     @Override
     public void showUserInfo(User user) {
-        this.user = user;
         if (!TextUtils.isEmpty(user.getRealName())) {
             texts[0].setText(user.getRealName());
             ets[0].setText(user.getRealName());

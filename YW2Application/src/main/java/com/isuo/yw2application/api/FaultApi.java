@@ -148,6 +148,10 @@ public interface FaultApi {
             , @Query("byCurrentUser") @NonNull String byCurrentUser
             , @Query("agentType") String agentType);
 
+    @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+    @POST("fault/list.json")
+    Observable<Bean<List<FaultList>>> getFaultHistoryList(@Body String body);
+
     @GET("fault/list.json")
     Observable<Bean<List<FaultList>>> getMoreFaultHistoryList(@Query("lastId") long lastId
             , @Query("count") int count

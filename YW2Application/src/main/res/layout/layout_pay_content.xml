@@ -16,8 +16,11 @@
 
         <TextView
             android:id="@+id/text1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:text="xxxxx"
             android:textColor="@color/gray_666666"
             android:textSize="14sp" />
@@ -25,11 +28,12 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -38,6 +42,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/text3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="元"

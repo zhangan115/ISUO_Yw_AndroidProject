@@ -39,8 +39,8 @@ public class StatisticsPersonPresenter implements StatisticsPersonContract.Prese
 
 
     @Override
-    public void getCStatisticsPersonData(String startTime, String endTime) {
-        subscription.add(mRepository.getPerson(startTime, endTime, new IObjectCallBack<PartPersonStatistics>() {
+    public void getCStatisticsPersonData(String startTime, String endTime,int userId) {
+        subscription.add(mRepository.getPerson(startTime, endTime,userId, new IObjectCallBack<PartPersonStatistics>() {
             @Override
             public void onSuccess(@NonNull PartPersonStatistics statistics) {
                 mView.showData(statistics);

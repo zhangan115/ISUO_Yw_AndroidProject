@@ -27,12 +27,14 @@ import com.isuo.yw2application.mode.bean.fault.DefaultFlowBean;
 import com.isuo.yw2application.mode.bean.fault.FaultCount;
 import com.isuo.yw2application.mode.bean.fault.FaultDetail;
 import com.isuo.yw2application.mode.bean.fault.JobPackageBean;
+import com.sito.library.utils.DataUtil;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -384,10 +386,33 @@ public class FaultRepository implements FaultDataSource {
 
     @NonNull
     @Override
-    public Subscription getHistoryList(int count, @NonNull final IListCallBack<FaultList> callBack) {
+    public Subscription getHistoryList(int userId, int count, @NonNull final IListCallBack<FaultList> callBack) {
+        String userIdStr = String.valueOf(Yw2Application.getInstance().getCurrentUser().getUserId());
+        String startTime = null;
+        String endTime = null;
+        if (userId != -1) {
+            userIdStr = String.valueOf(userId);
+            Calendar calendar = Calendar.getInstance();
+            endTime = DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd");
+            calendar.add(Calendar.DAY_OF_MONTH, -40);
+            startTime = DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd");
+        }
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("byCurrentUser", userIdStr);
+            jsonObject.put("count", count);
+            jsonObject.put("agentType", 0);
+            if (startTime != null) {
+                jsonObject.put("startTime", startTime);
+            }
+            if (endTime != null) {
+                jsonObject.put("endTime", endTime);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Observable<Bean<List<FaultList>>> observable = Api.createRetrofit().create(FaultApi.class)
-                .getFaultHistoryList(count, String.valueOf(Yw2Application.getInstance().getCurrentUser().getUserId())
-                        , "0");
+                .getFaultHistoryList(jsonObject.toString());
         return new ApiCallBack<List<FaultList>>(observable) {
             @Override
             public void onSuccess(List<FaultList> faultLists) {
@@ -405,11 +430,37 @@ public class FaultRepository implements FaultDataSource {
 
     @NonNull
     @Override
-    public Subscription getMoreHistoryList(int count, long lastId, @NonNull final IListCallBack<FaultList> callBack) {
+    public Subscription getMoreHistoryList(int userId, int count, long lastId, @NonNull final IListCallBack<FaultList> callBack) {
+        String userIdStr = String.valueOf(Yw2Application.getInstance().getCurrentUser().getUserId());
+        if (userId != -1) {
+            userIdStr = String.valueOf(userId);
+        }
+        String startTime = null;
+        String endTime = null;
+        if (userId != -1) {
+            userIdStr = String.valueOf(userId);
+            Calendar calendar = Calendar.getInstance();
+            endTime = DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd");
+            calendar.add(Calendar.DAY_OF_MONTH, -40);
+            startTime = DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd");
+        }
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("byCurrentUser", userIdStr);
+            jsonObject.put("count", count);
+            jsonObject.put("lastId", lastId);
+            jsonObject.put("agentType", 0);
+            if (startTime != null) {
+                jsonObject.put("startTime", startTime);
+            }
+            if (endTime != null) {
+                jsonObject.put("endTime", endTime);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Observable<Bean<List<FaultList>>> observable = Api.createRetrofit().create(FaultApi.class)
-                .getMoreFaultHistoryList(lastId, count
-                        , String.valueOf(Yw2Application.getInstance().getCurrentUser().getUserId())
-                        , "0");
+                .getFaultHistoryList(jsonObject.toString());
         return new ApiCallBack<List<FaultList>>(observable) {
             @Override
             public void onSuccess(List<FaultList> faultLists) {
@@ -432,7 +483,7 @@ public class FaultRepository implements FaultDataSource {
 
     @NonNull
     @Override
-    public Subscription careEquipment(JSONObject jsonObject, @NonNull  final IObjectCallBack<String> callBack) {
+    public Subscription careEquipment(JSONObject jsonObject, @NonNull final IObjectCallBack<String> callBack) {
         Observable<Bean<String>> observable = Api.createRetrofit().create(FaultApi.class).careEquipment(jsonObject.toString());
         return new ApiCallBack<String>(observable) {
 

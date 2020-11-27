@@ -68,10 +68,10 @@ public interface FaultDataSource {
     Subscription getDefaultFlow(@NonNull IListCallBack<DefaultFlowBean> callBack);
 
     @NonNull
-    Subscription getHistoryList(int count, @NonNull IListCallBack<FaultList> callBack);
+    Subscription getHistoryList(int userId,int count, @NonNull IListCallBack<FaultList> callBack);
 
     @NonNull
-    Subscription getMoreHistoryList(int count, long lastId, @NonNull IListCallBack<FaultList> callBack);
+    Subscription getMoreHistoryList(int userId,int count, long lastId, @NonNull IListCallBack<FaultList> callBack);
 
     @NonNull
     Subscription careEquipment(JSONObject jsonObject, @NonNull IObjectCallBack<String> callBack);

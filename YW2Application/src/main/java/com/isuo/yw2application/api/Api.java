@@ -9,6 +9,7 @@ import com.isuo.yw2application.mode.Bean;
 import com.isuo.yw2application.mode.bean.EnterpriseCustomer;
 import com.isuo.yw2application.mode.bean.JoinBean;
 import com.isuo.yw2application.mode.bean.NewVersion;
+import com.isuo.yw2application.mode.bean.PayMenuBean;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.VerificationCode;
 import com.isuo.yw2application.mode.bean.check.CheckBean;
@@ -229,6 +230,13 @@ public class Api {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("user/edit.json")
         Observable<Bean<String>> saveUserInfo(@Body() String info);
+
+        /**
+         * 套餐信息
+         */
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("menu/list.json")
+        Observable<Bean<List<PayMenuBean>>> getMenuList(@Body() String info);
     }
 
     public interface MessageApi {
@@ -363,6 +371,7 @@ public class Api {
         @GET("statistics/work/statDetail.json")
         Observable<Bean<PartPersonStatistics>> getStatisticsUserAndPart(@Query("startTime") String startTime
                 , @Query("endTime") String endTime
+                , @Query("userId") String userId
                 , @Query("isPersonal") int type);
 
     }

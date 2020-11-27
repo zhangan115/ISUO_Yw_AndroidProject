@@ -16,6 +16,8 @@ import com.isuo.yw2application.mode.bean.work.InspectionDataBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import rx.Subscription;
@@ -60,6 +62,15 @@ public interface WorkDataSource {
     Subscription getInspectionData(int inspectionType, @NonNull String data, @Nullable String lastId, @NonNull IListCallBack<InspectionBean> callBack);
 
     /**
+     * 获取巡检列表
+     *
+     * @param callBack 回调
+     * @return 订阅
+     */
+    @NonNull
+    Subscription getInspectionData(JSONObject jsonObject, @NonNull IListCallBack<InspectionBean> callBack);
+
+    /**
      * 获取检修列表
      *
      * @param data     时间
@@ -101,7 +112,8 @@ public interface WorkDataSource {
         void showWorkItem(List<WorkItem> workItems);
 
     }
-    interface WorkItemAllCallBack extends WorkItemCallBack{
+
+    interface WorkItemAllCallBack extends WorkItemCallBack {
 
         void showAllWorkItem(List<WorkItem> workItems);
 
