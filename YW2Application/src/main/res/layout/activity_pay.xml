@@ -33,27 +33,15 @@
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:scrollbars="none">
 
                     <LinearLayout
+                        android:id="@+id/layoutContent"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="1px"
-                            android:layout_height="match_parent"
-                            android:background="@color/gray_F9F9F9" />
-
-                        <LinearLayout
-                            android:id="@+id/layoutContent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                        </LinearLayout>
-
-                    </LinearLayout>
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"/>
 
                 </HorizontalScrollView>
             </LinearLayout>
