@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,9 @@ import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.utils.DataUtil;
 import com.sito.library.utils.GlideUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.text.ParseException;
@@ -132,7 +136,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (id == -1) {
-                    startActivityForResult(new Intent(getActivity(),WorkItemAllActivity.class),WORK_ALL_CODE);
+                    startActivityForResult(new Intent(getActivity(), WorkItemAllActivity.class), WORK_ALL_CODE);
                 } else {
                     startActivity(WorkItemAllIntent.startWorkItem(getActivity(), showWorkItemList.get(position)));
                 }
@@ -230,7 +234,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                         new CheckRequestPermissionListener() {
                             @Override
                             public void onPermissionOk(Permission permission) {
-                                startActivityForResult(new Intent(getActivity(),CaptureActivity.class),SCANNER_CODE);
+                                startActivityForResult(new Intent(getActivity(), CaptureActivity.class), SCANNER_CODE);
                             }
 
                             @Override
@@ -270,6 +274,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
 
     private final int WORK_ALL_CODE = 100;
     private final int SCANNER_CODE = 200;
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -280,9 +285,20 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         } else if (resultCode == Activity.RESULT_OK && requestCode == SCANNER_CODE) {
             if (data != null) {
                 String result = data.getStringExtra(CaptureActivity.RESULT);
-                Intent intent = new Intent(getActivity(), EquipmentArchivesActivity.class);
-                intent.putExtra(ConstantStr.KEY_BUNDLE_STR,result);
-                startActivity(intent);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String type = jsonObject.getString("type");
+                    long id = jsonObject.getLong("id");
+                    if (TextUtils.equals("room", type)) {
+
+                    } else if (TextUtils.equals("equipment", type)) {
+                        Intent intent = new Intent(getActivity(), EquipmentArchivesActivity.class);
+                        intent.putExtra(ConstantStr.KEY_BUNDLE_STR, String.valueOf(id));
+                        startActivity(intent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

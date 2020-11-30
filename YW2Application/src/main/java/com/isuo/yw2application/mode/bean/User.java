@@ -40,6 +40,8 @@ public class User implements Parcelable {
     private String entryTime;
     private String userCode;
 
+    private PayMenuBean customerSetMenu;
+
 
     public String getPortraitUrl() {
         return portraitUrl;
@@ -466,6 +468,14 @@ public class User implements Parcelable {
     public User() {
     }
 
+    public PayMenuBean getCustomerSetMenu() {
+        return customerSetMenu;
+    }
+
+    public void setCustomerSetMenu(PayMenuBean customerSetMenu) {
+        this.customerSetMenu = customerSetMenu;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -495,6 +505,7 @@ public class User implements Parcelable {
         dest.writeString(this.ability);
         dest.writeString(this.entryTime);
         dest.writeString(this.userCode);
+        dest.writeParcelable(this.customerSetMenu, flags);
     }
 
     protected User(Parcel in) {
@@ -520,6 +531,7 @@ public class User implements Parcelable {
         this.ability = in.readString();
         this.entryTime = in.readString();
         this.userCode = in.readString();
+        this.customerSetMenu = in.readParcelable(PayMenuBean.class.getClassLoader());
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

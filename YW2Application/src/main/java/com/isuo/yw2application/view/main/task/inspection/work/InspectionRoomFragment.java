@@ -410,7 +410,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
                     if (isAutoSendAction) {
                         roomListBean = null;
                         for (int i = 0; i < mList.size(); i++) {
-                            if (mList.get(i).getRoom().getRoomId() == Long.valueOf(data)) {
+                            if (mList.get(i).getRoom().getRoomId() == Long.parseLong(data)) {
                                 roomListBean = mList.get(i);
                                 mPosition = i;
                                 break;
@@ -422,7 +422,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
                             receiverAction();
                         }
                     } else {
-                        if (roomListBean.getRoom().getRoomId() == Long.valueOf(data)) {
+                        if (roomListBean.getRoom().getRoomId() == Long.parseLong(data)) {
                             receiverAction();
                         } else {
                             getApp().showToast("二维码与属地不匹配");

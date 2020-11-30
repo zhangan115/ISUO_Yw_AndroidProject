@@ -33,6 +33,9 @@ import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -316,9 +319,20 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
         if (resultCode == Activity.RESULT_OK && requestCode == SCANNER_CODE) {
             if (data != null) {
                 String result = data.getStringExtra(CaptureActivity.RESULT);
-                Intent intent = new Intent(getActivity(), EquipmentArchivesActivity.class);
-                intent.putExtra(ConstantStr.KEY_BUNDLE_STR, result);
-                startActivity(intent);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String type = jsonObject.getString("type");
+                    long id = jsonObject.getLong("id");
+                    if (TextUtils.equals("room", type)) {
+
+                    } else if (TextUtils.equals("equipment", type)) {
+                        Intent intent = new Intent(getActivity(), EquipmentArchivesActivity.class);
+                        intent.putExtra(ConstantStr.KEY_BUNDLE_STR, String.valueOf(id));
+                        startActivity(intent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

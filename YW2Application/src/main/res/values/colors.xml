@@ -91,6 +91,7 @@
     <color name="color_search_reset">#B1D6FF</color>
     <color name="gray_666666">#666666</color>
     <color name="gray_999999">#999999</color>
+    <color name="gray_F9F9F9">#D6D6D6</color>
 
     <color name="line_chart_color_1">#f6b433</color>
     <color name="line_chart_color_2">#69A7fb</color>
