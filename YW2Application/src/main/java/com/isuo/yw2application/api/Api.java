@@ -237,6 +237,13 @@ public class Api {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("menu/list.json")
         Observable<Bean<List<PayMenuBean>>> getMenuList(@Body() String info);
+
+        /**
+         * 获取支付信息
+         */
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("pay/upgrade/menu.json")
+        Observable<Bean<String>> getPayInfo(@Body() String info);
     }
 
     public interface MessageApi {

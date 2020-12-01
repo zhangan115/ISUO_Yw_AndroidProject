@@ -63,6 +63,26 @@ public class PayPresenter implements PayContract.Presenter {
     }
 
     @Override
+    public void getPayInfo(JSONObject jsonObject) {
+        subscription.add(mRepository.getPayInfo(jsonObject, new IObjectCallBack<String>() {
+            @Override
+            public void onSuccess(@NonNull String s) {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }));
+    }
+
+    @Override
     public void subscribe() {
 
     }

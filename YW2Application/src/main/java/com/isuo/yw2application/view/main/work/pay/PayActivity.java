@@ -76,11 +76,15 @@ public class PayActivity extends BaseActivity implements PayContract.View {
                     @Override
                     public void onPay(int type) {
                         JSONObject jsonObject = new JSONObject();
-                        if (type == 1) {
-                            mPresenter.getAlPayInfo(jsonObject);
-                        } else {
-                            mPresenter.getWeiXinPayInfo(jsonObject);
+                        try {
+                            jsonObject.put("setMenuId",PayActivity.this.currentMenu.getId());
+                            jsonObject.put("payType",type);
+                            jsonObject.put("year",1);
+                            jsonObject.put("appType","android");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                        mPresenter.getPayInfo(jsonObject);
                     }
                 }))
                 .show();

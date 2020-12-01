@@ -1783,6 +1783,25 @@ public class CustomerRepository implements CustomerDataSource {
 
     @NonNull
     @Override
+    public Subscription getPayInfo(JSONObject json, final IObjectCallBack<String> callBack) {
+        Observable<Bean<String>> observable = Api.createRetrofit().create(Api.Login.class).getPayInfo(json.toString());
+        return new ApiCallBack<String>(observable) {
+            @Override
+            public void onSuccess(@Nullable String s) {
+                callBack.onFinish();
+                callBack.onSuccess("");
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
     public Subscription createCustomer(JSONObject json, final IObjectCallBack<String> callBack) {
         Observable<Bean<String>> observable = Api.createRetrofit().create(Api.Login.class).addCustomer(json.toString());
         return new ApiCallBack<String>(observable) {

@@ -18,6 +18,8 @@ public interface PayContract {
 
         void getAlPayInfo(JSONObject jsonObject);
 
+        void getPayInfo(JSONObject jsonObject);
+
         void paySuccess(JSONObject jsonObject);
     }
 

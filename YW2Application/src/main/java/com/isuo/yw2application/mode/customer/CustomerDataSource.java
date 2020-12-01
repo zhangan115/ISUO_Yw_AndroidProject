@@ -320,6 +320,7 @@ public interface CustomerDataSource {
     @NonNull
     Subscription getMenuList(JSONObject json, IListCallBack<PayMenuBean> callBack);
 
-
+    @NonNull
+    Subscription getPayInfo(JSONObject json, IObjectCallBack<String> callBack);
 
 }

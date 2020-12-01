@@ -39,7 +39,7 @@ android {
             applicationId "com.isuo.yw2application"
             dimension "default"
             resValue "string", "app_name", "小梭优维+"
-            buildConfigField "String", "HOST", '"http://114.118.94.117:8088/isuoywnew/api"'
+            buildConfigField "String", "HOST", '"https://isuo.cloud/api"'
             buildConfigField "String", "UMENG_CHANNEL", '"defaultChannel"'
             manifestPlaceholders = [
                     TASK_AFFINITY_VALUE: "android.task.isuo.yw2.application",
