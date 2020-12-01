@@ -33,9 +33,11 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
 
     private AppCompatMultiAutoCompleteTextView mNameEt;
     private EditText mPassEt;
+    private int flag = -1;
 
-    public static LoginFragment newInstance() {
+    public static LoginFragment newInstance(int flag) {
         Bundle args = new Bundle();
+        args.putInt(ConstantStr.KEY_BUNDLE_INT, flag);
         LoginFragment fragment = new LoginFragment();
         fragment.setArguments(args);
         return fragment;
@@ -45,6 +47,7 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fmg_login, container, false);
+        flag = getArguments().getInt(ConstantStr.KEY_BUNDLE_INT);
         mNameEt = rootView.findViewById(R.id.edit_username);
         mPassEt = rootView.findViewById(R.id.edit_password);
         rootView.findViewById(R.id.setting).setOnClickListener(this);
@@ -74,6 +77,15 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
     @Override
     public void loginHideLoading() {
 //        hideProgressDialog();
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (flag == 1) {
+            showProgressDialog("登陆中...");
+            mPresenter.login("18509259203", "123456");
+        }
     }
 
     @Override

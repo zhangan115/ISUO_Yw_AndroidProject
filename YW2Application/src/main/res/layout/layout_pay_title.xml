@@ -17,7 +17,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#D4FECA" />
+        android:background="#D4FECA"
+        android:visibility="gone" />
 
     <View
         android:layout_width="match_parent"

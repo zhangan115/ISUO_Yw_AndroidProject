@@ -14,7 +14,11 @@ public interface PayContract {
 
         void getPayList(JSONObject jsonObject);
 
-        void pay(JSONObject jsonObject);
+        void getWeiXinPayInfo(JSONObject jsonObject);
+
+        void getAlPayInfo(JSONObject jsonObject);
+
+        void paySuccess(JSONObject jsonObject);
     }
 
     interface View extends BaseView<Presenter> {
@@ -24,5 +28,9 @@ public interface PayContract {
         void paySuccess();
 
         void payFail();
+
+        void payAli(String payMessage);
+
+        void payWeiXin(WeiXinPayBean weiXinBean);
     }
 }

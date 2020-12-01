@@ -40,6 +40,7 @@ import com.isuo.yw2application.utils.PhotoUtils;
 import com.isuo.yw2application.utils.UpdateManager;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.contact.ContactActivity;
+import com.isuo.yw2application.view.login.LoginActivity;
 import com.isuo.yw2application.view.main.about.AboutActivity;
 import com.isuo.yw2application.view.main.alarm.AlarmFragment;
 import com.isuo.yw2application.view.main.data.DataFragment;
@@ -133,6 +134,7 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
         findViewById(R.id.layout_6).setOnClickListener(this);
         findViewById(R.id.layout_7).setOnClickListener(this);
         findViewById(R.id.layout_8).setOnClickListener(this);
+        findViewById(R.id.layout_9).setOnClickListener(this);
         findViewById(R.id.exitApp).setOnClickListener(this);
         User user = Yw2Application.getInstance().getCurrentUser();
         mUserPhoto = findViewById(R.id.userImage);
@@ -216,6 +218,22 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
             startActivity(new Intent(this, ForgePassWordActivity.class));
         } else if (id == R.id.layout_8) {
             startActivity(new Intent(this, PayActivity.class));
+        } else if (id == R.id.layout_9) {
+            new MaterialDialog.Builder(this)
+                    .content("确定尝试试用示范账号?")
+                    .negativeText("取消")
+                    .positiveText("确定")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            mainPresenter.exitApp();
+                            MobclickAgent.onProfileSignOff();
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            intent.putExtra(ConstantStr.KEY_BUNDLE_INT, 1);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }).show();
         } else if (id == R.id.exitApp) {
             if (mainPresenter != null) {
                 mainPresenter.exitApp();

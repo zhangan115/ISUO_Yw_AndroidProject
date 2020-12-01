@@ -25,8 +25,8 @@
         <ImageView
             android:id="@+id/userImage"
             android:layout_width="60dp"
-            android:src="@drawable/avater"
-            android:layout_height="60dp" />
+            android:layout_height="60dp"
+            android:src="@drawable/avater" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -221,6 +221,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/list_arrow" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/layout_8"
             android:layout_width="match_parent"
@@ -235,6 +236,29 @@
                 android:drawableLeft="@drawable/icon_changepsw"
                 android:drawablePadding="15dp"
                 android:text="套餐选择"
+                android:textColor="@color/gray_666666"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/list_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_9"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/icon_changepsw"
+                android:drawablePadding="15dp"
+                android:text="进入示范账号"
                 android:textColor="@color/gray_666666"
                 android:textSize="16sp" />
 

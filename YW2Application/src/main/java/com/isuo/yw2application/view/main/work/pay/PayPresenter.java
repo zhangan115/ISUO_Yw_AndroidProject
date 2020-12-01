@@ -48,7 +48,17 @@ public class PayPresenter implements PayContract.Presenter {
     }
 
     @Override
-    public void pay(JSONObject jsonObject) {
+    public void paySuccess(JSONObject jsonObject) {
+
+    }
+
+    @Override
+    public void getWeiXinPayInfo(JSONObject jsonObject) {
+
+    }
+
+    @Override
+    public void getAlPayInfo(JSONObject jsonObject) {
 
     }
 

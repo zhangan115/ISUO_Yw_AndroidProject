@@ -71,7 +71,8 @@
                     android:gravity="center"
                     android:text="查询详情"
                     android:textColor="@color/colorWhite"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
         </LinearLayout>
@@ -79,6 +80,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:visibility="gone"
             android:background="#D4FECA" />
 
         <View
@@ -111,13 +113,14 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:background="@color/gray_F9F9F9" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -133,7 +136,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -155,7 +158,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -178,7 +181,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -200,7 +203,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -223,7 +226,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -245,7 +248,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -267,7 +270,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -290,7 +293,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -313,7 +316,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -335,7 +338,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -357,7 +360,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -380,7 +383,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -402,7 +405,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -425,7 +428,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -448,7 +451,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -470,7 +473,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -492,7 +495,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -514,7 +517,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -536,7 +539,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -558,7 +561,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -580,7 +583,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -603,7 +606,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -626,7 +629,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -649,7 +652,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -672,7 +675,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -694,7 +697,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -716,7 +719,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -738,7 +741,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -760,7 +763,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -782,7 +785,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -804,7 +807,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View
@@ -827,7 +830,7 @@
                         android:background="@color/colorWhite"
                         android:gravity="center"
                         android:text="开放"
-                        android:textColor="@color/gray_999999"
+                        android:textColor="@color/color58CE79"
                         android:textSize="12sp" />
 
                     <View

@@ -29,10 +29,11 @@ public class LoginActivity extends BaseActivity {
         transparentStatusBar();
         setDarkStatusIcon(true);
         FrameLayout fl = findViewById(R.id.frame_container);
-        fl.setPadding(0,getStatusHeight(),0,0);
+        fl.setPadding(0, getStatusHeight(), 0, 0);
+        int flag = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT, -1);
         LoginFragment fragment = (LoginFragment) getFragmentManager().findFragmentById(R.id.frame_container);
         if (fragment == null) {
-            fragment = LoginFragment.newInstance();
+            fragment = LoginFragment.newInstance(flag);
             ActivityUtils.addFragmentToActivity(getFragmentManager(), fragment, R.id.frame_container);
         }
         DaggerLoginComponent.builder().loginModule(new LoginModule(fragment))

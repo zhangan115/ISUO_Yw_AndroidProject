@@ -132,43 +132,49 @@ public class PayContentView extends LinearLayout {
         textViews[21].setText(MessageFormat.format("限制台{0}台", bean.getEquipmentCount()));
         if (bean.getSafetySo() == 0){
             textViews[22].setText("不开放");
-            textViews[22].setText("不开放");
+            textViews[22].setTextColor(context.getResources().getColor(R.color.colorF05340));
         }else {
-            textViews[22].setText("开放");
             textViews[22].setText("开放");
         }
         if (bean.getIncrementWorkSo() == 0) {
             textViews[24].setText("不开放");
+            textViews[24].setTextColor(context.getResources().getColor(R.color.colorF05340));
         } else {
             textViews[24].setText("开放");
         }
         if (bean.getOilSo() == 0) {
             textViews[25].setText("不开放");
+            textViews[25].setTextColor(context.getResources().getColor(R.color.colorF05340));
         } else {
             textViews[25].setText("开放");
         }
         if (bean.getToolSo() == 0) {
             textViews[26].setText("不开放");
+            textViews[26].setTextColor(context.getResources().getColor(R.color.colorF05340));
         } else {
             textViews[26].setText("开放");
         }
 
         if (bean.getDeptSo() == 0) {
+            textViews[27].setTextColor(context.getResources().getColor(R.color.colorF05340));
             textViews[27].setText("不开放");
         } else {
             textViews[27].setText("开放");
         }
         if (bean.getSelfSo() == 0) {
+            textViews[28].setTextColor(context.getResources().getColor(R.color.colorF05340));
             textViews[28].setText("不开放");
         } else {
             textViews[28].setText("开放");
         }
         if (bean.getPersonSo() == 0) {
+            textViews[29].setTextColor(context.getResources().getColor(R.color.colorF05340));
             textViews[29].setText("不开放");
         } else {
             textViews[29].setText("开放");
         }
         if (bean.getFaultSo() == 0) {
+            textViews[30].setTextColor(context.getResources().getColor(R.color.colorF05340));
             textViews[30].setText("不开放");
         } else {
             textViews[30].setText("开放");
@@ -176,11 +182,13 @@ public class PayContentView extends LinearLayout {
 
         if (bean.getSelectTaskCount() == 0) {
             textViews[31].setText("不开放");
+            textViews[31].setTextColor(context.getResources().getColor(R.color.colorF05340));
         } else {
             textViews[31].setText("开放");
         }
         if (bean.getSelectPersonCount() == 0) {
             textViews[32].setText("不开放");
+            textViews[32].setTextColor(context.getResources().getColor(R.color.colorF05340));
         } else {
             textViews[32].setText("开放");
         }

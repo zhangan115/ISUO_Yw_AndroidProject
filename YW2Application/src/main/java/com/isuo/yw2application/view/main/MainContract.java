@@ -14,11 +14,13 @@ import java.io.File;
 interface MainContract {
 
     interface Presenter extends BasePresenter {
+
         void getNewVersion();
 
         void uploadUserPhoto(File file);
 
         void exitApp();
+
     }
 
     interface View extends BaseView<Presenter> {
