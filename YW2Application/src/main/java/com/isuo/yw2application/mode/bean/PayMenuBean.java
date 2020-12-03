@@ -9,7 +9,8 @@ public class PayMenuBean implements Parcelable {
     private int faultCount;
     private int safetySo;
     private long id;
-    private int workSpace;
+    private long menuId;
+    private long workSpace;
     private int incrementWorkSo;
     private String menuName;
     private String menuView;
@@ -17,7 +18,7 @@ public class PayMenuBean implements Parcelable {
     private int oilSo;
     private int planCount;
     private int planEquipmentCount;
-    private int price;
+    private float price;
     private int repairCount;
     private int selectPersonCount;
     private int selectTaskCount;
@@ -30,6 +31,13 @@ public class PayMenuBean implements Parcelable {
     private int faultSo;
     private int userCount;
 
+    public long getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(long menuId) {
+        this.menuId = menuId;
+    }
 
     public int getEquipmentCount() {
         return equipmentCount;
@@ -111,11 +119,11 @@ public class PayMenuBean implements Parcelable {
         this.planEquipmentCount = planEquipmentCount;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -207,11 +215,11 @@ public class PayMenuBean implements Parcelable {
         this.faultSo = faultSo;
     }
 
-    public int getWorkSpace() {
+    public long getWorkSpace() {
         return workSpace;
     }
 
-    public void setWorkSpace(int workSpace) {
+    public void setWorkSpace(long workSpace) {
         this.workSpace = workSpace;
     }
 
@@ -221,6 +229,9 @@ public class PayMenuBean implements Parcelable {
 
     public void setSafetySo(int safetySo) {
         this.safetySo = safetySo;
+    }
+
+    public PayMenuBean() {
     }
 
     @Override
@@ -234,7 +245,8 @@ public class PayMenuBean implements Parcelable {
         dest.writeInt(this.faultCount);
         dest.writeInt(this.safetySo);
         dest.writeLong(this.id);
-        dest.writeInt(this.workSpace);
+        dest.writeLong(this.menuId);
+        dest.writeLong(this.workSpace);
         dest.writeInt(this.incrementWorkSo);
         dest.writeString(this.menuName);
         dest.writeString(this.menuView);
@@ -242,7 +254,7 @@ public class PayMenuBean implements Parcelable {
         dest.writeInt(this.oilSo);
         dest.writeInt(this.planCount);
         dest.writeInt(this.planEquipmentCount);
-        dest.writeInt(this.price);
+        dest.writeFloat(this.price);
         dest.writeInt(this.repairCount);
         dest.writeInt(this.selectPersonCount);
         dest.writeInt(this.selectTaskCount);
@@ -256,15 +268,13 @@ public class PayMenuBean implements Parcelable {
         dest.writeInt(this.userCount);
     }
 
-    public PayMenuBean() {
-    }
-
     protected PayMenuBean(Parcel in) {
         this.equipmentCount = in.readInt();
         this.faultCount = in.readInt();
         this.safetySo = in.readInt();
         this.id = in.readLong();
-        this.workSpace = in.readInt();
+        this.menuId = in.readLong();
+        this.workSpace = in.readLong();
         this.incrementWorkSo = in.readInt();
         this.menuName = in.readString();
         this.menuView = in.readString();
@@ -272,7 +282,7 @@ public class PayMenuBean implements Parcelable {
         this.oilSo = in.readInt();
         this.planCount = in.readInt();
         this.planEquipmentCount = in.readInt();
-        this.price = in.readInt();
+        this.price = in.readFloat();
         this.repairCount = in.readInt();
         this.selectPersonCount = in.readInt();
         this.selectTaskCount = in.readInt();

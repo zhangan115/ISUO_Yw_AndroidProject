@@ -53,6 +53,7 @@ import com.isuo.yw2application.mode.bean.db.NewsBean;
 import com.isuo.yw2application.mode.bean.option.OptionBean;
 import com.isuo.yw2application.mode.inspection.InspectionApi;
 import com.isuo.yw2application.mode.tools.ToolsApi;
+import com.isuo.yw2application.view.main.work.pay.WeiXinPayBean;
 import com.sito.library.utils.Base64Util;
 import com.umeng.analytics.MobclickAgent;
 
@@ -1306,7 +1307,7 @@ public class CustomerRepository implements CustomerDataSource {
     @Override
     public Subscription getPartData(String startTime, String endTime, final IObjectCallBack<PartPersonStatistics> callBack) {
         return new ApiCallBack<PartPersonStatistics>(Api.createRetrofit().create(Api.Count.class)
-                .getStatisticsUserAndPart(startTime, endTime, null, 0)) {
+                .getStatisticsUserAndPart(startTime, endTime, String.valueOf(Yw2Application.getInstance().getCurrentUser().getUserId()), 0)) {
             @Override
             public void onSuccess(@Nullable PartPersonStatistics statistics) {
                 callBack.onFinish();
@@ -1328,9 +1329,11 @@ public class CustomerRepository implements CustomerDataSource {
     @NonNull
     @Override
     public Subscription getPerson(String startTime, String endTime, int userId, final IObjectCallBack<PartPersonStatistics> callBack) {
-        String userStr = null;
+        String userStr;
         if (userId != -1) {
             userStr = String.valueOf(userId);
+        }else {
+            userStr = String.valueOf(Yw2Application.getInstance().getCurrentUser().getUserId());
         }
         return new ApiCallBack<PartPersonStatistics>(Api.createRetrofit().create(Api.Count.class)
                 .getStatisticsUserAndPart(startTime, endTime, userStr, 1)) {
@@ -1783,13 +1786,56 @@ public class CustomerRepository implements CustomerDataSource {
 
     @NonNull
     @Override
-    public Subscription getPayInfo(JSONObject json, final IObjectCallBack<String> callBack) {
-        Observable<Bean<String>> observable = Api.createRetrofit().create(Api.Login.class).getPayInfo(json.toString());
+    public Subscription getPayInfo(JSONObject json, final IObjectCallBack<WeiXinPayBean> callBack) {
+        Observable<Bean<WeiXinPayBean>> observable = Api.createRetrofit().create(Api.Login.class).getPayInfo(json.toString());
+        return new ApiCallBack<WeiXinPayBean>(observable) {
+            @Override
+            public void onSuccess(@Nullable WeiXinPayBean s) {
+                callBack.onFinish();
+                assert s != null;
+                callBack.onSuccess(s);
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription getPayInfoAl(JSONObject json, final IObjectCallBack<String> callBack) {
+        Observable<Bean<String>> observable = Api.createRetrofit().create(Api.Login.class).getPayInfoAl(json.toString());
         return new ApiCallBack<String>(observable) {
             @Override
             public void onSuccess(@Nullable String s) {
                 callBack.onFinish();
-                callBack.onSuccess("");
+                callBack.onSuccess(s);
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription paySuccessBack(JSONObject json, final IObjectCallBack<User> callBack) {
+        Observable<Bean<User>> observable = Api.createRetrofit().create(Api.Login.class).paySuccessBack(json.toString());
+        return new ApiCallBack<User>(observable) {
+            @Override
+            public void onSuccess(@Nullable User s) {
+                callBack.onFinish();
+                if (s != null) {
+                    callBack.onSuccess(s);
+                } else {
+                    callBack.onError("");
+                }
             }
 
             @Override

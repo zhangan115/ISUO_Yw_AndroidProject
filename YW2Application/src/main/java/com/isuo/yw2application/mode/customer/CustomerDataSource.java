@@ -34,6 +34,7 @@ import com.isuo.yw2application.mode.bean.fault.FaultYearCountBean;
 import com.isuo.yw2application.mode.bean.news.EnterpriseDetailBean;
 import com.isuo.yw2application.mode.bean.news.MessageListBean;
 import com.isuo.yw2application.mode.bean.db.NewsBean;
+import com.isuo.yw2application.view.main.work.pay.WeiXinPayBean;
 
 import org.json.JSONObject;
 
@@ -321,6 +322,12 @@ public interface CustomerDataSource {
     Subscription getMenuList(JSONObject json, IListCallBack<PayMenuBean> callBack);
 
     @NonNull
-    Subscription getPayInfo(JSONObject json, IObjectCallBack<String> callBack);
+    Subscription getPayInfo(JSONObject json, IObjectCallBack<WeiXinPayBean> callBack);
+
+    @NonNull
+    Subscription getPayInfoAl(JSONObject json, IObjectCallBack<String> callBack);
+
+    @NonNull
+    Subscription paySuccessBack(JSONObject json, IObjectCallBack<User> callBack);
 
 }

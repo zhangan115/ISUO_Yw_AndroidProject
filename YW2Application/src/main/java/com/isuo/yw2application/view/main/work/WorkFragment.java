@@ -32,6 +32,7 @@ import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.MainActivity;
+import com.isuo.yw2application.view.main.device.list.EquipListActivity;
 import com.isuo.yw2application.view.main.equip.archives.EquipmentArchivesActivity;
 import com.isuo.yw2application.view.main.work.all.PayGridViewAdapter;
 import com.isuo.yw2application.view.main.work.all.WorkItemAllActivity;
@@ -290,7 +291,10 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                     String type = jsonObject.getString("type");
                     long id = jsonObject.getLong("id");
                     if (TextUtils.equals("room", type)) {
-
+                        Intent intent = new Intent(getActivity(), EquipListActivity.class);
+                        intent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN_3, true);
+                        intent.putExtra(ConstantStr.KEY_BUNDLE_INT_2, id);
+                        startActivity(intent);
                     } else if (TextUtils.equals("equipment", type)) {
                         Intent intent = new Intent(getActivity(), EquipmentArchivesActivity.class);
                         intent.putExtra(ConstantStr.KEY_BUNDLE_STR, String.valueOf(id));

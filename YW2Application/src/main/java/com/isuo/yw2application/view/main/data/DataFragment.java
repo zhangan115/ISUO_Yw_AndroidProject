@@ -19,6 +19,7 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.discover.ValueAddedBean;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
+import com.isuo.yw2application.view.contact.ContactActivity;
 import com.isuo.yw2application.view.main.data.count.alarm.DealAlarmCountActivity;
 import com.isuo.yw2application.view.main.data.count.work.WorkCountActivity;
 import com.isuo.yw2application.view.main.data.fault_line.FaultLineActivity;
@@ -121,7 +122,7 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
                 startActivity(new Intent(getActivity(), StatisticsPersonActivity.class));
                 break;
             case R.id.itemLayout9:
-                startActivity(new Intent(getActivity(), StatisticsPersonActivity.class));
+                startActivity(new Intent(getActivity(), ContactActivity.class));
                 break;
         }
     }

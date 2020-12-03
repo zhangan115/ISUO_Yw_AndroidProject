@@ -18,8 +18,6 @@ public interface PayContract {
 
         void getAlPayInfo(JSONObject jsonObject);
 
-        void getPayInfo(JSONObject jsonObject);
-
         void paySuccess(JSONObject jsonObject);
     }
 
@@ -27,12 +25,13 @@ public interface PayContract {
 
         void showPayList(List<PayMenuBean> list);
 
-        void paySuccess();
-
-        void payFail();
-
         void payAli(String payMessage);
 
         void payWeiXin(WeiXinPayBean weiXinBean);
+
+        void paySuccess();
+
+        void hidePopView();
+
     }
 }

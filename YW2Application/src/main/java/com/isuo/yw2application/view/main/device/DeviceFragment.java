@@ -324,7 +324,10 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
                     String type = jsonObject.getString("type");
                     long id = jsonObject.getLong("id");
                     if (TextUtils.equals("room", type)) {
-
+                        Intent intent = new Intent(getActivity(), EquipListActivity.class);
+                        intent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN_3, true);
+                        intent.putExtra(ConstantStr.KEY_BUNDLE_INT_2, id);
+                        startActivity(intent);
                     } else if (TextUtils.equals("equipment", type)) {
                         Intent intent = new Intent(getActivity(), EquipmentArchivesActivity.class);
                         intent.putExtra(ConstantStr.KEY_BUNDLE_STR, String.valueOf(id));

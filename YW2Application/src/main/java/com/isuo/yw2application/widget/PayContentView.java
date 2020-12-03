@@ -15,6 +15,7 @@ import java.text.MessageFormat;
 public class PayContentView extends LinearLayout {
 
     private TextView[] textViews = new TextView[33];
+    public TextView currentTv;
 
     public PayContentView(Context context) {
         super(context);
@@ -83,13 +84,7 @@ public class PayContentView extends LinearLayout {
                 }
             }
         });
-        findViewById(R.id.checkDetail).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
+        currentTv = findViewById(R.id.checkDetail);
     }
 
     public interface OnChooseListener {
@@ -130,10 +125,10 @@ public class PayContentView extends LinearLayout {
         textViews[19].setText(MessageFormat.format("限制{0}条/周", bean.getFaultCount()));
         textViews[20].setText("无限制使用");
         textViews[21].setText(MessageFormat.format("限制台{0}台", bean.getEquipmentCount()));
-        if (bean.getSafetySo() == 0){
+        if (bean.getSafetySo() == 0) {
             textViews[22].setText("不开放");
             textViews[22].setTextColor(context.getResources().getColor(R.color.colorF05340));
-        }else {
+        } else {
             textViews[22].setText("开放");
         }
         if (bean.getIncrementWorkSo() == 0) {

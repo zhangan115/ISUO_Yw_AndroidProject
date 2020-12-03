@@ -40,6 +40,7 @@ import com.isuo.yw2application.mode.bean.today.TodayToDoBean;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.isuo.yw2application.mode.inject.bean.InjectEquipment;
 import com.isuo.yw2application.mode.inject.bean.InjectRoomBean;
+import com.isuo.yw2application.view.main.work.pay.WeiXinPayBean;
 import com.sito.library.utils.SPHelper;
 
 import java.util.ArrayList;
@@ -243,7 +244,21 @@ public class Api {
          */
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("pay/upgrade/menu.json")
-        Observable<Bean<String>> getPayInfo(@Body() String info);
+        Observable<Bean<WeiXinPayBean>> getPayInfo(@Body() String info);
+
+        /**
+         * 获取支付信息
+         */
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("pay/upgrade/menu.json")
+        Observable<Bean<String>> getPayInfoAl(@Body() String info);
+
+        /**
+         * 支付成功回调
+         */
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("pay/app/pay/back.json")
+        Observable<Bean<User>> paySuccessBack(@Body() String info);
     }
 
     public interface MessageApi {

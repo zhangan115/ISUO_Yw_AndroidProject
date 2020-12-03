@@ -69,7 +69,7 @@
                     android:layout_marginRight="15dp"
                     android:background="@drawable/bg_btn_report"
                     android:gravity="center"
-                    android:text="查询详情"
+                    android:text="当前套餐"
                     android:textColor="@color/colorWhite"
                     android:textSize="12sp"
                     android:visibility="gone" />
@@ -80,8 +80,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:visibility="gone"
-            android:background="#D4FECA" />
+            android:background="#D4FECA"
+            android:visibility="gone" />
 
         <View
             android:layout_width="match_parent"

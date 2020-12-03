@@ -23,13 +23,14 @@ import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.widget.PayBottomView;
 import com.isuo.yw2application.widget.PayContentView;
 import com.lxj.xpopup.XPopup;
-import com.orhanobut.logger.Logger;
+import com.lxj.xpopup.core.BasePopupView;
 import com.sito.library.utils.DisplayUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +44,8 @@ public class PayActivity extends BaseActivity implements PayContract.View {
     private WeiXinFailBr weiXinFailBr;
     private String weiXinOutTradeNo = "";
     private int AL_PAY_FLAG = 100;
+    private PayMenuBean customerSetMenu;
+    private BasePopupView popupView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +66,18 @@ public class PayActivity extends BaseActivity implements PayContract.View {
         registerReceiver(weiXinSuccessBr, new IntentFilter("pay_wei_xin_success"));
         weiXinFailBr = new WeiXinFailBr();
         registerReceiver(weiXinFailBr, new IntentFilter("pay_wei_xin_fail"));
+        customerSetMenu = Yw2Application.getInstance().getCurrentUser().getCustomerSetMenu();
         mPresenter.getPayList(new JSONObject());
+    }
+
+    @Override
+    public void setPresenter(PayContract.Presenter presenter) {
+        mPresenter = presenter;
     }
 
     private void showPayView() {
         if (currentMenu == null) return;
-        new XPopup.Builder(PayActivity.this)
+        popupView = new XPopup.Builder(PayActivity.this)
                 .atView(btn_buy)
                 .asCustom(new PayBottomView(PayActivity.this
                         , "支付信息:" + currentMenu.getMenuName(), "支付金额:" + currentMenu.getPrice() + "元"
@@ -77,28 +86,29 @@ public class PayActivity extends BaseActivity implements PayContract.View {
                     public void onPay(int type) {
                         JSONObject jsonObject = new JSONObject();
                         try {
-                            jsonObject.put("setMenuId",PayActivity.this.currentMenu.getId());
-                            jsonObject.put("payType",type);
-                            jsonObject.put("year",1);
-                            jsonObject.put("appType","android");
+                            jsonObject.put("setMenuId", PayActivity.this.currentMenu.getId());
+                            jsonObject.put("payType", type);
+                            jsonObject.put("year", 1);
+                            jsonObject.put("appType", "android");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        mPresenter.getPayInfo(jsonObject);
+                        if (type == 0) {
+                            mPresenter.getWeiXinPayInfo(jsonObject);
+                        } else {
+                            mPresenter.getAlPayInfo(jsonObject);
+                        }
                     }
                 }))
                 .show();
     }
 
-    @Override
-    public void setPresenter(PayContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
     private PayContentView[] views = null;
+    private List<PayMenuBean> payList = new ArrayList<>();
 
     @Override
     public void showPayList(List<PayMenuBean> list) {
+        this.payList = list;
         views = new PayContentView[list.size()];
         layoutContent.removeAllViews();
         for (int i = 0; i < list.size(); i++) {
@@ -106,6 +116,7 @@ public class PayActivity extends BaseActivity implements PayContract.View {
             view.setLayoutParams(new LinearLayout.LayoutParams(DisplayUtil.dip2px(this, 160), LinearLayout.LayoutParams.WRAP_CONTENT));
             view.setTag(R.id.tag_position, i);
             view.setData(list.get(i));
+            view.currentTv.setVisibility(list.get(i).getId() == customerSetMenu.getMenuId() ? View.VISIBLE : View.GONE);
             view.chooseListener = new PayContentView.OnChooseListener() {
                 @Override
                 public void chooseMenu(PayMenuBean bean) {
@@ -114,23 +125,18 @@ public class PayActivity extends BaseActivity implements PayContract.View {
                     for (int j = 0; j < views.length; j++) {
                         views[j].setChooseState(j == position);
                     }
-                    btn_buy.setText(MessageFormat.format("升级(已选{0}元{1})", currentMenu.getPrice(), currentMenu.getMenuName()));
-                    btn_buy.setBackground(findDrawById(R.drawable.bg_btn_report));
+                    if (customerSetMenu != null && customerSetMenu.getMenuId() == currentMenu.getId()) {
+                        btn_buy.setText("无法购买");
+                        btn_buy.setBackground(findDrawById(R.drawable.bg_btn_gray));
+                    } else {
+                        btn_buy.setText(MessageFormat.format("升级(已选{0}元{1})", currentMenu.getPrice(), currentMenu.getMenuName()));
+                        btn_buy.setBackground(findDrawById(R.drawable.bg_btn_report));
+                    }
                 }
             };
             layoutContent.addView(view);
             views[i] = view;
         }
-    }
-
-    @Override
-    public void paySuccess() {
-
-    }
-
-    @Override
-    public void payFail() {
-
     }
 
     @Override
@@ -150,22 +156,32 @@ public class PayActivity extends BaseActivity implements PayContract.View {
         thread.start();
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        try {
-            if (weiXinFailBr != null) {
-                unregisterReceiver(weiXinFailBr);
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == AL_PAY_FLAG) {
+                PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+                String resultStatus = payResult.getResultStatus();
+                if (TextUtils.equals(resultStatus, "9000")) {
+                    JSONObject json;
+                    try {
+                        json = new JSONObject(resultInfo);
+                        AlPaySuccessCallBack callBack = new Gson().fromJson(json.toString(), AlPaySuccessCallBack.class);
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("outTradeNo", callBack.getAlipay_trade_app_pay_response().getOut_trade_no());
+                        jsonObject.put("trade_no", callBack.getAlipay_trade_app_pay_response().getTrade_no());
+                        mPresenter.paySuccess(jsonObject);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Yw2Application.getInstance().showToast("支付失败");
+                }
             }
-            if (weiXinSuccessBr != null) {
-                unregisterReceiver(weiXinSuccessBr);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-    }
-
+    };
 
     @Override
     public void payWeiXin(WeiXinPayBean payMessage) {
@@ -181,37 +197,32 @@ public class PayActivity extends BaseActivity implements PayContract.View {
                 .build().toWXPayNotSign(this);
     }
 
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == AL_PAY_FLAG) {
-                PayResult payResult = new PayResult((Map<String, String>) msg.obj);
-                String resultInfo = payResult.getResult();// 同步返回需要验证的信息
-                String resultStatus = payResult.getResultStatus();
-                // 判断resultStatus 为9000则代表支付成功
-                if (TextUtils.equals(resultStatus, "9000")) {
-                    // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                    JSONObject json;
-                    try {
-                        json = new JSONObject(resultInfo);
-                        AlPaySuccessCallBack callBack = new Gson().fromJson(json.toString(), AlPaySuccessCallBack.class);
-                        JSONObject jsonObject = new JSONObject();
-                        jsonObject.put("outTradeNo", callBack.getAlipay_trade_app_pay_response().getOut_trade_no());
-                        jsonObject.put("trade_no", callBack.getAlipay_trade_app_pay_response().getTrade_no());
-                        mPresenter.paySuccess(jsonObject);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                    Logger.d(resultInfo);
-                    Logger.d(resultStatus);
-                    Yw2Application.getInstance().showToast("支付失败");
-                }
+    @Override
+    public void paySuccess() {
+        customerSetMenu = Yw2Application.getInstance().getCurrentUser().getCustomerSetMenu();
+        currentMenu = null;
+        showPayList(this.payList);
+    }
+
+    @Override
+    public void hidePopView() {
+        popupView.doDismissAnimation();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            if (weiXinFailBr != null) {
+                unregisterReceiver(weiXinFailBr);
             }
+            if (weiXinSuccessBr != null) {
+                unregisterReceiver(weiXinSuccessBr);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    };
+    }
 
     class WeiXinSuccessBr extends BroadcastReceiver {
 
