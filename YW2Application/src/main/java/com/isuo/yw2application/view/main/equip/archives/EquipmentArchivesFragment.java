@@ -171,12 +171,12 @@ public class EquipmentArchivesFragment extends MvpFragment<EquipmentArchivesCont
             case R.id.ll_4:
                 intent = new Intent(getActivity(), EquipmentTimeLineActivity.class);
                 intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, bean.getEquipmentId());
-                intent.putExtra(ConstantStr.KEY_BUNDLE_INT, 1);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_INT, 2);
                 break;
             case R.id.ll_5:
                 intent = new Intent(getActivity(), EquipmentTimeLineActivity.class);
                 intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, bean.getEquipmentId());
-                intent.putExtra(ConstantStr.KEY_BUNDLE_INT, 2);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_INT, 1);
                 break;
             case R.id.ll_6:
                 intent = new Intent(getActivity(), EquipmentTimeLineActivity.class);

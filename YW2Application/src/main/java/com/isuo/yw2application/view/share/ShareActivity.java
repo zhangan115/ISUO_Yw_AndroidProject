@@ -61,7 +61,7 @@ public class ShareActivity extends BaseActivity {
             WXWebpageObject wxWebpageObject = new WXWebpageObject();
             wxWebpageObject.webpageUrl = mUrl;
             WXMediaMessage mediaMessage = new WXMediaMessage(wxWebpageObject);
-            mediaMessage.title = "优维+";
+            mediaMessage.title = "小梭运维+";
             mediaMessage.description = "";
             SendMessageToWX.Req req = new SendMessageToWX.Req();
             req.message = mediaMessage;

@@ -62,6 +62,7 @@ import com.soundcloud.android.crop.Crop;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -152,6 +153,8 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
         } else {
             userInfoTv.setText(user.getUserRoleNames());
         }
+        TextView text_8 = findViewById(R.id.text_8);
+        text_8.setText(MessageFormat.format("套餐选择：{0}", user.getCustomerSetMenu().getMenuName()));
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
 
             @Override

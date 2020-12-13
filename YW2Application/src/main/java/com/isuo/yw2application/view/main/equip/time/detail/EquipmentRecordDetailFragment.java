@@ -1,7 +1,11 @@
 package com.isuo.yw2application.view.main.equip.time.detail;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
@@ -38,7 +43,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class EquipmentRecordDetailFragment extends MvpFragment<EquipmentRecordDetailContract.Presenter> implements EquipmentRecordDetailContract.View, EasyPermissions.PermissionCallbacks {
 
     private TimeLineBean timeLineBean;
-    private static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/EvPro/";
+    private static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ISUO/";
 
     public static EquipmentRecordDetailFragment newInstance(TimeLineBean timeLineBean) {
         Bundle args = new Bundle();
@@ -89,12 +94,10 @@ public class EquipmentRecordDetailFragment extends MvpFragment<EquipmentRecordDe
         ((TextView) getView().findViewById(R.id.tv_time)).setText(DataUtil.timeFormat(timeLineBean.getCreateTime(), null));
         ((TextView) getView().findViewById(R.id.tv_equip_name)).setText(equipRecordDetail.getRecordName());
         TextView contentTitleTv = getView().findViewById(R.id.tv_record_title);
-        if (timeLineBean.getType() == ConstantInt.TYPE_REPAIR) {
-            contentTitleTv.setText("大修内容");
-        } else if (timeLineBean.getType() == ConstantInt.TYPE_CHECK) {
-            contentTitleTv.setText("检测内容");
-        } else if (timeLineBean.getType() == ConstantInt.TYPE_EXPERIMENT) {
-            contentTitleTv.setText("实验内容简要");
+        if (timeLineBean.getType() == 2) {
+            contentTitleTv.setText("设备图纸");
+        } else {
+            contentTitleTv.setText("维修方案");
         }
         ((TextView) getView().findViewById(R.id.record_content)).setText(equipRecordDetail.getRecordContent());
         LinearLayout photo_content = getView().findViewById(R.id.photo_content);
@@ -113,10 +116,27 @@ public class EquipmentRecordDetailFragment extends MvpFragment<EquipmentRecordDe
     }
 
     @Override
-    public void downLoadSuccess(String filePath) {
+    public void downLoadSuccess(final String filePath) {
         new MaterialDialog.Builder(getActivity())
-                .content("文件已经下载成功，请在EvPro文件夹中查看!")
-                .positiveText("确定").show();
+                .content("文件已经下载成功，请在ISUO文件夹中查看!")
+                .positiveText("确定")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                        openFileByWps(getActivity(), new File(filePath));
+                    }
+                })
+                .show();
+    }
+
+    public static void openFileByWps(Context context, File file) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setClassName("cn.wps.moffice", "cn.wps.moffice.documentmanager.PreStartActivity");
+        Uri uri = Uri.fromFile(file);
+        intent.setData(uri);
+        context.startActivity(intent);
     }
 
     @Override

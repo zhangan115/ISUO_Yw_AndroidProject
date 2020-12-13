@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -21,17 +22,21 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.zxing.client.android.CaptureActivity;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.BroadcastAction;
 import com.isuo.yw2application.common.ConstantStr;
+import com.isuo.yw2application.mode.bean.PayMenuBean;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.news.MessageListBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.MainActivity;
+import com.isuo.yw2application.view.main.about.AboutActivity;
 import com.isuo.yw2application.view.main.device.list.EquipListActivity;
 import com.isuo.yw2application.view.main.equip.archives.EquipmentArchivesActivity;
 import com.isuo.yw2application.view.main.work.all.PayGridViewAdapter;
@@ -39,6 +44,7 @@ import com.isuo.yw2application.view.main.work.all.WorkItemAllActivity;
 import com.isuo.yw2application.view.main.work.all.WorkItemAllIntent;
 import com.isuo.yw2application.view.main.work.all.widget.WorkItemGridView;
 import com.isuo.yw2application.view.main.work.message.NewsListActivity;
+import com.isuo.yw2application.view.main.work.pay.PayActivity;
 import com.isuo.yw2application.view.main.work.safe_manager.SafeManagerActivity;
 import com.isuo.yw2application.view.main.work.sos.SOSActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
@@ -125,6 +131,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
             }
         });
         User user = Yw2Application.getInstance().getCurrentUser();
+        payMenuBean = user.getCustomerSetMenu();
         TextView userNameTv = rootView.findViewById(R.id.userNameTv);
         userNameTv.setText(String.format("欢迎，%s", user.getRealName()));
         rootView.findViewById(R.id.rightImage).setOnClickListener(this);
@@ -227,6 +234,8 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         mPresenter = presenter;
     }
 
+    PayMenuBean payMenuBean;
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -265,12 +274,55 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                 startActivity(intent);
                 break;
             case R.id.workItem9:
-                startActivity(new Intent(getActivity(), SOSActivity.class));
+                if (payMenuBean != null && payMenuBean.getSafetySo() == 1) {
+                    startActivity(new Intent(getActivity(), SOSActivity.class));
+                } else {
+                    showPayDialog();
+                }
                 break;
             case R.id.workItem10:
-                startActivity(new Intent(getActivity(), SafeManagerActivity.class));
+                if (payMenuBean != null && payMenuBean.getSafetySo() == 1) {
+                    startActivity(new Intent(getActivity(), SafeManagerActivity.class));
+                } else {
+                    showPayDialog();
+                }
                 break;
         }
+    }
+
+    MaterialDialog payDialog;
+
+    private void showPayDialog() {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_pay, null);
+        view.findViewById(R.id.text1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),PayActivity.class));
+                if (payDialog != null) {
+                    payDialog.dismiss();
+                }
+            }
+        });
+        view.findViewById(R.id.text2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), AboutActivity.class));
+                if (payDialog != null) {
+                    payDialog.dismiss();
+                }
+            }
+        });
+        view.findViewById(R.id.text3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (payDialog != null) {
+                    payDialog.dismiss();
+                }
+            }
+        });
+        payDialog = new MaterialDialog.Builder(getActivity())
+                .customView(view, false)
+                .show();
     }
 
     private final int WORK_ALL_CODE = 100;

@@ -111,7 +111,7 @@ public interface ConstantStr {
     String KEY_URL = "key_url";
     String KEY_ID = "key_id";
     String KEY_TITLE = "key_title";
-    String WEIXIN_APP_ID = "wxe2bffa66403363af";
+    String WEIXIN_APP_ID = "wxba4dd4de1d07f517";
 
     String KEY_NEW_BEAN = "news_bean";
     String KEY_NEW_ID = "news_notify_id";

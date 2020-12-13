@@ -36,7 +36,7 @@ public interface ConstantInt {
 
     int TYPE_REPAIR = 1;//大修记录
     int TYPE_EXPERIMENT = 2;//实验记录
-    int TYPE_CHECK = 3;//带电检测记录
+    int TYPE_CHECK = 2;//带电检测记录
 
     int DATA_VALUE_TYPE_1 = 1;
     int DATA_VALUE_TYPE_2 = 2;//数字输入

@@ -23,12 +23,10 @@ public class EquipmentRecordDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         TimeLineBean lineBean = getIntent().getParcelableExtra(ConstantStr.KEY_BUNDLE_OBJECT);
         String title = null;
-        if (lineBean.getType() == ConstantInt.TYPE_CHECK) {
-            title = "检测详情";
-        } else if (lineBean.getType() == ConstantInt.TYPE_REPAIR) {
-            title = "大修详情";
-        } else if (lineBean.getType() == ConstantInt.TYPE_EXPERIMENT) {
-            title = "实验详情";
+       if (lineBean.getType() == 2) {
+            title = "设备图纸";
+        } else  {
+            title = "维修方案";
         }
         if (TextUtils.isEmpty(title)) {
             finish();

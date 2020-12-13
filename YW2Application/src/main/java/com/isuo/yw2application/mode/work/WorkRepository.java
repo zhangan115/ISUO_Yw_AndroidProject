@@ -11,11 +11,14 @@ import com.isuo.yw2application.api.Api;
 import com.isuo.yw2application.api.ApiCallBack;
 import com.isuo.yw2application.api.FaultApi;
 import com.isuo.yw2application.api.WorkApi;
+import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.Bean;
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
+import com.isuo.yw2application.mode.bean.PayMenuBean;
+import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.check.FaultList;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulBean;
 import com.isuo.yw2application.mode.bean.today.TodayToDoBean;
@@ -404,7 +407,6 @@ public class WorkRepository implements WorkDataSource {
         List<WorkItem> allWorkItems = new ArrayList<>();
         List<WorkItem> payWorkItems = new ArrayList<>();
         //可用item
-        allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
         allWorkItems.add(new WorkItem(2, "执行检修", R.drawable.overhaul));
         allWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
         allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
@@ -414,8 +416,22 @@ public class WorkRepository implements WorkDataSource {
         allWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));
         allWorkItems.add(new WorkItem(9, "执行巡检", R.drawable.inspecting));
         //需要付费item
-        payWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
-        payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
+        PayMenuBean payMenuBean = Yw2Application.getInstance().getCurrentUser().getCustomerSetMenu();
+        if (payMenuBean.getIncrementWorkSo() == 0) {
+            payWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
+        }else {
+            allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
+        }
+        if (payMenuBean.getOilSo() == 0) {
+            payWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
+        }else {
+            allWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
+        }
+        if (payMenuBean.getToolSo() == 0) {
+            payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
+        }else {
+            allWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
+        }
 
         String workItemStr = sp.getString(ConstantStr.WORK_ITEM, "");
         String[] items = workItemStr.split(",");
@@ -441,7 +457,7 @@ public class WorkRepository implements WorkDataSource {
             }
         }
         if (myWorkItems.isEmpty()) {
-            myWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
+            allWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));
             myWorkItems.add(new WorkItem(2, "执行检修", R.drawable.overhaul));
             myWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
             myWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
@@ -459,7 +475,6 @@ public class WorkRepository implements WorkDataSource {
         List<WorkItem> allWorkItems = new ArrayList<>();
         List<WorkItem> payWorkItems = new ArrayList<>();
         //可用item
-        allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
         allWorkItems.add(new WorkItem(2, "执行检修", R.drawable.overhaul));
         allWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
         allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
@@ -469,8 +484,22 @@ public class WorkRepository implements WorkDataSource {
         allWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));
         allWorkItems.add(new WorkItem(9, "执行巡检", R.drawable.inspecting));
         //需要付费item
-        payWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
-        payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
+        PayMenuBean payMenuBean = Yw2Application.getInstance().getCurrentUser().getCustomerSetMenu();
+        if (payMenuBean.getIncrementWorkSo() == 0) {
+            payWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
+        }else {
+            allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
+        }
+        if (payMenuBean.getOilSo() == 0) {
+            payWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
+        }else {
+            allWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
+        }
+        if (payMenuBean.getToolSo() == 0) {
+            payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
+        }else {
+            allWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
+        }
         callBack.showAllWorkItem(allWorkItems);
         callBack.showPayWorkItem(payWorkItems);
     }

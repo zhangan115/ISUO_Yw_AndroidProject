@@ -8,7 +8,7 @@ import com.isuo.yw2application.view.base.BaseActivity;
 import com.sito.library.utils.ActivityUtils;
 
 /**
- * 大修记录，带电检测，实验数据
+ * 设备图纸，维修方案
  * Created by zhangan on 2017/10/13.
  */
 
@@ -23,12 +23,10 @@ public class EquipmentTimeLineActivity extends BaseActivity {
             return;
         }
         String title;
-        if (showType == 1) {
-            title = "大修记录";
-        } else if (showType == 2) {
-            title = "维修方案";
-        } else {
+       if (showType == 2) {
             title = "设备图纸";
+        } else {
+            title = "维修方案";
         }
         setLayoutAndToolbar(R.layout.activity_container_toolbar, title);
         EquipmentTimeLineFragment fragment = (EquipmentTimeLineFragment) getFragmentManager().findFragmentById(R.id.frame_container);

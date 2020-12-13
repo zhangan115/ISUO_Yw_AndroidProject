@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="小梭优维"
+                android:text="小梭运维＋"
                 android:textSize="22sp"
                 android:visibility="visible" />
 

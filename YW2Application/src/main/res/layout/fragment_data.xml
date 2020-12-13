@@ -34,13 +34,11 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/rightTv"
+                    android:id="@+id/payTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
-                    android:text="其他服务"
                     android:textColor="@color/colorWhite"
-                    android:visibility="gone"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -483,7 +481,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginTop="12dp"
-                                    android:text="个人详情"
+                                    android:text="人员数据查询"
                                     android:textColor="@color/text333"
                                     android:textSize="12sp" />
                             </LinearLayout>

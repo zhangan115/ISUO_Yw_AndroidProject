@@ -17,6 +17,7 @@ import com.google.zxing.client.android.CaptureActivity;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
+import com.isuo.yw2application.mode.bean.PayMenuBean;
 import com.isuo.yw2application.mode.bean.equip.EquipBean;
 import com.isuo.yw2application.mode.bean.equip.EquipmentBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
@@ -25,6 +26,7 @@ import com.isuo.yw2application.view.main.device.equipment.CreateEquipmentActivit
 import com.isuo.yw2application.view.main.device.list.EquipListActivity;
 import com.isuo.yw2application.view.main.device.search.EquipSearchActivity;
 import com.isuo.yw2application.view.main.equip.archives.EquipmentArchivesActivity;
+import com.isuo.yw2application.view.main.work.pay.PayActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
@@ -36,6 +38,7 @@ import com.sito.library.widget.PinnedHeaderExpandableListView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -88,6 +91,11 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
         rootView.findViewById(R.id.type).setOnClickListener(this);
         rootView.findViewById(R.id.room).setOnClickListener(this);
         rootView.findViewById(R.id.state).setOnClickListener(this);
+        rootView.findViewById(R.id.payTitle).setOnClickListener(this);
+        TextView payTitle = rootView.findViewById(R.id.payTitle);
+        PayMenuBean bean = Yw2Application.getInstance().getCurrentUser().getCustomerSetMenu();
+        payTitle.setText(MessageFormat.format("当前为{0}", bean.getMenuName()));
+        payTitle.setOnClickListener(this);
         expandableListView = rootView.findViewById(R.id.expandableListView);
         swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout);
         deviceAllCountTv = rootView.findViewById(R.id.deviceAllCountTv);
@@ -136,6 +144,9 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
             case R.id.searchDeviceLayout:
                 Intent searchIntent = new Intent(getActivity(), EquipSearchActivity.class);
                 startActivity(searchIntent);
+                break;
+            case R.id.payTitle:
+                startActivity(new Intent(getActivity(), PayActivity.class));
                 break;
             case R.id.deviceCountTv:
                 new XPopup.Builder(getContext()).atView(view).asAttachList(deviceCountItems, new int[]{},

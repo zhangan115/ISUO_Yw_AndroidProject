@@ -3,19 +3,26 @@ package com.isuo.yw2application.view.main.work.all;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.huxq17.handygridview.HandyGridView;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
+import com.isuo.yw2application.mode.bean.PayMenuBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.main.work.all.widget.ShowWorkItemView;
 import com.isuo.yw2application.view.main.work.all.widget.WorkItemGridView;
+import com.isuo.yw2application.view.main.work.pay.PayActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +46,7 @@ public class WorkItemAllActivity extends BaseActivity implements WorkItemAllCont
     private boolean isEditState;
     private AllGridViewAdapter allGridViewAdapter;
     private PayGridViewAdapter payGridViewAdapter;
+    private LinearLayout canBuyItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +56,30 @@ public class WorkItemAllActivity extends BaseActivity implements WorkItemAllCont
         init();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_equipment, menu);
+        PayMenuBean bean = Yw2Application.getInstance().getCurrentUser().getCustomerSetMenu();
+        MenuItem menuItem = menu.getItem(0);
+        if (menuItem != null) {
+            menuItem.setTitle("当前为" + bean.getMenuName());
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        startActivity(new Intent(WorkItemAllActivity.this, PayActivity.class));
+        return true;
+
+    }
+
     private void init() {
         showWorkItems = new ArrayList<>();
         workAllItems = new ArrayList<>();
         payWorkItems = new ArrayList<>();
         mHandyGridView = findViewById(R.id.grid_tips);
+        canBuyItem = findViewById(R.id.canBuyItem);
         allGridView = findViewById(R.id.gridView);
         payGridView = findViewById(R.id.payGridView);
         tvNote = findViewById(R.id.tvNote);
@@ -87,10 +114,7 @@ public class WorkItemAllActivity extends BaseActivity implements WorkItemAllCont
         payGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //todo 判断是否交钱
-                if (!isEditState) {
-                    startActivity(WorkItemAllIntent.startWorkItem(WorkItemAllActivity.this, payWorkItems.get(position)));
-                }
+                startActivity(new Intent(WorkItemAllActivity.this, PayActivity.class));
             }
         });
         if (mPresenter != null) {
@@ -121,9 +145,9 @@ public class WorkItemAllActivity extends BaseActivity implements WorkItemAllCont
         for (int i = 0; i < showWorkItems.size(); i++) {
             showWorkItems.get(i).setEdit(isEditState);
         }
-        for (int i = 0; i < payWorkItems.size(); i++) {
-            payWorkItems.get(i).setEdit(isEditState);
-        }
+//        for (int i = 0; i < payWorkItems.size(); i++) {
+//            payWorkItems.get(i).setEdit(isEditState);
+//        }
         tvNote.setVisibility(isEditState ? View.VISIBLE : View.GONE);
         tvEdit.setVisibility(!isEditState ? View.VISIBLE : View.GONE);
         tvFinish.setVisibility(!isEditState ? View.GONE : View.VISIBLE);
@@ -159,7 +183,7 @@ public class WorkItemAllActivity extends BaseActivity implements WorkItemAllCont
             return false;
         }
         Intent intent = new Intent();
-        if (mPresenter!=null){
+        if (mPresenter != null) {
             mPresenter.saveWorkItem(this.showWorkItems);
         }
         setResult(Activity.RESULT_OK, intent);
@@ -175,12 +199,12 @@ public class WorkItemAllActivity extends BaseActivity implements WorkItemAllCont
     @Override
     public void showMyWorkItemList(List<WorkItem> workItems) {
         int position = -1;
-        for (int i = 0;i<workItems.size();i++){
-            if (workItems.get(i).getId() == -1){
+        for (int i = 0; i < workItems.size(); i++) {
+            if (workItems.get(i).getId() == -1) {
                 position = i;
             }
         }
-        if (position!=-1){
+        if (position != -1) {
             workItems.remove(position);
         }
         this.showWorkItems.clear();
@@ -206,6 +230,10 @@ public class WorkItemAllActivity extends BaseActivity implements WorkItemAllCont
 
     @Override
     public void showPayWorkItemList(List<WorkItem> workItems) {
+        if (workItems.size() == 0) {
+            return;
+        }
+        this.canBuyItem.setVisibility(View.VISIBLE);
         this.payWorkItems.clear();
         this.payWorkItems.addAll(workItems);
         for (int i = 0; i < showWorkItems.size(); i++) {

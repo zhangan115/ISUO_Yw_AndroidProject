@@ -107,11 +107,16 @@ public class PayContentView extends LinearLayout {
         }
         textViews[9].setText(MessageFormat.format("{0}G", bean.getWorkSpace() / 1024));
         textViews[10].setText("2年");
-        //安全规则
-        textViews[11].setText("2年");
-        //一键报警
-        textViews[12].setText("2年");
-
+        //安全规则   一键报警
+        if (bean.getSafetySo()==0){
+            textViews[11].setText("不开放");
+            textViews[12].setText("不开放");
+            textViews[11].setTextColor(context.getResources().getColor(R.color.colorF05340));
+            textViews[12].setTextColor(context.getResources().getColor(R.color.colorF05340));
+        }else {
+            textViews[11].setText("开放");
+            textViews[12].setText("开放");
+        }
         textViews[13].setText(MessageFormat.format("限制{0}条计划", bean.getPlanCount()));
         if (bean.getPlanEquipmentCount() == 9999) {
             textViews[16].setText("不限制");
