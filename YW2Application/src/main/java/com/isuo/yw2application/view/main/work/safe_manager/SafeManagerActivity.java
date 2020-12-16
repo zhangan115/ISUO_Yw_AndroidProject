@@ -3,10 +3,8 @@ package com.isuo.yw2application.view.main.work.safe_manager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,7 +14,6 @@ import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.discover.StandBean;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.main.data.StandInfoActivity;
-import com.isuo.yw2application.view.main.work.enterprise_standard.EnterpriseStandardActivity;
 import com.sito.library.adapter.RVAdapter;
 import com.sito.library.widget.RecycleRefreshLoadLayout;
 

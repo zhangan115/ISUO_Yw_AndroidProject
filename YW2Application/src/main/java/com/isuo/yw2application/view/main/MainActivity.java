@@ -149,6 +149,8 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
         if (user.getCustomer() != null) {
             if (!TextUtils.isEmpty(user.getUserRoleNames())) {
                 userInfoTv.setText(String.format("%s-%s", user.getCustomer().getCustomerName(), user.getUserRoleNames()));
+            }else {
+                userInfoTv.setText(String.format("%s", user.getCustomer().getCustomerName()));
             }
         } else {
             userInfoTv.setText(user.getUserRoleNames());

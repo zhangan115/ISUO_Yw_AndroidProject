@@ -412,7 +412,7 @@ public class WorkRepository implements WorkDataSource {
         allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
         allWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
         allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
-        allWorkItems.add(new WorkItem(7, "查看规范", R.drawable.standard));
+        allWorkItems.add(new WorkItem(7, "查看规则", R.drawable.standard));
         allWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));
         allWorkItems.add(new WorkItem(9, "执行巡检", R.drawable.inspecting));
         //需要付费item
@@ -457,13 +457,13 @@ public class WorkRepository implements WorkDataSource {
             }
         }
         if (myWorkItems.isEmpty()) {
-            allWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));
+            myWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));
             myWorkItems.add(new WorkItem(2, "执行检修", R.drawable.overhaul));
             myWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
             myWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
             myWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
             myWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
-            myWorkItems.add(new WorkItem(7, "查看规范", R.drawable.standard));
+            myWorkItems.add(new WorkItem(7, "查看规则", R.drawable.standard));
         }
         myWorkItems.add(new WorkItem(-1, "全部", R.drawable.all));
         callBack.showWorkItem(myWorkItems);
@@ -480,7 +480,7 @@ public class WorkRepository implements WorkDataSource {
         allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
         allWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
         allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
-        allWorkItems.add(new WorkItem(7, "查看规范", R.drawable.standard));
+        allWorkItems.add(new WorkItem(7, "查看规则", R.drawable.standard));
         allWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));
         allWorkItems.add(new WorkItem(9, "执行巡检", R.drawable.inspecting));
         //需要付费item

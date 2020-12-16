@@ -11,9 +11,9 @@ public class NewsListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int type = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT,0);
+        int type = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT, 0);
         String title = "";
-        switch (type){
+        switch (type) {
             case 0:
                 title = "工作动态";
                 break;
@@ -24,10 +24,13 @@ public class NewsListActivity extends BaseActivity {
                 title = "企业通知";
                 break;
             case 3:
-                title ="与我相关";
+                title = "与我相关";
+                break;
+            case 4:
+                title = "故障任务";
                 break;
         }
-        setLayoutAndToolbar(R.layout.activity_container_toolbar,title,true);
+        setLayoutAndToolbar(R.layout.activity_container_toolbar, title, true);
         NewsListFragment fragment = (NewsListFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
         if (fragment == null) {
             fragment = NewsListFragment.newInstance(type);

@@ -10,17 +10,20 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.PayMenuBean;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
+import com.isuo.yw2application.view.main.about.AboutActivity;
 import com.isuo.yw2application.view.main.generate.increment.GenerateIncrementActivity;
 import com.isuo.yw2application.view.main.generate.repair.GenerateRepairActivity;
 import com.isuo.yw2application.view.main.task.increment.WorkIncrementActivity;
 import com.isuo.yw2application.view.main.task.inspection.WorkInspectionActivity;
 import com.isuo.yw2application.view.main.task.overhaul.WorkOverhaulActivity;
+import com.isuo.yw2application.view.main.work.message.NewsListActivity;
 import com.isuo.yw2application.view.main.work.pay.PayActivity;
 import com.sito.library.utils.DisplayUtil;
 
@@ -68,16 +71,19 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
         rootView.findViewById(R.id.taskIv2).setLayoutParams(new LinearLayout.LayoutParams(width, height));
         rootView.findViewById(R.id.taskIv3).setLayoutParams(new LinearLayout.LayoutParams(width, height));
         rootView.findViewById(R.id.taskIv4).setLayoutParams(new LinearLayout.LayoutParams(width, height));
+        rootView.findViewById(R.id.taskIv5).setLayoutParams(new LinearLayout.LayoutParams(width, height));
+        rootView.findViewById(R.id.taskIv6).setLayoutParams(new LinearLayout.LayoutParams(width, height));
         rootView.findViewById(R.id.taskIv1).setOnClickListener(this);
         rootView.findViewById(R.id.taskIv2).setOnClickListener(this);
         rootView.findViewById(R.id.taskIv3).setOnClickListener(this);
         rootView.findViewById(R.id.taskIv4).setOnClickListener(this);
+        rootView.findViewById(R.id.taskIv5).setOnClickListener(this);
         rootView.findViewById(R.id.layout_1).setOnClickListener(this);
         rootView.findViewById(R.id.layout_2).setOnClickListener(this);
         rootView.findViewById(R.id.layout_3).setOnClickListener(this);
         TextView payTitle = rootView.findViewById(R.id.payTitle);
-        PayMenuBean bean = Yw2Application.getInstance().getCurrentUser().getCustomerSetMenu();
-        payTitle.setText(MessageFormat.format("当前为{0}", bean.getMenuName()));
+        payMenuBean = Yw2Application.getInstance().getCurrentUser().getCustomerSetMenu();
+        payTitle.setText(MessageFormat.format("当前为{0}", payMenuBean.getMenuName()));
         payTitle.setOnClickListener(this);
         return rootView;
     }
@@ -89,6 +95,43 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
             mPresenter.getWorkCount();
         }
     }
+
+    MaterialDialog payDialog;
+
+    private void showPayDialog() {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_pay, null);
+        view.findViewById(R.id.text1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), PayActivity.class));
+                if (payDialog != null) {
+                    payDialog.dismiss();
+                }
+            }
+        });
+        view.findViewById(R.id.text2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), AboutActivity.class));
+                if (payDialog != null) {
+                    payDialog.dismiss();
+                }
+            }
+        });
+        view.findViewById(R.id.text3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (payDialog != null) {
+                    payDialog.dismiss();
+                }
+            }
+        });
+        payDialog = new MaterialDialog.Builder(getActivity())
+                .customView(view, false)
+                .show();
+    }
+
+    PayMenuBean payMenuBean;
 
     @Override
     public void onClick(View view) {
@@ -105,12 +148,25 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
                 startActivity(taskIntent2);
                 break;
             case R.id.taskIv3:
+                if (payMenuBean.getIncrementWorkSo() == 0) {
+                    showPayDialog();
+                    return;
+                }
                 Intent taskIntent3 = new Intent(getActivity(), GenerateIncrementActivity.class);
                 startActivity(taskIntent3);
                 break;
             case R.id.taskIv4:
+                if (payMenuBean.getIncrementWorkSo() == 0) {
+                    showPayDialog();
+                    return;
+                }
                 Intent taskIntent4 = new Intent(getActivity(), WorkIncrementActivity.class);
                 startActivity(taskIntent4);
+                break;
+            case R.id.taskIv5:
+                Intent intent5 = new Intent(getActivity(), NewsListActivity.class);
+                intent5.putExtra(ConstantStr.KEY_BUNDLE_INT, 4);
+                startActivity(intent5);
                 break;
             case R.id.layout_1:
             case R.id.layout_2:

@@ -28,7 +28,7 @@ public class EnterpriseStandardActivity extends BaseActivity implements Enterpri
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_enterprise_standard, "查看规范");
+        setLayoutAndToolbar(R.layout.activity_enterprise_standard, "查看规则");
         new EnterpriseStandardPresenter(Yw2Application.getInstance().getRepositoryComponent().getRepository(), this);
         RecycleRefreshLoadLayout refreshLoadLayout = findViewById(R.id.refreshLoadLayoutId);
         refreshLoadLayout.setColorSchemeColors(findColorById(R.color.colorPrimary));
@@ -45,7 +45,7 @@ public class EnterpriseStandardActivity extends BaseActivity implements Enterpri
             @Override
             public void showData(ViewHolder vHolder, StandBean.ListBean data, int position) {
                 TextView tvName = (TextView) vHolder.getView(R.id.id_stand_content);
-                String str = (position + 1) + "." + data.getRegulationName();
+                String str = (position + 1) + "." + data.getSecurityName();
                 tvName.setText(str);
             }
         };
@@ -54,8 +54,8 @@ public class EnterpriseStandardActivity extends BaseActivity implements Enterpri
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(EnterpriseStandardActivity.this, StandInfoActivity.class);
-                intent.putExtra(ConstantStr.KEY_TITLE, standBeen.get(position).getRegulationName());
-                intent.putExtra(ConstantStr.KEY_BUNDLE_STR, standBeen.get(position).getRegulationContent());
+                intent.putExtra(ConstantStr.KEY_TITLE, standBeen.get(position).getSecurityName());
+                intent.putExtra(ConstantStr.KEY_BUNDLE_STR, standBeen.get(position).getSecurityRemark());
                 startActivity(intent);
             }
         });

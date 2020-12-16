@@ -76,6 +76,24 @@ public class StandBean {
         private String regulationContent;
         private int regulationId;
         private String regulationName;
+        private String securityName;
+        private String securityRemark;
+
+        public String getSecurityName() {
+            return securityName;
+        }
+
+        public void setSecurityName(String securityName) {
+            this.securityName = securityName;
+        }
+
+        public String getSecurityRemark() {
+            return securityRemark;
+        }
+
+        public void setSecurityRemark(String securityRemark) {
+            this.securityRemark = securityRemark;
+        }
 
         public String getCreateDeptName() {
             return createDeptName;

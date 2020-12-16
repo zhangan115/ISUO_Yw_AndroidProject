@@ -483,14 +483,19 @@ public class Api {
     }
 
     public interface Getui {
+
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("user/bind/usercid.json")
         Observable<Bean<String>> postCidInfo(@Body() String info);
     }
 
     public interface Stand {
+
         @GET("regulation/list.json")
         Observable<Bean<StandBean>> getStandInfo(@Query("count") int pageSize);
+
+        @GET("bag/security/list/page.json")
+        Observable<Bean<StandBean>> getSecurityList(@Query("count") int pageSize);
     }
 
     public interface InjectEquipmentApi {

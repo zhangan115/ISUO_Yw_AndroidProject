@@ -201,8 +201,11 @@ public interface CustomerDataSource {
     @NonNull
     Subscription getAlarmCount(@NonNull IObjectCallBack<AlarmCount> callBack);
 
-    //获取规章制度
+    //获取安全管理制度
     Subscription getStandInfo(@NonNull IObjectCallBack<StandBean> callBack);
+
+    //安全包 查看规则
+    Subscription getSecurityList(@NonNull IObjectCallBack<StandBean> callBack);
 
     @NonNull
     Subscription getAlarmList(Map<String, String> map, @NonNull IListCallBack<FaultList> callBack);

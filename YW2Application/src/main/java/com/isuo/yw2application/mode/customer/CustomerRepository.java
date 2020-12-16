@@ -837,6 +837,29 @@ public class CustomerRepository implements CustomerDataSource {
         }.execute1();
     }
 
+    @Override
+    public Subscription getSecurityList(@NonNull final IObjectCallBack<StandBean> callBack) {
+        Observable<Bean<StandBean>> observable = Api.createRetrofit().create(Api.Stand.class)
+                .getSecurityList(ConstantInt.MAX_PAGE_SIZE);
+        return new ApiCallBack<StandBean>(observable) {
+            @Override
+            public void onSuccess(@Nullable StandBean standBeen) {
+                callBack.onFinish();
+                if (standBeen != null && standBeen.getList() != null && standBeen.getList().size() > 0) {
+                    callBack.onSuccess(standBeen);
+                } else {
+                    callBack.onError("");
+                }
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
     @NonNull
     @Override
     public Subscription getAlarmList(Map<String, String> map, @NonNull final IListCallBack<FaultList> callBack) {

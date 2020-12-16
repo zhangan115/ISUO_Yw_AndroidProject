@@ -15,7 +15,7 @@ public class EnterpriseStandardPresenter implements EnterpriseStandardContact.Pr
     @NonNull
     private CompositeSubscription mSubscription;
 
-    public EnterpriseStandardPresenter(CustomerRepository repository, EnterpriseStandardContact.View view) {
+    EnterpriseStandardPresenter(CustomerRepository repository, EnterpriseStandardContact.View view) {
         this.mRepository = repository;
         this.mView = view;
         mSubscription = new CompositeSubscription();
@@ -24,7 +24,7 @@ public class EnterpriseStandardPresenter implements EnterpriseStandardContact.Pr
 
     @Override
     public void getEnterpriseStandardList() {
-        mSubscription.add(mRepository.getStandInfo(new IObjectCallBack<StandBean>() {
+        mSubscription.add(mRepository.getSecurityList(new IObjectCallBack<StandBean>() {
             @Override
             public void onSuccess(@NonNull StandBean standBean) {
                 mView.showData(standBean.getList());

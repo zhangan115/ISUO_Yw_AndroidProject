@@ -89,7 +89,12 @@ public class NewsListFragment extends LazyLoadFragmentV4<NewsListContract.Presen
         getActivity().registerReceiver(receiverNewMessage, filter);
         requestMap = new HashMap<>();
         requestMap.put("count", String.valueOf(ConstantInt.PAGE_SIZE));
-        requestMap.put("messageType", String.valueOf(type + 1));
+        if (type == 4) {
+            requestMap.put("messageType", String.valueOf(type));
+        } else {
+            requestMap.put("messageType", String.valueOf(type + 1));
+        }
+
     }
 
     @Nullable
@@ -253,7 +258,7 @@ public class NewsListFragment extends LazyLoadFragmentV4<NewsListContract.Presen
                     startActivity(new Intent(getActivity(), WorkOverhaulActivity.class));
                 } else if (type == 503) {
                     startActivity(new Intent(getActivity(), WorkIncrementActivity.class));
-                }else if (type == 801) {
+                } else if (type == 801) {
                     startActivity(new Intent(getActivity(), JoinEnterpriseActivity.class));
                 }
             }
@@ -302,13 +307,37 @@ public class NewsListFragment extends LazyLoadFragmentV4<NewsListContract.Presen
     public void showMessageList(List<MessageListBean> list) {
         noDataLayout.setVisibility(View.GONE);
         messageListBeans.clear();
-        messageListBeans.addAll(list);
+        if (type == 4) {
+            for (MessageListBean bean : list) {
+                for (MessageListBean.MessageItemListBean listBean : bean.getMessageItemList()) {
+                    int type = listBean.getSmallType();
+                    if (type == 101 || type == 102 || type == 103 || type == 104) {
+                        messageListBeans.add(bean);
+                    }
+                    break;
+                }
+            }
+        } else {
+            messageListBeans.addAll(list);
+        }
         expendRecycleView.getAdapter().notifyDataSetChanged();
     }
 
     @Override
     public void showMessageListMore(List<MessageListBean> list) {
-        messageListBeans.addAll(list);
+        if (type == 4) {
+            for (MessageListBean bean : list) {
+                for (MessageListBean.MessageItemListBean listBean : bean.getMessageItemList()) {
+                    int type = listBean.getSmallType();
+                    if (type == 101 || type == 102 || type == 103 || type == 104) {
+                        messageListBeans.add(bean);
+                    }
+                    break;
+                }
+            }
+        } else {
+            messageListBeans.addAll(list);
+        }
         expendRecycleView.getAdapter().notifyDataSetChanged();
     }
 

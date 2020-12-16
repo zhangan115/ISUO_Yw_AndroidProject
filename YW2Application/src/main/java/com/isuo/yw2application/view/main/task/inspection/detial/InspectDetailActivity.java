@@ -118,7 +118,7 @@ public class InspectDetailActivity extends NotifyActivity implements InspectDeta
                 mUser.setText(data.getUser().getRealName());
                 TextView mTime = (TextView) vHolder.getView(R.id.tv_start_time);
                 mTime.setText("上报时间:" + DataUtil.timeFormat(data.getCreateTime(), "yyyy-MM-dd HH:mm"));
-                TextViewVertical mFault = (TextViewVertical) vHolder.getView(R.id.tv_alarm);
+                TextView mFault = (TextView) vHolder.getView(R.id.tv_alarm);
                 ImageView mFaultImg = (ImageView) vHolder.getView(R.id.img_alarm);
                 if (data.getFaultType() == 1) {
                     mFault.setText("A类故障");

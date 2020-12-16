@@ -47,7 +47,7 @@ public class WorkItemAllIntent {
             case 6://台账录入
                 intent.setClass(activity, CreateEquipmentActivity.class);
                 break;
-            case 7://企业规范
+            case 7://查看规则
                 intent.setClass(activity, EnterpriseStandardActivity.class);
                 break;
             case 8: //代办事项
