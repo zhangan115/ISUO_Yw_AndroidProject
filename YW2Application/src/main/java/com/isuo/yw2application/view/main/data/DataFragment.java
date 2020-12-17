@@ -91,6 +91,9 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (mPresenter != null) {
+            mPresenter.getValueAdded();
+        }
     }
 
 
@@ -113,7 +116,7 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
         view.findViewById(R.id.text1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),PayActivity.class));
+                startActivity(new Intent(getActivity(), PayActivity.class));
                 if (payDialog != null) {
                     payDialog.dismiss();
                 }
