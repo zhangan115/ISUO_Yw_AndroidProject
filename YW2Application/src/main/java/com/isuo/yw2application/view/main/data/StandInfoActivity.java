@@ -21,7 +21,7 @@ public class StandInfoActivity extends WebActivity {
         }
         setLayoutAndToolbar(R.layout.activity_stand_info, title);
         WebView tvContent = findViewById(R.id.id_stand_info);
-        if (content.startsWith("http")) {
+        if (content.startsWith("http") || content.startsWith("www")) {
             showWebUrl(tvContent, content);
         } else {
             showWeb(tvContent, content);

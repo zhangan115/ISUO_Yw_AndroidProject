@@ -200,7 +200,7 @@ public class NewsListFragment extends LazyLoadFragmentV4<NewsListContract.Presen
                     break;
                 } else if (type == 101 || type == 102 || type == 103 || type == 104) {
                     Intent intent = new Intent(getActivity(), AlarmDetailActivity.class);
-                    intent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, NewsListFragment.this.type == 3);
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, NewsListFragment.this.type == 3 || NewsListFragment.this.type == 4);
                     intent.putExtra(ConstantStr.KEY_BUNDLE_STR, String.valueOf(messageListBeans.get(position).getTaskId()));
                     startActivity(intent);
                     break;
