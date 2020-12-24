@@ -23,6 +23,7 @@ import com.isuo.yw2application.view.main.generate.repair.GenerateRepairActivity;
 import com.isuo.yw2application.view.main.task.increment.WorkIncrementActivity;
 import com.isuo.yw2application.view.main.task.inspection.WorkInspectionActivity;
 import com.isuo.yw2application.view.main.task.overhaul.WorkOverhaulActivity;
+import com.isuo.yw2application.view.main.work.await.AwaitActivity;
 import com.isuo.yw2application.view.main.work.message.NewsListActivity;
 import com.isuo.yw2application.view.main.work.pay.PayActivity;
 import com.sito.library.utils.DisplayUtil;
@@ -164,8 +165,8 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
                 startActivity(taskIntent4);
                 break;
             case R.id.taskIv5:
-                Intent intent5 = new Intent(getActivity(), NewsListActivity.class);
-                intent5.putExtra(ConstantStr.KEY_BUNDLE_INT, 4);
+                Intent intent5 = new Intent(getActivity(), AwaitActivity.class);
+                intent5.putExtra(ConstantStr.KEY_BUNDLE_STR, "4");
                 startActivity(intent5);
                 break;
             case R.id.layout_1:

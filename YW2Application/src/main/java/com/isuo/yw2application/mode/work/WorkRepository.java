@@ -64,7 +64,7 @@ public class WorkRepository implements WorkDataSource {
         try {
             jsonObject.put("count", ConstantInt.PAGE_SIZE);
             jsonObject.put("lastId", lastId);
-            jsonObject.put("flowTime", date);
+//            jsonObject.put("flowTime", date);
         } catch (JSONException e) {
             e.printStackTrace();
         }

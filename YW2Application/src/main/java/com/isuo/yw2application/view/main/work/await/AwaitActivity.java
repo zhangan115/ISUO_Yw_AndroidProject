@@ -18,10 +18,10 @@ public class AwaitActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String date = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR);
-        setLayoutAndToolbar(R.layout.activity_container_toolbar, TextUtils.isEmpty(date) ? "待办事项" : "今日代办");
+        setLayoutAndToolbar(R.layout.activity_container_toolbar, TextUtils.isEmpty(date) ? "待办事项" : "故障任务");
         AwaitFragment fragment = (AwaitFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
         if (fragment == null) {
-            fragment = AwaitFragment.newInstance(date);
+            fragment = AwaitFragment.newInstance("");
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
         }
     }

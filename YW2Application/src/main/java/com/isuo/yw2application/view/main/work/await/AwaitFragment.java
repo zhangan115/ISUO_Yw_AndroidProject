@@ -179,7 +179,7 @@ public class AwaitFragment extends LazyLoadFragmentV4<AwaitContract.Presenter> i
     @Override
     public void showLoading() {
         if (!isRefresh) {
-            showEvLoading();
+//            showEvLoading();
         } else {
             mRecycleRefreshLoadLayout.setRefreshing(true);
         }
@@ -187,7 +187,7 @@ public class AwaitFragment extends LazyLoadFragmentV4<AwaitContract.Presenter> i
 
     @Override
     public void hideLoading() {
-        hideEvLoading();
+//        hideEvLoading();
         mRecycleRefreshLoadLayout.setRefreshing(false);
     }
 
