@@ -17,7 +17,7 @@ import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.employee.DepartmentBean;
 import com.isuo.yw2application.view.contact.detail.UserDetailActivity;
 import com.sito.library.utils.GlideUtils;
-import com.sito.library.widget.PinnedHeaderExpandableListView;
+import com.sito.library.widget.PinnedHeaderExpandableListView1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +29,12 @@ import java.util.List;
 
 class ContactListAdapter extends BaseExpandableListAdapter {
     //展示页面
-    private PinnedHeaderExpandableListView mExpandListView;
+    private PinnedHeaderExpandableListView1 mExpandListView;
     private Context context;
     private int groupLayout, childLayout;
     private List<DepartmentBean> data = new ArrayList<>();
 
-    ContactListAdapter(Context context, PinnedHeaderExpandableListView expandableListView, int groupLayout, int childLayout) {
+    ContactListAdapter(Context context, PinnedHeaderExpandableListView1 expandableListView, int groupLayout, int childLayout) {
         this.context = context;
         this.groupLayout = groupLayout;
         this.childLayout = childLayout;

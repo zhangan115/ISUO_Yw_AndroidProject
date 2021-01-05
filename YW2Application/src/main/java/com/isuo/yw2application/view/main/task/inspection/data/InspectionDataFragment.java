@@ -12,7 +12,7 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.work.InspectionDataBean;
 import com.isuo.yw2application.view.base.MvpFragment;
-import com.sito.library.widget.PinnedHeaderExpandableListView;
+import com.sito.library.widget.PinnedHeaderExpandableListView1;
 
 /**
  * 巡检数据
@@ -23,7 +23,7 @@ public class InspectionDataFragment extends MvpFragment<InspectionDataContract.P
 
     private Long id;
     private RelativeLayout mNoDataLayout;
-    private PinnedHeaderExpandableListView mListView;
+    private PinnedHeaderExpandableListView1 mListView;
     private InspectionDataContract.Presenter mPresenter;
 
     public static InspectionDataFragment newInstance(Long id) {

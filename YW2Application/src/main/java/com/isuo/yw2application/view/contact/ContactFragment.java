@@ -11,7 +11,7 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.mode.bean.employee.DepartmentBean;
 import com.isuo.yw2application.view.base.MvpFragment;
-import com.sito.library.widget.PinnedHeaderExpandableListView;
+import com.sito.library.widget.PinnedHeaderExpandableListView1;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ContactFragment extends MvpFragment<ContactContract.Presenter> implements ContactContract.View {
 
-    private PinnedHeaderExpandableListView mListView;
+    private PinnedHeaderExpandableListView1 mListView;
     private ContactListAdapter mContactAdapter;
     private RelativeLayout noDataLayout;
 

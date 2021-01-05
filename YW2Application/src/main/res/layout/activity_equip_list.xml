@@ -18,7 +18,7 @@
         android:background="@drawable/white_bg_with_shape"
         android:visibility="visible">
 
-        <com.sito.library.widget.PinnedHeaderExpandableListView
+        <com.sito.library.widget.PinnedHeaderExpandableListView1
             android:id="@+id/expandableListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

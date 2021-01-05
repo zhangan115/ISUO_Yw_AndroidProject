@@ -17,7 +17,7 @@
         android:paddingRight="15dp"
         android:paddingBottom="12dp">
 
-        <com.sito.library.widget.PinnedHeaderExpandableListView
+        <com.sito.library.widget.PinnedHeaderExpandableListView1
             android:id="@+id/pinnedView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

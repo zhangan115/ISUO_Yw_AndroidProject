@@ -1,7 +1,6 @@
 package com.sito.customer.view.alarm.adduser;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import com.sito.customer.R;
 import com.sito.customer.app.CustomerApp;
 import com.sito.customer.mode.bean.employee.DepartmentBean;
 import com.sito.customer.mode.bean.employee.EmployeeBean;
-import com.sito.library.widget.PinnedHeaderExpandableListView;
 
 import java.util.ArrayList;
 import java.util.List;

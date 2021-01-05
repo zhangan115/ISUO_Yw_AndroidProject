@@ -15,6 +15,7 @@ import com.isuo.yw2application.mode.bean.equip.EquipBean;
 import com.isuo.yw2application.mode.bean.equip.EquipName;
 import com.isuo.yw2application.mode.bean.equip.EquipmentBean;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
+import com.sito.library.widget.PinnedHeaderExpandableListView1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 public class EquipListAdapter extends BaseExpandableListAdapter {
     //展示页面
-    private PinnedHeaderExpandableListView mExpandListView;
+    private PinnedHeaderExpandableListView1 mExpandListView;
     private Context context;
     private int groupLayout, childLayout;
     private List<EquipBean> data = new ArrayList<>();
@@ -47,7 +48,7 @@ public class EquipListAdapter extends BaseExpandableListAdapter {
         this.listener = listener;
     }
 
-    EquipListAdapter(Context context, PinnedHeaderExpandableListView expandableListView, int groupLayout, int childLayout) {
+    EquipListAdapter(Context context, PinnedHeaderExpandableListView1 expandableListView, int groupLayout, int childLayout) {
         this.context = context;
         this.groupLayout = groupLayout;
         this.childLayout = childLayout;

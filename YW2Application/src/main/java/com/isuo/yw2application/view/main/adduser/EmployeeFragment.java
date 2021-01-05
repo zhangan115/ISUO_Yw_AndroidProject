@@ -18,7 +18,7 @@ import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.employee.DepartmentBean;
 import com.isuo.yw2application.mode.bean.employee.EmployeeBean;
 import com.isuo.yw2application.view.base.MvpFragment;
-import com.sito.library.widget.PinnedHeaderExpandableListView;
+import com.sito.library.widget.PinnedHeaderExpandableListView1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ import java.util.List;
 
 public class EmployeeFragment extends MvpFragment<EmployeeContract.Presenter> implements EmployeeContract.View {
 
-    private PinnedHeaderExpandableListView mListView;
+    private PinnedHeaderExpandableListView1 mListView;
     private EmployeeListAdapter mEmployeeListAdapter;
     private List<EmployeeBean> mChooseEmployeeBeen;
     private RelativeLayout noDataLayout;

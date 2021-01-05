@@ -11,7 +11,6 @@ import com.sito.customer.R;
 import com.sito.customer.app.CustomerApp;
 import com.sito.customer.common.ConstantStr;
 import com.sito.customer.mode.bean.work.InspectionDataBean;
-import com.sito.customer.mode.work.WorkRepository;
 import com.sito.customer.view.MvpFragment;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 

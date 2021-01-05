@@ -26,7 +26,7 @@ import com.isuo.yw2application.view.main.device.search.EquipSearchActivity;
 import com.isuo.yw2application.view.main.equip.archives.EquipmentArchivesActivity;
 import com.sito.library.adapter.RVAdapter;
 import com.sito.library.widget.ExpendRecycleView;
-import com.sito.library.widget.PinnedHeaderExpandableListView;
+import com.sito.library.widget.PinnedHeaderExpandableListView1;
 import com.sito.library.widget.RecycleRefreshLoadLayout;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ import javax.inject.Inject;
 public class EquipListActivity extends BaseActivity implements EquipListContract.View, SwipeRefreshLayout.OnRefreshListener
         , RecycleRefreshLoadLayout.OnLoadListener {
     //view
-    private PinnedHeaderExpandableListView mListView;
+    private PinnedHeaderExpandableListView1 mListView;
     private EquipListAdapter equipAdapter;
 
     private RelativeLayout mNoDataLayout;
