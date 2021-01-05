@@ -20,7 +20,7 @@ public class AboutActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setLayoutAndToolbar(R.layout.about, "关于我们");
         findViewById(R.id.tv_content).setOnClickListener(this);
-        TextView mTel = (TextView) findViewById(R.id.mine_tel);
+        TextView mTel = findViewById(R.id.mine_tel);
         mTel.setOnClickListener(this);
         mTel.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
         mTel.getPaint().setAntiAlias(true);
