@@ -84,7 +84,7 @@ public class LoginFragment extends MvpFragment<LoginContract.Presenter> implemen
         super.onViewCreated(view, savedInstanceState);
         if (flag == 1) {
             showProgressDialog("登陆中...");
-            mPresenter.login("18509259203", "123456");
+            mPresenter.login("设备部长", "5555");
         }
     }
 
