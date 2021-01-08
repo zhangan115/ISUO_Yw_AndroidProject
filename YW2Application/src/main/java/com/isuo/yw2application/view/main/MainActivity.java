@@ -52,6 +52,7 @@ import com.isuo.yw2application.view.main.work.WorkFragment;
 import com.isuo.yw2application.view.main.work.pay.PayActivity;
 import com.isuo.yw2application.view.photo.ViewPagePhotoActivity;
 import com.isuo.yw2application.view.share.ShareActivity;
+import com.orhanobut.logger.Logger;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
@@ -124,6 +125,10 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
         transaction.commit();
         initView();
         new MainPresenter(Yw2Application.getInstance().getRepositoryComponent().getRepository(), this);
+        if (!TextUtils.isEmpty(Yw2Application.getInstance().getCid())) {
+            mainPresenter.postCidInfo(Yw2Application.getInstance().getCid());
+            Logger.d(Yw2Application.getInstance().getCid());
+        }
     }
 
     private void initView() {

@@ -33,6 +33,27 @@ public class MainPresenter implements MainContract.Presenter {
 
     }
 
+
+    @Override
+    public void postCidInfo(@NonNull String userCid) {
+        mSubscription.add(mRepository.postCidInfo(userCid, new IObjectCallBack<String>() {
+            @Override
+            public void onSuccess(@NonNull String s) {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }));
+    }
+
     @Override
     public void unSubscribe() {
         mSubscription.clear();

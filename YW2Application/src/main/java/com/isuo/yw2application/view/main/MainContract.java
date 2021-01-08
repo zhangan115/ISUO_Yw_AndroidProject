@@ -21,6 +21,8 @@ interface MainContract {
 
         void exitApp();
 
+        void postCidInfo(@NonNull String userCid);
+
     }
 
     interface View extends BaseView<Presenter> {

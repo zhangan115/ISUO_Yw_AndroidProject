@@ -8,10 +8,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.iflytek.cloud.SpeechUtility;
+import com.igexin.sdk.IUserLoggerInterface;
 import com.igexin.sdk.PushManager;
 import com.isuo.yw2application.BuildConfig;
 import com.isuo.yw2application.common.ConstantStr;
@@ -34,8 +36,6 @@ import com.isuo.yw2application.mode.generate.DaggerGenerateRepositoryComponent;
 import com.isuo.yw2application.mode.generate.GenerateRepositoryComponent;
 import com.isuo.yw2application.mode.work.DaggerWorkRepositoryComponent;
 import com.isuo.yw2application.mode.work.WorkRepositoryComponent;
-import com.isuo.yw2application.push.CustIntentService;
-import com.isuo.yw2application.push.CustPushService;
 import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.ApplicationModule;
 import com.isuo.yw2application.view.login.LoginActivity;
@@ -94,6 +94,17 @@ public class Yw2Application extends AbsBaseApp {
         equipmentRepositoryComponent = DaggerEquipmentRepositoryComponent.builder().build();
         initDatabases();
         initThirdModel();
+        initGetuiPush();
+    }
+
+    private void initGetuiPush() {
+        PushManager.getInstance().initialize(this);
+        PushManager.getInstance().setDebugLogger(this, new IUserLoggerInterface() {
+            @Override
+            public void log(String s) {
+                Log.i("PUSH_LOG",s);
+            }
+        });
     }
 
     /**
@@ -110,8 +121,6 @@ public class Yw2Application extends AbsBaseApp {
      * 初始化第三方模块
      */
     private void initThirdModel() {
-        PushManager.getInstance().initialize(this.getApplicationContext(), CustPushService.class);
-        PushManager.getInstance().registerPushIntentService(this, CustIntentService.class);
         SpeechUtility.createUtility(getApplicationContext(), ConstantStr.SPEED_APPID);
         iwxapi = WXAPIFactory.createWXAPI(this, ConstantStr.WEIXIN_APP_ID, true);
         iwxapi.registerApp(ConstantStr.WEIXIN_APP_ID);

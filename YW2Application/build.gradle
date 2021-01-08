@@ -29,7 +29,7 @@ android {
         versionCode 1
         versionName "1.0"
         ndk {
-            abiFilters "armeabi"
+            abiFilters "armeabi", "x86_64"
         }
         multiDexEnabled true
     }
@@ -43,9 +43,9 @@ android {
             buildConfigField "String", "UMENG_CHANNEL", '"defaultChannel"'
             manifestPlaceholders = [
                     TASK_AFFINITY_VALUE: "android.task.isuo.yw2.application",
-                    GETUI_APP_ID       : "nAvqNVbvUO9hyU3ZFVmoR8",
-                    GETUI_APP_KEY      : "8wUztqtOQQAey1TNrqSFu8",
-                    GETUI_APP_SECRET   : "G4jxJRrrZm8Ff9YDsmCyq8",
+                    GETUI_APP_ID       : "7eUw8vtivP8DdZnxkp3WS3",
+                    GETUI_APP_KEY      : "fFaJpZLS6w9qwXLhF7b2H5",
+                    GETUI_APP_SECRET   : "qlhdtETNTP9VaX5mZGHFt8",
                     UMENG_CHANNEL      : "defaultChannel",
                     PACKAGE_NAME       : applicationId,
             ]
@@ -93,7 +93,6 @@ dependencies {
     implementation "org.greenrobot:greendao:$rootProject.greenDaoVersion"
     implementation(name: 'DateTimePicker', ext: 'aar')
     implementation(name: 'MPChartLib', ext: 'aar')
-    implementation files('libs/GetuiSDK2.10.2.0.jar')
     implementation project(':AACRecordLibrary')
     //三方view
     implementation files('libs/SystemProperties.jar')
@@ -108,7 +107,7 @@ dependencies {
     implementation 'com.umeng.sdk:analytics:latest.integration'
     implementation 'android.arch.persistence.room:runtime:1.0.0'
     annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
-
+    implementation files('libs/GetuiSDK2.14.2.0.jar')
     //zxing
     implementation(name: 'ZxingLibrary', ext: 'aar')
     implementation 'com.google.zxing:core:3.3.1'

@@ -6,13 +6,9 @@ import android.util.Log;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.message.GTCmdMessage;
+import com.igexin.sdk.message.GTNotificationMessage;
 import com.igexin.sdk.message.GTTransmitMessage;
 import com.isuo.yw2application.app.Yw2Application;
-
-/**
- * Created by Yangzb on 2017/7/25 20:28
- * E-mail：yangzongbin@si-top.com
- */
 
 /**
  * 继承 GTIntentService 接收来自个推的消息, 所有消息在线程中回调, 如果注册了该服务, 则务必要在 AndroidManifest中声明, 否则无法接受消息<br>
@@ -71,6 +67,16 @@ public class CustIntentService extends GTIntentService {
 
     @Override
     public void onReceiveCommandResult(Context context, GTCmdMessage gtCmdMessage) {
+
+    }
+
+    @Override
+    public void onNotificationMessageArrived(Context context, GTNotificationMessage gtNotificationMessage) {
+
+    }
+
+    @Override
+    public void onNotificationMessageClicked(Context context, GTNotificationMessage gtNotificationMessage) {
 
     }
 
