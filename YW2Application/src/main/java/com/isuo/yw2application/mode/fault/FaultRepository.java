@@ -21,6 +21,7 @@ import com.isuo.yw2application.mode.bean.check.FaultList;
 import com.isuo.yw2application.mode.bean.db.Image;
 import com.isuo.yw2application.mode.bean.db.Voice;
 import com.isuo.yw2application.mode.bean.db.VoiceDao;
+import com.isuo.yw2application.mode.bean.discover.StandBean;
 import com.isuo.yw2application.mode.bean.employee.DepartmentBean;
 import com.isuo.yw2application.mode.bean.equip.EquipType;
 import com.isuo.yw2application.mode.bean.fault.DefaultFlowBean;
@@ -235,12 +236,13 @@ public class FaultRepository implements FaultDataSource {
 
     @NonNull
     @Override
-    public Subscription getJobPackage(@NonNull final IObjectCallBack<JobPackageBean> callBack) {
-        Observable<Bean<JobPackageBean>> observable = Api.createRetrofit().create(FaultApi.class).getJobPackage(ConstantInt.MAX_PAGE_SIZE);
-        return new ApiCallBack<JobPackageBean>(observable) {
+    public Subscription getJobPackage(@NonNull final IObjectCallBack<StandBean> callBack) {
+        Observable<Bean<StandBean>> observable = Api.createRetrofit().create(Api.Stand.class)
+                .getSecurityList(ConstantInt.MAX_PAGE_SIZE);
+        return new ApiCallBack<StandBean>(observable) {
 
             @Override
-            public void onSuccess(JobPackageBean been) {
+            public void onSuccess(StandBean been) {
                 callBack.onFinish();
                 callBack.onSuccess(been);
             }

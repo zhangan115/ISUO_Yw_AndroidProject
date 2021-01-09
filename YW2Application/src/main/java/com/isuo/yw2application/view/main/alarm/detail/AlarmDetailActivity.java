@@ -19,6 +19,7 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.User;
+import com.isuo.yw2application.mode.bean.discover.StandBean;
 import com.isuo.yw2application.mode.bean.employee.EmployeeBean;
 import com.isuo.yw2application.mode.bean.fault.FaultDetail;
 import com.isuo.yw2application.mode.bean.fault.JobPackageBean;
@@ -344,10 +345,10 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
         showProgressDialog("流转中....");
     }
 
-    private JobPackageBean jobPackageBeen;
+    private StandBean jobPackageBeen;
 
     @Override
-    public void showJobPackage(JobPackageBean jobPackageBeen) {
+    public void showJobPackage(StandBean jobPackageBeen) {
         this.jobPackageBeen = jobPackageBeen;
     }
 
@@ -574,7 +575,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
                 }
                 List<String> jobListStr = new ArrayList<>();
                 for (int i = 0; i < jobPackageBeen.getList().size(); i++) {
-                    jobListStr.add(jobPackageBeen.getList().get(i).getJobName());
+                    jobListStr.add(jobPackageBeen.getList().get(i).getSecurityName());
                 }
                 new MaterialDialog.Builder(AlarmDetailActivity.this)
                         .title("选择作业包")
@@ -589,8 +590,8 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
                                 }
                                 chooseWhich = which;
                                 TextView tv_choose_job = findViewById(R.id.tv_choose_job);
-                                jobId = String.valueOf(jobPackageBeen.getList().get(which).getJobId());
-                                tv_choose_job.setText(MessageFormat.format("作业包:{0}", text));
+                                jobId = String.valueOf(jobPackageBeen.getList().get(which).getRegulationId());
+                                tv_choose_job.setText(MessageFormat.format("安全包:{0}", text));
                                 return true;
                             }
                         }).positiveText(R.string.mdtp_ok).show();

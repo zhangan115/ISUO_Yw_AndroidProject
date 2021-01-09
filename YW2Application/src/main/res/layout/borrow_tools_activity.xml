@@ -281,7 +281,7 @@
             </LinearLayout>
         </ScrollView>
 
-        <com.sito.customer.widget.DatePick
+        <com.isuo.yw2application.widget.DatePick
             android:id="@+id/date_pick"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

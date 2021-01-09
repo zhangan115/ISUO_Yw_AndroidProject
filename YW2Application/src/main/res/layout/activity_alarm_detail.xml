@@ -386,7 +386,7 @@
                                 android:layout_weight="1"
                                 android:paddingTop="10dp"
                                 android:paddingBottom="10dp"
-                                android:text="选择作业包"
+                                android:text="选择安全包"
                                 android:textColor="@color/text333" />
 
                             <ImageView

@@ -9,6 +9,7 @@ import com.isuo.yw2application.mode.UploadImageCallBack;
 import com.isuo.yw2application.mode.UploadResult;
 import com.isuo.yw2application.mode.bean.check.FaultList;
 import com.isuo.yw2application.mode.bean.db.Image;
+import com.isuo.yw2application.mode.bean.discover.StandBean;
 import com.isuo.yw2application.mode.bean.employee.DepartmentBean;
 import com.isuo.yw2application.mode.bean.equip.EquipType;
 import com.isuo.yw2application.mode.bean.fault.DefaultFlowBean;
@@ -52,7 +53,7 @@ public interface FaultDataSource {
     Subscription overhaulFault(JSONObject jsonObject, @NonNull IObjectCallBack<String> callBack);
 
     @NonNull
-    Subscription getJobPackage(@NonNull IObjectCallBack<JobPackageBean> callBack);
+    Subscription getJobPackage(@NonNull IObjectCallBack<StandBean> callBack);
 
     @NonNull
     Subscription postFaultInfo(JSONObject jsonObject, @NonNull IObjectCallBack<UploadResult> callBack);

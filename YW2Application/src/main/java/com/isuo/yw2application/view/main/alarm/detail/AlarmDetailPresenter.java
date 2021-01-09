@@ -3,6 +3,7 @@ package com.isuo.yw2application.view.main.alarm.detail;
 import android.support.annotation.NonNull;
 
 import com.isuo.yw2application.mode.IObjectCallBack;
+import com.isuo.yw2application.mode.bean.discover.StandBean;
 import com.isuo.yw2application.mode.bean.fault.FaultDetail;
 import com.isuo.yw2application.mode.bean.fault.JobPackageBean;
 import com.isuo.yw2application.mode.fault.FaultRepository;
@@ -31,7 +32,6 @@ class AlarmDetailPresenter implements AlarmDetailContract.Presenter {
         mView.setPresenter(this);
         mSubscriptions = new CompositeSubscription();
     }
-
 
     @Override
     public void getFaultDetailData(String faultId) {
@@ -120,9 +120,9 @@ class AlarmDetailPresenter implements AlarmDetailContract.Presenter {
 
     @Override
     public void getJobPackage() {
-        mSubscriptions.add(mRepository.getJobPackage(new IObjectCallBack<JobPackageBean>() {
+        mSubscriptions.add(mRepository.getJobPackage(new IObjectCallBack<StandBean>() {
             @Override
-            public void onSuccess(@NonNull JobPackageBean jobPackageBean) {
+            public void onSuccess(@NonNull StandBean jobPackageBean) {
                 mView.showJobPackage(jobPackageBean);
             }
 

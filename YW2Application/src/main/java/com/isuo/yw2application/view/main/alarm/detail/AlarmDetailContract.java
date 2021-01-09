@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.alarm.detail;
 
+import com.isuo.yw2application.mode.bean.discover.StandBean;
 import com.isuo.yw2application.mode.bean.fault.FaultDetail;
 import com.isuo.yw2application.mode.bean.fault.JobPackageBean;
 import com.sito.library.base.BasePresenter;
@@ -45,7 +46,7 @@ interface AlarmDetailContract {
 
         void uploadProgress();
 
-        void showJobPackage(JobPackageBean jobPackageBeen);
+        void showJobPackage(StandBean jobPackageBeen);
 
         void careSuccess();
 
