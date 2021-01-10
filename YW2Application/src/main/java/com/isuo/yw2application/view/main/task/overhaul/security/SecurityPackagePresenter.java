@@ -3,6 +3,7 @@ package com.isuo.yw2application.view.main.task.overhaul.security;
 import android.support.annotation.NonNull;
 
 import com.isuo.yw2application.mode.IObjectCallBack;
+import com.isuo.yw2application.mode.bean.inspection.SecureBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulNoteBean;
 import com.isuo.yw2application.mode.overhaul.OverhaulSourceData;
 
@@ -28,9 +29,9 @@ class SecurityPackagePresenter implements SecurityPackageContract.Presenter {
     @Override
     public void getSecureInfo(long securityId) {
         mView.showLoading();
-        mSubscription.add(mSourceData.getSecureInfo(securityId, new IObjectCallBack<OverhaulNoteBean>() {
+        mSubscription.add(mSourceData.getSecureInfo(securityId, new IObjectCallBack<SecureBean>() {
             @Override
-            public void onSuccess(@NonNull OverhaulNoteBean secureBean) {
+            public void onSuccess(@NonNull SecureBean secureBean) {
                 mView.showData(secureBean);
             }
 

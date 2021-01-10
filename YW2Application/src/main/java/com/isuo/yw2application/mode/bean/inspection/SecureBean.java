@@ -3,8 +3,6 @@ package com.isuo.yw2application.mode.bean.inspection;
 import java.util.List;
 
 /**
- * Created by Yangzb on 2017/7/23 16:43
- * E-mail：yangzongbin@si-top.com
  * 安全包
  */
 public class SecureBean {

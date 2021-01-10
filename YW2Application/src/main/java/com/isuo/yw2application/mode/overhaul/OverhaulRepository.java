@@ -14,9 +14,11 @@ import com.isuo.yw2application.mode.bean.db.Image;
 import com.isuo.yw2application.mode.bean.db.ImageDao;
 import com.isuo.yw2application.mode.bean.db.Voice;
 import com.isuo.yw2application.mode.bean.db.VoiceDao;
+import com.isuo.yw2application.mode.bean.inspection.SecureBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulNoteBean;
 import com.isuo.yw2application.mode.bean.overhaul.WorkBean;
+import com.isuo.yw2application.mode.inspection.InspectionApi;
 
 import org.json.JSONObject;
 
@@ -56,12 +58,12 @@ public class OverhaulRepository implements OverhaulSourceData {
 
     @NonNull
     @Override
-    public Subscription getSecureInfo(long securityId, @NonNull final IObjectCallBack<OverhaulNoteBean> callBack) {
-        Observable<Bean<OverhaulNoteBean>> observable = Api.createRetrofit().create(OverhaulApi.class)
-                .getOverhaulNote(securityId);
-        return new ApiCallBack<OverhaulNoteBean>(observable) {
+    public Subscription getSecureInfo(long securityId, @NonNull final IObjectCallBack<SecureBean> callBack) {
+        Observable<Bean<SecureBean>> observable = Api.createRetrofit().create(InspectionApi.class)
+                .getSecureInfo(securityId);
+        return new ApiCallBack<SecureBean>(observable) {
             @Override
-            public void onSuccess(OverhaulNoteBean secureBean) {
+            public void onSuccess(SecureBean secureBean) {
                 callBack.onFinish();
                 if (secureBean != null && secureBean.getPageList() != null
                         && secureBean.getPageList().size() > 0) {

@@ -16,8 +16,8 @@ public class JobPackageBean {
 
     private long createTime;
     private int deleteState;
-    private long jobId;
-    private String jobName;
+    private long securityId;
+    private String securityName;
     private String jobRemark;
 
     public long getCreateTime() {
@@ -37,19 +37,19 @@ public class JobPackageBean {
     }
 
     public long getJobId() {
-        return jobId;
+        return securityId;
     }
 
     public void setJobId(long jobId) {
-        this.jobId = jobId;
+        this.securityId = jobId;
     }
 
     public String getJobName() {
-        return jobName;
+        return securityName;
     }
 
     public void setJobName(String jobName) {
-        this.jobName = jobName;
+        this.securityName = jobName;
     }
 
     public String getJobRemark() {

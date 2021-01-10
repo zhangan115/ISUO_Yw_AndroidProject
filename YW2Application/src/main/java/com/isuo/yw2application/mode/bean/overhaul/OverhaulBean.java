@@ -34,7 +34,7 @@ public class OverhaulBean {
     private List<OverhaulAddPic> repairPics;
     private int soundTimescale;
     private String repairRemark;
-    private JobPackageBean jobPackage;
+    private JobPackageBean securityPackage;
 
 
     public String getRepairRemark() {
@@ -222,10 +222,10 @@ public class OverhaulBean {
     }
 
     public JobPackageBean getJobPackage() {
-        return jobPackage;
+        return securityPackage;
     }
 
     public void setJobPackage(JobPackageBean jobPackage) {
-        this.jobPackage = jobPackage;
+        this.securityPackage = jobPackage;
     }
 }

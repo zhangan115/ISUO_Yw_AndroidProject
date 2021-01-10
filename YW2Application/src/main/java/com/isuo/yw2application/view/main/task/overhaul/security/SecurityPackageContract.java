@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.task.overhaul.security;
 
+import com.isuo.yw2application.mode.bean.inspection.SecureBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulNoteBean;
 import com.sito.library.base.BasePresenter;
 import com.sito.library.base.BaseView;
@@ -19,7 +20,7 @@ interface SecurityPackageContract {
 
     interface View extends BaseView<Presenter> {
 
-        void showData(OverhaulNoteBean noteBean);
+        void showData(SecureBean noteBean);
 
         void showLoading();
 

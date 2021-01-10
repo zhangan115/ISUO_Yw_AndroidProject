@@ -22,7 +22,6 @@ import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.discover.StandBean;
 import com.isuo.yw2application.mode.bean.employee.EmployeeBean;
 import com.isuo.yw2application.mode.bean.fault.FaultDetail;
-import com.isuo.yw2application.mode.bean.fault.JobPackageBean;
 import com.isuo.yw2application.utils.ChooseDateDialog;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.main.adduser.EmployeeActivity;
@@ -69,7 +68,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
     private ArrayList<EmployeeBean> employeeBeen;
     private String startTime;
     private String endTime;
-    private String jobId;
+    private String securityId;
     private int actionType, careType;
     private String careEndTime;
     private Calendar mCurrentCalender;
@@ -476,7 +475,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
                         if (!TextUtils.isEmpty(editText.getText().toString())) {
                             jsonObject.put("repairIntro", editText.getText().toString());
                         }
-                        jsonObject.put("jobId", jobId);
+                        jsonObject.put("securityId", securityId);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -590,7 +589,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
                                 }
                                 chooseWhich = which;
                                 TextView tv_choose_job = findViewById(R.id.tv_choose_job);
-                                jobId = String.valueOf(jobPackageBeen.getList().get(which).getRegulationId());
+                                securityId = String.valueOf(jobPackageBeen.getList().get(which).getSecurityId());
                                 tv_choose_job.setText(MessageFormat.format("安全包:{0}", text));
                                 return true;
                             }

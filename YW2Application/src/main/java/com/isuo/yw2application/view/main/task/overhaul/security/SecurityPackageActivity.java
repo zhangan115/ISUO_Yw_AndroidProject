@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
+import com.isuo.yw2application.mode.bean.inspection.SecureBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulNoteBean;
 import com.isuo.yw2application.mode.overhaul.OverhaulRepository;
 import com.isuo.yw2application.view.base.WebActivity;
@@ -31,7 +32,7 @@ public class SecurityPackageActivity extends WebActivity implements SecurityPack
     private long mSecurityId;
     private long mTaskId;
     private int mPosition, previous, next;
-    private List<OverhaulNoteBean.PageListBean> mList;
+    private List<SecureBean.PageListBean> mList;
     private SecurityPackageContract.Presenter mPresenter;
 
     @Override
@@ -56,10 +57,10 @@ public class SecurityPackageActivity extends WebActivity implements SecurityPack
     }
 
     @Override
-    public void showData(OverhaulNoteBean secureBean) {
+    public void showData(SecureBean secureBean) {
         if (secureBean != null && secureBean.getPageList() != null
                 && secureBean.getPageList().size() > 0) {
-            mTitleTv.setText(secureBean.getJobName());
+            mTitleTv.setText(secureBean.getSecurityName());
             next = 0;
             previous = 0;
             mList.clear();

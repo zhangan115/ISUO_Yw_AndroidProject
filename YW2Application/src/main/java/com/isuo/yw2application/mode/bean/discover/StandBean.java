@@ -75,9 +75,18 @@ public class StandBean {
         private String iconUrl;
         private String regulationContent;
         private int regulationId;
+        private int securityId;
         private String regulationName;
         private String securityName;
         private String securityRemark;
+
+        public int getSecurityId() {
+            return securityId;
+        }
+
+        public void setSecurityId(int securityId) {
+            this.securityId = securityId;
+        }
 
         public String getSecurityName() {
             return securityName;

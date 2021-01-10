@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.UploadImageCallBack;
 import com.isuo.yw2application.mode.bean.db.Image;
+import com.isuo.yw2application.mode.bean.inspection.SecureBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulNoteBean;
 import com.isuo.yw2application.mode.bean.overhaul.WorkBean;
@@ -21,7 +22,7 @@ import rx.Subscription;
 public interface OverhaulSourceData {
 
     @NonNull
-    Subscription getSecureInfo(long securityId, @NonNull IObjectCallBack<OverhaulNoteBean> callBack);
+    Subscription getSecureInfo(long securityId, @NonNull IObjectCallBack<SecureBean> callBack);
 
     @NonNull
     Subscription startRepair(String repairId);
