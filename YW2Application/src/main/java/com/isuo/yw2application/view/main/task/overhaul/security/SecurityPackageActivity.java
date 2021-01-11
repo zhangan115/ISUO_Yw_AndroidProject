@@ -2,6 +2,7 @@ package com.isuo.yw2application.view.main.task.overhaul.security;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -42,6 +43,10 @@ public class SecurityPackageActivity extends WebActivity implements SecurityPack
         setLayoutAndToolbar(R.layout.security_package_activity, "",true);
         mTaskId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG, -1);
         mSecurityId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG_1, -1);
+        String titleStr = getIntent().getStringExtra(ConstantStr.KEY_TITLE);
+        if (!TextUtils.isEmpty(titleStr)){
+            mTitleTv.setText(titleStr);
+        }
         mContent = findViewById(R.id.id_secure_content);
         mPrevious = findViewById(R.id.id_previous_page);
         mNext = findViewById(R.id.id_next_page);
@@ -129,6 +134,10 @@ public class SecurityPackageActivity extends WebActivity implements SecurityPack
     }
 
     private void startRoomList() {
+        if (this.mTaskId==-1){
+            finish();
+            return;
+        }
         SPHelper.write(this, ConstantStr.SECURITY_OVERHAUL_INFO, String.valueOf(mTaskId), true);
         Intent intent = new Intent(this, OverhaulExecuteActivity.class);
         intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, mTaskId);

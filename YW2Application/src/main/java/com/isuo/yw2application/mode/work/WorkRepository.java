@@ -411,7 +411,7 @@ public class WorkRepository implements WorkDataSource {
         allWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
         allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
         allWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
-        allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
+        allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.drive_input));
         allWorkItems.add(new WorkItem(7, "查看规则", R.drawable.standard));
         allWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));
         allWorkItems.add(new WorkItem(9, "执行巡检", R.drawable.inspecting));
@@ -462,7 +462,7 @@ public class WorkRepository implements WorkDataSource {
             myWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
             myWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
             myWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
-            myWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
+            myWorkItems.add(new WorkItem(6, "台账录入", R.drawable.drive_input));
             myWorkItems.add(new WorkItem(7, "查看规则", R.drawable.standard));
         }
         myWorkItems.add(new WorkItem(-1, "全部", R.drawable.all));
@@ -479,7 +479,7 @@ public class WorkRepository implements WorkDataSource {
         allWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
         allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
         allWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
-        allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.standing_book));
+        allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.drive_input));
         allWorkItems.add(new WorkItem(7, "查看规则", R.drawable.standard));
         allWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));
         allWorkItems.add(new WorkItem(9, "执行巡检", R.drawable.inspecting));

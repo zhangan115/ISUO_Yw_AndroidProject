@@ -13,6 +13,7 @@ import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.discover.StandBean;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.main.data.StandInfoActivity;
+import com.isuo.yw2application.view.main.task.overhaul.security.SecurityPackageActivity;
 import com.sito.library.adapter.RVAdapter;
 import com.sito.library.widget.RecycleRefreshLoadLayout;
 
@@ -53,9 +54,9 @@ public class EnterpriseStandardActivity extends BaseActivity implements Enterpri
         adapter.setOnItemClickListener(new RVAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(EnterpriseStandardActivity.this, StandInfoActivity.class);
+                Intent intent = new Intent(EnterpriseStandardActivity.this, SecurityPackageActivity.class);
                 intent.putExtra(ConstantStr.KEY_TITLE, standBeen.get(position).getSecurityName());
-                intent.putExtra(ConstantStr.KEY_BUNDLE_STR, standBeen.get(position).getSecurityRemark());
+                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG_1, Long.parseLong(String.valueOf(standBeen.get(position).getSecurityId())));
                 startActivity(intent);
             }
         });
@@ -63,7 +64,6 @@ public class EnterpriseStandardActivity extends BaseActivity implements Enterpri
             mPresenter.getEnterpriseStandardList();
         }
     }
-
 
     @Override
     public void setPresenter(EnterpriseStandardContact.Presenter presenter) {
