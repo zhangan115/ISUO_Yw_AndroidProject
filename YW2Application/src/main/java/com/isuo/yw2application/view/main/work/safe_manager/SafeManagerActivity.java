@@ -31,7 +31,7 @@ public class SafeManagerActivity extends BaseActivity implements SafeManagerCont
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         standBeen = new ArrayList<>();
-        setLayoutAndToolbar(R.layout.activity_enterprise_standard,"安全管理制度");
+        setLayoutAndToolbar(R.layout.activity_enterprise_standard,"安全制度管理");
         new SafeManagerPresenter(Yw2Application.getInstance().getRepositoryComponent().getRepository(),this);
         layout_no_data = findViewById(R.id.layout_no_data);
         RecycleRefreshLoadLayout refreshLoadLayout = findViewById(R.id.refreshLoadLayoutId);

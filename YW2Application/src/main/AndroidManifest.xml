@@ -177,6 +177,7 @@
             android:allowTaskReparenting="true"
             android:configChanges="orientation|keyboardHidden"
             android:taskAffinity="${TASK_AFFINITY_VALUE}"
+            android:theme="@style/AppTheme.NoActionBar.Black"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <!--测试activity-->
         <activity

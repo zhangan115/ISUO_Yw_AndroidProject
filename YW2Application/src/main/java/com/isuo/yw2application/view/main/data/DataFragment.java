@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -35,6 +36,7 @@ import com.isuo.yw2application.view.main.data.staff_count.StaffCountActivity;
 import com.isuo.yw2application.view.main.data.statistics.part.StatisticsPartActivity;
 import com.isuo.yw2application.view.main.data.statistics.person.StatisticsPersonActivity;
 import com.isuo.yw2application.view.main.work.pay.PayActivity;
+import com.sito.library.utils.DisplayUtil;
 import com.sito.library.utils.GlideUtils;
 
 import java.text.MessageFormat;
@@ -77,6 +79,10 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
         payTitle.setText(MessageFormat.format("当前为{0}", payMenuBean.getMenuName()));
         payTitle.setOnClickListener(this);
         convenientBanner = rootView.findViewById(R.id.convenientBanner);
+        int width = getContext().getResources().getDisplayMetrics().widthPixels - DisplayUtil.dip2px(getContext(), 30);
+        int height = width / 16 * 9;
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
+        convenientBanner.setLayoutParams(layoutParams);
         List<Integer> defaultValue = new ArrayList<>();
         defaultValue.add(R.drawable.banner);
         convenientBanner.setPages(new CBViewHolderCreator<DefaultHolderView>() {

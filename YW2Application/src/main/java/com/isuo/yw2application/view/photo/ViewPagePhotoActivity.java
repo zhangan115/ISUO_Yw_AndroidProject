@@ -118,7 +118,7 @@ public class ViewPagePhotoActivity extends BaseActivity {
             img.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
             img.setAdjustViewBounds(true);
             img.setOnClickListener(mOnClickListener);
-            img.setScaleType(ScaleType.CENTER_INSIDE);
+            img.setScaleType(ScaleType.CENTER);
             GlideUtils.ShowImage(ViewPagePhotoActivity.this, mUrls[position], img, R.drawable.picture_default);
             container.addView(img);
             return img;
