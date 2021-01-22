@@ -22,15 +22,18 @@
         android:textColor="@color/text333"
         android:textSize="14sp" />
 
-    <RelativeLayout
+    <LinearLayout
         android:paddingTop="10dp"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
             android:layout_centerVertical="true"
             android:id="@+id/tv_equip_check_value"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="电流:16A"
             android:textColor="@color/text_item_title_1"
@@ -59,5 +62,5 @@
             android:src="@drawable/picture_default"
             android:visibility="visible" />
 
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

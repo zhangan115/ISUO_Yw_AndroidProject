@@ -217,7 +217,7 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
         alarmCount[0].setText(String.valueOf(bean.getDayCount()));
         alarmCount[1].setText(String.valueOf(bean.getPendingCount()));
         alarmCount[2].setText(String.valueOf(bean.getFlowingCount()));
-        alarmCount[3].setText(String.valueOf(bean.getRepairCount()));
+        alarmCount[3].setText(String.valueOf(bean.getRepairCount()+bean.getCloseCount()));
         alarmCount[4].setText(String.valueOf(bean.getRelicFaultCount()));
     }
 

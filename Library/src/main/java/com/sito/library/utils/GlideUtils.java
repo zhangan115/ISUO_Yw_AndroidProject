@@ -120,6 +120,7 @@ public final class GlideUtils {
         Glide.with(activity).load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(drawableRes)
+                .fitCenter()
                 .placeholder(drawableRes)
                 .thumbnail(0.1f)
                 .into(imageView);

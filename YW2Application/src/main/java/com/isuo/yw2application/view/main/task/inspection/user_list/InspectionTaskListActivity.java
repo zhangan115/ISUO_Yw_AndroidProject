@@ -206,6 +206,7 @@ public class InspectionTaskListActivity extends BaseActivity implements Inspecti
     @Override
     public void showData(List<InspectionBean> lists) {
         mList.clear();
+        mList.addAll(lists);
         mExpendRecycleView.getAdapter().notifyDataSetChanged();
         mNoDataLayout.setVisibility(View.GONE);
     }

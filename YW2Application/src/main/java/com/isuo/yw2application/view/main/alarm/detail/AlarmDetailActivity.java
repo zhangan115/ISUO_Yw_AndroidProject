@@ -590,7 +590,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
                                 chooseWhich = which;
                                 TextView tv_choose_job = findViewById(R.id.tv_choose_job);
                                 securityId = String.valueOf(jobPackageBeen.getList().get(which).getSecurityId());
-                                tv_choose_job.setText(MessageFormat.format("安全包:{0}", text));
+                                tv_choose_job.setText(MessageFormat.format("任务规则:{0}", text));
                                 return true;
                             }
                         }).positiveText(R.string.mdtp_ok).show();
