@@ -1,6 +1,7 @@
 package com.isuo.yw2application.view.main.alarm.equipalarm;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.mode.IListCallBack;
@@ -74,8 +75,12 @@ final class EquipAlarmPresenter implements EquipAlarmContract.Presenter {
         Map<String, String> map = new HashMap<>();
         map.put("count", String.valueOf(ConstantInt.PAGE_SIZE));
         map.put("faultState", String.valueOf(alarmType + 1));
-        map.put("startTime", startTime);
-        map.put("endTime", endTime);
+        if (!TextUtils.isEmpty(startTime)){
+            map.put("startTime", startTime);
+        }
+        if (!TextUtils.isEmpty(endTime)){
+            map.put("endTime", endTime);
+        }
         subscription.add(mRepository.getAlarmList(map, new IListCallBack<FaultList>() {
             @Override
             public void onSuccess(@NonNull List<FaultList> list) {

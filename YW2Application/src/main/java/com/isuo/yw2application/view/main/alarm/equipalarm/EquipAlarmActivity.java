@@ -27,6 +27,8 @@ public class EquipAlarmActivity extends BaseActivity {
 
     @Nullable
     private String mCalendar;
+    @Nullable
+    private String alarmState;
     private ViewPager mViewPager;
 
     @Override
@@ -34,6 +36,7 @@ public class EquipAlarmActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         String titleStr = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR);
         mCalendar = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_OBJECT);
+        alarmState = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_OBJECT_1);
         setLayoutAndToolbar(R.layout.activity_work, titleStr);
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -78,7 +81,7 @@ public class EquipAlarmActivity extends BaseActivity {
             EquipmentAlarmFragment fragment = (EquipmentAlarmFragment) getSupportFragmentManager()
                     .findFragmentByTag(makeFragmentName(mViewPager.getId(), position));
             if (fragment == null) {
-                fragment = EquipmentAlarmFragment.newInstance(mCalendar, position);
+                fragment = EquipmentAlarmFragment.newInstance(mCalendar, alarmState,position);
             }
             addChangeListeners(fragment);
             return fragment;

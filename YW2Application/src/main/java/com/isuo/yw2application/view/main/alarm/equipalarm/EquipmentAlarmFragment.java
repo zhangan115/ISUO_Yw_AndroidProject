@@ -57,12 +57,15 @@ public class EquipmentAlarmFragment extends LazyLoadFragmentV4<EquipAlarmContrac
     private AnimationDrawable animation;
     @Nullable
     private String mCalendar;
+    @Nullable
+    private String dataType;
     private int mAlarmType;
     private EquipAlarmContract.Presenter mPresenter;
 
-    public static EquipmentAlarmFragment newInstance(String s, int type) {
+    public static EquipmentAlarmFragment newInstance(String s,String dataType, int type) {
         Bundle args = new Bundle();
         args.putString(ConstantStr.KEY_BUNDLE_STR, s);
+        args.putString(ConstantStr.KEY_BUNDLE_STR_1, dataType);
         args.putInt(ConstantStr.KEY_BUNDLE_INT, type);
         EquipmentAlarmFragment fragment = new EquipmentAlarmFragment();
         fragment.setArguments(args);
@@ -73,6 +76,7 @@ public class EquipmentAlarmFragment extends LazyLoadFragmentV4<EquipAlarmContrac
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCalendar = getArguments().getString(ConstantStr.KEY_BUNDLE_STR);
+        dataType = getArguments().getString(ConstantStr.KEY_BUNDLE_STR_1);
         mAlarmType = getArguments().getInt(ConstantStr.KEY_BUNDLE_INT);
         new EquipAlarmPresenter(Yw2Application.getInstance().getRepositoryComponent().getRepository(), this);
     }
@@ -109,7 +113,7 @@ public class EquipmentAlarmFragment extends LazyLoadFragmentV4<EquipAlarmContrac
         mNoDataLayout.setVisibility(View.GONE);
         isLoad = true;
         if (mCalendar != null) {
-            mPresenter.getTodayFault(mCalendar, mCalendar, mAlarmType);
+            mPresenter.getTodayFault(null, null, mAlarmType);
         } else {
             mPresenter.getFaultList(mAlarmType);
         }
