@@ -1,22 +1,25 @@
 package com.isuo.yw2application.view.main.data.fault_type;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.view.View;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
-import com.isuo.yw2application.mode.bean.ChartData;
 import com.isuo.yw2application.mode.bean.discover.FaultLevel;
 import com.isuo.yw2application.utils.ChooseDateDialog;
 import com.isuo.yw2application.view.base.BaseActivity;
+import com.sito.library.utils.DataUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,10 +29,9 @@ import java.util.TimeZone;
 import javax.inject.Inject;
 
 public class FaultTypeActivity extends BaseActivity implements FaultTypeContract.View {
-    private LineChart mLineChart;
+    private PieChart pieChart;
     private TextView mTime;
-    private int mYear;
-    List<String> month;
+    int[] colors = new int[]{R.color.line_chart_color_2, R.color.line_chart_color_3, R.color.line_chart_color_4};
     @Inject
     FaultTypePresenter mFaultTypePresenter;
     FaultTypeContract.Presenter mPresenter;
@@ -42,147 +44,81 @@ public class FaultTypeActivity extends BaseActivity implements FaultTypeContract
                 .faultTypeModule(new FaultTypeModule(this)).build()
                 .inject(this);
         mTime = findViewById(R.id.id_fault_time);
-        mLineChart = findViewById(R.id.lineChart);
-        mLineChart.setNoDataTextColor(findColorById(R.color.colorPrimary));
-        mLineChart.setNoDataText("");
-
-
+        pieChart = findViewById(R.id.pieChart);
+        pieChart.setNoDataTextColor(findColorById(R.color.colorPrimary));
+        pieChart.setNoDataText("");
         TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
-        mYear = Calendar.getInstance(TimeZone.getDefault()).get(Calendar.YEAR);
-        mTime.setText(String.valueOf(mYear));
-
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+        String dateStr = DataUtil.timeFormat(calendar.getTime().getTime(),"yyyy-MM");
+        mTime.setText(dateStr);
         mTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new ChooseDateDialog(FaultTypeActivity.this, R.style.MyDateDialog)
-                        .pickYear()
+                        .pickMonth()
                         .setResultListener(new ChooseDateDialog.OnDateChooseListener() {
                             @Override
                             public void onDate(Calendar calendar) {
-                                mYear = calendar.get(Calendar.YEAR);
-                                mTime.setText(String.valueOf(mYear));
-                                mPresenter.getChartData(String.valueOf(mYear));
+                                String dateStr = DataUtil.timeFormat(calendar.getTime().getTime(),"yyyy-MM");
+                                mTime.setText(dateStr);
+                                mPresenter.getChartData(dateStr);
                             }
                         }).show();
             }
         });
-        mPresenter.getChartData(mTime.getText().toString());
-    }
-
-    private void initLineChart(LineChart lineChart, List<ChartData> dataValues) {
-        lineChart.clear();
-        lineChart.setDescription(null);
-        lineChart.setNoDataText("");
-        lineChart.setAlpha(1f);
-        lineChart.setTouchEnabled(true);
-        lineChart.setDragEnabled(false);
-        lineChart.setScaleEnabled(false);
-        lineChart.setPinchZoom(false);
-        lineChart.getLegend().setEnabled(false);
-        //x
-        lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        lineChart.getXAxis().setTextSize(10f);
-        lineChart.getXAxis().setTextColor(findColorById(R.color.news_text_black));
-        lineChart.getXAxis().setDrawAxisLine(true);
-        lineChart.getXAxis().setDrawGridLines(false);
-        lineChart.getXAxis().setAxisLineColor(findColorById(R.color.color_news_line_gray));
-        lineChart.getXAxis().setLabelCount(month.size(), true);
-        lineChart.getXAxis().setValueFormatter(new ChartXFormatterN(month));
-        lineChart.getXAxis().setAvoidFirstLastClipping(true);
-        //左边Y
-        lineChart.getAxisLeft().setDrawGridLines(false);
-        lineChart.getAxisLeft().setDrawAxisLine(true);
-        lineChart.getAxisLeft().setDrawLabels(true);
-        lineChart.getAxisLeft().setTextSize(10f);
-        lineChart.getAxisLeft().setDrawZeroLine(false);
-        lineChart.getAxisLeft().setTextColor(findColorById(R.color.news_text_black));
-        lineChart.getAxisLeft().setAxisLineColor(findColorById(R.color.color_news_line_gray));
-        lineChart.getAxisLeft().setStartAtZero(true);
-        //右边Y
-        lineChart.getAxisRight().setEnabled(false);
-    }
-
-    private void initDataSet(LineDataSet dataSet, @ColorInt int color) {
-        dataSet.setLineWidth(2.0f);
-        dataSet.setColor(findColorById(color));
-        dataSet.setCircleColor(findColorById(color));
-        dataSet.setCircleRadius(2.5f);
-        dataSet.setDrawValues(false);
-        dataSet.setDrawCircles(true);
-        dataSet.setMode(LineDataSet.Mode.LINEAR);
-        dataSet.setHighLightColor(findColorById(R.color.transparent));
-    }
-
-
-    private LineData getLineData(List<ChartData> chartDatas, int[] color) {
-        List<ILineDataSet> dataSets = new ArrayList<>();
-        for (int i = 0; i < chartDatas.size(); i++) {
-            List<Entry> entries = new ArrayList<>();
-            for (int j = 0; j < chartDatas.get(i).getData().size(); j++) {
-                entries.add(new Entry(j, chartDatas.get(i).getData().get(j).getDataValue()));
-            }
-            LineDataSet dataSet = new LineDataSet(entries, "");
-            initDataSet(dataSet, color[i]);
-            dataSets.add(dataSet);
-        }
-
-        return new LineData(dataSets);
+        initView();
+        mPresenter.getChartData(dateStr);
     }
 
     @Override
-    public void showData(List<ChartData> chartDatas) {
-
+    public void showChartData(FaultLevel bean) {
+        setData(bean);
+    }
+    
+    private void initView(){
+        pieChart.setUsePercentValues(false);
+        pieChart.setDescription(null);
+        pieChart.setCenterText("");
+        pieChart.setExtraOffsets(25f, 25.f, 25.f, 25.f);
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleColor(Color.TRANSPARENT);
+        pieChart.setTransparentCircleColor(Color.WHITE);
+        pieChart.setTransparentCircleAlpha(110);
+        pieChart.setTransparentCircleRadius(50f);
+        pieChart.setHoleRadius(50f);
+        pieChart.setDrawCenterText(true);
+        pieChart.setCenterTextColor(findColorById(R.color.text333));
+        pieChart.setCenterTextSize(14);
+        pieChart.setRotationAngle(20);
+        pieChart.setRotationEnabled(false);
+        pieChart.getLegend().setEnabled(false);
     }
 
-    @Override
-    public void showChartData(List<FaultLevel> faultLevels) {
-        List<ChartData> chartDatas = new ArrayList<>();
-
-        ChartData allFault = new ChartData();
-        List<ChartData.Data> allList = new ArrayList<>();
-
-        ChartData aFault = new ChartData();
-        List<ChartData.Data> aList = new ArrayList<>();
-
-        ChartData bFault = new ChartData();
-        List<ChartData.Data> bList = new ArrayList<>();
-
-        ChartData cFault = new ChartData();
-        List<ChartData.Data> cList = new ArrayList<>();
-
-        month = new ArrayList<>();
-        for (int j = 0; j < faultLevels.size(); j++) {
-            ChartData.Data allData = new ChartData.Data();
-            allData.setDataValue(faultLevels.get(j).getAllFaultCount());
-            allList.add(allData);
-
-            ChartData.Data aData = new ChartData.Data();
-            aData.setDataValue(faultLevels.get(j).getAFaultCount());
-            aList.add(aData);
-
-            ChartData.Data bData = new ChartData.Data();
-            bData.setDataValue(faultLevels.get(j).getBFaultCount());
-            bList.add(bData);
-
-
-            ChartData.Data cData = new ChartData.Data();
-            cData.setDataValue(faultLevels.get(j).getCFaultCount());
-            cList.add(cData);
-
-            month.add((j + 1) + "月");
-        }
-        allFault.setData(allList);
-        aFault.setData(aList);
-        bFault.setData(bList);
-        cFault.setData(cList);
-        chartDatas.add(allFault);
-        chartDatas.add(aFault);
-        chartDatas.add(bFault);
-        chartDatas.add(cFault);
-
-        initLineChart(mLineChart, chartDatas);
-        int[] colors = new int[]{R.color.color_fault_pink, R.color.line_color_4, R.color.line_color_1, R.color.line_color_2};
-        mLineChart.setData(getLineData(chartDatas, colors));
+    private void setData(FaultLevel bean) {
+        List<PieEntry> yValues1 = new ArrayList<>();
+        yValues1.add(new PieEntry(bean.getAFaultCount()));
+        yValues1.add(new PieEntry(bean.getBFaultCount()));
+        yValues1.add(new PieEntry(bean.getCFaultCount()));
+        PieDataSet dataSet = new PieDataSet(yValues1, "");
+        dataSet.setSliceSpace(3f);
+        dataSet.setSelectionShift(5f);
+        dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(findColorById(this.colors[0]));
+        colors.add(findColorById(this.colors[1]));
+        colors.add(findColorById(this.colors[2]));
+        dataSet.setColors(colors);
+        dataSet.setValueLinePart1Length(0.3f);
+        dataSet.setValueLinePart2Length(0.4f);
+        dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        PieData data = new PieData(dataSet);
+        data.setValueFormatter(new ChartXFormatter());
+        data.setValueTextSize(12f);
+        data.setValueTextColor(findColorById(R.color.text333));
+        pieChart.setCenterText("故障总数:"+bean.getAllFaultCount());
+        pieChart.setData(data);
+        pieChart.highlightValues(null);
+        pieChart.invalidate();
     }
 
     @Override

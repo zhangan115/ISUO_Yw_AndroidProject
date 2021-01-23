@@ -13,7 +13,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="12dp"
         android:layout_marginRight="15dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:background="@drawable/white_bg_with_shape"
         android:orientation="vertical"
         android:paddingLeft="15dp"
@@ -47,8 +47,8 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/lineChart"
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
@@ -60,27 +60,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:background="@drawable/lin_chart_color_1" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/DP_5"
-                            android:text="总故障数"
-                            android:textColor="@color/news_text_black"
-                            android:textSize="12sp" />
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -154,6 +133,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="2" />
 
 </LinearLayout>

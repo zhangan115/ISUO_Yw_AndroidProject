@@ -18,9 +18,8 @@ interface FaultTypeContract {
     }
 
     interface View extends BaseView<Presenter> {
-        void showData(List<ChartData> chartDatas);
 
-        void showChartData(List<FaultLevel> faultLevels);
+        void showChartData(FaultLevel faultLevels);
 
         void showLoading();
 

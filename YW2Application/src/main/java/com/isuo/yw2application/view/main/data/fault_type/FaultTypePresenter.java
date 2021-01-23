@@ -3,6 +3,7 @@ package com.isuo.yw2application.view.main.data.fault_type;
 import android.support.annotation.NonNull;
 
 import com.isuo.yw2application.mode.IListCallBack;
+import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.discover.FaultLevel;
 import com.isuo.yw2application.mode.customer.CustomerRepository;
 
@@ -37,10 +38,10 @@ final class FaultTypePresenter implements FaultTypeContract.Presenter {
     @Override
     public void getChartData(String time) {
         mView.showLoading();
-        mSubscruptions.add(mRepository.getFaultLevel(time, new IListCallBack<FaultLevel>() {
+        mSubscruptions.add(mRepository.getFaultLevel(time, new IObjectCallBack<FaultLevel>() {
             @Override
-            public void onSuccess(@NonNull List<FaultLevel> list) {
-                mView.showChartData(list);
+            public void onSuccess(@NonNull FaultLevel bean) {
+                mView.showChartData(bean);
             }
 
             @Override
