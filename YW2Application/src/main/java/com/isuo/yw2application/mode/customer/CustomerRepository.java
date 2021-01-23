@@ -1051,12 +1051,12 @@ public class CustomerRepository implements CustomerDataSource {
     }
 
     @Override
-    public Subscription getFaultLevel(@NonNull String time, @NonNull final IListCallBack<FaultLevel> callBack) {
-        Observable<Bean<List<FaultLevel>>> observable = Api.createRetrofit().create(Api.Count.class)
+    public Subscription getFaultLevel(@NonNull String time, @NonNull final IObjectCallBack<FaultLevel> callBack) {
+        Observable<Bean<FaultLevel>> observable = Api.createRetrofit().create(Api.Count.class)
                 .getFaultLevel(time);
-        return new ApiCallBack<List<FaultLevel>>(observable) {
+        return new ApiCallBack<FaultLevel>(observable) {
             @Override
-            public void onSuccess(@Nullable List<FaultLevel> faultLevels) {
+            public void onSuccess(@Nullable FaultLevel faultLevels) {
                 callBack.onFinish();
                 callBack.onSuccess(faultLevels);
             }

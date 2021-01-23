@@ -15,11 +15,16 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
@@ -29,6 +34,7 @@ import com.isuo.yw2application.mode.bean.fault.AlarmCount;
 import com.isuo.yw2application.mode.bean.fault.FaultCountBean;
 import com.isuo.yw2application.mode.bean.fault.FaultDayCountBean;
 import com.isuo.yw2application.mode.bean.fault.FaultYearCountBean;
+import com.isuo.yw2application.mode.bean.news.Fault;
 import com.isuo.yw2application.utils.ChooseDateDialog;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.alarm.equipalarm.EquipAlarmActivity;
@@ -46,7 +52,7 @@ import java.util.Locale;
 public class FaultLineFragment extends MvpFragmentV4<FaultLineContract.Presenter> implements FaultLineContract.View, View.OnClickListener
         , SwipeRefreshLayout.OnRefreshListener {
 
-    private LineChart mLineChart;
+    private BarChart mLineChart;
     private LinearLayout mllFault;
     private int mCount = 0;
     private View todayView;
@@ -57,9 +63,8 @@ public class FaultLineFragment extends MvpFragmentV4<FaultLineContract.Presenter
     private LinearLayout mCountLayout;
     private LinearLayout mAlarmTitleLayout, mAlarmCountLayout;
     private SwipeRefreshLayout mRefreshLayout;
-    int[] colors = new int[]{R.color.line_chart_color_1, R.color.line_chart_color_2
-            , R.color.line_chart_color_3, R.color.line_chart_color_4
-            , R.color.line_chart_color_5};
+    int[] colors = new int[]{R.color.line_chart_color_2, R.color.line_chart_color_3
+            , R.color.line_chart_color_4, R.color.line_chart_color_5};
     private TextView chooseYear;
 
     public static FaultLineFragment newInstance() {
@@ -269,19 +274,9 @@ public class FaultLineFragment extends MvpFragmentV4<FaultLineContract.Presenter
     @Override
     public void showFaultYearCount(FaultYearCountBean bean) {
         mLineChart.removeAllViews();
-        List<ChartData> chartDatas = new ArrayList<>();
-        ChartData chartData = new ChartData();
-        //总数
-        List<ChartData.Data> dataList1 = new ArrayList<>();
-        for (int i = 0; i < bean.getAllList().size(); i++) {
-            ChartData.Data data = new ChartData.Data();
-            data.setDataValue(bean.getAllList().get(i));
-            dataList1.add(data);
-        }
-        chartData.setData(dataList1);
-        chartDatas.add(chartData);
+        List<ChartData> chartDates = new ArrayList<>();
         //待处理
-        chartData = new ChartData();
+        ChartData chartData = new ChartData();
         List<ChartData.Data> dataList2 = new ArrayList<>();
         for (int i = 0; i < bean.getPendingList().size(); i++) {
             ChartData.Data data = new ChartData.Data();
@@ -289,7 +284,7 @@ public class FaultLineFragment extends MvpFragmentV4<FaultLineContract.Presenter
             dataList2.add(data);
         }
         chartData.setData(dataList2);
-        chartDatas.add(chartData);
+        chartDates.add(chartData);
         //处理中
         chartData = new ChartData();
         List<ChartData.Data> dataList3 = new ArrayList<>();
@@ -299,7 +294,7 @@ public class FaultLineFragment extends MvpFragmentV4<FaultLineContract.Presenter
             dataList3.add(data);
         }
         chartData.setData(dataList3);
-        chartDatas.add(chartData);
+        chartDates.add(chartData);
         //转检修
         chartData = new ChartData();
         List<ChartData.Data> dataList4 = new ArrayList<>();
@@ -309,7 +304,7 @@ public class FaultLineFragment extends MvpFragmentV4<FaultLineContract.Presenter
             dataList4.add(data);
         }
         chartData.setData(dataList4);
-        chartDatas.add(chartData);
+        chartDates.add(chartData);
         //关闭
         chartData = new ChartData();
         List<ChartData.Data> dataList5 = new ArrayList<>();
@@ -319,10 +314,10 @@ public class FaultLineFragment extends MvpFragmentV4<FaultLineContract.Presenter
             dataList5.add(data);
         }
         chartData.setData(dataList5);
-        chartDatas.add(chartData);
+        chartDates.add(chartData);
 
-        initLineChart(mLineChart, chartDatas);
-        mLineChart.setData(getLineData(chartDatas, colors));
+        initLineChart(mLineChart, chartDates);
+        mLineChart.setData(getLineData(bean));
     }
 
     @NonNull
@@ -346,12 +341,12 @@ public class FaultLineFragment extends MvpFragmentV4<FaultLineContract.Presenter
         return sb.toString();
     }
 
-    private void initLineChart(LineChart lineChart, List<ChartData> dataValues) {
+    private void initLineChart(BarChart lineChart, List<ChartData> dataValues) {
         lineChart.clear();
         lineChart.setDescription(null);
         lineChart.setNoDataText("");
         lineChart.setAlpha(1f);
-        lineChart.setTouchEnabled(true);
+        lineChart.setTouchEnabled(false);
         lineChart.setDragEnabled(false);
         lineChart.setScaleEnabled(false);
         lineChart.setPinchZoom(false);
@@ -359,7 +354,7 @@ public class FaultLineFragment extends MvpFragmentV4<FaultLineContract.Presenter
         //x
         lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         lineChart.getXAxis().setTextSize(10f);
-        lineChart.getXAxis().setLabelCount(12, true);
+        lineChart.getXAxis().setLabelCount(12, false);
         lineChart.getXAxis().setTextColor(findColorById(R.color.gray_999999));
         lineChart.getXAxis().setDrawAxisLine(true);
         lineChart.getXAxis().setDrawGridLines(false);
@@ -371,7 +366,7 @@ public class FaultLineFragment extends MvpFragmentV4<FaultLineContract.Presenter
         lineChart.getAxisLeft().setDrawLabels(true);
         lineChart.getAxisLeft().setTextSize(12f);
         lineChart.getAxisLeft().setDrawZeroLine(false);
-        lineChart.getAxisLeft().setAxisMinimum(1f);
+        lineChart.getAxisLeft().setAxisMinimum(0f);
         lineChart.getAxisLeft().setValueFormatter(new ChartYFormatter(dataValues));
 
         lineChart.getAxisLeft().setTextColor(findColorById(R.color.color949AAC));
@@ -380,31 +375,33 @@ public class FaultLineFragment extends MvpFragmentV4<FaultLineContract.Presenter
         lineChart.getAxisRight().setEnabled(false);
     }
 
-    private void initDataSet(LineDataSet dataSet, @ColorInt int color) {
-        dataSet.setLineWidth(2.0f);
-        dataSet.setColor(findColorById(color));
-        dataSet.setCircleColor(findColorById(color));
-        dataSet.setCircleRadius(2.5f);
-        dataSet.setDrawValues(false);
-        dataSet.setDrawCircles(false);
-        dataSet.setMode(LineDataSet.Mode.LINEAR);
-        dataSet.setHighLightColor(findColorById(R.color.transparent));
-    }
-
-
-    private LineData getLineData(List<ChartData> chartDatas, int[] color) {
-        List<ILineDataSet> dataSets = new ArrayList<>();
-        for (int i = 0; i < chartDatas.size(); i++) {
-            List<Entry> entries = new ArrayList<>();
-            for (int j = 0; j < chartDatas.get(i).getData().size(); j++) {
-                entries.add(new Entry(j, chartDatas.get(i).getData().get(j).getDataValue()));
-            }
-            LineDataSet dataSet = new LineDataSet(entries, "");
-            initDataSet(dataSet, color[i]);
+    private BarData getLineData(FaultYearCountBean bean) {
+        List<IBarDataSet> dataSets = new ArrayList<>();
+        if (bean.getPendingList().size() == 12 && bean.getCloseList().size() == 12
+                && bean.getFlowingList().size() == 12 && bean.getRepairList().size() == 12) {
+            List<BarEntry> entries = new ArrayList<>();
+                for (int i=0;i<bean.getPendingList().size();i++){
+                    float[] values = new float[4];
+                    values[0]=(bean.getPendingList().get(i).floatValue());
+                    values[1]=(bean.getFlowingList().get(i).floatValue());
+                    values[2]=(bean.getRepairList().get(i).floatValue());
+                    values[3]=(bean.getCloseList().get(i).floatValue());
+                    entries.add(new BarEntry(i,values));
+                }
+            BarDataSet dataSet = new BarDataSet(entries, "");
+            ArrayList<Integer> colors = new ArrayList<>();
+            colors.add(findColorById(this.colors[0]));
+            colors.add(findColorById(this.colors[1]));
+            colors.add(findColorById(this.colors[2]));
+            colors.add(findColorById(this.colors[3]));
+            dataSet.setColors(colors);
+            dataSet.setValueFormatter(new ChartValueFormatter());
+            dataSet.setValueTextSize(12f);
+            dataSet.setDrawValues(true);
+            dataSet.setHighLightColor(findColorById(R.color.transparent));
             dataSets.add(dataSet);
         }
-
-        return new LineData(dataSets);
+        return new BarData(dataSets);
     }
 
     @Override

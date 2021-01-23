@@ -375,7 +375,7 @@ public class Api {
 
         //故障等级统计
         @GET("statistics/user/fault/level.json")
-        Observable<Bean<List<FaultLevel>>> getFaultLevel(@Query("time") String time);
+        Observable<Bean<FaultLevel>> getFaultLevel(@Query("time") String time);
 
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("message/send/system.json")

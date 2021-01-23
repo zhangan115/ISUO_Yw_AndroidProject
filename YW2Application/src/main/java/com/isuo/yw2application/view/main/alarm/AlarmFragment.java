@@ -245,7 +245,7 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
                     return;
                 } else if (type == 1) {
                     Calendar calendar = Calendar.getInstance();
-                    intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd"));
+//                    intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd"));
                     intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "今日故障");
                 } else {
                     intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "遗留故障");

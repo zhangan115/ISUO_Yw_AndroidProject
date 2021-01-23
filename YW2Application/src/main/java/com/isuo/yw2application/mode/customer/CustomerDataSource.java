@@ -174,7 +174,7 @@ public interface CustomerDataSource {
     Subscription getFaultReport(long deptId, @NonNull String time, @NonNull IListCallBack<FaultReport> callBack);
 
     //故障等级统计
-    Subscription getFaultLevel(@NonNull String time, @NonNull IListCallBack<FaultLevel> callBack);
+    Subscription getFaultLevel(@NonNull String time, @NonNull IObjectCallBack<FaultLevel> callBack);
 
     //根据taskid查询设备
     Subscription getEquipByTaskId(long taskId, @NonNull IListCallBack<EquipBean> callBack);
