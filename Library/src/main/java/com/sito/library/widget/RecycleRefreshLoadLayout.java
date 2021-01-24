@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.sito.library.R;
 
@@ -68,6 +69,8 @@ public class RecycleRefreshLoadLayout extends SwipeRefreshLayout {
                 if (getChildAt(i) instanceof ExpendRecycleView) {
                     expendRecycleView = (ExpendRecycleView) getChildAt(i);
                     break;
+                }else if (getChildAt(i) instanceof ViewGroup){
+                    getExpendView((ViewGroup) getChildAt(i));
                 }
             }
         }
@@ -75,6 +78,23 @@ public class RecycleRefreshLoadLayout extends SwipeRefreshLayout {
             expendRecycleView.addOnScrollListener(scrollListener);
         }
     }
+
+    private void getExpendView(ViewGroup vg){
+        if (vg.getChildCount()==0){
+            return;
+        }
+        for (int i = 0; i < vg.getChildCount(); i++) {
+            if (vg.getChildAt(i) instanceof ExpendRecycleView) {
+                expendRecycleView = (ExpendRecycleView) vg.getChildAt(i);
+                break;
+            }
+            if (expendRecycleView==null&&vg.getChildAt(i) instanceof ViewGroup){
+                getExpendView((ViewGroup) vg.getChildAt(i));
+            }
+        }
+
+    }
+
 
     public void setViewFooter(View viewFooter) {
         this.viewFooter = viewFooter;
