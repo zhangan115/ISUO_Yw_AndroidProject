@@ -474,7 +474,7 @@
                                 <ImageView
                                     android:layout_width="28dp"
                                     android:layout_height="28dp"
-                                    android:src="@drawable/work_load" />
+                                    android:src="@drawable/inspecting" />
 
                                 <TextView
                                     android:layout_width="wrap_content"

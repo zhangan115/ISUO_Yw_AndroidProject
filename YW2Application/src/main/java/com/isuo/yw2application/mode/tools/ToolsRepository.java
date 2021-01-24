@@ -11,6 +11,7 @@ import com.isuo.yw2application.mode.Bean;
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.tools.bean.CheckListBean;
+import com.isuo.yw2application.mode.tools.bean.ToolLogListBean;
 import com.isuo.yw2application.mode.tools.bean.Tools;
 import com.isuo.yw2application.mode.tools.bean.ToolsLog;
 
@@ -57,6 +58,29 @@ public class ToolsRepository implements ToolsSourceData {
                 iListCallBack.onFinish();
                 if (tools != null && tools.size() != 0) {
                     iListCallBack.onSuccess(tools);
+                } else {
+                    iListCallBack.onError("");
+                }
+            }
+
+            @Override
+            public void onFail() {
+                iListCallBack.onFinish();
+                iListCallBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription getBrowList(Map<String, String> map, final IObjectCallBack<ToolLogListBean> iListCallBack) {
+        return new ApiCallBack<ToolLogListBean>(Api.createRetrofit().create(ToolsApi.class).getBrowList(map)) {
+
+            @Override
+            public void onSuccess(@Nullable ToolLogListBean bean) {
+                iListCallBack.onFinish();
+                if (bean != null && bean.getList().size() != 0) {
+                    iListCallBack.onSuccess(bean);
                 } else {
                     iListCallBack.onError("");
                 }

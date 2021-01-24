@@ -119,12 +119,12 @@ public class AddToolsActivity extends BaseActivity implements AddToolsContract.V
                                     case 0://删除照片
                                         takePhoto = null;
                                         tools.setToolPic(null);
-                                        GlideUtils.ShowImage(AddToolsActivity.this, tools.getToolPic(), ivToolsPhoto, R.drawable.photo_button);
+                                        GlideUtils.ShowImage(AddToolsActivity.this, tools.getToolPic(), ivToolsPhoto, R.drawable.photograph);
                                         break;
                                     default://重新拍照
                                         takePhoto = null;
                                         tools.setToolPic(null);
-                                        GlideUtils.ShowImage(AddToolsActivity.this, tools.getToolPic(), ivToolsPhoto, R.drawable.photo_button);
+                                        GlideUtils.ShowImage(AddToolsActivity.this, tools.getToolPic(), ivToolsPhoto, R.drawable.photograph);
                                         takePhoto();
                                         break;
                                 }

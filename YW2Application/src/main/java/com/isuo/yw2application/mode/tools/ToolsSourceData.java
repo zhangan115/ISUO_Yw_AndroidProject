@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.tools.bean.CheckListBean;
+import com.isuo.yw2application.mode.tools.bean.ToolLogListBean;
 import com.isuo.yw2application.mode.tools.bean.Tools;
 import com.isuo.yw2application.mode.tools.bean.ToolsLog;
 
@@ -25,6 +26,9 @@ public interface ToolsSourceData {
 
     @NonNull
     Subscription getToolsList(Map<String, String> map, IListCallBack<Tools> iListCallBack);
+
+    @NonNull
+    Subscription getBrowList(Map<String, String> map, IObjectCallBack<ToolLogListBean> bean);
 
     interface IUploadToolsCallBack {
 

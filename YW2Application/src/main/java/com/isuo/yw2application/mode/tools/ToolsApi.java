@@ -4,6 +4,7 @@ package com.isuo.yw2application.mode.tools;
 import com.isuo.yw2application.mode.Bean;
 import com.isuo.yw2application.mode.bean.sos.EmergencyCall;
 import com.isuo.yw2application.mode.tools.bean.CheckListBean;
+import com.isuo.yw2application.mode.tools.bean.ToolLogListBean;
 import com.isuo.yw2application.mode.tools.bean.Tools;
 import com.isuo.yw2application.mode.tools.bean.ToolsLog;
 
@@ -88,6 +89,12 @@ public interface ToolsApi {
 
     @GET("tools/toolPreOut.json")
     Observable<Bean<String>> getToolsState(@Query("toolId") Long logId);
+
+    /**
+     * 获取借出详情
+     */
+    @GET("tools/getToolsLogList.json")
+    Observable<Bean<ToolLogListBean>> getBrowList(@QueryMap() Map<String, String> map);
 
 
 }

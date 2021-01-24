@@ -7,6 +7,7 @@ import com.sito.library.base.BaseView;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -22,6 +23,8 @@ interface ReturnToolsContract {
 
         void returnTools(JSONObject jsonObject);
 
+        void uploadImage(File image);
+
     }
 
     interface View extends BaseView<Presenter> {
@@ -35,5 +38,9 @@ interface ReturnToolsContract {
         void showCheckList(List<CheckListBean> checkListBeans);
 
         void noCheckList();
+
+        void uploadImageSuccess(String url);
+
+        void uploadImageFail();
     }
 }

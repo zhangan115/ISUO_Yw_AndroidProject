@@ -8,6 +8,8 @@ import com.isuo.yw2application.mode.tools.bean.ToolsLog;
 
 import org.json.JSONObject;
 
+import java.io.File;
+
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -73,6 +75,21 @@ class ReturnToolsPresenter implements ReturnToolsContract.Presenter {
             @Override
             public void onFinish() {
 
+            }
+        }));
+    }
+
+    @Override
+    public void uploadImage(File image) {
+        subscription.add(sourceData.uploadImageFile(image, new ToolsSourceData.IUploadToolsCallBack() {
+            @Override
+            public void onSuccess(String url) {
+                mView.uploadImageSuccess(url);
+            }
+
+            @Override
+            public void onError() {
+                mView.uploadImageFail();
             }
         }));
     }
