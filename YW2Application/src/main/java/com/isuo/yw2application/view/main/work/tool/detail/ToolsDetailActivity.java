@@ -1,15 +1,14 @@
 package com.isuo.yw2application.view.main.work.tool.detail;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,18 +20,15 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.common.ConstantStr;
-import com.isuo.yw2application.mode.bean.check.FaultList;
 import com.isuo.yw2application.mode.tools.ToolsRepository;
+import com.isuo.yw2application.mode.tools.bean.ToolDetailBean;
 import com.isuo.yw2application.mode.tools.bean.ToolLogListBean;
 import com.isuo.yw2application.mode.tools.bean.Tools;
-import com.isuo.yw2application.utils.CountDownTimerUtils;
-import com.isuo.yw2application.utils.MediaPlayerManager;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.main.work.tool.borrow.BorrowToolsActivity;
 import com.isuo.yw2application.view.main.work.tool.return_tools.ReturnToolsActivity;
 import com.isuo.yw2application.view.photo.ViewPagePhotoActivity;
-import com.isuo.yw2application.widget.ShowImageLayout;
-import com.sito.library.adapter.RVAdapter;
+import com.sito.library.adapter.VRVAdapter;
 import com.sito.library.utils.DataUtil;
 import com.sito.library.utils.GlideUtils;
 import com.sito.library.widget.ExpendRecycleView;
@@ -52,13 +48,13 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
     private ToolsDetailContract.Presenter mPresenter;
     private Tools tools;
     private boolean isCustomer;
-    private LinearLayout llCustomer, llBorrow;
+    private LinearLayout llCustomer;
     private ExpendRecycleView recyclerView;
     private RecycleRefreshLoadLayout refreshLoadLayout;
     private static final int REQUEST_BORROW = 100;
     private static final int REQUEST_RETURN = 101;
     private boolean isRefresh;
-    private List<ToolLogListBean.BrowLogBean> dataList = new ArrayList<>();
+    private List<ToolDetailBean> dataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +63,12 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
         new ToolsDetailPresenter(ToolsRepository.getRepository(this), this);
         mPresenter.subscribe();
         llCustomer = findViewById(R.id.llCustomer);
-        llBorrow = findViewById(R.id.llBorrow);
         tools = getIntent().getParcelableExtra(ConstantStr.KEY_BUNDLE_OBJECT);
         isCustomer = getIntent().getBooleanExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, false);
         recyclerView = findViewById(R.id.recyclerView);
+        @SuppressLint("InflateParams") View loadFooterView = LayoutInflater.from(this).inflate(R.layout.view_load_more_inspection, null);
         refreshLoadLayout = findViewById(R.id.refreshLoadLayout);
+        refreshLoadLayout.setViewFooter(loadFooterView);
         refreshLoadLayout.setColorSchemeResources(R.color.colorPrimary);
         refreshLoadLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -85,51 +82,63 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
         refreshLoadLayout.setOnLoadListener(new RecycleRefreshLoadLayout.OnLoadListener() {
             @Override
             public void onLoadMore() {
-                if (!isRefresh&&dataList.size()>0){
-                    mPresenter.getToolBrowListMore(tools.getToolId(),dataList.get(dataList.size()-1).getLogId());
+                if (!isRefresh && dataList.size() > 0) {
+                    mPresenter.getToolBrowListMore(tools.getToolId(), dataList.get(dataList.size() - 1).getBean().getLogId());
                 }
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setNestedScrollingEnabled(false);
-        RVAdapter<ToolLogListBean.BrowLogBean> adapter = new RVAdapter<ToolLogListBean.BrowLogBean>(recyclerView, this.dataList, R.layout.item_tool_log_list) {
+        VRVAdapter<ToolDetailBean> adapter = new VRVAdapter<ToolDetailBean>
+                (recyclerView, this.dataList, new int[]{R.layout.item_tool_detail_header, R.layout.item_tool_log_list}) {
+
             @Override
-            public void showData(final ViewHolder vHolder, ToolLogListBean.BrowLogBean data, int position) {
-                TextView tvToolsUse = (TextView) vHolder.getView(R.id.tvToolsUse);
-                TextView tvToolsUseTime = (TextView) vHolder.getView(R.id.tvToolsUseTime);
-                TextView tvToolsReturnTime = (TextView) vHolder.getView(R.id.tvToolsReturnTime);
-                tvToolsUse.setText(MessageFormat.format("用途:{0}", data.getUse()));
-                tvToolsUseTime.setText(MessageFormat.format("借用时间:{0}", DataUtil.timeFormat(data.getUseTime(), "yyyy-MM-dd HH:mm")));
-                if (data.getReturnTime() > 0) {
-                    tvToolsReturnTime.setText(MessageFormat.format("归还时间:{0}", DataUtil.timeFormat(data.getReturnTime(), "yyyy-MM-dd HH:mm")));
-                } else {
-                    tvToolsReturnTime.setText(MessageFormat.format("预计归还时间:{0}", DataUtil.timeFormat(data.getPreReturnTime(), "yyyy-MM-dd HH:mm")));
+            public int getItemViewType(int position) {
+                if (position == 0) {
+                    return 0;
                 }
-                LinearLayout layoutNote = (LinearLayout) vHolder.getView(R.id.ll_note);
-                LinearLayout layoutPhoto = (LinearLayout) vHolder.getView(R.id.ll_photo);
-                TextView tvNote = (TextView) vHolder.getView(R.id.tv_content);
-                ImageView ivToolsPhoto = (ImageView) vHolder.getView(R.id.ivToolsPhoto);
-                if (TextUtils.isEmpty(data.getView())) {
-                    layoutNote.setVisibility(View.GONE);
-                } else {
-                    layoutNote.setVisibility(View.VISIBLE);
-                    tvNote.setText(data.getView());
-                }
-                if (TextUtils.isEmpty(data.getPicUrl())) {
-                    layoutPhoto.setVisibility(View.GONE);
-                } else {
-                    layoutPhoto.setVisibility(View.VISIBLE);
-                    GlideUtils.ShowImage(ToolsDetailActivity.this, data.getPicUrl(), ivToolsPhoto, R.drawable.img_default);
-                    ivToolsPhoto.setTag(data.getPicUrl());
-                    ivToolsPhoto.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            String url = (String) view.getTag();
-                            if (!TextUtils.isEmpty(url)) {
-                                ViewPagePhotoActivity.startActivity(ToolsDetailActivity.this, new String[]{url}, 0);
+                return 1;
+            }
+
+            @Override
+            public void showData(ViewHolder vHolder, final ToolDetailBean data, int position, int type) {
+                if (type == 1) {
+                    TextView tvToolsUse = (TextView) vHolder.getView(R.id.tvToolsUse);
+                    TextView tvToolsUseTime = (TextView) vHolder.getView(R.id.tvToolsUseTime);
+                    TextView tvToolsReturnTime = (TextView) vHolder.getView(R.id.tvToolsReturnTime);
+                    tvToolsUse.setText(MessageFormat.format("用途:{0}", data.getBean().getUse()));
+                    tvToolsUseTime.setText(MessageFormat.format("借用时间:{0}", DataUtil.timeFormat(data.getBean().getUseTime(), "yyyy-MM-dd HH:mm")));
+                    if (data.getBean().getReturnTime() > 0) {
+                        tvToolsReturnTime.setText(MessageFormat.format("归还时间:{0}", DataUtil.timeFormat(data.getBean().getReturnTime(), "yyyy-MM-dd HH:mm")));
+                    } else {
+                        tvToolsReturnTime.setText(MessageFormat.format("预计归还时间:{0}", DataUtil.timeFormat(data.getBean().getPreReturnTime(), "yyyy-MM-dd HH:mm")));
+                    }
+                    LinearLayout layoutNote = (LinearLayout) vHolder.getView(R.id.ll_note);
+                    LinearLayout layoutPhoto = (LinearLayout) vHolder.getView(R.id.ll_photo);
+                    TextView tvNote = (TextView) vHolder.getView(R.id.tv_content);
+                    ImageView ivToolsPhoto = (ImageView) vHolder.getView(R.id.ivToolsPhoto);
+                    if (TextUtils.isEmpty(data.getBean().getView())) {
+                        layoutNote.setVisibility(View.GONE);
+                    } else {
+                        layoutNote.setVisibility(View.VISIBLE);
+                        tvNote.setText(data.getBean().getView());
+                    }
+                    if (TextUtils.isEmpty(data.getBean().getPicUrl())) {
+                        layoutPhoto.setVisibility(View.GONE);
+                    } else {
+                        layoutPhoto.setVisibility(View.VISIBLE);
+                        GlideUtils.ShowImage(ToolsDetailActivity.this, data.getBean().getPicUrl(), ivToolsPhoto, R.drawable.img_default);
+                        ivToolsPhoto.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (!TextUtils.isEmpty(data.getBean().getPicUrl())) {
+                                    ViewPagePhotoActivity.startActivity(ToolsDetailActivity.this, new String[]{data.getBean().getPicUrl()}, 0);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
+                } else {
+                    setTools(vHolder, data.getTools());
                 }
             }
         };
@@ -169,8 +178,20 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
 
     @Override
     public void showTools(final Tools tools) {
-        llBorrow.setVisibility(View.GONE);
-        ImageView ivToolsPhoto = findViewById(R.id.ivToolsPhoto);
+        if (this.dataList.size() > 0) {
+            ToolDetailBean bean = this.dataList.get(0);
+            bean.setTools(tools);
+        } else {
+            ToolDetailBean bean = new ToolDetailBean();
+            bean.setTools(tools);
+            this.dataList.add(bean);
+        }
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    private void setTools(VRVAdapter.ViewHolder viewHolder, final Tools tools) {
+        LinearLayout llBorrow = (LinearLayout) viewHolder.getView(R.id.llBorrow);
+        ImageView ivToolsPhoto = (ImageView) viewHolder.getView(R.id.ivToolsPhoto);
         ivToolsPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,23 +199,23 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
             }
         });
         GlideUtils.ShowImage(this, tools.getToolPic(), ivToolsPhoto, R.drawable.picture_default);
-        TextView tvToolsName = findViewById(R.id.tvToolsName);
-        TextView tvToolsState = findViewById(R.id.tvToolsState);
+        TextView tvToolsName = (TextView) viewHolder.getView(R.id.tvToolsName);
+        TextView tvToolsState = (TextView) viewHolder.getView(R.id.tvToolsState);
         tvToolsName.setText(tools.getToolName());
         if (isCustomer) {
             llCustomer.setVisibility(View.VISIBLE);
         } else {
             llCustomer.setVisibility(View.GONE);
         }
-        TextView tvToolsCustomerLocal = findViewById(R.id.tvToolsCustomerLocal);
-        TextView tvToolsBorrow = findViewById(R.id.tvToolsBorrow);
-        TextView tvToolsIn = findViewById(R.id.tvToolsIn);
-        TextView tvToolsReturn = findViewById(R.id.tvToolsReturn);
-        TextView tvToolsCustomerAsk = findViewById(R.id.tvToolsCustomerAsk);
+        TextView tvToolsCustomerLocal = ToolsDetailActivity.this.findViewById(R.id.tvToolsCustomerLocal);
+        TextView tvToolsBorrow = ToolsDetailActivity.this.findViewById(R.id.tvToolsBorrow);
+        TextView tvToolsIn = ToolsDetailActivity.this.findViewById(R.id.tvToolsIn);
+        TextView tvToolsReturn = ToolsDetailActivity.this.findViewById(R.id.tvToolsReturn);
+        TextView tvToolsCustomerAsk = ToolsDetailActivity.this.findViewById(R.id.tvToolsCustomerAsk);
 
-        TextView tvToolsUse = findViewById(R.id.tvToolsUse);
-        TextView tvToolsUseTime = findViewById(R.id.tvToolsUseTime);
-        TextView tvToolsReturnTime = findViewById(R.id.tvToolsReturnTime);
+        TextView tvToolsUse = (TextView) viewHolder.getView(R.id.tvToolsUse);
+        TextView tvToolsUseTime = (TextView) viewHolder.getView(R.id.tvToolsUseTime);
+        TextView tvToolsReturnTime = (TextView) viewHolder.getView(R.id.tvToolsReturnTime);
 
         tvToolsBorrow.setOnClickListener(this);
         tvToolsReturn.setOnClickListener(this);
@@ -211,6 +232,7 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
                         tvToolsIn.setVisibility(View.GONE);
                         tvToolsReturn.setVisibility(View.GONE);
                         tvToolsCustomerAsk.setVisibility(View.GONE);
+                        llBorrow.setVisibility(View.GONE);
                     } else {
                         tvToolsCustomerLocal.setTextColor(findColorById(R.color.colorBtnYellowNormal));
                         tvToolsCustomerLocal.setText(String.format("外借  借用人:%s", tools.getUseUser()));
@@ -219,7 +241,7 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
                         tvToolsReturn.setVisibility(View.VISIBLE);
                         if (tools.getToolsLog() != null && tools.getToolsLog().getPreReturnTime() < System.currentTimeMillis()) {
                             tvToolsCustomerAsk.setVisibility(View.VISIBLE);
-                            llBorrow.setVisibility(View.VISIBLE);
+                            llBorrow.setVisibility(View.GONE);
                             tvToolsUse.setText("用途:" + tools.getToolsLog().getUse());
                             tvToolsUseTime.setText("借用时间:" + DataUtil.timeFormat(tools.getToolsLog().getUseTime(), "yyyy-MM-dd HH:mm"));
                             tvToolsReturnTime.setText("预计归还时间:" + DataUtil.timeFormat(tools.getToolsLog().getPreReturnTime(), "yyyy-MM-dd HH:mm"));
@@ -268,7 +290,7 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
                 }
                 break;
         }
-        TextView tvToolsLocal = findViewById(R.id.tvToolsLocal);
+        TextView tvToolsLocal = (TextView) viewHolder.getView(R.id.tvToolsLocal);
         if (isCustomer) {
             tvToolsLocal.setVisibility(View.GONE);
         } else {
@@ -280,26 +302,37 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
                 tvToolsLocal.setText(String.format("借用人:%s", tools.getUseUser()));
             }
         }
-        TextView tvToolsNum = findViewById(R.id.tvToolsNum);
+        TextView tvToolsNum = (TextView) viewHolder.getView(R.id.tvToolsNum);
         tvToolsNum.setText(String.format("设备编号:%s", tools.getToolNumber()));
-        TextView tvToolsDes = findViewById(R.id.tvToolsDes);
-        tvToolsDes.setText(tools.getToolDesc());
-        TextView tvToolsBuyTime = findViewById(R.id.tvToolsBuyTime);
-        TextView tvToolsM = findViewById(R.id.tvToolsM);
-        TextView tvToolsCount = findViewById(R.id.tvToolsCount);
-        TextView tvToolsUnitPrice = findViewById(R.id.tvToolsUnitPrice);
+        TextView tvToolsDes = (TextView) viewHolder.getView(R.id.tvToolsDes);
+        if (!TextUtils.isEmpty(tools.getToolDesc())) {
+            tvToolsDes.setVisibility(View.VISIBLE);
+            tvToolsDes.setText(tools.getToolDesc());
+        } else {
+            tvToolsDes.setVisibility(View.GONE);
+        }
+        TextView tvToolsBuyTime = (TextView) viewHolder.getView(R.id.tvToolsBuyTime);
+        TextView tvToolsM = (TextView) viewHolder.getView(R.id.tvToolsM);
+        TextView tvToolsCount = (TextView) viewHolder.getView(R.id.tvToolsCount);
+        TextView tvToolsUnitPrice = (TextView) viewHolder.getView(R.id.tvToolsUnitPrice);
         if (tools.getBuyTime() != 0) {
             tvToolsBuyTime.setText("购买时间:");
         } else {
-            tvToolsBuyTime.setText("购买时间:" + tools.getBuyTime());
+            tvToolsBuyTime.setText(MessageFormat.format("购买时间:{0}", tools.getBuyTime()));
         }
         if (TextUtils.isEmpty(tools.getManufacturer())) {
             tvToolsM.setText("生产厂家:");
         } else {
-            tvToolsM.setText("生产厂家:" + tools.getManufacturer());
+            tvToolsM.setText(MessageFormat.format("生产厂家:{0}", tools.getManufacturer()));
         }
-        tvToolsCount.setText("数量:" + tools.getToolCount() + "个");
-        tvToolsUnitPrice.setText("单价:" + tools.getUnitPrice() + "元");
+        tvToolsCount.setText(MessageFormat.format("数量:{0}个", tools.getToolCount()));
+        tvToolsUnitPrice.setText(MessageFormat.format("单价:{0}元", tools.getUnitPrice()));
+        TextView text1 = (TextView) viewHolder.getView(R.id.text1);
+        if (dataList.size() == 1) {
+            text1.setVisibility(View.GONE);
+        } else {
+            text1.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -321,16 +354,27 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
     @Override
     public void showToolBrowList(List<ToolLogListBean.BrowLogBean> list) {
         this.dataList.clear();
-        this.dataList.addAll(list);
+        ToolDetailBean bean = new ToolDetailBean();
+        bean.setTools(this.tools);
+        this.dataList.add(bean);
+        for (int i = 0; i < list.size(); i++) {
+            ToolDetailBean bean1 = new ToolDetailBean();
+            bean1.setBean(list.get(i));
+            this.dataList.add(bean1);
+        }
         this.recyclerView.getAdapter().notifyDataSetChanged();
     }
 
     @Override
     public void showToolBrowListMore(List<ToolLogListBean.BrowLogBean> list) {
-        this.dataList.addAll(list);
-        if (list.size()< ConstantInt.PAGE_SIZE){
+        for (int i = 0; i < list.size(); i++) {
+            ToolDetailBean bean1 = new ToolDetailBean();
+            bean1.setBean(list.get(i));
+            this.dataList.add(bean1);
+        }
+        if (list.size() < ConstantInt.PAGE_SIZE) {
             this.refreshLoadLayout.setNoMoreData(true);
-        }else {
+        } else {
             this.refreshLoadLayout.loadFinish();
         }
         this.recyclerView.getAdapter().notifyDataSetChanged();
@@ -338,7 +382,7 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
 
     @Override
     public void getToolsError() {
-
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -365,6 +409,14 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
             tools.setIsUse("0");
             showTools(tools);
             //归还
+            stateChange = true;
+        } else if (requestCode == REQUEST_BORROW && Activity.RESULT_OK == resultCode) {
+            if (data != null) {
+                String useName = data.getStringExtra(ConstantStr.KEY_BUNDLE_STR);
+                tools.setUseUser(useName);
+            }
+            tools.setIsUse("1");
+            showTools(tools);
             stateChange = true;
         }
     }

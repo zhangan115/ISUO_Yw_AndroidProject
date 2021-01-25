@@ -191,7 +191,9 @@ public class BorrowToolsActivity extends BaseActivity implements BorrowContract.
 
     @Override
     public void borrowSuccess() {
-        setResult(Activity.RESULT_OK);
+        Intent intent = new Intent();
+        intent.putExtra(ConstantStr.KEY_BUNDLE_STR,chooseEmployeeBeen.get(0).getUser().getRealName());
+        setResult(Activity.RESULT_OK,intent);
         finish();
     }
 
