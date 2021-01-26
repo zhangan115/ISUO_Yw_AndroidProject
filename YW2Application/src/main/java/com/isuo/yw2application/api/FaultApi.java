@@ -69,6 +69,7 @@ public interface FaultApi {
      * startTime 开始时间
      * endTime 结束时间
      * lessThanFaultState 故障状态
+     * latelyTime 24h新增故障
      * </br>
      *
      * @param info

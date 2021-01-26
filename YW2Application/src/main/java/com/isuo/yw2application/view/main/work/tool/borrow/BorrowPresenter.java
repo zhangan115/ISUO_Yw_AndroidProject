@@ -9,6 +9,7 @@ import com.isuo.yw2application.mode.tools.bean.CheckListBean;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.List;
 
 import rx.subscriptions.CompositeSubscription;
@@ -96,6 +97,22 @@ class BorrowPresenter implements BorrowContract.Presenter {
             @Override
             public void onFinish() {
 
+            }
+        }));
+    }
+
+
+    @Override
+    public void uploadImage(File image) {
+        subscription.add(sourceData.uploadImageFile(image, new ToolsSourceData.IUploadToolsCallBack() {
+            @Override
+            public void onSuccess(String url) {
+                mView.uploadImageSuccess(url);
+            }
+
+            @Override
+            public void onError() {
+                mView.uploadImageFail();
             }
         }));
     }

@@ -18,35 +18,82 @@
         android:paddingRight="15dp"
         android:paddingBottom="12dp">
 
+        <TextView
+            android:id="@+id/tvToolsUse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text333"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvToolsUseTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/text333"
+            android:textSize="14sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvToolsUse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text333"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tvToolsUseTime"
+            <LinearLayout
+                android:id="@+id/ll_take_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/text333"
-                android:textSize="14sp" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvToolsReturnTime"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="借出备注:"
+                    android:textColor="@color/text333"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/tv_take_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:textColor="@color/text333"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_take_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/text333"
-                android:textSize="14sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="借出照片:"
+                    android:textColor="@color/text333"
+                    android:textSize="14dp" />
+
+                <ImageView
+                    android:id="@+id/ivTakeToolsPhoto"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/img_default" />
+            </LinearLayout>
+
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvToolsReturnTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/text333"
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,13 +104,13 @@
                 android:id="@+id/ll_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="备注:"
+                    android:text="归还备注:"
                     android:textColor="@color/text333"
                     android:textSize="14dp" />
 
@@ -71,9 +118,8 @@
                     android:id="@+id/tv_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:gravity="left"
-                    android:textColor="@color/text_item_content_1"
+                    android:textColor="@color/text333"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -81,14 +127,14 @@
             <LinearLayout
                 android:id="@+id/ll_photo"
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="拍照:"
+                    android:text="归还照片:"
                     android:textColor="@color/text333"
                     android:textSize="14dp" />
 
@@ -102,6 +148,7 @@
 
 
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

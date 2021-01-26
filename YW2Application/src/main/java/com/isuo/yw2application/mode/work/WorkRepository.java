@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -401,7 +402,34 @@ public class WorkRepository implements WorkDataSource {
             }
         }.execute1();
     }
+    @NonNull
+    @Override
+    public Subscription get24HFaultList(Map<String,String> map, @NonNull final IListCallBack<FaultList> callBack) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("latelyTime", 1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return new ApiCallBack<List<FaultList>>(Api.createRetrofit().create(FaultApi.class).getFaultList(jsonObject.toString())) {
 
+            @Override
+            public void onSuccess(@Nullable List<FaultList> faultLists) {
+                callBack.onFinish();
+                if (faultLists != null && faultLists.size() > 0) {
+                    callBack.onSuccess(faultLists);
+                } else {
+                    callBack.onError("");
+                }
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
     @Override
     public void getWorkItems(final WorkItemCallBack callBack) {
         List<WorkItem> allWorkItems = new ArrayList<>();

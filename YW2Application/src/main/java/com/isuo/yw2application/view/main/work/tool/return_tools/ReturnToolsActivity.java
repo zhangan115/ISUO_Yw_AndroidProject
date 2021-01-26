@@ -60,9 +60,9 @@ public class ReturnToolsActivity extends BaseActivity implements ReturnToolsCont
     private Calendar mCreateCalender;
     //view
     private TextView tvToolsReturnTime;
-    private ImageView ivToolsPhoto;
     private LinearLayout llCheckList, llAllCheckList;
     private List<CheckListBean> checkListBeans;
+    private ImageView ivToolsPhoto;
     private File photoFile;
     private ProgressBar progressBar;
 

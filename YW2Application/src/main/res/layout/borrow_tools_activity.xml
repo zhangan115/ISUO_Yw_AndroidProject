@@ -225,6 +225,7 @@
 
                 </LinearLayout>
 
+
                 <LinearLayout
                     android:id="@+id/llAllCheckList"
                     android:layout_width="match_parent"
@@ -232,7 +233,6 @@
                     android:layout_marginLeft="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="14sp"
-                    android:layout_marginBottom="10dp"
                     android:background="@drawable/white_bg_with_shape"
                     android:paddingLeft="14sp"
                     android:paddingTop="12dp"
@@ -261,6 +261,76 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical" />
 
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llToolsNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/white_bg_with_shape"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="12dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="12dp"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="备注:"
+                            android:textColor="@color/text333"
+                            android:textSize="14dp" />
+
+                        <EditText
+                            android:id="@+id/et_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_overhual_detail"
+                            android:gravity="left"
+                            android:hint="请输入备注"
+                            android:minLines="3"
+                            android:padding="10dp"
+                            android:textColor="@color/text_item_content_1"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="拍照:"
+                            android:textColor="@color/text333"
+                            android:textSize="14dp" />
+
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="60dp">
+
+                            <ImageView
+                                android:id="@+id/ivToolsPhoto"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/photograph" />
+
+                            <ProgressBar
+                                android:id="@+id/progressBar"
+                                style="?android:attr/progressBarStyle"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_centerInParent="true"
+                                android:visibility="gone" />
+                        </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
 

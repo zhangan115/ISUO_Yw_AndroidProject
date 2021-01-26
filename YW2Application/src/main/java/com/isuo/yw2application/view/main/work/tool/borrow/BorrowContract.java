@@ -6,6 +6,7 @@ import com.sito.library.base.BaseView;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -22,6 +23,8 @@ interface BorrowContract {
         void getCheckList(Long toolsId);
 
         void getToolsState(Long toolsId);
+
+        void uploadImage(File image);
     }
 
     interface View extends BaseView<Presenter> {
@@ -35,6 +38,10 @@ interface BorrowContract {
         void toolsCanBorrow();
 
         void toolsCantBorrow();
+
+        void uploadImageSuccess(String url);
+
+        void uploadImageFail();
 
     }
 }

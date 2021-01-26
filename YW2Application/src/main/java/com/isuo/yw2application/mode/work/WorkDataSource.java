@@ -19,6 +19,7 @@ import com.isuo.yw2application.mode.bean.work.WorkState;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Map;
 
 import rx.Subscription;
 
@@ -135,4 +136,7 @@ public interface WorkDataSource {
 
     @NonNull
     Subscription getTodayFaultList(boolean isRemain, String time, @NonNull IListCallBack<FaultList> callBack);
+
+    @NonNull
+    Subscription get24HFaultList(Map<String,String> map, @NonNull IListCallBack<FaultList> callBack);
 }

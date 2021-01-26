@@ -115,6 +115,7 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
                     }
                     LinearLayout layoutNote = (LinearLayout) vHolder.getView(R.id.ll_note);
                     LinearLayout layoutPhoto = (LinearLayout) vHolder.getView(R.id.ll_photo);
+
                     TextView tvNote = (TextView) vHolder.getView(R.id.tv_content);
                     ImageView ivToolsPhoto = (ImageView) vHolder.getView(R.id.ivToolsPhoto);
                     if (TextUtils.isEmpty(data.getBean().getView())) {
@@ -137,6 +138,32 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
                             }
                         });
                     }
+                    LinearLayout layoutTakeNote = (LinearLayout) vHolder.getView(R.id.ll_take_note);
+                    LinearLayout layoutTakePhoto = (LinearLayout) vHolder.getView(R.id.ll_take_photo);
+                    TextView tvTakeNote = (TextView) vHolder.getView(R.id.tv_take_content);
+                    ImageView ivTakeToolsPhoto = (ImageView) vHolder.getView(R.id.ivTakeToolsPhoto);
+                    if (TextUtils.isEmpty(data.getBean().getTakeView())) {
+                        layoutTakeNote.setVisibility(View.GONE);
+                    } else {
+                        layoutTakeNote.setVisibility(View.VISIBLE);
+                        if (!TextUtils.isEmpty(data.getBean().getTakeView()))
+                            tvTakeNote.setText(data.getBean().getTakeView());
+                    }
+                    if (TextUtils.isEmpty(data.getBean().getTakePicUrl())) {
+                        layoutTakePhoto.setVisibility(View.GONE);
+                    } else {
+                        layoutTakePhoto.setVisibility(View.VISIBLE);
+                        GlideUtils.ShowImage(ToolsDetailActivity.this, data.getBean().getTakePicUrl(), ivTakeToolsPhoto, R.drawable.img_default);
+                        ivTakeToolsPhoto.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (!TextUtils.isEmpty(data.getBean().getTakePicUrl())) {
+                                    ViewPagePhotoActivity.startActivity(ToolsDetailActivity.this, new String[]{data.getBean().getTakePicUrl()}, 0);
+                                }
+                            }
+                        });
+                    }
+
                 } else {
                     setTools(vHolder, data.getTools());
                 }

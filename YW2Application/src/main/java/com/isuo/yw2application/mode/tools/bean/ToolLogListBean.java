@@ -24,7 +24,9 @@ public class ToolLogListBean {
         private long returnTime;
         private String use;
         private String view;
+        private String takeView;
         private String picUrl;
+        private String takePicUrl;
         private User useUser;
 
         public long getLogId() {
@@ -97,6 +99,22 @@ public class ToolLogListBean {
 
         public void setUseUser(User useUser) {
             this.useUser = useUser;
+        }
+
+        public String getTakeView() {
+            return takeView;
+        }
+
+        public void setTakeView(String takeView) {
+            this.takeView = takeView;
+        }
+
+        public String getTakePicUrl() {
+            return takePicUrl;
+        }
+
+        public void setTakePicUrl(String takePicUrl) {
+            this.takePicUrl = takePicUrl;
         }
     }
 }

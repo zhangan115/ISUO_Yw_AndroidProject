@@ -6,6 +6,7 @@ import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.bean.check.FaultList;
 import com.isuo.yw2application.mode.work.WorkDataSource;
 
+import java.util.HashMap;
 import java.util.List;
 
 import rx.subscriptions.CompositeSubscription;
@@ -34,7 +35,7 @@ public class TodayFaultPresenter implements TodayFaultContract.Presenter {
     @Override
     public void getData(String time) {
         mView.showLoading();
-        mSubscription.add(mWorkDataSource.getTodayFaultList(false, time, new IListCallBack<FaultList>() {
+        mSubscription.add(mWorkDataSource.get24HFaultList(new HashMap<String, String>(), new IListCallBack<FaultList>() {
             @Override
             public void onSuccess(@NonNull List<FaultList> list) {
                 mView.showData(list);

@@ -166,8 +166,12 @@ public class UserDetailActivity extends BaseActivity implements UserDetailContra
                             jsonObject.put("userPhone", ets[6].getText());
                         }
                         jsonObject.put("sex", this.sex);
-                        jsonObject.put("birthDay", this.texts[1].getText().toString());
-                        jsonObject.put("entryTime", this.texts[6].getText().toString());
+                        if (!TextUtils.isEmpty(this.texts[1].getText().toString())) {
+                            jsonObject.put("birthDay", this.texts[1].getText().toString());
+                        }
+                        if (!TextUtils.isEmpty(this.texts[6].getText().toString())) {
+                            jsonObject.put("entryTime", this.texts[6].getText().toString());
+                        }
                         mPresenter.saveUserInfo(jsonObject);
                     } catch (JSONException e) {
                         e.printStackTrace();
