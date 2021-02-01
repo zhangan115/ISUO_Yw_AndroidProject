@@ -1,6 +1,7 @@
 package com.isuo.yw2application.view.main.data.statistics.part;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,6 +13,9 @@ import com.isuo.yw2application.mode.bean.count.PartPersonStatistics;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.widget.ChooseTimeLayout;
 import com.sito.library.utils.DataUtil;
+import com.sito.library.utils.NumberUtils;
+
+import java.text.MessageFormat;
 
 /**
  * 统计组织
@@ -80,35 +84,44 @@ public class StatisticsPartActivity extends BaseActivity implements ChooseTimeLa
 
     @Override
     public void showData(PartPersonStatistics statistics) {
-        ((TextView) findViewById(R.id.tv_1_1_1)).setText("日检 " + statistics.getTaskStat().getDayFinishCount() + "/" + statistics.getTaskStat().getDayAllCount());
-        ((TextView) findViewById(R.id.tv_1_1_2)).setText(statistics.getTaskStat().getDayEquipmentAvg() + "/次");
-        ((TextView) findViewById(R.id.tv_1_1_3)).setText("平均" + statistics.getTaskStat().getDayMinutesAvg() + "分钟/台");
-        ((TextView) findViewById(R.id.tv_1_2_1)).setText("周检 " + statistics.getTaskStat().getWeekFinishCount() + "/" + statistics.getTaskStat().getWeekAllCount());
-        ((TextView) findViewById(R.id.tv_1_2_2)).setText(statistics.getTaskStat().getWeekEquipmentAvg() + "/次");
-        ((TextView) findViewById(R.id.tv_1_2_3)).setText("平均" + statistics.getTaskStat().getWeekMinutesAvg() + "分钟/台");
-        ((TextView) findViewById(R.id.tv_1_3_1)).setText("月检 " + statistics.getTaskStat().getMonthFinishCount() + "/" + statistics.getTaskStat().getMonthAllCount());
-        ((TextView) findViewById(R.id.tv_1_3_2)).setText(statistics.getTaskStat().getMonthEquipmentAvg() + "/次");
-        ((TextView) findViewById(R.id.tv_1_3_3)).setText("平均" + statistics.getTaskStat().getMonthMinutesAvg() + "分钟/台");
-        ((TextView) findViewById(R.id.tv_1_4_1)).setText("特检 " + statistics.getTaskStat().getManualFinishCount() + "/" + statistics.getTaskStat().getManualAllCount());
-        ((TextView) findViewById(R.id.tv_1_4_2)).setText(statistics.getTaskStat().getManualEquipmentAvg() + "/次");
-        ((TextView) findViewById(R.id.tv_1_4_3)).setText("平均" + statistics.getTaskStat().getManualMinutesAvg() + "分钟/台");
-        ((TextView) findViewById(R.id.tv_2_1_1)).setText("已处理" + statistics.getFaultStat().getFaultFinishCount());
-        ((TextView) findViewById(R.id.tv_2_1_2)).setText("共" + statistics.getFaultStat().getFaultAllCount());
-        ((TextView) findViewById(R.id.tv_2_2_1)).setText("已处理" + statistics.getFaultStat().getRepairFinishCount());
-        ((TextView) findViewById(R.id.tv_2_2_2)).setText("共" + statistics.getFaultStat().getRepairAllCount());
+        ((TextView) findViewById(R.id.tv_1_1_1)).setText(MessageFormat.format("日检 {0}/{1}", statistics.getTaskStat().getDayFinishCount(), statistics.getTaskStat().getDayAllCount()));
+        ((TextView) findViewById(R.id.tv_1_1_2)).setText(MessageFormat.format("{0}/分钟次", NumberUtils.formatDouble(statistics.getTaskStat().getDayEquipmentAvg())));
+        ((TextView) findViewById(R.id.tv_1_1_3)).setText(MessageFormat.format("平均{0}分钟/台", statistics.getTaskStat().getDayMinutesAvg()));
+        ((TextView) findViewById(R.id.tv_1_2_1)).setText(MessageFormat.format("周检 {0}/{1}", statistics.getTaskStat().getWeekFinishCount(), statistics.getTaskStat().getWeekAllCount()));
+        ((TextView) findViewById(R.id.tv_1_2_2)).setText(MessageFormat.format("{0}/分钟次", NumberUtils.formatDouble(statistics.getTaskStat().getWeekEquipmentAvg())));
+        ((TextView) findViewById(R.id.tv_1_2_3)).setText(MessageFormat.format("平均{0}分钟/台", statistics.getTaskStat().getWeekMinutesAvg()));
+        ((TextView) findViewById(R.id.tv_1_3_1)).setText(MessageFormat.format("月检 {0}/{1}", statistics.getTaskStat().getMonthFinishCount(), statistics.getTaskStat().getMonthAllCount()));
+        ((TextView) findViewById(R.id.tv_1_3_2)).setText(MessageFormat.format("{0}/分钟次", NumberUtils.formatDouble(statistics.getTaskStat().getMonthEquipmentAvg())));
+        ((TextView) findViewById(R.id.tv_1_3_3)).setText(MessageFormat.format("平均{0}分钟/台", statistics.getTaskStat().getMonthMinutesAvg()));
+        ((TextView) findViewById(R.id.tv_1_4_1)).setText(MessageFormat.format("特检 {0}/{1}", statistics.getTaskStat().getManualFinishCount(), statistics.getTaskStat().getManualAllCount()));
+        ((TextView) findViewById(R.id.tv_1_4_2)).setText(MessageFormat.format("{0}/分钟次", NumberUtils.formatDouble(statistics.getTaskStat().getManualEquipmentAvg())));
+        ((TextView) findViewById(R.id.tv_1_4_3)).setText(MessageFormat.format("平均{0}分钟/台", statistics.getTaskStat().getManualMinutesAvg()));
+        ((TextView) findViewById(R.id.tv_2_1_1)).setText(MessageFormat.format("已处理{0}", statistics.getFaultStat().getFaultFinishCount()));
+        ((TextView) findViewById(R.id.tv_2_1_2)).setText(MessageFormat.format("共{0}", statistics.getFaultStat().getFaultAllCount()));
+        ((TextView) findViewById(R.id.tv_2_2_1)).setText(MessageFormat.format("已处理{0}", statistics.getFaultStat().getRepairFinishCount()));
+        ((TextView) findViewById(R.id.tv_2_2_2)).setText(MessageFormat.format("共{0}", statistics.getFaultStat().getRepairAllCount()));
         LinearLayout llIncrementItem = findViewById(R.id.llIncrementItem);
+        llIncrementItem.removeAllViews();
         for (int i = 0; i < statistics.getIncrementStat().size(); i++) {
             View view = getLayoutInflater().inflate(R.layout.statistics_increment_item, null);
             TextView tv1 = view.findViewById(R.id.tv_1);
             TextView tv2 = view.findViewById(R.id.tv_2);
             TextView tv3 = view.findViewById(R.id.tv_3);
             tv1.setText(statistics.getIncrementStat().get(i).getIncrementWorkTypeName());
-            tv2.setText("已处理" + statistics.getIncrementStat().get(i).getFinishCount());
-            tv3.setText("共" + statistics.getIncrementStat().get(i).getAllCount());
+            tv2.setText(MessageFormat.format("已处理{0}", statistics.getIncrementStat().get(i).getFinishCount()));
+            tv3.setText(MessageFormat.format("共{0}", statistics.getIncrementStat().get(i).getAllCount()));
             llIncrementItem.addView(view);
         }
-        ((TextView) findViewById(R.id.tv_4_1)).setText("最多故障设备类型:" + statistics.getTheMostStat().getFlimsyEquipmentType().getEquipmentTypeName());
-        ((TextView) findViewById(R.id.tv_4_2)).setText("最多故障类型:" + statistics.getTheMostStat().getTheMostFaultType());
+        if (!TextUtils.isEmpty(statistics.getTheMostStat().getFlimsyEquipmentType().getEquipmentTypeName())){
+            ((TextView) findViewById(R.id.tv_4_1)).setText(MessageFormat.format("最多故障设备类型:{0}", statistics.getTheMostStat().getFlimsyEquipmentType().getEquipmentTypeName()));
+        }else{
+            ((TextView) findViewById(R.id.tv_4_1)).setText("最多故障设备类型:");
+        }
+        if (!TextUtils.isEmpty(statistics.getTheMostStat().getTheMostFaultType())){
+            ((TextView) findViewById(R.id.tv_4_2)).setText(MessageFormat.format("最多故障类型:{0}", statistics.getTheMostStat().getTheMostFaultType()));
+        }else {
+            ((TextView) findViewById(R.id.tv_4_2)).setText("最多故障类型:");
+        }
         ((TextView) findViewById(R.id.tv_4_3_1)).setText(statistics.getTheMostStat().getFastestTimeCost() / 60000 + "分");
         ((TextView) findViewById(R.id.tv_4_3_2)).setText("平均耗时" + statistics.getTheMostStat().getFastestTimeCost() / 60000 + "分");
         ((TextView) findViewById(R.id.tv_4_4_1)).setText(statistics.getTheMostStat().getSlowestTimeCost() / 60000 + "分");

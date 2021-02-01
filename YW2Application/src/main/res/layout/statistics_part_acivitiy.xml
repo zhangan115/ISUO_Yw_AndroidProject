@@ -365,7 +365,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="7dp"
                         android:paddingBottom="10dp"
-                        android:text="今日之最"
+                        android:text="统计之最"
                         android:textColor="@color/text333"
                         android:textSize="14sp"
                         android:textStyle="bold" />
