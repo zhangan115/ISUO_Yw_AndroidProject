@@ -85,16 +85,16 @@ public class StatisticsPartActivity extends BaseActivity implements ChooseTimeLa
     @Override
     public void showData(PartPersonStatistics statistics) {
         ((TextView) findViewById(R.id.tv_1_1_1)).setText(MessageFormat.format("日检 {0}/{1}", statistics.getTaskStat().getDayFinishCount(), statistics.getTaskStat().getDayAllCount()));
-        ((TextView) findViewById(R.id.tv_1_1_2)).setText(MessageFormat.format("{0}/分钟次", NumberUtils.formatDouble(statistics.getTaskStat().getDayEquipmentAvg())));
+        ((TextView) findViewById(R.id.tv_1_1_2)).setText(MessageFormat.format("{0}分钟/次", NumberUtils.formatDouble(statistics.getTaskStat().getDayEquipmentAvg())));
         ((TextView) findViewById(R.id.tv_1_1_3)).setText(MessageFormat.format("平均{0}分钟/台", statistics.getTaskStat().getDayMinutesAvg()));
         ((TextView) findViewById(R.id.tv_1_2_1)).setText(MessageFormat.format("周检 {0}/{1}", statistics.getTaskStat().getWeekFinishCount(), statistics.getTaskStat().getWeekAllCount()));
-        ((TextView) findViewById(R.id.tv_1_2_2)).setText(MessageFormat.format("{0}/分钟次", NumberUtils.formatDouble(statistics.getTaskStat().getWeekEquipmentAvg())));
+        ((TextView) findViewById(R.id.tv_1_2_2)).setText(MessageFormat.format("{0}分钟/次", NumberUtils.formatDouble(statistics.getTaskStat().getWeekEquipmentAvg())));
         ((TextView) findViewById(R.id.tv_1_2_3)).setText(MessageFormat.format("平均{0}分钟/台", statistics.getTaskStat().getWeekMinutesAvg()));
         ((TextView) findViewById(R.id.tv_1_3_1)).setText(MessageFormat.format("月检 {0}/{1}", statistics.getTaskStat().getMonthFinishCount(), statistics.getTaskStat().getMonthAllCount()));
-        ((TextView) findViewById(R.id.tv_1_3_2)).setText(MessageFormat.format("{0}/分钟次", NumberUtils.formatDouble(statistics.getTaskStat().getMonthEquipmentAvg())));
+        ((TextView) findViewById(R.id.tv_1_3_2)).setText(MessageFormat.format("{0}分钟/次", NumberUtils.formatDouble(statistics.getTaskStat().getMonthEquipmentAvg())));
         ((TextView) findViewById(R.id.tv_1_3_3)).setText(MessageFormat.format("平均{0}分钟/台", statistics.getTaskStat().getMonthMinutesAvg()));
         ((TextView) findViewById(R.id.tv_1_4_1)).setText(MessageFormat.format("特检 {0}/{1}", statistics.getTaskStat().getManualFinishCount(), statistics.getTaskStat().getManualAllCount()));
-        ((TextView) findViewById(R.id.tv_1_4_2)).setText(MessageFormat.format("{0}/分钟次", NumberUtils.formatDouble(statistics.getTaskStat().getManualEquipmentAvg())));
+        ((TextView) findViewById(R.id.tv_1_4_2)).setText(MessageFormat.format("{0}分钟/次", NumberUtils.formatDouble(statistics.getTaskStat().getManualEquipmentAvg())));
         ((TextView) findViewById(R.id.tv_1_4_3)).setText(MessageFormat.format("平均{0}分钟/台", statistics.getTaskStat().getManualMinutesAvg()));
         ((TextView) findViewById(R.id.tv_2_1_1)).setText(MessageFormat.format("已处理{0}", statistics.getFaultStat().getFaultFinishCount()));
         ((TextView) findViewById(R.id.tv_2_1_2)).setText(MessageFormat.format("共{0}", statistics.getFaultStat().getFaultAllCount()));
