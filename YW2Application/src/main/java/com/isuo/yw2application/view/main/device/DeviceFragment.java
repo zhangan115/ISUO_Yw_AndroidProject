@@ -330,6 +330,10 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
         if (resultCode == Activity.RESULT_OK && requestCode == SCANNER_CODE) {
             if (data != null) {
                 String result = data.getStringExtra(CaptureActivity.RESULT);
+                if (TextUtils.isEmpty(result)){
+                    Yw2Application.getInstance().showToast("未找到数据,请从新扫码");
+                    return;
+                }
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String type = jsonObject.getString("type");
@@ -343,10 +347,15 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
                         Intent intent = new Intent(getActivity(), EquipmentArchivesActivity.class);
                         intent.putExtra(ConstantStr.KEY_BUNDLE_STR, String.valueOf(id));
                         startActivity(intent);
+                    }else {
+                        Yw2Application.getInstance().showToast("二维码不符合规范");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Yw2Application.getInstance().showToast("扫码失败");
                 }
+            }else {
+                Yw2Application.getInstance().showToast("扫码失败");
             }
         }
     }

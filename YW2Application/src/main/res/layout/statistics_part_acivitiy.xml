@@ -467,6 +467,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
+                            android:visibility="gone"
                             android:textColor="@color/text333"
                             android:textSize="14sp"
                             tools:text="平均耗时1.5小时" />

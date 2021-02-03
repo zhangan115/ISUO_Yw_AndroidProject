@@ -269,7 +269,6 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         mCurrentDay.set(year, monthOfYear, dayOfMonth);
         dateList = CalendarUtil.getDaysOfWeek(mCurrentDay.getTime());
         setDayToView();
-        monthOfYear = monthOfYear + 1;
         getDate(year, monthOfYear, dayOfMonth);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_calendar_close);
         mDatePickerView.startAnimation(animation);

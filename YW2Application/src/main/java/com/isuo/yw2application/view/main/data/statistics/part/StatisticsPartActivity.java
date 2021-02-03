@@ -123,7 +123,7 @@ public class StatisticsPartActivity extends BaseActivity implements ChooseTimeLa
             ((TextView) findViewById(R.id.tv_4_2)).setText("最多故障类型:");
         }
         ((TextView) findViewById(R.id.tv_4_3_1)).setText(statistics.getTheMostStat().getFastestTimeCost() / 60000 + "分");
-        ((TextView) findViewById(R.id.tv_4_3_2)).setText("平均耗时" + statistics.getTheMostStat().getFastestTimeCost() / 60000 + "分");
+        ((TextView) findViewById(R.id.tv_4_3_2)).setText("平均耗时" + statistics.getTheMostStat().getAverageTimeCost() / 60000 + "分");
         ((TextView) findViewById(R.id.tv_4_4_1)).setText(statistics.getTheMostStat().getSlowestTimeCost() / 60000 + "分");
         ((TextView) findViewById(R.id.tv_4_4_2)).setText("平均耗时" + statistics.getTheMostStat().getFastestTimeCost() / 60000 + "分");
         ((TextView) findViewById(R.id.tv_4_5_1)).setText(DataUtil.timeFormat(statistics.getTheMostStat().getEarliestTask().getStartTime(), "HH:mm") + "开始");
