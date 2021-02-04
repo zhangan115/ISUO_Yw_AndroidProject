@@ -122,10 +122,13 @@ public class StatisticsPartActivity extends BaseActivity implements ChooseTimeLa
         }else {
             ((TextView) findViewById(R.id.tv_4_2)).setText("最多故障类型:");
         }
-        ((TextView) findViewById(R.id.tv_4_3_1)).setText(statistics.getTheMostStat().getFastestTimeCost() / 60000 + "分");
-        ((TextView) findViewById(R.id.tv_4_3_2)).setText("平均耗时" + statistics.getTheMostStat().getAverageTimeCost() / 60000 + "分");
-        ((TextView) findViewById(R.id.tv_4_4_1)).setText(statistics.getTheMostStat().getSlowestTimeCost() / 60000 + "分");
-        ((TextView) findViewById(R.id.tv_4_4_2)).setText("平均耗时" + statistics.getTheMostStat().getFastestTimeCost() / 60000 + "分");
+        String value1 = String.format("%.2f",statistics.getTheMostStat().getFastestTimeCost() / 60000.00);
+        ((TextView) findViewById(R.id.tv_4_3_1)).setText( value1 + "分钟");
+        String value2 = String.format("平均耗时%.2f",statistics.getTheMostStat().getAverageTimeCost() / 60000.00);
+        ((TextView) findViewById(R.id.tv_4_3_2)).setText(value2+"分钟");
+        String value3 = String.format("%.2f",statistics.getTheMostStat().getSlowestTimeCost() / 60000.00);
+        ((TextView) findViewById(R.id.tv_4_4_1)).setText(value3 + "分钟");
+        ((TextView) findViewById(R.id.tv_4_4_2)).setText("平均耗时" + statistics.getTheMostStat().getFastestTimeCost() / 60000.00 + "分");
         ((TextView) findViewById(R.id.tv_4_5_1)).setText(DataUtil.timeFormat(statistics.getTheMostStat().getEarliestTask().getStartTime(), "HH:mm") + "开始");
         ((TextView) findViewById(R.id.tv_4_5_2)).setText(DataUtil.timeFormat(statistics.getTheMostStat().getEarliestTask().getEndTime(), "HH:mm") + "结束");
         ((TextView) findViewById(R.id.tv_4_6_1)).setText(DataUtil.timeFormat(statistics.getTheMostStat().getLatestTask().getStartTime(), "HH:mm") + "开始");
