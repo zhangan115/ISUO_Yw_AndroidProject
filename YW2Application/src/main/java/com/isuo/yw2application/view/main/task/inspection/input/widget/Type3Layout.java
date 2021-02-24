@@ -119,9 +119,9 @@ public class Type3Layout extends LinearLayout {
             progressBar.setVisibility(View.GONE);
         }
         if (TextUtils.isEmpty(dataItemBean.getLocalFile())) {
-            iv_take_photo.setImageDrawable(mContext.getResources().getDrawable(R.drawable.photo_button));
+            iv_take_photo.setImageDrawable(mContext.getResources().getDrawable(R.drawable.photograph));
         } else {
-            GlideUtils.ShowImage(mContext, dataItemBean.getLocalFile(), iv_take_photo, R.drawable.picture_default);
+            GlideUtils.ShowImage(mContext, dataItemBean.getLocalFile(), iv_take_photo, R.drawable.img_default);
         }
     }
 

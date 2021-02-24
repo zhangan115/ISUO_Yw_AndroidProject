@@ -150,7 +150,7 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
                         roomDb.setPhotoUrl(file.getAbsolutePath());
                     }
                     if (equipmentTakePhotoIV != null) {
-                        GlideUtils.ShowImage(InputActivity.this, file, equipmentTakePhotoIV, R.drawable.photo_button);
+                        GlideUtils.ShowImage(InputActivity.this, file, equipmentTakePhotoIV, R.drawable.photograph);
                     }
                     if (dialogProgressBar != null) {
                         dialogProgressBar.setVisibility(View.VISIBLE);
