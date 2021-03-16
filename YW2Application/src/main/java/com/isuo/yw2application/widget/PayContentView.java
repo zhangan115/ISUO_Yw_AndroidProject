@@ -1,5 +1,6 @@
 package com.isuo.yw2application.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -93,27 +94,28 @@ public class PayContentView extends LinearLayout {
 
     private PayMenuBean bean = null;
 
+    @SuppressLint("DefaultLocale")
     public void setData(PayMenuBean bean) {
         this.bean = bean;
         TextView text1 = findViewById(R.id.text1);
         TextView text2 = findViewById(R.id.text2);
         TextView text3 = findViewById(R.id.text3);
         text1.setText(bean.getMenuName());
-        text2.setText(String.valueOf(bean.getPrice()));
+        text2.setText(String.format("%.0f", bean.getPrice()));
         if (bean.getPrice() == 0) {
             text3.setText("元");
         } else {
-            text3.setText("年/元");
+            text3.setText("元/年");
         }
         textViews[9].setText(MessageFormat.format("{0}G", bean.getWorkSpace() / 1024));
         textViews[10].setText("2年");
         //安全规则   一键报警
-        if (bean.getSafetySo()==0){
+        if (bean.getSafetySo() == 0) {
             textViews[11].setText("不开放");
             textViews[12].setText("不开放");
             textViews[11].setTextColor(context.getResources().getColor(R.color.colorF05340));
             textViews[12].setTextColor(context.getResources().getColor(R.color.colorF05340));
-        }else {
+        } else {
             textViews[11].setText("开放");
             textViews[12].setText("开放");
         }

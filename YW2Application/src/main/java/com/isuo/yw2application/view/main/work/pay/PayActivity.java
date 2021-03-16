@@ -80,7 +80,7 @@ public class PayActivity extends BaseActivity implements PayContract.View {
         popupView = new XPopup.Builder(PayActivity.this)
                 .atView(btn_buy)
                 .asCustom(new PayBottomView(PayActivity.this
-                        , "支付信息:" + currentMenu.getMenuName(), "支付金额:" + currentMenu.getPrice() + "元"
+                        , "支付信息:" + currentMenu.getMenuName(), "支付金额:" + String.format("%.0f", currentMenu.getPrice()) + "元"
                         , new PayBottomView.PayClickListener() {
                     @Override
                     public void onPay(int type) {
@@ -129,7 +129,7 @@ public class PayActivity extends BaseActivity implements PayContract.View {
                         btn_buy.setText("无法购买");
                         btn_buy.setBackground(findDrawById(R.drawable.bg_btn_gray));
                     } else {
-                        btn_buy.setText(MessageFormat.format("升级(已选{0}元{1})", currentMenu.getPrice(), currentMenu.getMenuName()));
+                        btn_buy.setText(MessageFormat.format("升级(已选{0}元{1})", String.format("%.0f", currentMenu.getPrice()), currentMenu.getMenuName()));
                         btn_buy.setBackground(findDrawById(R.drawable.bg_btn_report));
                     }
                 }
