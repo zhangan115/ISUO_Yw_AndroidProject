@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f7f7f7"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/white_bg_with_shape"
+                        android:orientation="vertical"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp">
+
+                        <LinearLayout
+                            android:id="@+id/id_increment_ll_type"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="工作类型"
+                                android:textColor="@color/text333"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/id_increment_type"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:drawableRight="@drawable/list_arrow"
+                                android:drawablePadding="4dp"
+                                android:gravity="right|center_vertical"
+                                android:textColor="@color/gray_999999"
+                                android:textSize="14sp"
+                                tools:text="A类" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:background="#f7f7f7" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_increment_start_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="开始时间"
+                                android:textColor="@color/text333"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tv_increment_start_time"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:drawableRight="@drawable/list_arrow"
+                                android:drawablePadding="4dp"
+                                android:gravity="right|center_vertical"
+                                android:textColor="@color/gray_999999"
+                                android:textSize="14sp"
+                                tools:text="2017-09-29-10：55" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:background="#f7f7f7" />
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_increment_end_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="结束时间"
+                                android:textColor="@color/text333"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tv_increment_end_time"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:drawableRight="@drawable/list_arrow"
+                                android:drawablePadding="4dp"
+                                android:gravity="right|center_vertical"
+                                android:textColor="@color/gray_999999"
+                                android:textSize="14sp"
+                                tools:text="2017-09-29-10：55" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:background="#f7f7f7" />
+
+
+                        <LinearLayout
+                            android:id="@+id/id_ll_increment_state"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:id="@+id/id_increment_device"
+                                android:layout_width="match_parent"
+                                android:layout_height="44dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:text="设备名称"
+                                    android:textColor="@color/text333"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/id_increment_device_name"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:drawableRight="@drawable/list_arrow"
+                                    android:drawablePadding="4dp"
+                                    android:gravity="right|center_vertical"
+                                    android:textColor="@color/text333"
+                                    android:textSize="14sp"
+                                    tools:text="1#出线柜" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:background="#f7f7f7" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_choose_quarantine"
+                                android:layout_width="match_parent"
+                                android:layout_height="44dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:text="隔离状态"
+                                    android:textColor="@color/text333"
+                                    android:textSize="14sp" />
+
+                                <com.isuo.yw2application.widget.SwitchButton
+                                    android:id="@+id/switchButton"
+                                    style="@style/Switch"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:clickable="true" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:background="#f7f7f7" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="44dp"
+                                android:gravity="center_vertical"
+                                android:text="工作内容"
+                                android:textColor="@color/text333"
+                                android:textSize="14sp" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_voice_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:orientation="vertical">
+
+                                <EditText
+                                    android:id="@+id/id_increment_content"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:minHeight="44dp"
+                                    android:gravity="top"
+                                    android:hint="语音文字显示区域"
+                                    android:textColor="@color/text333"
+                                    android:textColorHint="@color/gray_999999"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/id_increment_time"
+                                    android:layout_width="70dp"
+                                    android:layout_height="30dp"
+                                    android:background="@drawable/voice_three"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:textColor="@color/gray_999999"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/id_increment_speech"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal|right"
+                                android:paddingRight="10dp"
+                                android:paddingLeft="10dp"
+                                android:src="@drawable/mic_btn" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/white_bg_with_shape"
+                        android:orientation="vertical"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:gravity="center_vertical"
+                            android:text="照片记录"
+                            android:textStyle="bold"
+                            android:textColor="@color/text333"
+                            android:textSize="14sp" />
+
+                        <com.isuo.yw2application.widget.TakePhotoView
+                            android:id="@+id/take_photo_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/white_bg_with_shape"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_type_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:text="指派"
+                    android:textStyle="bold"
+                    android:textColor="@color/text333"
+                    android:textSize="14sp" />
+
+                <HorizontalScrollView
+                    android:id="@+id/id_hs_employee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/ll_employee_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <ImageButton
+                            android:id="@+id/ib_add_user"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/add_btn" />
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/id_increment_commit"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_btn_report"
+                android:gravity="center"
+                android:text="发布"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

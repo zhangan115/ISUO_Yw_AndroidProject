@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f7f7f7"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:id="@+id/id_equip_room"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/white_bg_with_shape"
+        android:visibility="visible">
+
+        <com.sito.library.widget.PinnedHeaderExpandableListView1
+            android:id="@+id/expandableListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/DP_10"
+            android:cacheColorHint="@null"
+            android:childDivider="@null"
+            android:childIndicatorLeft="0dp"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:groupIndicator="@null"
+            android:listSelector="@color/transparent"
+            android:paddingTop="10dp"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:scrollbars="none" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/id_equip_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/white_bg_with_shape"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.sito.library.widget.RecycleRefreshLoadLayout
+            android:id="@+id/refreshLoadLayoutId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.sito.library.widget.ExpendRecycleView
+                android:id="@+id/recycleViewId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none" />
+
+        </com.sito.library.widget.RecycleRefreshLoadLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/empty_default" />
+
+        <TextView
+            android:id="@+id/tv_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_no_data"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/no_data"
+            android:textColor="@color/color_text_energy_gray"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</LinearLayout>
