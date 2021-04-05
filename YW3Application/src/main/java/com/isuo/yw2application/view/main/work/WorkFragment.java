@@ -137,6 +137,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         rootView.findViewById(R.id.rightImage).setOnClickListener(this);
         userPhoto = rootView.findViewById(R.id.leftImage);
         rootView.findViewById(R.id.leftImage).setOnClickListener(this);
+        rootView.findViewById(R.id.fireLayout).setOnClickListener(this);
         gridView = rootView.findViewById(R.id.gridView);
         gridViewAdapter = new GridViewAdapter(this.getActivity(), showWorkItemList, R.layout.work_item);
         gridView.setAdapter(gridViewAdapter);
@@ -286,6 +287,8 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                 } else {
                     showPayDialog();
                 }
+                break;
+            case R.id.fireLayout:
                 break;
         }
     }
