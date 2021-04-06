@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/white_bg_with_shape"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_equipment_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:paddingTop="10dp"
+                android:textColor="#499bfe"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="加氢列表话" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="一级归属地" />
+
+                <TextView
+                    android:id="@+id/tv_1"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="二级归属地" />
+
+                <TextView
+                    android:id="@+id/tv_2"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="三级归属地" />
+
+                <TextView
+                    android:id="@+id/tv_3"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="归属设备名称" />
+
+                <TextView
+                    android:id="@+id/tv_4"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="归属设备编号" />
+
+                <TextView
+                    android:id="@+id/tv_5"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="生产商" />
+
+                <TextView
+                    android:id="@+id/tv_6"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="智能灭火材料出厂型号" />
+
+                <TextView
+                    android:id="@+id/tv_7"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="安装数量" />
+
+                <TextView
+                    android:id="@+id/tv_8"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="智能灭火材料出厂编号" />
+
+                <TextView
+                    android:id="@+id/tv_9"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="在线状态" />
+
+                <TextView
+                    android:id="@+id/tv_10"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="触发状态" />
+
+                <TextView
+                    android:id="@+id/tv_11"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="生产日期" />
+
+                <TextView
+                    android:id="@+id/tv_12"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="提醒日期" />
+
+                <TextView
+                    android:id="@+id/tv_13"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="到期日期" />
+
+                <TextView
+                    android:id="@+id/tv_14"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="备注" />
+
+                <TextView
+                    android:id="@+id/tv_15"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="无" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

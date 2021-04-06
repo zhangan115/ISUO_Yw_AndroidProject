@@ -22,14 +22,14 @@
             <ImageView
                 android:id="@+id/drawerImage"
                 android:layout_width="44dp"
-                android:visibility="gone"
-                android:layout_height="44dp" />
+                android:layout_height="44dp"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:layout_marginLeft="15dp"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -327,10 +327,10 @@
                         android:textStyle="bold" />
 
                     <LinearLayout
+                        android:id="@+id/fireLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:id="@+id/fireLayout"
                         android:layout_marginBottom="16dp"
                         android:orientation="horizontal"
                         android:weightSum="5">
@@ -348,6 +348,7 @@
                                 android:id="@+id/alarmTv1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="0"
                                 android:textColor="#f87856"
                                 android:textSize="24sp"
                                 android:textStyle="bold"
@@ -375,6 +376,7 @@
                                 android:id="@+id/alarmTv2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="0"
                                 android:textColor="#fb9714"
                                 android:textSize="24sp"
                                 android:textStyle="bold"
@@ -402,6 +404,7 @@
                                 android:id="@+id/alarmTv3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="0"
                                 android:textColor="#08c161"
                                 android:textSize="24sp"
                                 android:textStyle="bold"
@@ -429,6 +432,7 @@
                                 android:id="@+id/alarmTv4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="0"
                                 android:textColor="#499bfe"
                                 android:textSize="24sp"
                                 android:textStyle="bold"
@@ -456,6 +460,7 @@
                                 android:id="@+id/alarmTv5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="0"
                                 android:textColor="#999999"
                                 android:textSize="24sp"
                                 android:textStyle="bold"

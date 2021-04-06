@@ -43,6 +43,7 @@ import com.isuo.yw2application.view.main.work.all.PayGridViewAdapter;
 import com.isuo.yw2application.view.main.work.all.WorkItemAllActivity;
 import com.isuo.yw2application.view.main.work.all.WorkItemAllIntent;
 import com.isuo.yw2application.view.main.work.all.widget.WorkItemGridView;
+import com.isuo.yw2application.view.main.work.fire.FireActivity;
 import com.isuo.yw2application.view.main.work.message.NewsListActivity;
 import com.isuo.yw2application.view.main.work.pay.PayActivity;
 import com.isuo.yw2application.view.main.work.safe_manager.SafeManagerActivity;
@@ -171,6 +172,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         super.onActivityCreated(savedInstanceState);
         mPresenter.getNews();
         mPresenter.getWorkItem();
+        mPresenter.getFireData();
     }
 
     @Override
@@ -228,6 +230,21 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
     @Override
     public void requestFinish() {
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showFireData() {
+        if (getView() == null) return;
+        TextView fire1Tv = getView().findViewById(R.id.alarmTv1);
+        TextView fire2Tv = getView().findViewById(R.id.alarmTv2);
+        TextView fire3Tv = getView().findViewById(R.id.alarmTv3);
+        TextView fire4Tv = getView().findViewById(R.id.alarmTv4);
+        TextView fire5Tv = getView().findViewById(R.id.alarmTv5);
+        fire1Tv.setText("10");
+        fire2Tv.setText("30");
+        fire3Tv.setText("22");
+        fire4Tv.setText("8");
+        fire5Tv.setText("0");
     }
 
     @Override
@@ -289,6 +306,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                 }
                 break;
             case R.id.fireLayout:
+                startActivity(new Intent(getActivity(), FireActivity.class));
                 break;
         }
     }
@@ -300,7 +318,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         view.findViewById(R.id.text1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),PayActivity.class));
+                startActivity(new Intent(getActivity(), PayActivity.class));
                 if (payDialog != null) {
                     payDialog.dismiss();
                 }
@@ -341,7 +359,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         } else if (resultCode == Activity.RESULT_OK && requestCode == SCANNER_CODE) {
             if (data != null) {
                 String result = data.getStringExtra(CaptureActivity.RESULT);
-                if (TextUtils.isEmpty(result)){
+                if (TextUtils.isEmpty(result)) {
                     Yw2Application.getInstance().showToast("未找到数据,请从新扫码");
                     return;
                 }
@@ -358,14 +376,14 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                         Intent intent = new Intent(getActivity(), EquipmentArchivesActivity.class);
                         intent.putExtra(ConstantStr.KEY_BUNDLE_STR, String.valueOf(id));
                         startActivity(intent);
-                    }else {
+                    } else {
                         Yw2Application.getInstance().showToast("二维码不符合规范");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Yw2Application.getInstance().showToast("扫码失败");
                 }
-            }else{
+            } else {
                 Yw2Application.getInstance().showToast("扫码失败");
             }
         }

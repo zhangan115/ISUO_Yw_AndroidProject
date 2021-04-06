@@ -64,6 +64,11 @@ class WorkPresenter implements WorkContract.Presenter {
         requestEnterpriseNews();
     }
 
+    @Override
+    public void getFireData() {
+        mView.showFireData();
+    }
+
     private void requestWorkNews() {
         Map<String, String> map1 = new HashMap<>();
         map1.put("count", String.valueOf(1));

@@ -19,6 +19,8 @@ interface WorkContract {
 
         void getNews();
 
+        void getFireData();
+
     }
 
     interface View extends BaseView<Presenter> {
@@ -34,6 +36,8 @@ interface WorkContract {
         void showEnterpriseNews(MessageListBean bean);
 
         void requestFinish();
+
+        void showFireData();
 
     }
 
