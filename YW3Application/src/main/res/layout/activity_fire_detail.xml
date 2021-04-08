@@ -106,7 +106,7 @@
                     style="@style/Equipment_TEXT_TITLE_STYLE"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="归属设备名称" />
+                    android:text="安装设备名称" />
 
                 <TextView
                     android:id="@+id/tv_4"
@@ -127,7 +127,7 @@
                     style="@style/Equipment_TEXT_TITLE_STYLE"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="归属设备编号" />
+                    android:text="安装设备编号" />
 
                 <TextView
                     android:id="@+id/tv_5"
@@ -142,7 +142,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/Equipment_TEXT_TITLE_STYLE"
@@ -331,8 +332,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp">
+                android:orientation="horizontal">
 
                 <TextView
                     style="@style/Equipment_TEXT_TITLE_STYLE"
@@ -342,6 +342,28 @@
 
                 <TextView
                     android:id="@+id/tv_15"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="无" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="负责人" />
+
+                <TextView
+                    android:id="@+id/tv_16"
                     style="@style/Equipment_TEXT_CONTENT_STYLE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

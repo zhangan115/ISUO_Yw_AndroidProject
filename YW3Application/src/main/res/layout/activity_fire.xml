@@ -37,7 +37,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/white_bg_with_shape"
+                        android:background="@drawable/green_bg_with_shape_1"
                         android:orientation="vertical"
                         android:paddingLeft="10dp"
                         android:paddingTop="12dp"
@@ -47,7 +47,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="灭火材料统计"
+                            android:text="灭火装置状态监控"
                             android:textColor="@color/text333"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -60,34 +60,6 @@
                             android:layout_marginBottom="16dp"
                             android:orientation="horizontal"
                             android:weightSum="4">
-
-                            <LinearLayout
-                                android:id="@+id/layout_1"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:tag="0">
-
-                                <TextView
-                                    android:id="@+id/alarmTv1"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="10"
-                                    android:textColor="@color/text333"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold"
-                                    tools:text="5" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="7dp"
-                                    android:text="总数"
-                                    android:textColor="@color/text333"
-                                    android:textSize="12sp" />
-                            </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/layout_2"
@@ -103,7 +75,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="0"
-                                    android:textColor="@color/text333"
+                                    android:textColor="#fb9714"
                                     android:textSize="24sp"
                                     android:textStyle="bold"
                                     tools:text="5" />
@@ -112,7 +84,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="7dp"
-                                    android:text="在线"
+                                    android:text="总数量"
                                     android:textColor="@color/text333"
                                     android:textSize="12sp" />
                             </LinearLayout>
@@ -131,7 +103,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="0"
-                                    android:textColor="@color/text333"
+                                    android:textColor="#08c161"
                                     android:textSize="24sp"
                                     android:textStyle="bold"
                                     tools:text="5" />
@@ -140,7 +112,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="7dp"
-                                    android:text="离线"
+                                    android:text="线上数量"
                                     android:textColor="@color/text333"
                                     android:textSize="12sp" />
                             </LinearLayout>
@@ -159,7 +131,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="0"
-                                    android:textColor="@color/text333"
+                                    android:textColor="#499bfe"
                                     android:textSize="24sp"
                                     android:textStyle="bold"
                                     tools:text="5" />
@@ -168,7 +140,35 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="7dp"
-                                    android:text="报警"
+                                    android:text="线下数量"
+                                    android:textColor="@color/text333"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:tag="2">
+
+                                <TextView
+                                    android:id="@+id/alarmTv5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0"
+                                    android:textColor="#999999"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold"
+                                    tools:text="5" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="7dp"
+                                    android:text="触发数量"
                                     android:textColor="@color/text333"
                                     android:textSize="12sp" />
                             </LinearLayout>
@@ -182,7 +182,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/white_bg_with_shape"
+                        android:background="@drawable/green_bg_with_shape_1"
                         android:orientation="vertical"
                         android:paddingLeft="10dp"
                         android:paddingTop="12dp"
@@ -192,7 +192,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="灭火材料列表"
+                            android:text="灭火装置信息列表"
                             android:textColor="@color/text333"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -313,7 +313,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/white_bg_with_shape"
+                        android:background="@drawable/green_bg_with_shape_1"
                         android:orientation="vertical"
                         android:paddingLeft="10dp"
                         android:paddingTop="12dp"
@@ -323,7 +323,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="灭火材料状态"
+                            android:text="灭火装置时效监控"
                             android:textColor="@color/text333"
                             android:textSize="18sp"
                             android:textStyle="bold" />

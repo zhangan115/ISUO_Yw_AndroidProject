@@ -321,7 +321,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="中微安控智能灭火材料管理模块"
+                        android:text="小空间智能灭火装置管理系统"
                         android:textColor="@color/text333"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -386,7 +386,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="7dp"
-                                android:text="材料总数"
+                                android:text="总数量"
                                 android:textColor="@color/text333"
                                 android:textSize="12sp" />
                         </LinearLayout>

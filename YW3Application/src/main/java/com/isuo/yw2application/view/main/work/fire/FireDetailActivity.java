@@ -18,9 +18,8 @@ public class FireDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        String name = intent.getStringExtra(ConstantStr.KEY_BUNDLE_STR);
         FireBean fireBean = intent.getParcelableExtra(ConstantStr.KEY_BUNDLE_OBJECT);
-        setLayoutAndToolbar(R.layout.activity_fire_detail, name);
+        setLayoutAndToolbar(R.layout.activity_fire_detail, "小空间智能灭火装置管理系统");
         textViews[0] = findViewById(R.id.tv_1);
         textViews[1] = findViewById(R.id.tv_2);
         textViews[2] = findViewById(R.id.tv_3);
@@ -38,7 +37,7 @@ public class FireDetailActivity extends BaseActivity {
         textViews[14] = findViewById(R.id.tv_15);
 
         TextView equipmentTv = findViewById(R.id.tv_equipment_name);
-        equipmentTv.setText(fireBean.getEquipmentName());
+        equipmentTv.setText("小空间智能灭火装置");
         textViews[0].setText(fireBean.getRoom1());
         textViews[1].setText(fireBean.getRoom2());
         textViews[2].setText(fireBean.getRoom3());

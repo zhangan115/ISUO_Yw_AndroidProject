@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.common.ConstantStr;
@@ -29,7 +30,7 @@ public class FireActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_fire, "智能灭火材料管理");
+        setLayoutAndToolbar(R.layout.activity_fire, "小空间智能灭火装置管理系统");
         expandableListView = findViewById(R.id.expandableListView);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorScheme(R.color.colorPrimary);
@@ -115,6 +116,15 @@ public class FireActivity extends BaseActivity {
             }
         }
         fireAdapter.setData(listBeanList);
+
+        TextView fire2Tv = findViewById(R.id.alarmTv2);
+        TextView fire3Tv = findViewById(R.id.alarmTv3);
+        TextView fire4Tv = findViewById(R.id.alarmTv4);
+        TextView fire5Tv = findViewById(R.id.alarmTv5);
+        fire2Tv.setText("30");
+        fire3Tv.setText("22");
+        fire4Tv.setText("8");
+        fire5Tv.setText("0");
     }
 
     ArrayList<String> equipmentTypeList = new ArrayList<>();
