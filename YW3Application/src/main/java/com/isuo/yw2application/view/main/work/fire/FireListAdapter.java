@@ -114,6 +114,7 @@ public class FireListAdapter extends BaseExpandableListAdapter {
         }
         holder.mPlace.setText(data.get(groupPosition).getRoomName());
         holder.mCount.setText(String.format("%d", data.get(groupPosition).getEquipments().size()));
+        holder.mLine.setBackgroundColor(context.getResources().getColor(R.color.setting_text_job));
         if (data.size() > 1) {
             if (groupPosition == 0) {
                 holder.mLine.setVisibility(View.VISIBLE);
@@ -140,10 +141,12 @@ public class FireListAdapter extends BaseExpandableListAdapter {
             holder = new ChildViewHolder();
             convertView = LayoutInflater.from(context).inflate(childLayout, null);
             holder.mName = (TextView) convertView.findViewById(R.id.id_item_equip_name);
+            holder.mLine = convertView.findViewById(R.id.line);
             convertView.setTag(holder);
         } else {
             holder = (ChildViewHolder) convertView.getTag();
         }
+        holder.mLine.setBackgroundColor(context.getResources().getColor(R.color.setting_text_job));
         holder.mName.setText(String.format("%s%s", data.get(groupPosition).getEquipments().get(childPosition).getEquipmentName()
                 , TextUtils.isEmpty(data.get(groupPosition).getEquipments().get(childPosition).getEquipmentSn()) ? ""
                         : "(" + data.get(groupPosition).getEquipments().get(childPosition).getEquipmentSn() + ")"));

@@ -26,6 +26,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="25dp"
