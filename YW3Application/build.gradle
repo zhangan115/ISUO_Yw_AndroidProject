@@ -35,7 +35,7 @@ android {
     }
     flavorDimensions "default"
     productFlavors {
-        yw2_app_default {
+        yw3_app_default {
             applicationId "com.isuo.yw3application"
             dimension "default"
             resValue "string", "app_name", "中微安控"
