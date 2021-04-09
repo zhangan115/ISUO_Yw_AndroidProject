@@ -69,8 +69,8 @@ public class FireActivity extends BaseActivity {
                 fireBean.setDeleteState(0);
                 fireBean.setEquipmentFsn("SN2020-" + "x" + (i + 1) + "-" + (j + 1));
                 fireBean.setEquipmentId(j);
-                fireBean.setEquipmentName("智能灭火材料");
-                fireBean.setEquipmentSn("配电柜ZXM00" + (j + 1));
+                fireBean.setEquipmentName("配电柜");
+                fireBean.setEquipmentSn("PDG AB-0" + (j + 1));
                 fireBean.setManufacturer("西安中微安控");
                 fireBean.setManufactureTime(1586448000000L);
                 fireBean.setNearTime(1617984000000L);
