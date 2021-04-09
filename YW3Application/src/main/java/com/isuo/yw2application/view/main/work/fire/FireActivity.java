@@ -121,10 +121,18 @@ public class FireActivity extends BaseActivity {
         TextView fire3Tv = findViewById(R.id.alarmTv3);
         TextView fire4Tv = findViewById(R.id.alarmTv4);
         TextView fire5Tv = findViewById(R.id.alarmTv5);
-        fire2Tv.setText("30");
-        fire3Tv.setText("22");
-        fire4Tv.setText("8");
+        fire2Tv.setText("16");
+        fire3Tv.setText("12");
+        fire4Tv.setText("4");
         fire5Tv.setText("0");
+
+        TextView stateTv1 = findViewById(R.id.stateTv1);
+        TextView stateTv2 = findViewById(R.id.stateTv2);
+        TextView stateTv3 = findViewById(R.id.stateTv3);
+
+        stateTv1.setText("16");
+        stateTv2.setText("0");
+        stateTv3.setText("0");
     }
 
     ArrayList<String> equipmentTypeList = new ArrayList<>();

@@ -241,9 +241,9 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         TextView fire4Tv = getView().findViewById(R.id.alarmTv4);
         TextView fire5Tv = getView().findViewById(R.id.alarmTv5);
         fire1Tv.setText("10");
-        fire2Tv.setText("30");
-        fire3Tv.setText("22");
-        fire4Tv.setText("8");
+        fire2Tv.setText("16");
+        fire3Tv.setText("12");
+        fire4Tv.setText("4");
         fire5Tv.setText("0");
     }
 
