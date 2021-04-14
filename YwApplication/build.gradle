@@ -26,8 +26,8 @@ android {
         applicationId "com.isuo.yw"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
-        versionName "1.0.0"
+        versionCode 14
+        versionName "1.1.0"
         ndk {
             abiFilters "armeabi"
         }
@@ -39,7 +39,7 @@ android {
             applicationId "com.isuo.yw"
             dimension "default"
             resValue "string", "app_name", "优维+"
-            buildConfigField "String", "HOST", '"http://114.118.94.117:8080/isuoyw/api"'
+            buildConfigField "String", "HOST", '"http://117.50.31.157:8080/isuoyw/api"'
             buildConfigField "String", "UMENG_CHANNEL", '"defaultChannel"'
             manifestPlaceholders = [
                     TASK_AFFINITY_VALUE: "android.task.sito.evpro.customer",
