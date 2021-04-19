@@ -4,9 +4,11 @@ import android.support.annotation.NonNull;
 
 
 import com.isuo.yw2application.mode.IListCallBack;
+import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.news.MessageListBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.mode.customer.CustomerRepository;
+import com.isuo.yw2application.mode.fire.FireCountBean;
 import com.isuo.yw2application.mode.work.WorkDataSource;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ class WorkPresenter implements WorkContract.Presenter {
     @NonNull
     private CompositeSubscription subscription;
 
-    WorkPresenter(WorkDataSource repository,CustomerRepository newsRepository, WorkContract.View view) {
+    WorkPresenter(WorkDataSource repository, CustomerRepository newsRepository, WorkContract.View view) {
         this.mRepository = repository;
         this.mNewsRepository = newsRepository;
         this.mView = view;
@@ -66,7 +68,23 @@ class WorkPresenter implements WorkContract.Presenter {
 
     @Override
     public void getFireData() {
-        mView.showFireData();
+        subscription.add(mRepository.getFireCount(new HashMap<String, String>(), new IObjectCallBack<FireCountBean>() {
+
+            @Override
+            public void onSuccess(@NonNull FireCountBean s) {
+                mView.showFireData(s);
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }));
     }
 
     private void requestWorkNews() {

@@ -33,6 +33,7 @@ import com.isuo.yw2application.mode.bean.PayMenuBean;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.news.MessageListBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
+import com.isuo.yw2application.mode.fire.FireCountBean;
 import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.MainActivity;
@@ -233,18 +234,18 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
     }
 
     @Override
-    public void showFireData() {
+    public void showFireData(FireCountBean bean) {
         if (getView() == null) return;
         TextView fire1Tv = getView().findViewById(R.id.alarmTv1);
         TextView fire2Tv = getView().findViewById(R.id.alarmTv2);
         TextView fire3Tv = getView().findViewById(R.id.alarmTv3);
         TextView fire4Tv = getView().findViewById(R.id.alarmTv4);
         TextView fire5Tv = getView().findViewById(R.id.alarmTv5);
-        fire1Tv.setText("10");
-        fire2Tv.setText("16");
-        fire3Tv.setText("12");
-        fire4Tv.setText("4");
-        fire5Tv.setText("0");
+        fire1Tv.setText(String.valueOf(bean.getProtectCount()));
+        fire2Tv.setText(String.valueOf(bean.getAllCount()));
+        fire3Tv.setText(String.valueOf(bean.getOnLineCount()));
+        fire4Tv.setText(String.valueOf(bean.getLeaveCount()));
+        fire5Tv.setText(String.valueOf(bean.getTriggerCount()));
     }
 
     @Override

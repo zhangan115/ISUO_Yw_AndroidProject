@@ -39,7 +39,7 @@ android {
             applicationId "com.isuo.yw3application"
             dimension "default"
             resValue "string", "app_name", "中微安控"
-            buildConfigField "String", "HOST", '"https://isuo.cloud/api"'
+            buildConfigField "String", "HOST", '"https://isuo.cloud/zwak/api"'
             buildConfigField "String", "UMENG_CHANNEL", '"defaultChannel"'
             manifestPlaceholders = [
                     TASK_AFFINITY_VALUE: "android.task.isuo.yw3.application",

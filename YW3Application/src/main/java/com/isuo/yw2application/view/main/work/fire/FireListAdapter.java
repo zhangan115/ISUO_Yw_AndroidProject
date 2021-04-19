@@ -113,7 +113,7 @@ public class FireListAdapter extends BaseExpandableListAdapter {
             holder = (GroupViewHolder) convertView.getTag();
         }
         holder.mPlace.setText(data.get(groupPosition).getRoomName());
-        holder.mCount.setText(String.format("%d", data.get(groupPosition).getEquipments().size()));
+        holder.mCount.setText(String.format("%d", data.get(groupPosition).getCount()));
         holder.mLine.setBackgroundColor(context.getResources().getColor(R.color.setting_text_job));
         if (data.size() > 1) {
             if (groupPosition == 0) {
@@ -148,8 +148,8 @@ public class FireListAdapter extends BaseExpandableListAdapter {
         }
         holder.mLine.setBackgroundColor(context.getResources().getColor(R.color.setting_text_job));
         holder.mName.setText(String.format("%s%s", data.get(groupPosition).getEquipments().get(childPosition).getEquipmentName()
-                , TextUtils.isEmpty(data.get(groupPosition).getEquipments().get(childPosition).getEquipmentSn()) ? ""
-                        : "(" + data.get(groupPosition).getEquipments().get(childPosition).getEquipmentSn() + ")"));
+                , TextUtils.isEmpty(data.get(groupPosition).getEquipments().get(childPosition).getEquipmentModel()) ? ""
+                        : "(" + data.get(groupPosition).getEquipments().get(childPosition).getEquipmentModel() + ")"));
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

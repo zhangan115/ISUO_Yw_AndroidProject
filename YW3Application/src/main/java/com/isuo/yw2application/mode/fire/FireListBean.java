@@ -10,27 +10,17 @@ import java.util.List;
  */
 public class FireListBean {
 
-    private long createTime;
-    private int deleteState;
+    private int count;
     private int roomId;
     private String roomName;
-    private String roomRemark;
-    private List<FireBean> equipments;
+    private List<FireBean> fireEquipmentList;
 
-    public long getCreateTime() {
-        return createTime;
+    public int getCount() {
+        return count;
     }
 
-    public void setCreateTime(long createTime) {
-        this.createTime = createTime;
-    }
-
-    public int getDeleteState() {
-        return deleteState;
-    }
-
-    public void setDeleteState(int deleteState) {
-        this.deleteState = deleteState;
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public int getRoomId() {
@@ -49,19 +39,11 @@ public class FireListBean {
         this.roomName = roomName;
     }
 
-    public String getRoomRemark() {
-        return roomRemark;
-    }
-
-    public void setRoomRemark(String roomRemark) {
-        this.roomRemark = roomRemark;
-    }
-
     public List<FireBean> getEquipments() {
-        return equipments;
+        return fireEquipmentList;
     }
 
     public void setEquipments(List<FireBean> equipments) {
-        this.equipments = equipments;
+        this.fireEquipmentList = equipments;
     }
 }

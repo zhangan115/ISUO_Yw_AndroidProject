@@ -15,6 +15,8 @@ import com.isuo.yw2application.mode.bean.work.InspectionBean;
 import com.isuo.yw2application.mode.bean.work.InspectionDataBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.mode.bean.work.WorkState;
+import com.isuo.yw2application.mode.fire.FireCountBean;
+import com.isuo.yw2application.mode.fire.FireListBean;
 
 import org.json.JSONObject;
 
@@ -138,5 +140,14 @@ public interface WorkDataSource {
     Subscription getTodayFaultList(boolean isRemain, String time, @NonNull IListCallBack<FaultList> callBack);
 
     @NonNull
-    Subscription get24HFaultList(Map<String,String> map, @NonNull IListCallBack<FaultList> callBack);
+    Subscription get24HFaultList(Map<String, String> map, @NonNull IListCallBack<FaultList> callBack);
+
+    @NonNull
+    Subscription getFireCount(Map<String, String> map, @NonNull IObjectCallBack<FireCountBean> callBack);
+
+    @NonNull
+    Subscription getFireRoomList(Map<String, String> map, @NonNull IListCallBack<FireListBean> callBack);
+
+    @NonNull
+    Subscription getFireStateCount(Map<String, String> map, @NonNull IObjectCallBack<FireCountBean> callBack);
 }

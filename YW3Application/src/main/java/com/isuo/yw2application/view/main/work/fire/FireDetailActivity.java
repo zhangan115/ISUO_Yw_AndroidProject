@@ -12,7 +12,7 @@ import com.sito.library.utils.DataUtil;
 
 public class FireDetailActivity extends BaseActivity {
 
-    TextView[] textViews = new TextView[15];
+    TextView[] textViews = new TextView[16];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +35,19 @@ public class FireDetailActivity extends BaseActivity {
         textViews[12] = findViewById(R.id.tv_13);
         textViews[13] = findViewById(R.id.tv_14);
         textViews[14] = findViewById(R.id.tv_15);
+        textViews[15] = findViewById(R.id.tv_16);
 
         TextView equipmentTv = findViewById(R.id.tv_equipment_name);
         equipmentTv.setText("小空间智能灭火装置");
-        textViews[0].setText(fireBean.getRoom1());
-        textViews[1].setText(fireBean.getRoom2());
-        textViews[2].setText(fireBean.getRoom3());
+        textViews[0].setText(fireBean.getRoomName());
+        textViews[1].setText(fireBean.getTwoRegion());
+        textViews[2].setText(fireBean.getThreeRegion());
         textViews[3].setText(fireBean.getEquipmentName());
-        textViews[4].setText(fireBean.getEquipmentSn());
-        textViews[5].setText(fireBean.getManufacturer());
-        textViews[6].setText(fireBean.getItemNumber());
+        textViews[4].setText(fireBean.getEquipmentNumber());
+//        textViews[5].setText(fireBean.getEquipmentModel());
+        textViews[6].setText(fireBean.getEquipmentModel());
         textViews[7].setText(String.valueOf(fireBean.getCount()));
-        textViews[8].setText("XMM001");
+        textViews[8].setText(fireBean.getCompanyNumber());
         if (fireBean.getEquipmentState() == 0) {
             textViews[9].setText("线上");
         } else {
@@ -58,7 +59,10 @@ public class FireDetailActivity extends BaseActivity {
             textViews[10].setText("触发");
         }
         textViews[11].setText(DataUtil.timeFormat(fireBean.getManufactureTime(), "yyyy-MM"));
-        textViews[12].setText(DataUtil.timeFormat(fireBean.getNearTime(), "yyyy-MM"));
+        textViews[12].setText(DataUtil.timeFormat(fireBean.getRemindTime(), "yyyy-MM"));
         textViews[13].setText(DataUtil.timeFormat(fireBean.getExpireTime(), "yyyy-MM"));
+
+        textViews[14].setText(fireBean.getNote());
+        textViews[15].setText(fireBean.getEquipmentPerson());
     }
 }

@@ -10,6 +10,7 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.api.Api;
 import com.isuo.yw2application.api.ApiCallBack;
 import com.isuo.yw2application.api.FaultApi;
+import com.isuo.yw2application.api.FireApi;
 import com.isuo.yw2application.api.WorkApi;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantInt;
@@ -28,6 +29,8 @@ import com.isuo.yw2application.mode.bean.work.InspectionBean;
 import com.isuo.yw2application.mode.bean.work.InspectionDataBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.mode.bean.work.WorkState;
+import com.isuo.yw2application.mode.fire.FireCountBean;
+import com.isuo.yw2application.mode.fire.FireListBean;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -402,9 +405,10 @@ public class WorkRepository implements WorkDataSource {
             }
         }.execute1();
     }
+
     @NonNull
     @Override
-    public Subscription get24HFaultList(Map<String,String> map, @NonNull final IListCallBack<FaultList> callBack) {
+    public Subscription get24HFaultList(Map<String, String> map, @NonNull final IListCallBack<FaultList> callBack) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("latelyTime", 1);
@@ -430,6 +434,61 @@ public class WorkRepository implements WorkDataSource {
             }
         }.execute1();
     }
+
+    @NonNull
+    @Override
+    public Subscription getFireCount(Map<String, String> map, @NonNull final IObjectCallBack<FireCountBean> callBack) {
+        return new ApiCallBack<FireCountBean>(Api.createRetrofit().create(FireApi.class).getFireEquipmentCount(map)) {
+            @Override
+            public void onSuccess(@Nullable FireCountBean s) {
+                callBack.onFinish();
+                callBack.onSuccess(s);
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription getFireRoomList(Map<String, String> map, @NonNull final IListCallBack<FireListBean> callBack) {
+        return new ApiCallBack<List<FireListBean>>(Api.createRetrofit().create(FireApi.class).getFireEquipmentList(map)) {
+            @Override
+            public void onSuccess(@Nullable List<FireListBean> s) {
+                callBack.onFinish();
+                callBack.onSuccess(s);
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription getFireStateCount(Map<String, String> map, @NonNull final IObjectCallBack<FireCountBean> callBack) {
+        return new ApiCallBack<FireCountBean>(Api.createRetrofit().create(FireApi.class).getFireStateCount(map)) {
+            @Override
+            public void onSuccess(@Nullable FireCountBean s) {
+                callBack.onFinish();
+                callBack.onSuccess(s);
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
     @Override
     public void getWorkItems(final WorkItemCallBack callBack) {
         List<WorkItem> allWorkItems = new ArrayList<>();
@@ -447,17 +506,17 @@ public class WorkRepository implements WorkDataSource {
         PayMenuBean payMenuBean = Yw2Application.getInstance().getCurrentUser().getCustomerSetMenu();
         if (payMenuBean.getIncrementWorkSo() == 0) {
             payWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
-        }else {
+        } else {
             allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
         }
         if (payMenuBean.getOilSo() == 0) {
             payWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
-        }else {
+        } else {
             allWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
         }
         if (payMenuBean.getToolSo() == 0) {
             payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
-        }else {
+        } else {
             allWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
         }
 
@@ -515,17 +574,17 @@ public class WorkRepository implements WorkDataSource {
         PayMenuBean payMenuBean = Yw2Application.getInstance().getCurrentUser().getCustomerSetMenu();
         if (payMenuBean.getIncrementWorkSo() == 0) {
             payWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
-        }else {
+        } else {
             allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
         }
         if (payMenuBean.getOilSo() == 0) {
             payWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
-        }else {
+        } else {
             allWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
         }
         if (payMenuBean.getToolSo() == 0) {
             payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
-        }else {
+        } else {
             allWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
         }
         callBack.showAllWorkItem(allWorkItems);

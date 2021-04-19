@@ -2,6 +2,7 @@ package com.isuo.yw2application.view.main.work;
 
 import com.isuo.yw2application.mode.bean.news.MessageListBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
+import com.isuo.yw2application.mode.fire.FireCountBean;
 import com.sito.library.base.BasePresenter;
 import com.sito.library.base.BaseView;
 
@@ -37,7 +38,7 @@ interface WorkContract {
 
         void requestFinish();
 
-        void showFireData();
+        void showFireData(FireCountBean bean);
 
     }
 

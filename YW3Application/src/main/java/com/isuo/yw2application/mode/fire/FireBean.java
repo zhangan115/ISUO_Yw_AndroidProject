@@ -14,55 +14,44 @@ import java.util.List;
 
 public class FireBean implements Parcelable {
 
-    private long createTime;
-    private int deleteState;
-    private long equipmentId;
-    private String manufacturer;//生产厂
-    private String equipmentName;
-    private String equipmentNumber;
-    private String equipmentRemark;
-    private long manufactureTime;//生产时间
-    private long nearTime;//提醒时间
-    private long expireTime;//过期时间
-    private String supplier;//供应商
-
-    private String room1;//所属配电
-    private String room2;//所属配电
-    private String room3;//所属配电
-
-    private String equipmentSn;//编号
+    private String roomName;//所属配电
+    private String twoRegion;//二级
+    private String threeRegion;//三级
+    private String equipmentName;//设备名称
+    private String equipmentNumber;//安装设备编号
+    private String equipmentType;//出厂型号
     private int count;//安装数量
-    private int equipmentState;//触发状态 0 正常 1 触发
+    private String companyNumber;//出厂编号
     private int workingState;//工作状态 0 线上 1 线下
-
-    private String itemNumber;//出厂型号
-    private String equipmentFsn;//设备出厂编号
+    private int equipmentState;//触发状态 0 正常 1 触发
+    private long manufactureTime;//生产时间
+    private long remindTime;//提醒时间
+    private long expireTime;//过期时间
+    private String equipmentModel;//过期时间
+    private String remark;
+    private String equipmentPerson;
 
     public FireBean(){
 
     }
 
-    FireBean(Parcel in) {
-        createTime = in.readLong();
-        deleteState = in.readInt();
-        equipmentId = in.readLong();
-        manufacturer = in.readString();
+    protected FireBean(Parcel in) {
+        roomName = in.readString();
+        twoRegion = in.readString();
+        threeRegion = in.readString();
         equipmentName = in.readString();
         equipmentNumber = in.readString();
-        equipmentRemark = in.readString();
-        manufactureTime = in.readLong();
-        nearTime = in.readLong();
-        expireTime = in.readLong();
-        supplier = in.readString();
-        room1 = in.readString();
-        room2 = in.readString();
-        room3 = in.readString();
-        equipmentSn = in.readString();
+        equipmentType = in.readString();
         count = in.readInt();
-        equipmentState = in.readInt();
+        companyNumber = in.readString();
         workingState = in.readInt();
-        itemNumber = in.readString();
-        equipmentFsn = in.readString();
+        equipmentState = in.readInt();
+        manufactureTime = in.readLong();
+        remindTime = in.readLong();
+        expireTime = in.readLong();
+        remark = in.readString();
+        equipmentPerson = in.readString();
+        equipmentModel = in.readString();
     }
 
     public static final Creator<FireBean> CREATOR = new Creator<FireBean>() {
@@ -77,36 +66,53 @@ public class FireBean implements Parcelable {
         }
     };
 
-    public long getCreateTime() {
-        return createTime;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setCreateTime(long createTime) {
-        this.createTime = createTime;
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(roomName);
+        parcel.writeString(twoRegion);
+        parcel.writeString(threeRegion);
+        parcel.writeString(equipmentName);
+        parcel.writeString(equipmentNumber);
+        parcel.writeString(equipmentType);
+        parcel.writeInt(count);
+        parcel.writeString(companyNumber);
+        parcel.writeInt(workingState);
+        parcel.writeInt(equipmentState);
+        parcel.writeLong(manufactureTime);
+        parcel.writeLong(remindTime);
+        parcel.writeLong(expireTime);
+        parcel.writeString(remark);
+        parcel.writeString(equipmentPerson);
+        parcel.writeString(equipmentModel);
     }
 
-    public int getDeleteState() {
-        return deleteState;
+    public String getRoomName() {
+        return roomName;
     }
 
-    public void setDeleteState(int deleteState) {
-        this.deleteState = deleteState;
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 
-    public long getEquipmentId() {
-        return equipmentId;
+    public String getTwoRegion() {
+        return twoRegion;
     }
 
-    public void setEquipmentId(long equipmentId) {
-        this.equipmentId = equipmentId;
+    public void setTwoRegion(String twoRegion) {
+        this.twoRegion = twoRegion;
     }
 
-    public String getManufacturer() {
-        return manufacturer;
+    public String getThreeRegion() {
+        return threeRegion;
     }
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
+    public void setThreeRegion(String threeRegion) {
+        this.threeRegion = threeRegion;
     }
 
     public String getEquipmentName() {
@@ -125,76 +131,12 @@ public class FireBean implements Parcelable {
         this.equipmentNumber = equipmentNumber;
     }
 
-    public String getEquipmentRemark() {
-        return equipmentRemark;
+    public String getEquipmentType() {
+        return equipmentType;
     }
 
-    public void setEquipmentRemark(String equipmentRemark) {
-        this.equipmentRemark = equipmentRemark;
-    }
-
-    public long getManufactureTime() {
-        return manufactureTime;
-    }
-
-    public void setManufactureTime(long manufactureTime) {
-        this.manufactureTime = manufactureTime;
-    }
-
-    public long getNearTime() {
-        return nearTime;
-    }
-
-    public void setNearTime(long nearTime) {
-        this.nearTime = nearTime;
-    }
-
-    public long getExpireTime() {
-        return expireTime;
-    }
-
-    public void setExpireTime(long expireTime) {
-        this.expireTime = expireTime;
-    }
-
-    public String getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
-    }
-
-    public String getRoom1() {
-        return room1;
-    }
-
-    public void setRoom1(String room1) {
-        this.room1 = room1;
-    }
-
-    public String getRoom2() {
-        return room2;
-    }
-
-    public void setRoom2(String room2) {
-        this.room2 = room2;
-    }
-
-    public String getRoom3() {
-        return room3;
-    }
-
-    public void setRoom3(String room3) {
-        this.room3 = room3;
-    }
-
-    public String getEquipmentSn() {
-        return equipmentSn;
-    }
-
-    public void setEquipmentSn(String equipmentSn) {
-        this.equipmentSn = equipmentSn;
+    public void setEquipmentType(String equipmentType) {
+        this.equipmentType = equipmentType;
     }
 
     public int getCount() {
@@ -205,12 +147,12 @@ public class FireBean implements Parcelable {
         this.count = count;
     }
 
-    public int getEquipmentState() {
-        return equipmentState;
+    public String getCompanyNumber() {
+        return companyNumber;
     }
 
-    public void setEquipmentState(int equipmentState) {
-        this.equipmentState = equipmentState;
+    public void setCompanyNumber(String companyNumber) {
+        this.companyNumber = companyNumber;
     }
 
     public int getWorkingState() {
@@ -221,48 +163,59 @@ public class FireBean implements Parcelable {
         this.workingState = workingState;
     }
 
-    public String getItemNumber() {
-        return itemNumber;
+    public int getEquipmentState() {
+        return equipmentState;
     }
 
-    public void setItemNumber(String itemNumber) {
-        this.itemNumber = itemNumber;
+    public void setEquipmentState(int equipmentState) {
+        this.equipmentState = equipmentState;
     }
 
-    public String getEquipmentFsn() {
-        return equipmentFsn;
+    public long getManufactureTime() {
+        return manufactureTime;
     }
 
-    public void setEquipmentFsn(String equipmentFsn) {
-        this.equipmentFsn = equipmentFsn;
+    public void setManufactureTime(long manufactureTime) {
+        this.manufactureTime = manufactureTime;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public long getRemindTime() {
+        return remindTime;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(createTime);
-        dest.writeInt(deleteState);
-        dest.writeLong(equipmentId);
-        dest.writeString(manufacturer);
-        dest.writeString(equipmentName);
-        dest.writeString(equipmentNumber);
-        dest.writeString(equipmentRemark);
-        dest.writeLong(manufactureTime);
-        dest.writeLong(nearTime);
-        dest.writeLong(expireTime);
-        dest.writeString(supplier);
-        dest.writeString(room1);
-        dest.writeString(room2);
-        dest.writeString(room3);
-        dest.writeString(equipmentSn);
-        dest.writeInt(count);
-        dest.writeInt(equipmentState);
-        dest.writeInt(workingState);
-        dest.writeString(itemNumber);
-        dest.writeString(equipmentFsn);
+    public void setRemindTime(long remindTime) {
+        this.remindTime = remindTime;
+    }
+
+    public long getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(long expireTime) {
+        this.expireTime = expireTime;
+    }
+
+    public String getNote() {
+        return remark;
+    }
+
+    public void setNote(String note) {
+        this.remark = note;
+    }
+
+    public String getEquipmentPerson() {
+        return equipmentPerson;
+    }
+
+    public void setEquipmentPerson(String equipmentPerson) {
+        this.equipmentPerson = equipmentPerson;
+    }
+
+    public String getEquipmentModel() {
+        return equipmentModel;
+    }
+
+    public void setEquipmentModel(String equipmentModel) {
+        this.equipmentModel = equipmentModel;
     }
 }
