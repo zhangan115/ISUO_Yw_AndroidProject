@@ -8,11 +8,14 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.alipay.sdk.app.PayTask;
 import com.google.gson.Gson;
 import com.isuo.yw2application.R;
@@ -20,6 +23,7 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.mode.bean.PayMenuBean;
 import com.isuo.yw2application.utils.WXPayUtils;
 import com.isuo.yw2application.view.base.BaseActivity;
+import com.isuo.yw2application.view.main.about.AboutActivity;
 import com.isuo.yw2application.widget.PayBottomView;
 import com.isuo.yw2application.widget.PayContentView;
 import com.lxj.xpopup.XPopup;
@@ -77,6 +81,10 @@ public class PayActivity extends BaseActivity implements PayContract.View {
 
     private void showPayView() {
         if (currentMenu == null) return;
+        if (currentMenu.getMenuName().equals("定制版")) {
+            startActivity(new Intent(PayActivity.this, AboutActivity.class));
+            return;
+        }
         popupView = new XPopup.Builder(PayActivity.this)
                 .atView(btn_buy)
                 .asCustom(new PayBottomView(PayActivity.this
@@ -124,6 +132,11 @@ public class PayActivity extends BaseActivity implements PayContract.View {
                     int position = (int) view.getTag(R.id.tag_position);
                     for (int j = 0; j < views.length; j++) {
                         views[j].setChooseState(j == position);
+                    }
+                    if (currentMenu.getMenuName().equals("定制版")) {
+                        btn_buy.setText("请联系客服");
+                        btn_buy.setBackground(findDrawById(R.drawable.bg_btn_report));
+                        return;
                     }
                     if (customerSetMenu != null && customerSetMenu.getMenuId() == currentMenu.getId()) {
                         btn_buy.setText("无法购买");

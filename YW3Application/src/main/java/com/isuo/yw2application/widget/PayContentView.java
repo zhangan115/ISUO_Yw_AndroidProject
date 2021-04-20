@@ -101,11 +101,17 @@ public class PayContentView extends LinearLayout {
         TextView text2 = findViewById(R.id.text2);
         TextView text3 = findViewById(R.id.text3);
         text1.setText(bean.getMenuName());
-        text2.setText(String.format("%.0f", bean.getPrice()));
-        if (bean.getPrice() == 0) {
-            text3.setText("元");
+
+        if (bean.getMenuName().equals("定制版")) {
+            text2.setText("请联系客服");
+            text3.setText("");
         } else {
-            text3.setText("元/年");
+            text2.setText(String.format("%.0f", bean.getPrice()));
+            if (bean.getPrice() == 0) {
+                text3.setText("元");
+            } else {
+                text3.setText("元/年");
+            }
         }
         textViews[9].setText(MessageFormat.format("{0}G", bean.getWorkSpace() / 1024));
         textViews[10].setText("2年");
