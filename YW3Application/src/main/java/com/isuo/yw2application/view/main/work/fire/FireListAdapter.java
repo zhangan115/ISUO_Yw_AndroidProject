@@ -18,6 +18,7 @@ import com.isuo.yw2application.mode.fire.FireBean;
 import com.isuo.yw2application.mode.fire.FireListBean;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,6 +142,7 @@ public class FireListAdapter extends BaseExpandableListAdapter {
             holder = new ChildViewHolder();
             convertView = LayoutInflater.from(context).inflate(childLayout, null);
             holder.mName = (TextView) convertView.findViewById(R.id.id_item_equip_name);
+            holder.count = (TextView) convertView.findViewById(R.id.id_count);
             holder.mLine = convertView.findViewById(R.id.line);
             convertView.setTag(holder);
         } else {
@@ -150,6 +152,7 @@ public class FireListAdapter extends BaseExpandableListAdapter {
         holder.mName.setText(String.format("%s%s", data.get(groupPosition).getEquipments().get(childPosition).getEquipmentName()
                 , TextUtils.isEmpty(data.get(groupPosition).getEquipments().get(childPosition).getEquipmentModel()) ? ""
                         : "(" + data.get(groupPosition).getEquipments().get(childPosition).getEquipmentModel() + ")"));
+        holder.count.setText(MessageFormat.format("{0}个", data.get(groupPosition).getEquipments().get(childPosition).getCount()));
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,6 +195,7 @@ public class FireListAdapter extends BaseExpandableListAdapter {
      */
     private static class ChildViewHolder {
         TextView mName;
+        TextView count;
         View mLine;
         LinearLayout mChild;
     }

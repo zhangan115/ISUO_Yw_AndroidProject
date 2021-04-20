@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -21,9 +23,11 @@ import com.isuo.yw2application.mode.fire.FireListBean;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
+import com.sito.library.adapter.RVAdapter;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,6 +36,8 @@ public class FireActivity extends BaseActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private PinnedHeaderExpandableListView expandableListView;
     private FireListAdapter fireAdapter;
+    private RecyclerView recyclerView;
+    List<FireListBean> listBeanList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +45,13 @@ public class FireActivity extends BaseActivity {
         setLayoutAndToolbar(R.layout.activity_fire, "小空间智能灭火装置管理系统");
         expandableListView = findViewById(R.id.expandableListView);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         swipeRefreshLayout.setColorScheme(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(false);
+                request();
             }
         });
         findViewById(R.id.countTv).setOnClickListener(this);
@@ -64,7 +72,32 @@ public class FireActivity extends BaseActivity {
             }
         });
         expandableListView.setAdapter(fireAdapter);
-        List<FireListBean> listBeanList = new ArrayList<>();
+
+        RVAdapter<FireBean> adapter = new RVAdapter<FireBean>(recyclerView, fireBeans, R.layout.item_equip_child) {
+            @Override
+            public void showData(ViewHolder vHolder, FireBean data, int position) {
+                TextView equipmentNameTv = (TextView) vHolder.getView(R.id.id_item_equip_name);
+                equipmentNameTv.setText(String.format("%s%s", data.getEquipmentName()
+                        , TextUtils.isEmpty(data.getEquipmentModel()) ? ""
+                                : "(" + data.getEquipmentModel() + ")"));
+            }
+        };
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new RVAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                FireBean fireBean = fireBeans.get(position);
+                Intent intent = new Intent(FireActivity.this, FireDetailActivity.class);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_STR, fireBean.getEquipmentName());
+                intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, fireBean);
+                startActivity(intent);
+            }
+        });
+        request();
+    }
+
+    private void request() {
+        recyclerView.setVisibility(View.GONE);
         roomList.clear();
         equipmentTypeList.clear();
         roomList.add("全部");
@@ -90,7 +123,7 @@ public class FireActivity extends BaseActivity {
 
                     @Override
                     public void onFinish() {
-
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 });
         Yw2Application.getInstance().getWorkRepositoryComponent().getRepository()
@@ -112,6 +145,8 @@ public class FireActivity extends BaseActivity {
                                 }
                             }
                         }
+                        FireActivity.this.listBeanList.clear();
+                        FireActivity.this.listBeanList.addAll(list);
                         FireActivity.this.fireAdapter.setData(list);
                     }
 
@@ -122,7 +157,7 @@ public class FireActivity extends BaseActivity {
 
                     @Override
                     public void onFinish() {
-
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 });
         Yw2Application.getInstance().getWorkRepositoryComponent().getRepository()
@@ -146,13 +181,14 @@ public class FireActivity extends BaseActivity {
 
                     @Override
                     public void onFinish() {
-
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 });
     }
 
     ArrayList<String> equipmentTypeList = new ArrayList<>();
     ArrayList<String> roomList = new ArrayList<>();
+    ArrayList<FireBean> fireBeans = new ArrayList<>();
 
     @Override
     public void onClick(View v) {
@@ -163,12 +199,18 @@ public class FireActivity extends BaseActivity {
                         new OnSelectListener() {
                             @Override
                             public void onSelect(int position, String text) {
+                                recyclerView.setVisibility(View.GONE);
                                 if (position == 0) {
-
+                                    FireActivity.this.fireAdapter.setData(FireActivity.this.listBeanList);
                                 } else if (position == 1) {
-
+                                    List<FireListBean> beanList = new ArrayList<>(FireActivity.this.listBeanList);
+                                    Collections.sort(beanList);
+                                    FireActivity.this.fireAdapter.setData(beanList);
                                 } else {
-
+                                    List<FireListBean> beanList = new ArrayList<>(FireActivity.this.listBeanList);
+                                    Collections.sort(beanList);
+                                    Collections.reverse(beanList);
+                                    FireActivity.this.fireAdapter.setData(beanList);
                                 }
                             }
                         }).show();
@@ -179,9 +221,31 @@ public class FireActivity extends BaseActivity {
                             @Override
                             public void onSelect(int position, String text) {
                                 if (position == 0) {
-
+                                    FireActivity.this.fireAdapter.setData(FireActivity.this.listBeanList);
+                                    recyclerView.setVisibility(View.GONE);
                                 } else {
-
+                                    List<FireListBean> beanList = new ArrayList<>();
+                                    for (FireListBean bean : FireActivity.this.listBeanList) {
+                                        ArrayList<FireBean> fireBeans = new ArrayList<>();
+                                        for (FireBean fb : bean.getEquipments()) {
+                                            if (TextUtils.equals(fb.getEquipmentType(), text)) {
+                                                fireBeans.add(fb);
+                                            }
+                                        }
+                                        if (fireBeans.size() > 0) {
+                                            FireListBean bean1 = new FireListBean();
+                                            bean1.setRoomId(bean.getRoomId());
+                                            bean1.setRoomName(bean.getRoomName());
+                                            bean1.setEquipments(fireBeans);
+                                            int count = 0;
+                                            for (int i = 0; i < fireBeans.size(); i++) {
+                                                count += fireBeans.get(i).getCount();
+                                            }
+                                            bean1.setCount(count);
+                                            beanList.add(bean1);
+                                        }
+                                    }
+                                    FireActivity.this.fireAdapter.setData(beanList);
                                 }
                             }
                         }).show();
@@ -192,45 +256,118 @@ public class FireActivity extends BaseActivity {
                             @Override
                             public void onSelect(int position, String text) {
                                 if (position == 0) {
-
+                                    FireActivity.this.fireAdapter.setData(FireActivity.this.listBeanList);
+                                    recyclerView.setVisibility(View.GONE);
                                 } else {
-
+                                    List<FireListBean> beanList = new ArrayList<>();
+                                    for (FireListBean bean : FireActivity.this.listBeanList) {
+                                        if (TextUtils.equals(bean.getRoomName(), text)) {
+                                            beanList.add(bean);
+                                        }
+                                    }
+                                    FireActivity.this.fireAdapter.setData(beanList);
                                 }
                             }
                         }).show();
                 break;
             case R.id.stateTv:
-                String[] list1 = new String[]{"默认", "线上", "线下", "触发"};
+                String[] list1 = new String[]{"全部", "线上", "线下", "触发"};
                 new XPopup.Builder(this).atView(v).asBottomList("", list1,
                         new OnSelectListener() {
                             @Override
                             public void onSelect(int position, String text) {
                                 if (position == 0) {
-
-                                } else if (position == 1) {
-
-                                } else if (position == 2) {
-
+                                    FireActivity.this.fireAdapter.setData(FireActivity.this.listBeanList);
+                                    recyclerView.setVisibility(View.GONE);
+                                } else if (position == 1 || position == 2) {
+                                    List<FireListBean> beanList = new ArrayList<>();
+                                    for (FireListBean bean : FireActivity.this.listBeanList) {
+                                        ArrayList<FireBean> fireBeans = new ArrayList<>();
+                                        for (FireBean fb : bean.getEquipments()) {
+                                            if (fb.getPattern() == position) {
+                                                fireBeans.add(fb);
+                                            }
+                                        }
+                                        if (fireBeans.size() > 0) {
+                                            FireListBean bean1 = new FireListBean();
+                                            bean1.setRoomId(bean.getRoomId());
+                                            bean1.setRoomName(bean.getRoomName());
+                                            bean1.setEquipments(fireBeans);
+                                            int count = 0;
+                                            for (int i = 0; i < fireBeans.size(); i++) {
+                                                count += fireBeans.get(i).getCount();
+                                            }
+                                            bean1.setCount(count);
+                                            beanList.add(bean1);
+                                        }
+                                    }
+                                    FireActivity.this.fireAdapter.setData(beanList);
                                 } else {
-
+                                    List<FireListBean> beanList = new ArrayList<>();
+                                    for (FireListBean bean : FireActivity.this.listBeanList) {
+                                        ArrayList<FireBean> fireBeans = new ArrayList<>();
+                                        for (FireBean fb : bean.getEquipments()) {
+                                            if (fb.getState() == 2) {
+                                                fireBeans.add(fb);
+                                            }
+                                        }
+                                        if (fireBeans.size() > 0) {
+                                            FireListBean bean1 = new FireListBean();
+                                            bean1.setRoomId(bean.getRoomId());
+                                            bean1.setRoomName(bean.getRoomName());
+                                            bean1.setEquipments(fireBeans);
+                                            int count = 0;
+                                            for (int i = 0; i < fireBeans.size(); i++) {
+                                                count += fireBeans.get(i).getCount();
+                                            }
+                                            bean1.setCount(count);
+                                            beanList.add(bean1);
+                                        }
+                                    }
+                                    FireActivity.this.fireAdapter.setData(beanList);
                                 }
                             }
                         }).show();
                 break;
             case R.id.timeTv:
-                String[] list2 = new String[]{"默认", "正常", "预警", "过期"};
+                String[] list2 = new String[]{"全部", "正常", "预警", "过期"};
                 new XPopup.Builder(this).atView(v).asBottomList("", list2,
                         new OnSelectListener() {
                             @Override
                             public void onSelect(int position, String text) {
                                 if (position == 0) {
-
-                                } else if (position == 1) {
-
-                                } else if (position == 2) {
-
+                                    FireActivity.this.fireAdapter.setData(FireActivity.this.listBeanList);
                                 } else {
-
+                                    List<FireListBean> beanList = new ArrayList<>();
+                                    for (FireListBean bean : FireActivity.this.listBeanList) {
+                                        ArrayList<FireBean> fireBeans = new ArrayList<>();
+                                        for (FireBean fb : bean.getEquipments()) {
+                                            long current = System.currentTimeMillis();
+                                            if (position == 1) {
+                                                if (current < fb.getRemindTime()) {
+                                                    fireBeans.add(fb);
+                                                }
+                                            } else if (position == 2) {
+                                                if (current >= fb.getRemindTime() && current < fb.getExpireTime()) {
+                                                    fireBeans.add(fb);
+                                                }
+                                            } else if (position == 3) {
+                                                if (current >= fb.getExpireTime()) {
+                                                    fireBeans.add(fb);
+                                                }
+                                            }
+                                        }
+                                        if (fireBeans.size() > 0) {
+                                            bean.setEquipments(fireBeans);
+                                            int count = 0;
+                                            for (int i = 0; i < fireBeans.size(); i++) {
+                                                count += fireBeans.get(i).getCount();
+                                            }
+                                            bean.setCount(count);
+                                            beanList.add(bean);
+                                        }
+                                    }
+                                    FireActivity.this.fireAdapter.setData(beanList);
                                 }
                             }
                         }).show();

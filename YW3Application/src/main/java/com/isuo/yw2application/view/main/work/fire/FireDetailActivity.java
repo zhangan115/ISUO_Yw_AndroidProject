@@ -18,7 +18,7 @@ public class FireDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        FireBean fireBean = intent.getParcelableExtra(ConstantStr.KEY_BUNDLE_OBJECT);
+        FireBean fireBean = (FireBean) intent.getSerializableExtra(ConstantStr.KEY_BUNDLE_OBJECT);
         setLayoutAndToolbar(R.layout.activity_fire_detail, "小空间智能灭火装置管理系统");
         textViews[0] = findViewById(R.id.tv_1);
         textViews[1] = findViewById(R.id.tv_2);
@@ -48,21 +48,21 @@ public class FireDetailActivity extends BaseActivity {
         textViews[6].setText(fireBean.getEquipmentModel());
         textViews[7].setText(String.valueOf(fireBean.getCount()));
         textViews[8].setText(fireBean.getCompanyNumber());
-        if (fireBean.getEquipmentState() == 0) {
-            textViews[9].setText("线上");
-        } else {
+        if (fireBean.getPattern() == 2) {
             textViews[9].setText("线下");
+        } else if (fireBean.getPattern() == 1){
+            textViews[9].setText("线上");
         }
-        if (fireBean.getWorkingState() == 0) {
+        if (fireBean.getState() == 1) {
             textViews[10].setText("正常");
-        } else {
+        } else if (fireBean.getState() == 2){
             textViews[10].setText("触发");
         }
         textViews[11].setText(DataUtil.timeFormat(fireBean.getManufactureTime(), "yyyy-MM"));
         textViews[12].setText(DataUtil.timeFormat(fireBean.getRemindTime(), "yyyy-MM"));
         textViews[13].setText(DataUtil.timeFormat(fireBean.getExpireTime(), "yyyy-MM"));
 
-        textViews[14].setText(fireBean.getNote());
+        textViews[14].setText(fireBean.getRemark());
         textViews[15].setText(fireBean.getEquipmentPerson());
     }
 }

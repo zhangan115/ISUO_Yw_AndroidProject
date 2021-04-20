@@ -1,6 +1,9 @@
 package com.isuo.yw2application.mode.fire;
 
 
+import android.support.annotation.NonNull;
+
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -8,7 +11,7 @@ import java.util.List;
  * E-mail：yangzongbin@si-top.com
  * 设备列表 带配电室
  */
-public class FireListBean {
+public class FireListBean implements Comparable<FireListBean> {
 
     private int count;
     private int roomId;
@@ -45,5 +48,11 @@ public class FireListBean {
 
     public void setEquipments(List<FireBean> equipments) {
         this.fireEquipmentList = equipments;
+    }
+
+
+    @Override
+    public int compareTo(@NonNull FireListBean fireListBean) {
+        return this.getCount() - fireListBean.getCount();
     }
 }

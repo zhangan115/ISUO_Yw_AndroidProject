@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -12,7 +13,7 @@ import java.util.List;
  * Created by zhangan on 2017-07-10.
  */
 
-public class FireBean implements Parcelable {
+public class FireBean implements Serializable {
 
     private String roomName;//所属配电
     private String twoRegion;//二级
@@ -24,72 +25,14 @@ public class FireBean implements Parcelable {
     private String companyNumber;//出厂编号
     private int workingState;//工作状态 0 线上 1 线下
     private int equipmentState;//触发状态 0 正常 1 触发
+    private int pattern;//工作模式 1 线上 2 线下
+    private int state;//触发状态 1 正常 2 触发
     private long manufactureTime;//生产时间
     private long remindTime;//提醒时间
     private long expireTime;//过期时间
-    private String equipmentModel;//过期时间
+    private String equipmentModel;
     private String remark;
     private String equipmentPerson;
-
-    public FireBean(){
-
-    }
-
-    protected FireBean(Parcel in) {
-        roomName = in.readString();
-        twoRegion = in.readString();
-        threeRegion = in.readString();
-        equipmentName = in.readString();
-        equipmentNumber = in.readString();
-        equipmentType = in.readString();
-        count = in.readInt();
-        companyNumber = in.readString();
-        workingState = in.readInt();
-        equipmentState = in.readInt();
-        manufactureTime = in.readLong();
-        remindTime = in.readLong();
-        expireTime = in.readLong();
-        remark = in.readString();
-        equipmentPerson = in.readString();
-        equipmentModel = in.readString();
-    }
-
-    public static final Creator<FireBean> CREATOR = new Creator<FireBean>() {
-        @Override
-        public FireBean createFromParcel(Parcel in) {
-            return new FireBean(in);
-        }
-
-        @Override
-        public FireBean[] newArray(int size) {
-            return new FireBean[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(roomName);
-        parcel.writeString(twoRegion);
-        parcel.writeString(threeRegion);
-        parcel.writeString(equipmentName);
-        parcel.writeString(equipmentNumber);
-        parcel.writeString(equipmentType);
-        parcel.writeInt(count);
-        parcel.writeString(companyNumber);
-        parcel.writeInt(workingState);
-        parcel.writeInt(equipmentState);
-        parcel.writeLong(manufactureTime);
-        parcel.writeLong(remindTime);
-        parcel.writeLong(expireTime);
-        parcel.writeString(remark);
-        parcel.writeString(equipmentPerson);
-        parcel.writeString(equipmentModel);
-    }
 
     public String getRoomName() {
         return roomName;
@@ -171,6 +114,22 @@ public class FireBean implements Parcelable {
         this.equipmentState = equipmentState;
     }
 
+    public int getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(int pattern) {
+        this.pattern = pattern;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     public long getManufactureTime() {
         return manufactureTime;
     }
@@ -195,12 +154,20 @@ public class FireBean implements Parcelable {
         this.expireTime = expireTime;
     }
 
-    public String getNote() {
+    public String getEquipmentModel() {
+        return equipmentModel;
+    }
+
+    public void setEquipmentModel(String equipmentModel) {
+        this.equipmentModel = equipmentModel;
+    }
+
+    public String getRemark() {
         return remark;
     }
 
-    public void setNote(String note) {
-        this.remark = note;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getEquipmentPerson() {
@@ -209,13 +176,5 @@ public class FireBean implements Parcelable {
 
     public void setEquipmentPerson(String equipmentPerson) {
         this.equipmentPerson = equipmentPerson;
-    }
-
-    public String getEquipmentModel() {
-        return equipmentModel;
-    }
-
-    public void setEquipmentModel(String equipmentModel) {
-        this.equipmentModel = equipmentModel;
     }
 }
