@@ -22,17 +22,24 @@
             android:text="1#配电室"
             android:textColor="@color/gray_999999"
             android:textSize="14sp" />
+
         <TextView
             android:id="@+id/id_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
-            android:layout_marginRight="15dp"
-            android:drawableRight="@drawable/list_arrow"
             android:gravity="center|right"
             android:text="x"
             android:textColor="@color/gray_999999"
             android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/DP_10"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/list_arrow" />
     </LinearLayout>
 
     <View

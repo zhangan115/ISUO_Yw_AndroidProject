@@ -3,13 +3,18 @@ package com.isuo.yw2application.view.main.work.fire;
 import android.support.annotation.Nullable;
 
 import com.isuo.yw2application.mode.fire.FireBean;
+import com.isuo.yw2application.mode.fire.FireListBean;
 
 public class FireShowBean {
-   public FireShowBean(int id,int level, int count, String name, @Nullable FireBean fireBean) {
-      this.id = id;
+
+   public FireShowBean(int level, int childCount, long id, int count, String name, boolean open, FireListBean fireListBean, @Nullable FireBean fireBean) {
       this.level = level;
+      this.childCount = childCount;
+      this.id = id;
       this.count = count;
       this.name = name;
+      this.open = open;
+      this.fireListBean = fireListBean;
       this.fireBean = fireBean;
    }
 
@@ -22,6 +27,7 @@ public class FireShowBean {
    private  int count;
    private String name;
    private boolean open;
+   private FireListBean fireListBean;
    @Nullable
    private FireBean fireBean;
 
@@ -31,6 +37,22 @@ public class FireShowBean {
 
    public void setLevel(int level) {
       this.level = level;
+   }
+
+   public int getChildCount() {
+      return childCount;
+   }
+
+   public void setChildCount(int childCount) {
+      this.childCount = childCount;
+   }
+
+   public long getId() {
+      return id;
+   }
+
+   public void setId(long id) {
+      this.id = id;
    }
 
    public int getCount() {
@@ -49,11 +71,6 @@ public class FireShowBean {
       this.name = name;
    }
 
-   @Nullable
-   public FireBean getFireBean() {
-      return fireBean;
-   }
-
    public boolean isOpen() {
       return open;
    }
@@ -62,20 +79,17 @@ public class FireShowBean {
       this.open = open;
    }
 
-   public long getId() {
-      return id;
+   public FireListBean getFireListBean() {
+      return fireListBean;
    }
 
-   public void setId(long id) {
-      this.id = id;
+   public void setFireListBean(FireListBean fireListBean) {
+      this.fireListBean = fireListBean;
    }
 
-   public int getChildCount() {
-      return childCount;
-   }
-
-   public void setChildCount(int childCount) {
-      this.childCount = childCount;
+   @Nullable
+   public FireBean getFireBean() {
+      return fireBean;
    }
 
    public void setFireBean(@Nullable FireBean fireBean) {

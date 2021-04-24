@@ -31,6 +31,7 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:orientation="vertical"
+                    android:descendantFocusability="blocksDescendants"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp">
 
@@ -304,16 +305,16 @@
                                 android:divider="@null"
                                 android:dividerHeight="0dp"
                                 android:groupIndicator="@null"
+                                android:visibility="gone"
                                 android:listSelector="@color/transparent"
                                 android:scrollbars="none" />
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/recyclerView"
                                 android:layout_width="match_parent"
+                                android:nestedScrollingEnabled="false"
                                 android:layout_height="wrap_content"
-                                android:background="@color/colorWhite"
-                                android:scrollbars="none"
-                                android:visibility="gone" />
+                                android:scrollbars="none" />
                         </FrameLayout>
 
                     </LinearLayout>
