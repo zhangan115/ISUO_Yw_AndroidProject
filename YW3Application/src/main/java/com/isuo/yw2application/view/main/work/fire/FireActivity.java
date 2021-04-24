@@ -24,8 +24,10 @@ import com.isuo.yw2application.view.base.BaseActivity;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.sito.library.adapter.RVAdapter;
+import com.sito.library.adapter.VRVAdapter;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,6 +40,7 @@ public class FireActivity extends BaseActivity {
     private FireListAdapter fireAdapter;
     private RecyclerView recyclerView;
     List<FireListBean> listBeanList = new ArrayList<>();
+    private List<FireShowBean> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +75,6 @@ public class FireActivity extends BaseActivity {
             }
         });
         expandableListView.setAdapter(fireAdapter);
-
         RVAdapter<FireBean> adapter = new RVAdapter<FireBean>(recyclerView, fireBeans, R.layout.item_equip_child) {
             @Override
             public void showData(ViewHolder vHolder, FireBean data, int position) {
@@ -82,18 +84,88 @@ public class FireActivity extends BaseActivity {
                                 : "(" + data.getEquipmentModel() + ")"));
             }
         };
-        recyclerView.setAdapter(adapter);
+        dataList = new ArrayList<>();
+        VRVAdapter<FireShowBean> vrvAdapter = new VRVAdapter<FireShowBean>(recyclerView, dataList, new int[]{
+                R.layout.item_equip_group, R.layout.item_equip_group2, R.layout.item_equip_child1
+        }) {
+            @Override
+            public int getItemViewType(int position) {
+                return dataList.get(position).getLevel();
+            }
+
+            @Override
+            public void showData(ViewHolder vHolder, FireShowBean data, int position, int type) {
+                switch (type) {
+                    case 0:
+                    case 1:
+                        ((TextView) vHolder.getView(R.id.id_item_equip_place)).setText(data.getName());
+                        ((TextView) vHolder.getView(R.id.id_item_equip_mum)).setText(MessageFormat.format("{0}个", data.getCount()));
+                        break;
+                    default:
+                        ((TextView) vHolder.getView(R.id.id_item_equip_name)).setText(data.getName());
+                        ((TextView) vHolder.getView(R.id.id_count)).setText(MessageFormat.format("{0}个", data.getCount()));
+                        break;
+                }
+            }
+        };
+        recyclerView.setAdapter(vrvAdapter);
+        vrvAdapter.setOnItemClickListener(new VRVAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                FireShowBean bean = dataList.get(position);
+                if (bean.getLevel() == 2) {
+                    Intent intent = new Intent(FireActivity.this, FireDetailActivity.class);
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, bean.getName());
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, bean.getFireBean());
+                    startActivity(intent);
+                } else if (bean.getLevel() == 1) {
+
+                } else if (bean.getLevel() == 0) {
+                    if (bean.isOpen()) {
+
+                    } else {
+                        for (int i = 0; i < listBeanList.size(); i++) {
+                            FireListBean fls = listBeanList.get(i);
+                            if (fls.getRoomId() == bean.getId()){
+                                List<FireShowBean> sfb = new ArrayList<>();
+                                for (int j = 0; j < fls.getEquipments().size(); j++) {
+                                    FireBean fb = fls.getEquipments().get(j);
+                                    if (!haveName(fb.getTwoRegion(),fls.getRoomId())){
+
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
         adapter.setOnItemClickListener(new RVAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                FireBean fireBean = fireBeans.get(position);
-                Intent intent = new Intent(FireActivity.this, FireDetailActivity.class);
-                intent.putExtra(ConstantStr.KEY_BUNDLE_STR, fireBean.getEquipmentName());
-                intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, fireBean);
-                startActivity(intent);
+                FireShowBean bean = dataList.get(position);
+                if (bean.getLevel() == 2) {
+                    Intent intent = new Intent(FireActivity.this, FireDetailActivity.class);
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, bean.getName());
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, bean.getFireBean());
+                    startActivity(intent);
+                }
             }
         });
         request();
+    }
+
+    private boolean haveName(String text,long id){
+        for (int i = 0; i < dataList.size(); i++) {
+           FireShowBean fsb = dataList.get(i);
+           if (fsb.getLevel() == 1){
+               if (fsb.getName().equals(text)&& fsb.getId() == id){
+                   return true;
+               }
+           }
+        }
+        return false;
     }
 
     private void request() {
@@ -130,8 +202,10 @@ public class FireActivity extends BaseActivity {
                 .getFireRoomList(new HashMap<String, String>(), new IListCallBack<FireListBean>() {
                     @Override
                     public void onSuccess(@NonNull List<FireListBean> list) {
+                        dataList.clear();
                         for (FireListBean bean : list) {
                             roomList.add(bean.getRoomName());
+                            dataList.add(new FireShowBean(bean.getRoomId(),0, bean.getCount(), bean.getRoomName(), null));
                             for (FireBean fb : bean.getEquipments()) {
                                 fb.setRoomName(bean.getRoomName());
                                 boolean canAdd = true;
@@ -148,6 +222,7 @@ public class FireActivity extends BaseActivity {
                         FireActivity.this.listBeanList.clear();
                         FireActivity.this.listBeanList.addAll(list);
                         FireActivity.this.fireAdapter.setData(list);
+                        recyclerView.getAdapter().notifyDataSetChanged();
                     }
 
                     @Override

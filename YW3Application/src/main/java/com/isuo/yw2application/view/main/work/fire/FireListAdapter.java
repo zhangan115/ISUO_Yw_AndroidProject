@@ -149,9 +149,10 @@ public class FireListAdapter extends BaseExpandableListAdapter {
             holder = (ChildViewHolder) convertView.getTag();
         }
         holder.mLine.setBackgroundColor(context.getResources().getColor(R.color.setting_text_job));
-        holder.mName.setText(String.format("%s%s", data.get(groupPosition).getEquipments().get(childPosition).getEquipmentName()
-                , TextUtils.isEmpty(data.get(groupPosition).getEquipments().get(childPosition).getEquipmentModel()) ? ""
-                        : "(" + data.get(groupPosition).getEquipments().get(childPosition).getEquipmentModel() + ")"));
+//        holder.mName.setText(String.format("%s%s", data.get(groupPosition).getEquipments().get(childPosition).getEquipmentName()
+//                , TextUtils.isEmpty(data.get(groupPosition).getEquipments().get(childPosition).getEquipmentModel()) ? ""
+//                        : "(" + data.get(groupPosition).getEquipments().get(childPosition).getEquipmentModel() + ")"));
+        holder.mName.setText(data.get(groupPosition).getEquipments().get(childPosition).getEquipmentName());
         holder.count.setText(MessageFormat.format("{0}个", data.get(groupPosition).getEquipments().get(childPosition).getCount()));
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

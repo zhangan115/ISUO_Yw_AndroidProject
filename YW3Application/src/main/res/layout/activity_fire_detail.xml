@@ -160,26 +160,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:orientation="horizontal">
 
-                <TextView
-                    style="@style/Equipment_TEXT_TITLE_STYLE"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="智能灭火材料出厂型号" />
-
-                <TextView
-                    android:id="@+id/tv_7"
-                    style="@style/Equipment_TEXT_CONTENT_STYLE"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="设备位号" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -201,28 +182,6 @@
                     tools:text="设备位号" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/Equipment_TEXT_TITLE_STYLE"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="智能灭火材料出厂编号" />
-
-                <TextView
-                    android:id="@+id/tv_9"
-                    style="@style/Equipment_TEXT_CONTENT_STYLE"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="设备位号" />
-
-            </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -328,6 +287,27 @@
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="负责人" />
+
+                <TextView
+                    android:id="@+id/tv_16"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="无" />
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -348,28 +328,47 @@
                     android:text="无" />
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp">
+                android:orientation="horizontal">
 
                 <TextView
                     style="@style/Equipment_TEXT_TITLE_STYLE"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="负责人" />
+                    android:text="灭火装置型号" />
 
                 <TextView
-                    android:id="@+id/tv_16"
+                    android:id="@+id/tv_7"
                     style="@style/Equipment_TEXT_CONTENT_STYLE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="无" />
+                    tools:text="设备位号" />
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Equipment_TEXT_TITLE_STYLE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="灭火装置编号" />
+
+                <TextView
+                    android:id="@+id/tv_9"
+                    style="@style/Equipment_TEXT_CONTENT_STYLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="设备位号" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
