@@ -119,24 +119,16 @@ public class FireActivity extends BaseActivity {
                     intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, bean.getFireBean());
                     startActivity(intent);
                 } else if (bean.getLevel() == 1) {
+                    if (bean.isOpen()) {
 
+                    } else {
+
+                    }
                 } else if (bean.getLevel() == 0) {
                     if (bean.isOpen()) {
 
                     } else {
-                        for (int i = 0; i < listBeanList.size(); i++) {
-                            FireListBean fls = listBeanList.get(i);
-                            if (fls.getRoomId() == bean.getId()){
-                                List<FireShowBean> sfb = new ArrayList<>();
-                                for (int j = 0; j < fls.getEquipments().size(); j++) {
-                                    FireBean fb = fls.getEquipments().get(j);
-                                    if (!haveName(fb.getTwoRegion(),fls.getRoomId())){
 
-                                    }
-                                }
-                                break;
-                            }
-                        }
                     }
                 }
             }
@@ -154,18 +146,6 @@ public class FireActivity extends BaseActivity {
             }
         });
         request();
-    }
-
-    private boolean haveName(String text,long id){
-        for (int i = 0; i < dataList.size(); i++) {
-           FireShowBean fsb = dataList.get(i);
-           if (fsb.getLevel() == 1){
-               if (fsb.getName().equals(text)&& fsb.getId() == id){
-                   return true;
-               }
-           }
-        }
-        return false;
     }
 
     private void request() {
