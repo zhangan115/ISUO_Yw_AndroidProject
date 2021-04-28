@@ -57,7 +57,7 @@ public class ActivityUtils {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(activity, "com.isuo.yw2application.fileprovider", photoFile);
+                Uri photoURI = FileProvider.getUriForFile(activity, "com.isuo.yw3application.fileprovider", photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 activity.startActivityForResult(takePictureIntent, REQUEST_CODE);
             }
@@ -83,7 +83,7 @@ public class ActivityUtils {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(fragment.getActivity().getPackageManager()) != null) {
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(fragment.getActivity(), "com.isuo.yw2application.fileprovider", photoFile);
+                Uri photoURI = FileProvider.getUriForFile(fragment.getActivity(), "com.isuo.yw3application.fileprovider", photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 fragment.startActivityForResult(takePictureIntent, REQUEST_CODE);
             }
