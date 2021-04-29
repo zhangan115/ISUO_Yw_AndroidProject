@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.isuo.yw2application.R;
@@ -23,9 +24,12 @@ import com.isuo.yw2application.mode.fire.FireListBean;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
+import com.orhanobut.logger.Logger;
 import com.sito.library.adapter.RVAdapter;
+import com.sito.library.adapter.VRVAdapter;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,6 +42,7 @@ public class FireActivity extends BaseActivity {
     private FireListAdapter fireAdapter;
     private RecyclerView recyclerView;
     List<FireListBean> listBeanList = new ArrayList<>();
+    private List<FireShowBean> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,32 +77,143 @@ public class FireActivity extends BaseActivity {
             }
         });
         expandableListView.setAdapter(fireAdapter);
-
-        RVAdapter<FireBean> adapter = new RVAdapter<FireBean>(recyclerView, fireBeans, R.layout.item_equip_child) {
+        dataList = new ArrayList<>();
+        VRVAdapter<FireShowBean> vrvAdapter = new VRVAdapter<FireShowBean>(recyclerView, dataList, new int[]{
+                R.layout.item_equip_group, R.layout.item_equip_group2, R.layout.item_equip_child1
+        }) {
             @Override
-            public void showData(ViewHolder vHolder, FireBean data, int position) {
-                TextView equipmentNameTv = (TextView) vHolder.getView(R.id.id_item_equip_name);
-                equipmentNameTv.setText(String.format("%s%s", data.getEquipmentName()
-                        , TextUtils.isEmpty(data.getEquipmentModel()) ? ""
-                                : "(" + data.getEquipmentModel() + ")"));
+            public int getItemViewType(int position) {
+                return dataList.get(position).getLevel();
+            }
+
+            @Override
+            public void showData(ViewHolder vHolder, FireShowBean data, int position, int type) {
+                switch (type) {
+                    case 0:
+                    case 1:
+                        ((TextView) vHolder.getView(R.id.id_item_equip_place)).setText(data.getName());
+                        ((TextView) vHolder.getView(R.id.id_item_equip_mum)).setText(MessageFormat.format("{0}", data.getCount()));
+                        if (data.isOpen()) {
+                            ((ImageView) vHolder.getView(R.id.iv_state)).setImageDrawable(findDrawById(R.drawable.bg_employee_arrow_open));
+                        } else {
+                            ((ImageView) vHolder.getView(R.id.iv_state)).setImageDrawable(findDrawById(R.drawable.bg_employee_arrow));
+                        }
+                        break;
+                    default:
+                        ((TextView) vHolder.getView(R.id.id_item_equip_name)).setText(data.getName());
+                        ((TextView) vHolder.getView(R.id.id_count)).setText(MessageFormat.format("{0}", data.getCount()));
+                        break;
+                }
             }
         };
-        recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new RVAdapter.OnItemClickListener() {
+        recyclerView.setAdapter(vrvAdapter);
+        vrvAdapter.setOnItemClickListener(new VRVAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                FireBean fireBean = fireBeans.get(position);
-                Intent intent = new Intent(FireActivity.this, FireDetailActivity.class);
-                intent.putExtra(ConstantStr.KEY_BUNDLE_STR, fireBean.getEquipmentName());
-                intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, fireBean);
-                startActivity(intent);
+                FireShowBean bean = dataList.get(position);
+                if (bean.getLevel() == 2) {
+                    Intent intent = new Intent(FireActivity.this, FireDetailActivity.class);
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, bean.getName());
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, bean.getFireBean());
+                    startActivity(intent);
+                } else if (bean.getLevel() == 1) {
+                    if (bean.isOpen()) {
+                        closeEquipment(bean, position);
+                    } else {
+                        openEquipment(bean, position);
+                    }
+                    recyclerView.getAdapter().notifyDataSetChanged();
+                } else if (bean.getLevel() == 0) {
+                    if (bean.isOpen()) {
+                        closeRoom(bean, position);
+                    } else {
+                        openRoom(bean, position);
+                    }
+                    recyclerView.getAdapter().notifyDataSetChanged();
+                }
             }
         });
         request();
     }
 
+    private void openRoom(FireShowBean bean, int position) {
+        ArrayList<FireShowBean> list = new ArrayList<>();
+        for (int i = 0; i < bean.getFireListBean().getEquipments().size(); i++) {
+            FireBean fireBean = bean.getFireListBean().getEquipments().get(i);
+            boolean have = false;
+            for (int j = 0; j < list.size(); j++) {
+                if (fireBean.getTwoRegion().equals(list.get(j).getName())) {
+                    have = true;
+                    break;
+                }
+            }
+            if (!have) {
+                FireShowBean showBean = new FireShowBean(1, 0, -1
+                        , bean.getCount(), fireBean.getTwoRegion()
+                        , false, bean.getFireListBean(), fireBean);
+                list.add(showBean);
+            }
+        }
+        for (int i = 0; i < list.size(); i++) {
+            int count = 0;
+            int equipmentCount = 0;
+            FireShowBean fireShowBean = list.get(i);
+            for (int j = 0; j < fireShowBean.getFireListBean().getEquipments().size(); j++) {
+                FireBean fireBean = bean.getFireListBean().getEquipments().get(j);
+                if (fireShowBean.getName().equals(fireBean.getTwoRegion())) {
+                    count = count + fireBean.getCount();
+                    equipmentCount = equipmentCount + 1;
+                }
+            }
+            fireShowBean.setChildCount(equipmentCount);
+            fireShowBean.setCount(count);
+        }
+        for (int i = 0; i < list.size(); i++) {
+            dataList.add(position + i + 1, list.get(i));
+        }
+        bean.setChildCount(list.size());
+        bean.setOpen(true);
+    }
+
+    private void closeRoom(FireShowBean bean, int position) {
+        for (int i = 0; i < bean.getChildCount(); i++) {
+            FireShowBean fireShowBean = dataList.get(position + i + 1);
+            if (fireShowBean.isOpen()) {
+                closeEquipment(fireShowBean, position + i + 1);
+            }
+        }
+        for (int i = 0; i < bean.getChildCount(); i++) {
+            dataList.remove(position + 1);
+        }
+        bean.setOpen(false);
+    }
+
+    private void openEquipment(FireShowBean bean, int position) {
+        ArrayList<FireShowBean> list = new ArrayList<>();
+        for (int j = 0; j < bean.getFireListBean().getEquipments().size(); j++) {
+            FireBean fireBean = bean.getFireListBean().getEquipments().get(j);
+            if (bean.getName().equals(fireBean.getTwoRegion())) {
+                list.add(new FireShowBean(2, 0, -1, fireBean.getCount(), fireBean.getEquipmentName()
+                        , false, null, fireBean));
+            }
+        }
+        if (list.size() == bean.getChildCount()) {
+            for (int i = 0; i < list.size(); i++) {
+                dataList.add(position + i + 1, list.get(i));
+            }
+            bean.setOpen(true);
+        }
+    }
+
+    private void closeEquipment(FireShowBean bean, int position) {
+        for (int i = 0; i < bean.getChildCount(); i++) {
+            dataList.remove(position + 1);
+        }
+        bean.setOpen(false);
+    }
+
     private void request() {
-        recyclerView.setVisibility(View.GONE);
+//        recyclerView.setVisibility(View.GONE);
         roomList.clear();
         equipmentTypeList.clear();
         roomList.add("全部");
@@ -130,8 +246,10 @@ public class FireActivity extends BaseActivity {
                 .getFireRoomList(new HashMap<String, String>(), new IListCallBack<FireListBean>() {
                     @Override
                     public void onSuccess(@NonNull List<FireListBean> list) {
+                        dataList.clear();
                         for (FireListBean bean : list) {
                             roomList.add(bean.getRoomName());
+                            dataList.add(new FireShowBean(0, 0, bean.getRoomId(), bean.getCount(), bean.getRoomName(), false, bean, null));
                             for (FireBean fb : bean.getEquipments()) {
                                 fb.setRoomName(bean.getRoomName());
                                 boolean canAdd = true;
@@ -148,6 +266,7 @@ public class FireActivity extends BaseActivity {
                         FireActivity.this.listBeanList.clear();
                         FireActivity.this.listBeanList.addAll(list);
                         FireActivity.this.fireAdapter.setData(list);
+                        recyclerView.getAdapter().notifyDataSetChanged();
                     }
 
                     @Override
