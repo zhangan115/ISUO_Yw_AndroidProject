@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -230,6 +232,10 @@ public class FireActivity extends BaseActivity {
                         fire3Tv.setText(String.valueOf(bean.getOnLineCount()));
                         fire4Tv.setText(String.valueOf(bean.getLeaveCount()));
                         fire5Tv.setText(String.valueOf(bean.getTriggerCount()));
+                        if (!TextUtils.equals(String.valueOf(bean.getTriggerCount()), "0")) {
+                            Animation animation = AnimationUtils.loadAnimation(FireActivity.this, R.anim.trigger_anim);
+                            fire5Tv.startAnimation(animation);
+                        }
                     }
 
                     @Override

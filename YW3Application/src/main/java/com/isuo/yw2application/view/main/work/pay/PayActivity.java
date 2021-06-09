@@ -57,8 +57,8 @@ public class PayActivity extends BaseActivity implements PayContract.View {
         setLayoutAndToolbar(R.layout.activity_pay, "套餐选择");
         new PayPresenter(Yw2Application.getInstance().getRepositoryComponent().getRepository(), this);
         btn_buy = findViewById(R.id.btn_buy);
-        btn_buy.setText("未选择套餐");
-        btn_buy.setBackground(findDrawById(R.drawable.bg_btn_gray));
+//        btn_buy.setText("未选择套餐");
+//        btn_buy.setBackground(findDrawById(R.drawable.bg_btn_gray));
         layoutContent = findViewById(R.id.layoutContent);
         btn_buy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,34 +81,35 @@ public class PayActivity extends BaseActivity implements PayContract.View {
 
     private void showPayView() {
         if (currentMenu == null) return;
-        if (currentMenu.getMenuName().equals("定制版")) {
-            startActivity(new Intent(PayActivity.this, AboutActivity.class));
-            return;
-        }
-        popupView = new XPopup.Builder(PayActivity.this)
-                .atView(btn_buy)
-                .asCustom(new PayBottomView(PayActivity.this
-                        , "支付信息:" + currentMenu.getMenuName(), "支付金额:" + String.format("%.0f", currentMenu.getPrice()) + "元"
-                        , new PayBottomView.PayClickListener() {
-                    @Override
-                    public void onPay(int type) {
-                        JSONObject jsonObject = new JSONObject();
-                        try {
-                            jsonObject.put("setMenuId", PayActivity.this.currentMenu.getId());
-                            jsonObject.put("payType", type);
-                            jsonObject.put("year", 1);
-                            jsonObject.put("appType", "android");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        if (type == 0) {
-                            mPresenter.getWeiXinPayInfo(jsonObject);
-                        } else {
-                            mPresenter.getAlPayInfo(jsonObject);
-                        }
-                    }
-                }))
-                .show();
+        startActivity(new Intent(PayActivity.this, AboutActivity.class));
+//        if (currentMenu.getMenuName().equals("定制版")) {
+//            startActivity(new Intent(PayActivity.this, AboutActivity.class));
+//            return;
+//        }
+//        popupView = new XPopup.Builder(PayActivity.this)
+//                .atView(btn_buy)
+//                .asCustom(new PayBottomView(PayActivity.this
+//                        , "支付信息:" + currentMenu.getMenuName(), "支付金额:" + String.format("%.0f", currentMenu.getPrice()) + "元"
+//                        , new PayBottomView.PayClickListener() {
+//                    @Override
+//                    public void onPay(int type) {
+//                        JSONObject jsonObject = new JSONObject();
+//                        try {
+//                            jsonObject.put("setMenuId", PayActivity.this.currentMenu.getId());
+//                            jsonObject.put("payType", type);
+//                            jsonObject.put("year", 1);
+//                            jsonObject.put("appType", "android");
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                        if (type == 0) {
+//                            mPresenter.getWeiXinPayInfo(jsonObject);
+//                        } else {
+//                            mPresenter.getAlPayInfo(jsonObject);
+//                        }
+//                    }
+//                }))
+//                .show();
     }
 
     private PayContentView[] views = null;
@@ -133,23 +134,25 @@ public class PayActivity extends BaseActivity implements PayContract.View {
                     for (int j = 0; j < views.length; j++) {
                         views[j].setChooseState(j == position);
                     }
-                    if (currentMenu.getMenuName().equals("定制版")) {
-                        btn_buy.setText("请联系客服");
-                        btn_buy.setBackground(findDrawById(R.drawable.bg_btn_report));
-                        return;
-                    }
-                    if (customerSetMenu != null && customerSetMenu.getMenuId() == currentMenu.getId()) {
-                        btn_buy.setText("无法购买");
-                        btn_buy.setBackground(findDrawById(R.drawable.bg_btn_gray));
-                    } else {
-                        btn_buy.setText(MessageFormat.format("升级(已选{0}元{1})", String.format("%.0f", currentMenu.getPrice()), currentMenu.getMenuName()));
-                        btn_buy.setBackground(findDrawById(R.drawable.bg_btn_report));
-                    }
+//                    if (currentMenu.getMenuName().equals("定制版")) {
+//                        btn_buy.setText("请联系客服");
+//                        btn_buy.setBackground(findDrawById(R.drawable.bg_btn_report));
+//                        return;
+//                    }
+//                    if (customerSetMenu != null && customerSetMenu.getMenuId() == currentMenu.getId()) {
+//                        btn_buy.setText("无法购买");
+//                        btn_buy.setBackground(findDrawById(R.drawable.bg_btn_gray));
+//                    } else {
+//                        btn_buy.setText(MessageFormat.format("升级(已选{0}元{1})", String.format("%.0f", currentMenu.getPrice()), currentMenu.getMenuName()));
+//                        btn_buy.setBackground(findDrawById(R.drawable.bg_btn_report));
+//                    }
                 }
             };
             layoutContent.addView(view);
             views[i] = view;
         }
+        btn_buy.setText("请联系客服");
+        btn_buy.setBackground(findDrawById(R.drawable.bg_btn_report));
     }
 
     @Override

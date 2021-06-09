@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -241,11 +243,16 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
         TextView fire3Tv = getView().findViewById(R.id.alarmTv3);
         TextView fire4Tv = getView().findViewById(R.id.alarmTv4);
         TextView fire5Tv = getView().findViewById(R.id.alarmTv5);
+
         fire1Tv.setText(String.valueOf(bean.getProtectCount()));
         fire2Tv.setText(String.valueOf(bean.getAllCount()));
         fire3Tv.setText(String.valueOf(bean.getOnLineCount()));
         fire4Tv.setText(String.valueOf(bean.getLeaveCount()));
         fire5Tv.setText(String.valueOf(bean.getTriggerCount()));
+        if (!TextUtils.equals(String.valueOf(bean.getTriggerCount()), "0")) {
+            Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.trigger_anim);
+            fire5Tv.startAnimation(animation);
+        }
     }
 
     @Override
