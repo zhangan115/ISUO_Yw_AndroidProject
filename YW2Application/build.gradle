@@ -99,7 +99,7 @@ dependencies {
     implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
     implementation 'cn.bingoogolapple:bga-badgeview:1.1.3'
     implementation 'com.huxq17.handygridview:handygridview:1.1.0'
-    implementation 'com.nbsp:materialfilepicker:1.9.1'
+    implementation 'com.nbsp:library:1.8'
     implementation 'com.bigkoo:convenientbanner:2.0.5'
 
     //统计，bug报警等

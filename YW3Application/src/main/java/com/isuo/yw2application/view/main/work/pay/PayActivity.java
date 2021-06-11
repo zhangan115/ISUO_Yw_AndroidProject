@@ -80,8 +80,8 @@ public class PayActivity extends BaseActivity implements PayContract.View {
     }
 
     private void showPayView() {
-        if (currentMenu == null) return;
         startActivity(new Intent(PayActivity.this, AboutActivity.class));
+//        if (currentMenu == null) return;
 //        if (currentMenu.getMenuName().equals("定制版")) {
 //            startActivity(new Intent(PayActivity.this, AboutActivity.class));
 //            return;
