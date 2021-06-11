@@ -350,6 +350,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="0"
                                 android:textColor="#f87856"
+                                android:layout_marginTop="4dp"
                                 android:textSize="24sp"
                                 android:textStyle="bold"
                                 tools:text="5" />
@@ -375,6 +376,7 @@
                             <TextView
                                 android:id="@+id/alarmTv2"
                                 android:layout_width="wrap_content"
+                                android:layout_marginTop="4dp"
                                 android:layout_height="wrap_content"
                                 android:text="0"
                                 android:textColor="#fb9714"
@@ -404,6 +406,7 @@
                                 android:id="@+id/alarmTv3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
                                 android:text="0"
                                 android:textColor="#08c161"
                                 android:textSize="24sp"
@@ -432,6 +435,7 @@
                                 android:id="@+id/alarmTv4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
                                 android:text="0"
                                 android:textColor="#499bfe"
                                 android:textSize="24sp"
@@ -461,8 +465,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="#999999"
-                                android:textSize="24sp"
+                                android:textColor="#d71345"
+                                android:textSize="28sp"
                                 android:textStyle="bold"
                                 tools:text="5" />
 
