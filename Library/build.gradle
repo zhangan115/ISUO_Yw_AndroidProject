@@ -41,8 +41,8 @@ dependencies {
     api "com.squareup.retrofit2:adapter-rxjava:$rootProject.rxjavaAdapterAdapter"
     api 'com.soundcloud.android:android-crop:1.0.1@aar'
     api files('libs/logger_v1.3.0.jar')
-    api 'pub.devrel:easypermissions:1.0.1'
+    api 'pub.devrel:easypermissions:1.1.0'
     api 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v1.3.0'
-    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.7.4'
     api 'com.android.support:multidex:1.0.3'
 }
