@@ -55,8 +55,10 @@ public class FireDetailActivity extends BaseActivity {
         }
         if (fireBean.getState() == 1) {
             textViews[10].setText("正常");
+            textViews[10].setTextColor(findColorById(R.color.text333));
         } else if (fireBean.getState() == 2){
             textViews[10].setText("触发");
+            textViews[10].setTextColor(findColorById(R.color.colorAlarmA));
         }
         textViews[11].setText(DataUtil.timeFormat(fireBean.getManufactureTime(), "yyyy-MM"));
         textViews[12].setText(DataUtil.timeFormat(fireBean.getRemindTime(), "yyyy-MM"));
