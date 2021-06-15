@@ -100,6 +100,11 @@ public class FireActivity extends BaseActivity {
                     default:
                         ((TextView) vHolder.getView(R.id.id_item_equip_name)).setText(data.getName());
                         ((TextView) vHolder.getView(R.id.id_count)).setText(MessageFormat.format("{0}", data.getCount()));
+                        if (data.getFireBean().getState() == 1){
+                            ((TextView) vHolder.getView(R.id.id_count)).setTextColor(findColorById(R.color.gray_999999));
+                        }else{
+                            ((TextView) vHolder.getView(R.id.id_count)).setTextColor(findColorById(R.color.colorAlarmA));
+                        }
                         break;
                 }
             }

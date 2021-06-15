@@ -18,6 +18,7 @@
     <uses-permission android:name="getui.permission.GetuiService.${applicationId}" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <permission
         android:name="getui.permission.GetuiService.${applicationId}"
         android:protectionLevel="normal" />

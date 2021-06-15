@@ -36,6 +36,7 @@ import com.sito.customer.mode.bean.news.MessageContent;
 import com.sito.customer.mode.bean.db.NewsBean;
 import com.sito.customer.mode.bean.option.OptionBean;
 import com.sito.customer.mode.count.CountRepositoryComponent;
+
 import com.sito.customer.mode.count.DaggerCountRepositoryComponent;
 import com.sito.customer.mode.customer.CustomerRepositoryComponent;
 import com.sito.customer.mode.customer.DaggerCustomerRepositoryComponent;
@@ -56,6 +57,7 @@ import com.sito.customer.view.home.HomeActivity;
 import com.sito.customer.view.login.LoginActivity;
 import com.sito.customer.view.splash.SplashActivity;
 import com.sito.library.base.AbsBaseApp;
+import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.Base64Util;
 import com.sito.library.utils.SPHelper;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -107,6 +109,7 @@ public class CustomerApp extends AbsBaseApp {
     public void onCreate() {
         super.onCreate();
         _instance = this;
+        ActivityUtils.appIdName = BuildConfig.APPLICATION_ID;
         sp = getSharedPreferences(ConstantStr.USER_INFO, Context.MODE_PRIVATE);
         ApplicationModule applicationModule = new ApplicationModule(this);
         mRepositoryComponent = DaggerCustomerRepositoryComponent.builder().applicationModule(applicationModule).build();

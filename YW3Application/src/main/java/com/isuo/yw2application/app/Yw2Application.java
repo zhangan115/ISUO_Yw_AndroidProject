@@ -40,6 +40,7 @@ import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.ApplicationModule;
 import com.isuo.yw2application.view.login.LoginActivity;
 import com.sito.library.base.AbsBaseApp;
+import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.Base64Util;
 import com.sito.library.utils.SPHelper;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -84,6 +85,7 @@ public class Yw2Application extends AbsBaseApp {
     public void onCreate() {
         super.onCreate();
         _instance = this;
+        ActivityUtils.appIdName = BuildConfig.APPLICATION_ID;
         sp = getSharedPreferences(ConstantStr.USER_INFO, Context.MODE_PRIVATE);
         ApplicationModule applicationModule = new ApplicationModule(this);
         mRepositoryComponent = DaggerCustomerRepositoryComponent.builder().applicationModule(applicationModule).build();

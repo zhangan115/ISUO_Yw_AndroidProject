@@ -38,7 +38,7 @@ android {
         yw3_app_default {
             applicationId "com.isuo.yw3application"
             dimension "default"
-            resValue "string", "app_name", "中微安控"
+            resValue "string", "app_name", "智能灭火管理系统"
             buildConfigField "String", "HOST", '"https://isuo.cloud/zwak/api"'
             buildConfigField "String", "UMENG_CHANNEL", '"defaultChannel"'
             manifestPlaceholders = [

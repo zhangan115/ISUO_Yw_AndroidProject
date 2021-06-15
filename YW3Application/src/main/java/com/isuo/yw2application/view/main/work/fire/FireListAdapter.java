@@ -16,6 +16,7 @@ import com.isuo.yw2application.mode.bean.equip.EquipName;
 import com.isuo.yw2application.mode.bean.equip.EquipmentBean;
 import com.isuo.yw2application.mode.fire.FireBean;
 import com.isuo.yw2application.mode.fire.FireListBean;
+import com.orhanobut.logger.Logger;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 
 import java.text.MessageFormat;
@@ -149,9 +150,15 @@ public class FireListAdapter extends BaseExpandableListAdapter {
             holder = (ChildViewHolder) convertView.getTag();
         }
         holder.mLine.setBackgroundColor(context.getResources().getColor(R.color.setting_text_job));
+
 //        holder.mName.setText(String.format("%s%s", data.get(groupPosition).getEquipments().get(childPosition).getEquipmentName()
 //                , TextUtils.isEmpty(data.get(groupPosition).getEquipments().get(childPosition).getEquipmentModel()) ? ""
 //                        : "(" + data.get(groupPosition).getEquipments().get(childPosition).getEquipmentModel() + ")"));
+        if (data.get(groupPosition).getEquipments().get(childPosition).getState() == 1){
+            holder.count.setTextColor(context.getResources().getColor(R.color.gray_999999));
+        }else{
+            holder.count.setTextColor(context.getResources().getColor(R.color.colorAlarmA));
+        }
         holder.mName.setText(data.get(groupPosition).getEquipments().get(childPosition).getEquipmentName());
         holder.count.setText(MessageFormat.format("{0}个", data.get(groupPosition).getEquipments().get(childPosition).getCount()));
         convertView.setOnClickListener(new View.OnClickListener() {

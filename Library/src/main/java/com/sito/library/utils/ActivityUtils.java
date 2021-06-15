@@ -35,6 +35,8 @@ import java.io.File;
  */
 public class ActivityUtils {
 
+    public static String appIdName = "";
+
     /**
      * The {@code fragment} is added to the container view with id {@code frameId}. The operation is
      * performed by the {@code fragmentManager}.
@@ -57,7 +59,8 @@ public class ActivityUtils {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(activity, "com.isuo.yw3application.fileprovider", photoFile);
+                Uri photoURI = FileProvider.getUriForFile(activity, appIdName +".fileprovider", photoFile);
+
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 activity.startActivityForResult(takePictureIntent, REQUEST_CODE);
             }
@@ -83,7 +86,7 @@ public class ActivityUtils {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(fragment.getActivity().getPackageManager()) != null) {
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(fragment.getActivity(), "com.isuo.yw3application.fileprovider", photoFile);
+                Uri photoURI = FileProvider.getUriForFile(fragment.getActivity(), appIdName +".fileprovider", photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 fragment.startActivityForResult(takePictureIntent, REQUEST_CODE);
             }
