@@ -117,7 +117,7 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
         if (getView() != null) {
             ((WorkItemLayout) getView().findViewById(R.id.workItem1)).setContent(new WorkItem(0, "台账录入", R.drawable.drive_input));
             getView().findViewById(R.id.workItem1).setOnClickListener(this);
-            ((WorkItemLayout) getView().findViewById(R.id.workItem2)).setContent(new WorkItem(1, "设备扫码", R.drawable.drive_scan));
+            ((WorkItemLayout) getView().findViewById(R.id.workItem2)).setContent(new WorkItem(1, "扫码", R.drawable.drive_scan));
             getView().findViewById(R.id.workItem2).setOnClickListener(this);
             ((WorkItemLayout) getView().findViewById(R.id.workItem3)).setContent(new WorkItem(2, "重点关注", R.drawable.focus_on));
             getView().findViewById(R.id.workItem3).setOnClickListener(this);
