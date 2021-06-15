@@ -124,7 +124,8 @@ class Engine {
         canvas.drawBitmap(target, 0, 0, p);
         // 在左边的中间位置开始添加水印
         canvas.drawText(mark, 0, h / 2, p);
-        canvas.save(Canvas.ALL_SAVE_FLAG);
+//        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.save();
         canvas.restore();
         return bmp;
     }

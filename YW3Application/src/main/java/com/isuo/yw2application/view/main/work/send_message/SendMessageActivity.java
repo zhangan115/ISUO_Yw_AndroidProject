@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.view.main.adduser.EmployeeActivity;
-import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantInt;
@@ -27,6 +26,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import materialfilepicker.ui.FilePickerActivity;
 
 /**
  * 发布新的企业通知

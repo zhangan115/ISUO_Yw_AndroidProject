@@ -30,6 +30,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->
         <meta-data

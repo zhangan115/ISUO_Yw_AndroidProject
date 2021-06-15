@@ -1,2 +1,4 @@
+include ':materialprogressbar'
+include ':easyadapter'
 include ':YW2Application', ':PopupLibrary',':YW3Application'
         include ':DialogLib', ':Library',  ':YwApplication', ':AACRecordLibrary',  'DateTimePicker', ':MPChartLib'

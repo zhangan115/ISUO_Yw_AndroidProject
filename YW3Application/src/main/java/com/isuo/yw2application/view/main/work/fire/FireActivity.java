@@ -1,6 +1,5 @@
 package com.isuo.yw2application.view.main.work.fire;
 
-import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,15 +18,12 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
-import com.isuo.yw2application.mode.bean.equip.RoomBean;
 import com.isuo.yw2application.mode.fire.FireBean;
 import com.isuo.yw2application.mode.fire.FireCountBean;
 import com.isuo.yw2application.mode.fire.FireListBean;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
-import com.orhanobut.logger.Logger;
-import com.sito.library.adapter.RVAdapter;
 import com.sito.library.adapter.VRVAdapter;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 

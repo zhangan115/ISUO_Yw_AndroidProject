@@ -18,10 +18,9 @@
     <uses-permission android:name="getui.permission.GetuiService.${applicationId}" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.CAMERA" />
-
-<!--    <permission-->
-<!--        android:name="getui.permission.GetuiService.${applicationId}"-->
-<!--        android:protectionLevel="normal" />-->
+    <permission
+        android:name="getui.permission.GetuiService.${applicationId}"
+        android:protectionLevel="normal" />
 
     <application
         android:name=".app.Yw2Application"
@@ -29,9 +28,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:appComponentFactory=""
-        tools:replace="android:appComponentFactory"
         android:theme="@style/AppTheme.NoActionBar">
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->

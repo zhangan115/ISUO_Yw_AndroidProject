@@ -13,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.isuo.yw2application.BuildConfig;
 import com.isuo.yw2application.app.Yw2Application;
 import com.sito.library.luban.Luban;
 import com.sito.library.utils.DataUtil;
@@ -176,7 +175,8 @@ public class PhotoUtils {
         String date = DataUtil.timeFormat(System.currentTimeMillis(), null);
         float dateWidth = p.measureText(date);
         canvas.drawText(date, w - 50 - dateWidth, h - 20 - textHeight, p);
-        canvas.save(Canvas.ALL_SAVE_FLAG);
+//        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.save();
         canvas.restore();
         return bmp;
     }

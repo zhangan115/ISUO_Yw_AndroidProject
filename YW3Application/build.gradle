@@ -26,8 +26,8 @@ android {
         applicationId "com.isuo.yw3application"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.5"
         ndk {
             abiFilters "armeabi", "x86_64"
         }
@@ -65,6 +65,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     android.applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "中微安控${variant.flavorName}_V${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}.apk"
@@ -99,14 +103,11 @@ dependencies {
     implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
     implementation 'cn.bingoogolapple:bga-badgeview:1.1.3'
     implementation 'com.huxq17.handygridview:handygridview:1.1.0'
-    implementation 'com.nbsp:materialfilepicker:1.9.1'
     implementation 'com.bigkoo:convenientbanner:2.0.5'
 
     //统计，bug报警等
-    implementation 'com.umeng.sdk:common:latest.integration'
-    implementation 'com.umeng.sdk:analytics:latest.integration'
-    implementation 'android.arch.persistence.room:runtime:1.0.0'
-    annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
+    implementation 'com.umeng.sdk:common:1.5.3'
+    implementation 'com.umeng.sdk:analytics:7.5.3'
     implementation files('libs/GetuiSDK2.14.2.0.jar')
     //zxing
     implementation(name: 'ZxingLibrary', ext: 'aar')
@@ -117,4 +118,6 @@ dependencies {
     implementation project(':PopupLibrary')
 
     implementation files('libs/alipaySdk-20180403.jar')
+    //file pick
+    implementation(name: 'file-pick-library', ext: 'aar')
 }

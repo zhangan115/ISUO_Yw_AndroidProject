@@ -176,7 +176,8 @@ public class PhotoUtils {
         String date = DataUtil.timeFormat(System.currentTimeMillis(), null);
         float dateWidth = p.measureText(date);
         canvas.drawText(date, w - 50 - dateWidth, h - 20 - textHeight, p);
-        canvas.save(Canvas.ALL_SAVE_FLAG);
+//        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.save();
         canvas.restore();
         return bmp;
     }

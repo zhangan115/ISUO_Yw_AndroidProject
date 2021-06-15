@@ -27,8 +27,5 @@ dependencies {
     api "com.android.support:support-v4:$rootProject.supportLibraryVersion"
     api "com.android.support:support-v13:$rootProject.supportLibraryVersion"
     api "com.android.support:design:$rootProject.supportLibraryVersion"
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'com.pholser:junit-quickcheck-core:0.7'
-    testImplementation 'com.pholser:junit-quickcheck-generators:0.7'
 }
 
