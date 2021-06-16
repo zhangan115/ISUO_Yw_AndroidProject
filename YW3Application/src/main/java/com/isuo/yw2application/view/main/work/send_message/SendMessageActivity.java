@@ -27,7 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import materialfilepicker.ui.FilePickerActivity;
+import filepicker.ui.FilePickerActivity;
+
 
 /**
  * 发布新的企业通知

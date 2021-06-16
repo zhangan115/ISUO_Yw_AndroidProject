@@ -9,8 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nbsp.materialfilepicker.ui.FilePickerActivity;
-import com.orhanobut.logger.Logger;
 import com.sito.customer.R;
 import com.sito.customer.app.CustomerApp;
 import com.sito.customer.common.ConstantInt;
@@ -28,6 +26,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import filepicker.ui.FilePickerActivity;
 
 /**
  * 发布新的企业通知

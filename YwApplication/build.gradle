@@ -104,12 +104,9 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-badgeview:1.1.3'
     implementation 'com.huxq17.handygridview:handygridview:1.1.0'
     implementation 'com.bigkoo:convenientbanner:2.0.5'
-
     //统计，bug报警等
     implementation 'com.umeng.sdk:common:1.5.3'
     implementation 'com.umeng.sdk:analytics:7.5.3'
-//    implementation 'android.arch.persistence.room:runtime:1.0.0'
-//    annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
     //file pick
-    implementation(name: 'file-pick-library', ext: 'aar')
+    implementation project(':FilePickLibrary')
 }

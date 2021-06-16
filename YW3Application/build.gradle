@@ -117,7 +117,9 @@ dependencies {
 
     implementation project(':PopupLibrary')
 
+
     implementation files('libs/alipaySdk-20180403.jar')
     //file pick
-    implementation(name: 'file-pick-library', ext: 'aar')
+    implementation project(':FilePickLibrary')
+//    implementation(name: 'file-pick-library', ext: 'aar')
 }
