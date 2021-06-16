@@ -20,6 +20,7 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.mode.bean.PayMenuBean;
 import com.isuo.yw2application.utils.WXPayUtils;
 import com.isuo.yw2application.view.base.BaseActivity;
+import com.isuo.yw2application.view.main.about.AboutActivity;
 import com.isuo.yw2application.widget.PayBottomView;
 import com.isuo.yw2application.widget.PayContentView;
 import com.lxj.xpopup.XPopup;
@@ -76,6 +77,10 @@ public class PayActivity extends BaseActivity implements PayContract.View {
     }
 
     private void showPayView() {
+        if (currentMenu.getMenuName().equals("定制版")){
+            startActivity(new Intent(PayActivity.this, AboutActivity.class));
+            return;
+        }
         if (currentMenu == null) return;
         popupView = new XPopup.Builder(PayActivity.this)
                 .atView(btn_buy)
@@ -129,7 +134,12 @@ public class PayActivity extends BaseActivity implements PayContract.View {
                         btn_buy.setText("无法购买");
                         btn_buy.setBackground(findDrawById(R.drawable.bg_btn_gray));
                     } else {
-                        btn_buy.setText(MessageFormat.format("升级(已选{0}元{1})", String.format("%.0f", currentMenu.getPrice()), currentMenu.getMenuName()));
+                        assert currentMenu != null;
+                        if (currentMenu.getMenuName().equals("定制版")){
+                            btn_buy.setText("联系客服");
+                        }else {
+                            btn_buy.setText(MessageFormat.format("升级(已选{0}元{1})", String.format("%.0f", currentMenu.getPrice()), currentMenu.getMenuName()));
+                        }
                         btn_buy.setBackground(findDrawById(R.drawable.bg_btn_report));
                     }
                 }
