@@ -12,7 +12,7 @@
     <string name="toast_exit_app">再次点击将退出应用</string>
 
     <string name="str_first_nav_1">工作</string>
-    <string name="str_first_nav_2">设备</string>
+    <string name="str_first_nav_2">台账</string>
     <string name="str_first_nav_3">任务</string>
     <string name="str_first_nav_4">故障</string>
     <string name="str_first_nav_5">数据</string>
