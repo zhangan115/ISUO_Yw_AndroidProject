@@ -1,4 +1,7 @@
-include ':materialprogressbar'
+//project
+include ':YwApplication',':YW2Application', ':YW3Application'
+//library
+include ':Library',':DialogLib', ':PopupLibrary', ':AACRecordLibrary'
+include ':materialprogressbar', 'DateTimePicker',':MPChartLib',':FilePickLibrary'
 include ':easyadapter'
-include ':YW2Application', ':PopupLibrary',':YW3Application'
-        include ':DialogLib', ':Library',  ':YwApplication', ':AACRecordLibrary',  'DateTimePicker', ':MPChartLib'
+
