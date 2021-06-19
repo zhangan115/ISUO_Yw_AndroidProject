@@ -101,7 +101,7 @@ public class PayContentView extends LinearLayout {
         TextView text2 = findViewById(R.id.text2);
         TextView text3 = findViewById(R.id.text3);
         text1.setText(bean.getMenuName());
-        if (bean.getMenuName().equals("定制版")) {
+        if (bean.getMenuType()==1) {
             text2.setText("请联系客服");
             text3.setText("");
         } else {

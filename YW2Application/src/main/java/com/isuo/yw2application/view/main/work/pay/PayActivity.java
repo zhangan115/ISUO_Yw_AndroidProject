@@ -135,7 +135,7 @@ public class PayActivity extends BaseActivity implements PayContract.View {
                         btn_buy.setBackground(findDrawById(R.drawable.bg_btn_gray));
                     } else {
                         assert currentMenu != null;
-                        if (currentMenu.getMenuName().equals("定制版")){
+                        if (currentMenu.getMenuType()==1){
                             btn_buy.setText("联系客服");
                         }else {
                             btn_buy.setText(MessageFormat.format("升级(已选{0}元{1})", String.format("%.0f", currentMenu.getPrice()), currentMenu.getMenuName()));
