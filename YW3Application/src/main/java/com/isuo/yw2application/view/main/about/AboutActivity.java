@@ -33,7 +33,7 @@ public class AboutActivity extends BaseActivity {
         }
     }
     private void call() {
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "029-88879967"));
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "029-85792830"));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

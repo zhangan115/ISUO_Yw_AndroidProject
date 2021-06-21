@@ -26,7 +26,7 @@
             android:paddingLeft="10dip"
             android:paddingRight="10dip"
             android:paddingBottom="20dip"
-            android:text="@string/mine_about_content"
+            android:text="@string/mine_about_content_1"
             android:textColor="#5f5f5f"
             android:textSize="16sp" />
 
@@ -38,13 +38,15 @@
             android:paddingRight="10dip"
             android:text="@string/mine_content"
             android:textColor="#5f5f5f"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -60,7 +62,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -83,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:paddingLeft="10dip"
-                android:text="@string/mine_tel_3"
+                android:text="@string/mine_tel_4"
                 android:textColor="#5f5f5f"
                 android:textSize="16sp" />
 
@@ -92,6 +95,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -107,7 +111,7 @@
                 android:id="@+id/mine_tel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="029-88879967"
+                android:text="029-85792830"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -118,7 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:gravity="center"
-        android:text="Copyright@2018-2020小梭易智出品"
-        android:textColor="@color/gray_999999"
+        android:text="西安小梭易智信息科技有限公司”提供应用及技术支持及版权所有\n小梭运维+”每时每刻，让您的任务管理更优异!"
+        android:textColor="@color/gray_666666"
         android:textSize="12sp" />
 </LinearLayout>
