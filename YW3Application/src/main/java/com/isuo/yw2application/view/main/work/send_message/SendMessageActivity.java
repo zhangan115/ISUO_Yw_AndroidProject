@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -243,9 +244,10 @@ public class SendMessageActivity extends BaseActivity implements SendMessageCont
         llFileList.removeAllViews();
         for (int i = 0; i < fileList.size(); i++) {
             FileItemLayout layout = new FileItemLayout(this);
+            layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             layout.setTag(i);
             layout.setData(new File(fileList.get(i)).getName(), i, fileClick);
-            llFileList.addView(layout);
+            llFileList.addView(layout,i);
         }
     }
 
