@@ -1,0 +1,125 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+def static releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+android {
+    signingConfigs {
+        debug {
+            keyAlias 'sito'
+            keyPassword '123456'
+            storeFile file('../sito_check.jks')
+            storePassword '123456'
+        }
+        relealse {
+            keyAlias 'sito'
+            keyPassword '123456'
+            storeFile file('../sito_check.jks')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.isuo.shuhe"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            abiFilters "armeabi", "x86_64"
+        }
+        multiDexEnabled true
+    }
+    flavorDimensions "default"
+    productFlavors {
+        shuhe_app_default {
+            applicationId "com.isuo.shuhe"
+            dimension "default"
+            resValue "string", "app_name", "小梭运维＋"
+            buildConfigField "String", "HOST", '"https://isuo.cloud/api"'
+            buildConfigField "String", "UMENG_CHANNEL", '"defaultChannel"'
+            manifestPlaceholders = [
+                    TASK_AFFINITY_VALUE: "android.task.isuo.shuhe.application",
+                    GETUI_APP_ID       : "7eUw8vtivP8DdZnxkp3WS3",
+                    GETUI_APP_KEY      : "fFaJpZLS6w9qwXLhF7b2H5",
+                    GETUI_APP_SECRET   : "qlhdtETNTP9VaX5mZGHFt8",
+                    UMENG_CHANNEL      : "defaultChannel",
+                    PACKAGE_NAME       : applicationId,
+            ]
+            multiDexEnabled true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "运维＋蜀河${variant.flavorName}_V${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}.apk"
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    //green dao 配置
+    greendao {
+        schemaVersion 3//版本号
+    }
+}
+
+repositories { flatDir { dirs 'libs' } }
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    implementation project(':Library')
+    implementation project(':DialogLib')
+    implementation "org.greenrobot:greendao:$rootProject.greenDaoVersion"
+    implementation(name: 'DateTimePicker', ext: 'aar')
+    implementation(name: 'MPChartLib', ext: 'aar')
+    implementation project(':AACRecordLibrary')
+    //三方view
+    implementation files('libs/SystemProperties.jar')
+    implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
+    implementation 'cn.bingoogolapple:bga-badgeview:1.1.3'
+    implementation 'com.huxq17.handygridview:handygridview:1.1.0'
+    implementation 'com.bigkoo:convenientbanner:2.0.5'
+
+    //统计，bug报警等
+    implementation 'com.umeng.sdk:common:1.5.3'
+    implementation 'com.umeng.sdk:analytics:7.5.3'
+//    implementation 'android.arch.persistence.room:runtime:1.0.0'
+//    annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
+    implementation files('libs/GetuiSDK2.14.2.0.jar')
+    //zxing
+    implementation(name: 'ZxingLibrary', ext: 'aar')
+    implementation 'com.google.zxing:core:3.3.1'
+    // 权限申请
+    implementation 'com.qw:soulpermission:1.1.8'
+
+    implementation project(':PopupLibrary')
+
+    implementation files('libs/alipaySdk-20180403.jar')
+    //file pick
+    implementation project(':FilePickLibrary')
+}

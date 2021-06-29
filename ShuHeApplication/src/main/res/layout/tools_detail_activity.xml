@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/color_division"
+        android:orientation="vertical">
+
+        <com.sito.library.widget.RecycleRefreshLoadLayout
+            android:id="@+id/refreshLoadLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.sito.library.widget.ExpendRecycleView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none" />
+        </com.sito.library.widget.RecycleRefreshLoadLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvToolsCustomerLocal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:textColor="@color/colorTextYellow"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/tvToolsBorrow"
+            android:layout_width="143dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorTextBlue"
+            android:gravity="center"
+            android:text="外借"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvToolsIn"
+            android:layout_width="143dp"
+            android:layout_height="match_parent"
+            android:background="#cbd7df"
+            android:gravity="center"
+            android:text="出库"
+            android:textColor="#94a3af"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvToolsReturn"
+            android:layout_width="83dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorTextBlue"
+            android:gravity="center"
+            android:text="归还"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvToolsCustomerAsk"
+            android:layout_width="83dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorTextYellow"
+            android:gravity="center"
+            android:text="催还"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

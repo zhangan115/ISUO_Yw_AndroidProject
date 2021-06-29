@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_ll_white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:padding="@dimen/DP_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_centerVertical="true">
+
+        <com.sito.library.widget.ExpendRecycleView
+            android:id="@+id/recycleViewId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/id_check_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:divider="@null"
+            android:listSelector="@color/transparent">
+
+        </ListView>
+    </RelativeLayout>
+</RelativeLayout>
