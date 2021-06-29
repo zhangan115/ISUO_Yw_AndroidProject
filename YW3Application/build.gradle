@@ -26,10 +26,10 @@ android {
         applicationId "com.isuo.yw3application"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
+        versionCode 3
         versionName "1.5"
         ndk {
-            abiFilters "armeabi", "x86_64"
+            abiFilters "armeabi", "x86_64","x86"
         }
         multiDexEnabled true
     }
