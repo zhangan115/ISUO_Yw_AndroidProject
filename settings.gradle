@@ -1,5 +1,5 @@
 //project
-include ':YwApplication',':YW2Application', ':YW3Application'
+include ':YwApplication',':YW2Application', ':YW3Application', ':ShuHeApplication'
 //library
 include ':Library',':DialogLib', ':PopupLibrary', ':AACRecordLibrary'
 include ':materialprogressbar', 'DateTimePicker',':MPChartLib',':FilePickLibrary'
