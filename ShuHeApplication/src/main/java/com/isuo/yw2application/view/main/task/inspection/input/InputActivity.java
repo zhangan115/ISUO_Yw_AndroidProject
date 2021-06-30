@@ -124,11 +124,12 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
                 startActivityForResult(intent, ACTION_START_ALARM);
                 break;
             case R.id.tv_finish_input:
-                if (roomDb != null && roomDb.getTakePhotoPosition() == taskEquipmentBean.getTaskEquipmentId()&&TextUtils.isEmpty(roomDb.getUploadPhotoUrl())) {
-                    toUploadEquipmentPhoto();
-                } else {
-                    toCheckUploadData();
-                }
+                toCheckUploadData();
+//                if (roomDb != null && roomDb.getTakePhotoPosition() == taskEquipmentBean.getTaskEquipmentId()&&TextUtils.isEmpty(roomDb.getUploadPhotoUrl())) {
+//                    toUploadEquipmentPhoto();
+//                } else {
+//                    toCheckUploadData();
+//                }
                 break;
         }
     }

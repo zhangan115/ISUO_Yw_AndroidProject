@@ -131,7 +131,7 @@ public class SecurityPackageActivity extends WebActivity implements SecurityPack
     }
 
     private void startRoomList() {
-//        SPHelper.write(this, ConstantStr.SECURITY_INFO, String.valueOf(mTaskId), true);
+        SPHelper.write(this, ConstantStr.SECURITY_INFO, String.valueOf(mTaskId), true);
         Intent intent = new Intent(this, InspectionRoomActivity.class);
         intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, mTaskId);
         intent.putExtra(ConstantStr.KEY_BUNDLE_LONG_1, mSecurityId);
