@@ -39,7 +39,7 @@ android {
             applicationId "com.isuo.shuhe"
             dimension "default"
             resValue "string", "app_name", "蜀河运维＋"
-            buildConfigField "String", "HOST", '"https://isuo.cloud/api"'
+            buildConfigField "String", "HOST", '"https://isuo.cloud/shuhe/api"'
             buildConfigField "String", "UMENG_CHANNEL", '"defaultChannel"'
             manifestPlaceholders = [
                     TASK_AFFINITY_VALUE: "android.task.isuo.shuhe.application",
