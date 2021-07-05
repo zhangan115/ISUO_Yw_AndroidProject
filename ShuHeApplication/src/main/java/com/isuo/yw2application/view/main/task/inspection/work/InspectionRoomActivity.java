@@ -56,27 +56,30 @@ public class InspectionRoomActivity extends BaseActivity {
         if (TextUtils.isEmpty(taskStartType)) {
             taskStartType = ConstantStr.START_TYPE_0;
         }
-        if (!TextUtils.isEmpty(taskStartType) && taskStartType.equals(ConstantStr.START_TYPE_2)) {
+        if (taskStartType.equals(ConstantStr.START_TYPE_2) || taskStartType.equals(ConstantStr.START_TYPE_0)) {
             nfcAdapter = NfcAdapter.getDefaultAdapter(this);
             //拦截系统级的NFC扫描，例如扫描蓝牙
             mPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,
                     getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
             ndefMessage = new NdefMessage(new NdefRecord[]{Utils.newTextRecord("",
                     Locale.ENGLISH, true)});
-            if (nfcAdapter == null) {
-                Yw2Application.getInstance().showToast("当前设备不支持NFC");
-            } else if (!nfcAdapter.isEnabled()) {
-                new MaterialDialog.Builder(this)
-                        .content("请打开NFC功能")
-                        .negativeText("取消")
-                        .positiveText("确定")
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
-                            }
-                        })
-                        .show();
+            //只允许使用NFC开启任务
+            if (taskStartType.equals(ConstantStr.START_TYPE_2)) {
+                if (nfcAdapter == null) {
+                    Yw2Application.getInstance().showToast("当前设备不支持NFC");
+                } else if (!nfcAdapter.isEnabled()) {
+                    new MaterialDialog.Builder(this)
+                            .content("请打开NFC功能")
+                            .negativeText("取消")
+                            .positiveText("确定")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+                                }
+                            })
+                            .show();
+                }
             }
         }
         InspectionRoomFragment fragment = (InspectionRoomFragment) getSupportFragmentManager().findFragmentById(R.id.frame);

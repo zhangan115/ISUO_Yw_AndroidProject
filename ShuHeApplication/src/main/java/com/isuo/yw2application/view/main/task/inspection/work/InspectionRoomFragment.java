@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.task.inspection.work;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -17,6 +18,9 @@ import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.zxing.client.android.CaptureActivity;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.BroadcastAction;
@@ -36,14 +41,24 @@ import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
 import com.isuo.yw2application.mode.inspection.InspectionRepository;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.adduser.EmployeeActivity;
+import com.isuo.yw2application.view.main.device.list.EquipListActivity;
+import com.isuo.yw2application.view.main.equip.archives.EquipmentArchivesActivity;
 import com.isuo.yw2application.view.main.task.inspection.report.ReportActivity;
 import com.isuo.yw2application.widget.RoomListLayout;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.utils.DisplayUtil;
 import com.sito.library.utils.SystemUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 
 /**
@@ -63,6 +78,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     private long taskId;
     private int REQUEST_CODE = 200;
     private int REQUEST_CODE_START = 201;
+    private final int SCANNER_CODE = 202;
     private String taskStartType, taskStartDesc;
     private List<RoomListLayout> roomListLayouts;
     private boolean canScan = ConstantStr.ALPS.equals(SystemUtil.getDeviceBrand());
@@ -129,6 +145,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         if (TextUtils.isEmpty(taskStartType)) {
             taskStartType = ConstantStr.START_TYPE_0;
         }
+        setHasOptionsMenu(taskStartType.equals(ConstantStr.START_TYPE_0));
         myHandle = new MyHandle(new WeakReference<>(getActivity()));
         refreshUiReceiver = new RefreshUiReceiver();
         IntentFilter filter = new IntentFilter();
@@ -225,13 +242,34 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     @Override
     public void finishAllRoom() {
         getApp().showToast("已完成所有的检测");
-        getActivity().setResult(Activity.RESULT_OK);
-        getActivity().finish();
+        if (getActivity() != null) {
+            getActivity().setResult(Activity.RESULT_OK);
+            getActivity().finish();
+        }
     }
 
     @Override
     public void showMessage(String message) {
         getApp().showToast(message);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (taskStartType.equals(ConstantStr.START_TYPE_0)){
+            inflater.inflate(R.menu.menu_scan, menu);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (taskStartType.equals(ConstantStr.START_TYPE_0)){
+            if (item.getItemId()==R.id.menu_id_scan){
+                scan();
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -265,8 +303,32 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
             if (mPresenter != null && mList.size() > 0) {
                 mPresenter.loadRoomDataFromDb(taskId, mList);
             }
+        } else if (resultCode == Activity.RESULT_OK && requestCode == SCANNER_CODE) {
+            if (data != null) {
+                String result = data.getStringExtra(CaptureActivity.RESULT);
+                if (TextUtils.isEmpty(result)) {
+                    Yw2Application.getInstance().showToast("未找到数据,请从新扫码");
+                    return;
+                }
+                roomListBean = null;
+                for (int i = 0; i < mList.size(); i++) {
+                    if (mList.get(i).getRoom().getRoomId() == Long.parseLong(result)) {
+                        roomListBean = mList.get(i);
+                        mPosition = i;
+                        break;
+                    }
+                }
+                if (roomListBean == null) {
+                    getApp().showToast("无匹配的属地");
+                } else {
+                    receiverAction();
+                }
+            } else {
+                Yw2Application.getInstance().showToast("扫码失败");
+            }
         }
     }
+
 
     private void addRoomToLayout() {
         mRoomsLayout.removeAllViews();
@@ -459,11 +521,12 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     }
 
     private void startScan() {
-        getApp().showToast("扫描中...");
-        Intent intent = new Intent();
-        intent.setAction(ConstantStr.STOP_SCAN);
-        getActivity().sendBroadcast(intent);
         if (canScan) {
+            getApp().showToast("扫描中...");
+            Intent intent = new Intent();
+            intent.setAction(ConstantStr.STOP_SCAN);
+            if (getActivity() != null)
+                getActivity().sendBroadcast(intent);
             try {
                 SystemProperties.set("persist.sys.scanstopimme", "true");
                 SystemClock.sleep(20);
@@ -472,9 +535,33 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
                 canScan = false;
                 return;
             }
+            intent.setAction(ConstantStr.START_SCAN_ACTION);
+            getActivity().sendBroadcast(intent, null);
+        } else {
+            scan();
         }
-        intent.setAction(ConstantStr.START_SCAN_ACTION);
-        getActivity().sendBroadcast(intent, null);
+    }
+
+    private void scan(){
+        SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.CAMERA,
+                new CheckRequestPermissionListener() {
+                    @Override
+                    public void onPermissionOk(Permission permission) {
+                        startActivityForResult(new Intent(getActivity(), CaptureActivity.class), SCANNER_CODE);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(Permission permission) {
+                        if (getActivity() != null)
+                            new AppSettingsDialog.Builder(getActivity())
+                                    .setRationale(getString(R.string.need_camera_setting))
+                                    .setTitle(getString(R.string.request_permissions))
+                                    .setPositiveButton(getString(R.string.sure))
+                                    .setNegativeButton(getString(R.string.cancel))
+                                    .build()
+                                    .show();
+                    }
+                });
     }
 
 
