@@ -72,7 +72,7 @@ android {
     }
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "运维＋蜀河${variant.flavorName}_V${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}.apk"
+            outputFileName = "蜀河运维＋${variant.flavorName}_V${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}.apk"
         }
     }
     sourceSets {
