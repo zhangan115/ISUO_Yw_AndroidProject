@@ -26,10 +26,10 @@ android {
         applicationId "com.isuo.yw3application"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "1.5"
+        versionCode 4
+        versionName "1.5.1"
         ndk {
-            abiFilters "armeabi", "x86_64","x86"
+            abiFilters "armeabi"
         }
         multiDexEnabled true
     }
@@ -109,9 +109,11 @@ dependencies {
     implementation 'com.umeng.sdk:common:1.5.3'
     implementation 'com.umeng.sdk:analytics:7.5.3'
     implementation files('libs/GetuiSDK2.14.2.0.jar')
-    //zxing
-    implementation(name: 'ZxingLibrary', ext: 'aar')
-    implementation 'com.google.zxing:core:3.3.1'
+    //二维码扫码
+//    implementation(name: 'ZxingLibrary', ext: 'aar')
+//    implementation 'com.google.zxing:core:3.3.1'
+    //Android Support 版本
+    implementation 'com.king.zxing:zxing-lite:1.1.9'
     // 权限申请
     implementation 'com.qw:soulpermission:1.1.8'
 

@@ -3,18 +3,13 @@ package com.isuo.yw2application.view.main.work;
 import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.zxing.client.android.CaptureActivity;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.BroadcastAction;
@@ -39,7 +32,6 @@ import com.isuo.yw2application.view.main.MainActivity;
 import com.isuo.yw2application.view.main.about.AboutActivity;
 import com.isuo.yw2application.view.main.device.list.EquipListActivity;
 import com.isuo.yw2application.view.main.equip.archives.EquipmentArchivesActivity;
-import com.isuo.yw2application.view.main.work.all.PayGridViewAdapter;
 import com.isuo.yw2application.view.main.work.all.WorkItemAllActivity;
 import com.isuo.yw2application.view.main.work.all.WorkItemAllIntent;
 import com.isuo.yw2application.view.main.work.all.widget.WorkItemGridView;
@@ -48,6 +40,7 @@ import com.isuo.yw2application.view.main.work.pay.PayActivity;
 import com.isuo.yw2application.view.main.work.safe_manager.SafeManagerActivity;
 import com.isuo.yw2application.view.main.work.sos.SOSActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
+import com.king.zxing.CaptureActivity;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
@@ -57,7 +50,6 @@ import com.sito.library.utils.GlideUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -337,7 +329,7 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
             }
         } else if (resultCode == Activity.RESULT_OK && requestCode == SCANNER_CODE) {
             if (data != null) {
-                String result = data.getStringExtra(CaptureActivity.RESULT);
+                String result = data.getStringExtra(CaptureActivity.KEY_RESULT);
                 if (TextUtils.isEmpty(result)){
                     Yw2Application.getInstance().showToast("未找到数据,请从新扫码");
                     return;

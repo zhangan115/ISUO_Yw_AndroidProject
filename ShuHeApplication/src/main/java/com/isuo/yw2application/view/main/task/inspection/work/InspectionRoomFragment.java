@@ -28,7 +28,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.zxing.client.android.CaptureActivity;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.BroadcastAction;
@@ -45,6 +44,7 @@ import com.isuo.yw2application.view.main.device.list.EquipListActivity;
 import com.isuo.yw2application.view.main.equip.archives.EquipmentArchivesActivity;
 import com.isuo.yw2application.view.main.task.inspection.report.ReportActivity;
 import com.isuo.yw2application.widget.RoomListLayout;
+import com.king.zxing.CaptureActivity;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
@@ -305,7 +305,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
             }
         } else if (resultCode == Activity.RESULT_OK && requestCode == SCANNER_CODE) {
             if (data != null) {
-                String result = data.getStringExtra(CaptureActivity.RESULT);
+                String result = data.getStringExtra(CaptureActivity.KEY_RESULT);
                 if (TextUtils.isEmpty(result)) {
                     Yw2Application.getInstance().showToast("未找到数据,请从新扫码");
                     return;

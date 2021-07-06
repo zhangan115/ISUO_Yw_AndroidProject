@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.zxing.client.android.CaptureActivity;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
@@ -28,6 +27,7 @@ import com.isuo.yw2application.view.main.device.search.EquipSearchActivity;
 import com.isuo.yw2application.view.main.equip.archives.EquipmentArchivesActivity;
 import com.isuo.yw2application.view.main.work.pay.PayActivity;
 import com.isuo.yw2application.widget.WorkItemLayout;
+import com.king.zxing.CaptureActivity;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.qw.soul.permission.SoulPermission;
@@ -329,7 +329,7 @@ public class DeviceFragment extends MvpFragmentV4<DeviceContract.Presenter> impl
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == SCANNER_CODE) {
             if (data != null) {
-                String result = data.getStringExtra(CaptureActivity.RESULT);
+                String result = data.getStringExtra(CaptureActivity.KEY_RESULT);
                 if (TextUtils.isEmpty(result)){
                     Yw2Application.getInstance().showToast("未找到数据,请从新扫码");
                     return;
