@@ -31,12 +31,12 @@
 
                 <ImageView
                     android:id="@+id/setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="28dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/uv_logo" />
+                    android:src="@mipmap/ic_launcher" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -66,6 +66,7 @@
                             android:layout_height="match_parent"
                             android:background="@color/login_enter_bg"
                             android:freezesText="true"
+                            android:gravity="center_vertical"
                             android:hint="@string/hit_login_user"
                             android:inputType="textPersonName"
                             android:lines="1"
@@ -100,6 +101,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@color/login_enter_bg"
+                            android:gravity="center_vertical"
                             android:hint="@string/hit_login_pass"
                             android:inputType="textPassword"
                             android:lines="1"
