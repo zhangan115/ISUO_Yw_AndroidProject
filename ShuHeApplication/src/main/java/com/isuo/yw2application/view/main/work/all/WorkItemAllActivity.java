@@ -64,13 +64,13 @@ public class WorkItemAllActivity extends BaseActivity implements WorkItemAllCont
         if (menuItem != null) {
             menuItem.setTitle("当前为" + bean.getMenuName());
         }
-        return true;
+        return false;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         startActivity(new Intent(WorkItemAllActivity.this, PayActivity.class));
-        return true;
+        return false;
 
     }
 
@@ -114,7 +114,7 @@ public class WorkItemAllActivity extends BaseActivity implements WorkItemAllCont
         payGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(WorkItemAllActivity.this, PayActivity.class));
+//                startActivity(new Intent(WorkItemAllActivity.this, PayActivity.class));
             }
         });
         if (mPresenter != null) {

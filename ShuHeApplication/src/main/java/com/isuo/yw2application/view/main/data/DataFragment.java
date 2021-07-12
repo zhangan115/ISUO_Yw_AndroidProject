@@ -159,66 +159,66 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
                 startActivity(new Intent(getActivity(), PayActivity.class));
                 break;
             case R.id.itemLayout1:
-                if (payMenuBean.getDeptSo() == 0) {
-                    showPayDialog();
-                    return;
-                }
+//                if (payMenuBean.getDeptSo() == 0) {
+//                    showPayDialog();
+//                    return;
+//                }
                 startActivity(new Intent(getActivity(), StatisticsPartActivity.class));
                 break;
             case R.id.itemLayout2:
-                if (payMenuBean.getPersonSo() == 0) {
-                    showPayDialog();
-                    return;
-                }
+//                if (payMenuBean.getPersonSo() == 0) {
+//                    showPayDialog();
+//                    return;
+//                }
                 startActivity(new Intent(getContext(), StaffCountActivity.class));
                 break;
             case R.id.itemLayout3:
-                if (payMenuBean.getPersonSo() == 0) {
-                    showPayDialog();
-                    return;
-                }
+//                if (payMenuBean.getPersonSo() == 0) {
+//                    showPayDialog();
+//                    return;
+//                }
                 startActivity(new Intent(getActivity(), FaultReportActivity.class));
                 break;
             case R.id.itemLayout4:
-                if (payMenuBean.getPersonSo() == 0) {
-                    showPayDialog();
-                    return;
-                }
+//                if (payMenuBean.getPersonSo() == 0) {
+//                    showPayDialog();
+//                    return;
+//                }
                 startActivity(new Intent(getContext(), WorkCountActivity.class));
                 break;
             case R.id.itemLayout5:
-                if (payMenuBean.getFaultSo() == 0) {
-                    showPayDialog();
-                    return;
-                }
+//                if (payMenuBean.getFaultSo() == 0) {
+//                    showPayDialog();
+//                    return;
+//                }
                 startActivity(new Intent(getActivity(), FaultTypeActivity.class));
                 break;
             case R.id.itemLayout6:
-                if (payMenuBean.getFaultSo() == 0) {
-                    showPayDialog();
-                    return;
-                }
+//                if (payMenuBean.getFaultSo() == 0) {
+//                    showPayDialog();
+//                    return;
+//                }
                 startActivity(new Intent(getActivity(), DealAlarmCountActivity.class));
                 break;
             case R.id.itemLayout7:
-                if (payMenuBean.getFaultSo() == 0) {
-                    showPayDialog();
-                    return;
-                }
+//                if (payMenuBean.getFaultSo() == 0) {
+//                    showPayDialog();
+//                    return;
+//                }
                 startActivity(new Intent(getActivity(), FaultLineActivity.class));
                 break;
             case R.id.itemLayout8:
-                if (payMenuBean.getSelfSo() == 0) {
-                    showPayDialog();
-                    return;
-                }
+//                if (payMenuBean.getSelfSo() == 0) {
+//                    showPayDialog();
+//                    return;
+//                }
                 startActivity(new Intent(getActivity(), StatisticsPersonActivity.class));
                 break;
             case R.id.itemLayout9:
-                if (payMenuBean.getSelectPersonCount() == 0) {
-                    showPayDialog();
-                    return;
-                }
+//                if (payMenuBean.getSelectPersonCount() == 0) {
+//                    showPayDialog();
+//                    return;
+//                }
                 startActivity(new Intent(getActivity(), ContactActivity.class));
                 break;
         }

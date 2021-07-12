@@ -274,18 +274,20 @@ public class WorkFragment extends MvpFragmentV4<WorkContract.Presenter> implemen
                 startActivity(intent);
                 break;
             case R.id.workItem9:
-                if (payMenuBean != null && payMenuBean.getSafetySo() == 1) {
-                    startActivity(new Intent(getActivity(), SOSActivity.class));
-                } else {
-                    showPayDialog();
-                }
+//                if (payMenuBean != null && payMenuBean.getSafetySo() == 1) {
+//                    startActivity(new Intent(getActivity(), SOSActivity.class));
+//                } else {
+//                    showPayDialog();
+//                }
+                startActivity(new Intent(getActivity(), SOSActivity.class));
                 break;
             case R.id.workItem10:
-                if (payMenuBean != null && payMenuBean.getSafetySo() == 1) {
-                    startActivity(new Intent(getActivity(), SafeManagerActivity.class));
-                } else {
-                    showPayDialog();
-                }
+//                if (payMenuBean != null && payMenuBean.getSafetySo() == 1) {
+//                    startActivity(new Intent(getActivity(), SafeManagerActivity.class));
+//                } else {
+//                    showPayDialog();
+//                }
+                startActivity(new Intent(getActivity(), SafeManagerActivity.class));
                 break;
         }
     }

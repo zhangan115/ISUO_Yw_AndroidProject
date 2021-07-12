@@ -149,18 +149,18 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
                 startActivity(taskIntent2);
                 break;
             case R.id.taskIv3:
-                if (payMenuBean.getIncrementWorkSo() == 0) {
-                    showPayDialog();
-                    return;
-                }
+//                if (payMenuBean.getIncrementWorkSo() == 0) {
+//                    showPayDialog();
+//                    return;
+//                }
                 Intent taskIntent3 = new Intent(getActivity(), GenerateIncrementActivity.class);
                 startActivity(taskIntent3);
                 break;
             case R.id.taskIv4:
-                if (payMenuBean.getIncrementWorkSo() == 0) {
-                    showPayDialog();
-                    return;
-                }
+//                if (payMenuBean.getIncrementWorkSo() == 0) {
+//                    showPayDialog();
+//                    return;
+//                }
                 Intent taskIntent4 = new Intent(getActivity(), WorkIncrementActivity.class);
                 startActivity(taskIntent4);
                 break;

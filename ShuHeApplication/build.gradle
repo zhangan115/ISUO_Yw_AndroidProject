@@ -38,7 +38,7 @@ android {
         shuhe_app_default {
             applicationId "com.isuo.shuhe"
             dimension "default"
-            resValue "string", "app_name", "大唐蜀河智能运维"
+            resValue "string", "app_name", "蜀河电厂智能任务管理"
             buildConfigField "String", "HOST", '"https://isuo.cloud/shuhe/api"'
 //            buildConfigField "String", "HOST", '"https://isuo.cloud/api"'
             buildConfigField "String", "UMENG_CHANNEL", '"defaultChannel"'
