@@ -79,7 +79,9 @@ public class BaseFragment extends AbsBaseFragment implements DialogInterface.OnC
                     .cancelListener(this)
                     .progressIndeterminateStyle(false).build();
         }
-        loadingDialog.show();
+        if (!loadingDialog.isShowing()) {
+            loadingDialog.show();
+        }
         return loadingDialog;
     }
 

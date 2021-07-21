@@ -72,7 +72,7 @@ android {
     }
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "大唐蜀河智能运维${variant.flavorName}_V${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}.apk"
+            outputFileName = "蜀河电厂智能任务管理${variant.flavorName}_V${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}.apk"
         }
     }
     sourceSets {
@@ -82,7 +82,7 @@ android {
     }
     //green dao 配置
     greendao {
-        schemaVersion 3//版本号
+        schemaVersion 4//版本号
     }
 }
 
