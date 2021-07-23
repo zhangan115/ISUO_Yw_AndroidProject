@@ -16,7 +16,6 @@ import org.greenrobot.greendao.annotation.Id;
 @Entity(nameInDb = "share_data")
 public class ShareDataDb implements Parcelable {
 
-    @Id
     private long inspectionId;
     private String value;
     private int type;//类型
@@ -24,6 +23,7 @@ public class ShareDataDb implements Parcelable {
     private long roomId;
     private long equipmentId;
     private String chooseInspectionName;
+    @Id
     private long dataItemId;
     private String localPhoto;
     private long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();

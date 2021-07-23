@@ -984,6 +984,7 @@ public class InspectionRepository implements InspectionSourceData {
                                                     , ShareDataDbDao.Properties.TaskId.eq(equipmentDataDb.getTaskId())
                                                     , ShareDataDbDao.Properties.RoomId.eq(equipmentDataDb.getRoomId())
                                                     , ShareDataDbDao.Properties.InspectionId.eq(equipmentDataDb.getInspectionId())
+                                                    , ShareDataDbDao.Properties.DataItemId.eq(equipmentDataDb.getType())
                                                     , ShareDataDbDao.Properties.Type.eq(equipmentDataDb.getType())
                                                     , ShareDataDbDao.Properties.Value.isNotNull()
                                             ).unique();
