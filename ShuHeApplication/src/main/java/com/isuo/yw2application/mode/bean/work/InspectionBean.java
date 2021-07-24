@@ -29,6 +29,7 @@ public class InspectionBean implements Parcelable{
     private User receiveUser;
     private List<User> users;
     private List<ExecutorUserList> executorUserList;//指定的执行人
+    private String regionName;
 
     public User getReceiveUser() {
         return receiveUser;
@@ -158,6 +159,14 @@ public class InspectionBean implements Parcelable{
         this.rooms = rooms;
     }
 
+    public String getRegionName() {
+        return regionName;
+    }
+
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
+    }
+
     public static class SecurityPackage {
 
         /**
@@ -237,6 +246,7 @@ public class InspectionBean implements Parcelable{
         dest.writeParcelable(this.receiveUser, flags);
         dest.writeTypedList(this.users);
         dest.writeTypedList(this.executorUserList);
+        dest.writeString(this.regionName);
     }
 
     public InspectionBean() {
@@ -258,6 +268,7 @@ public class InspectionBean implements Parcelable{
         this.receiveUser = in.readParcelable(User.class.getClassLoader());
         this.users = in.createTypedArrayList(User.CREATOR);
         this.executorUserList = in.createTypedArrayList(ExecutorUserList.CREATOR);
+        this.regionName = in.readString();
     }
 
     public static final Creator<InspectionBean> CREATOR = new Creator<InspectionBean>() {
