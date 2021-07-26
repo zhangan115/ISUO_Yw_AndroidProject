@@ -26,8 +26,8 @@ android {
         applicationId "com.isuo.shuhe"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
         ndk {
             abiFilters "armeabi","x86","x86_64"
         }
@@ -82,7 +82,7 @@ android {
     }
     //green dao 配置
     greendao {
-        schemaVersion 4//版本号
+        schemaVersion 3//版本号
     }
 }
 
