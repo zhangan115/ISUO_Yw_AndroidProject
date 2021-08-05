@@ -17,6 +17,8 @@ interface MainContract {
 
         void getNewVersion();
 
+        void getNewVersionWithoutTip();
+
         void uploadUserPhoto(File file);
 
         void exitApp();

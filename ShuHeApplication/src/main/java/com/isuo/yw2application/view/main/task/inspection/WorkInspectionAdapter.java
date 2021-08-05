@@ -1,7 +1,9 @@
 package com.isuo.yw2application.view.main.task.inspection;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +14,14 @@ import android.widget.TextView;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.common.ConstantInt;
+import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.work.InspectionBean;
 import com.isuo.yw2application.mode.bean.work.InspectionRegionModel;
+import com.isuo.yw2application.view.main.task.inspection.security.SecurityPackageActivity;
+import com.isuo.yw2application.view.main.task.inspection.work.InspectionRoomActivity;
+import com.orhanobut.logger.Logger;
 import com.sito.library.utils.DataUtil;
+import com.sito.library.utils.SPHelper;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 
 import java.text.MessageFormat;
@@ -45,6 +52,11 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
     interface ItemClickListener {
 
         void onItemClick(InspectionBean inspectionBean);
+
+        void operationTask(String id,int position);
+
+        void toStartActivity(long taskId,long securityId);
+
 
     }
 
@@ -184,6 +196,8 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
                     }
                 }
                 vHolder.tv_executor_inspection_user.setText(sb.toString());
+            }else {
+                vHolder.tv_executor_inspection_user.setText("");
             }
             vHolder.tv_executor_user_type.setText("被指派人:");
             vHolder.actualStartTimeTv.setText("实际开始:");
@@ -191,13 +205,21 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
         } else if (data.getTaskState() == ConstantInt.TASK_STATE_2) {
             vHolder.ll_actual_time.setVisibility(View.GONE);
             vHolder.tv_executor_user_type.setText("领 取 人:");
-            vHolder.tv_executor_inspection_user.setText(data.getReceiveUser().getRealName());
+            if (data.getReceiveUser()!=null){
+                vHolder.tv_executor_inspection_user.setText(data.getReceiveUser().getRealName());
+            }else {
+                vHolder.tv_executor_inspection_user.setText("");
+            }
             vHolder.actualStartTimeTv.setText("实际开始:");
             vHolder.startTaskTv.setText("开始任务");
         } else if (data.getTaskState() == ConstantInt.TASK_STATE_3) {
             vHolder.ll_actual_time.setVisibility(View.GONE);
             vHolder.tv_executor_user_type.setText("领 取 人:");
-            vHolder.tv_executor_inspection_user.setText(data.getReceiveUser().getRealName());
+            if (data.getReceiveUser()!=null){
+                vHolder.tv_executor_inspection_user.setText(data.getReceiveUser().getRealName());
+            }else {
+                vHolder.tv_executor_inspection_user.setText("");
+            }
             vHolder.actualStartTimeTv.setText("实际开始:");
             vHolder.startTaskTv.setText("开始任务");
         } else if (data.getTaskState() == ConstantInt.TASK_STATE_4) {
@@ -206,13 +228,15 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
             vHolder.tv_time_actual.setText(DataUtil.timeFormat(data.getStartTime(), "yyyy-MM-dd HH:mm"));
             vHolder.tv_time_actual_end.setText(DataUtil.timeFormat(data.getEndTime(), "yyyy-MM-dd HH:mm"));
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < data.getUsers().size(); i++) {
-                if (data.getUsers().get(i) == null) {
-                    continue;
-                }
-                sb.append(data.getUsers().get(i).getRealName());
-                if (i != data.getUsers().size() - 1) {
-                    sb.append("、");
+            if (data.getUsers()!=null){
+                for (int i = 0; i < data.getUsers().size(); i++) {
+                    if (data.getUsers().get(i) == null) {
+                        continue;
+                    }
+                    sb.append(data.getUsers().get(i).getRealName());
+                    if (i != data.getUsers().size() - 1) {
+                        sb.append("、");
+                    }
                 }
             }
             vHolder.tv_executor_inspection_user.setText(sb.toString());
@@ -220,10 +244,12 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
             vHolder.startTaskTv.setText("开始任务");
         }
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < data.getRooms().size(); i++) {
-            sb.append(data.getRooms().get(i));
-            if (i != data.getRooms().size() - 1) {
-                sb.append("、");
+        if (data.getRooms()!=null){
+            for (int i = 0; i < data.getRooms().size(); i++) {
+                sb.append(data.getRooms().get(i));
+                if (i != data.getRooms().size() - 1) {
+                    sb.append("、");
+                }
             }
         }
         vHolder.tv_belong_place.setText(sb.toString());
@@ -253,7 +279,23 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
         vHolder.startTaskLayout.setTag(R.id.tag_position, childPosition);
         vHolder.startTaskLayout.setTag(R.id.tag_task, data.getTaskId());
         vHolder.startTaskLayout.setTag(R.id.tag_position_1, data.getSecurityPackage() == null ? -1L : data.getSecurityPackage().getSecurityId());
-        vHolder.startTaskLayout.setOnClickListener(startTaskListener);
+        vHolder.startTaskLayout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (listener == null) {
+                    return;
+                }
+                int position = (int) v.getTag(R.id.tag_position);
+                if (data.getTaskState() == ConstantInt.TASK_STATE_1) {
+                    listener.operationTask(String.valueOf(data.getTaskId()),position);
+                    return;
+                }
+                long taskId = (long) v.getTag(R.id.tag_task);
+                long securityId = (long) v.getTag(R.id.tag_position_1);
+                listener.toStartActivity(taskId,securityId);
+            }
+        });
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

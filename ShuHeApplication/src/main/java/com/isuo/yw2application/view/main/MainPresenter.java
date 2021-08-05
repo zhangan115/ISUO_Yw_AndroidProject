@@ -75,6 +75,21 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public void getNewVersionWithoutTip() {
+        mSubscription.add(mRepository.getNewVersion(new CustomerDataSource.NewVersionCallBack() {
+            @Override
+            public void newVersion(NewVersion result) {
+                mView.newVersionDialog(result);
+            }
+
+            @Override
+            public void noNewVersion() {
+              
+            }
+        }));
+    }
+
+    @Override
     public void uploadUserPhoto(File file) {
         mSubscription.add(mRepository.uploadUserPhoto(file, new IObjectCallBack<String>() {
             @Override

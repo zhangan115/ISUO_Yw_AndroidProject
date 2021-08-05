@@ -129,6 +129,9 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
             mainPresenter.postCidInfo(Yw2Application.getInstance().getCid());
             Logger.d(Yw2Application.getInstance().getCid());
         }
+        if (mainPresenter!=null){
+            mainPresenter.getNewVersionWithoutTip();
+        }
     }
 
     private void initView() {

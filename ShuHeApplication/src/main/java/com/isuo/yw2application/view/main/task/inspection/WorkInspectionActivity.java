@@ -298,13 +298,39 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
 //        });
         inspectionAdapter = new WorkInspectionAdapter(this, expandableListView, R.layout.item_equip_group, R.layout.item_day_inspection);
         expandableListView.setAdapter(inspectionAdapter);
-        inspectionAdapter.setStartTaskListener(startTaskListener);
+//        inspectionAdapter.setStartTaskListener(startTaskListener);
         inspectionAdapter.setItemListener(new WorkInspectionAdapter.ItemClickListener() {
             @Override
             public void onItemClick(InspectionBean inspectionBean) {
                 Intent intent = new Intent(WorkInspectionActivity.this, InspectDetailActivity.class);
                 intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, inspectionBean.getTaskId());
                 intent.putExtra(ConstantStr.KEY_BUNDLE_STR, inspectionBean.getTaskName());
+                startActivity(intent);
+            }
+
+            @Override
+            public void operationTask(String id, int position) {
+                if (isClick) {
+                    return;
+                }
+                mPresenter.operationTask(id,position);
+            }
+
+            @Override
+            public void toStartActivity(long taskId, long securityId) {
+                if (isClick) {
+                    return;
+                }
+                Intent intent = new Intent();
+                if (!SPHelper.readBoolean(WorkInspectionActivity.this
+                        , ConstantStr.SECURITY_INFO, String.valueOf(taskId), false) && securityId != -1) {
+                    intent.setClass(WorkInspectionActivity.this, SecurityPackageActivity.class);
+                } else {
+                    intent.setClass(WorkInspectionActivity.this, InspectionRoomActivity.class);
+                }
+                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, taskId);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG_1, securityId);
+                isClick = true;
                 startActivity(intent);
             }
         });
@@ -514,6 +540,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                 return;
             }
             int position = (int) v.getTag(R.id.tag_position);
+
             if (mList.get(position).getTaskState() == ConstantInt.TASK_STATE_1 && mPresenter != null) {
                 mPresenter.operationTask(String.valueOf(mList.get(position).getTaskId()), position);
                 return;
