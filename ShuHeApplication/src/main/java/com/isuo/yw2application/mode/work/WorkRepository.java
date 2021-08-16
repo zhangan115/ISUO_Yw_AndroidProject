@@ -21,14 +21,6 @@ import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.PayMenuBean;
 import com.isuo.yw2application.mode.bean.check.FaultList;
-import com.isuo.yw2application.mode.bean.db.InspectionTaskDb;
-import com.isuo.yw2application.mode.bean.db.InspectionTaskDbDao;
-import com.isuo.yw2application.mode.bean.db.RoomDb;
-import com.isuo.yw2application.mode.bean.db.RoomDbDao;
-import com.isuo.yw2application.mode.bean.inspection.DataItemValueListBean;
-import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
-import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
-import com.isuo.yw2application.mode.bean.inspection.TaskEquipmentBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulBean;
 import com.isuo.yw2application.mode.bean.today.TodayToDoBean;
 import com.isuo.yw2application.mode.bean.work.AwaitWorkBean;
@@ -38,7 +30,6 @@ import com.isuo.yw2application.mode.bean.work.InspectionDataBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.isuo.yw2application.utils.ACache;
-import com.sito.library.utils.SPHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -179,7 +170,7 @@ public class WorkRepository implements WorkDataSource {
                 .observeOn(Schedulers.io())
                 .flatMap((Func1<String, Observable<List<InspectionBean>>>) s -> {
                     if (TextUtils.isEmpty(s)){
-                        return Observable.just(new ArrayList<>());
+                        return Observable.just(null);
                     }
                     Type type = new TypeToken<List<InspectionBean>>() {
                     }.getType();
@@ -187,7 +178,11 @@ public class WorkRepository implements WorkDataSource {
                     return Observable.just(inspectionBeans);
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(callBack::onSuccess);
+                .subscribe(inspectionBeans -> {
+                    if (inspectionBeans!=null&&inspectionBeans.size()>0){
+                        callBack.onSuccess(inspectionBeans);
+                    }
+                });
         Observable<Bean<List<InspectionBean>>> observable =
                 Api.createRetrofit().create(WorkApi.class).getInspection(jsonObject.toString());
         return new ApiCallBack<List<InspectionBean>>(observable) {

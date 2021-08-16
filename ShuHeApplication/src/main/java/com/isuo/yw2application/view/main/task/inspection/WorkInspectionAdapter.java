@@ -48,9 +48,9 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
 
         void onItemClick(InspectionBean inspectionBean);
 
-        void operationTask(String id,int groupPosition,int childPosition);
+        void operationTask(String id, int groupPosition, int childPosition);
 
-        void toStartActivity(long taskId,long securityId);
+        void toStartActivity(long taskId, long securityId);
 
 
     }
@@ -124,7 +124,18 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
         }
         holder.mPlace.setText(data.get(groupPosition).getRegionName());
         holder.mCount.setVisibility(View.GONE);
-        holder.unitTv.setVisibility(View.GONE);
+        holder.unitTv.setVisibility(View.VISIBLE);
+        int notFinishCount = 0;
+        int taskCount = 0;
+        if (data.get(groupPosition).getInspectionBeanList() != null) {
+            for (int i = 0; i < data.get(groupPosition).getInspectionBeanList().size(); i++) {
+                if (data.get(groupPosition).getInspectionBeanList().get(i).getTaskState() < ConstantInt.TASK_STATE_4) {
+                    notFinishCount++;
+                }
+            }
+            taskCount = data.get(groupPosition).getInspectionBeanList().size();
+        }
+        holder.unitTv.setText(MessageFormat.format("总数:{0} 未完成:{1}", taskCount, notFinishCount));
         if (isExpanded) {
             holder.stateIv.setImageDrawable(context.getResources().getDrawable(R.drawable.bg_employee_arrow_open));
         } else {
@@ -191,7 +202,7 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
                     }
                 }
                 vHolder.tv_executor_inspection_user.setText(sb.toString());
-            }else {
+            } else {
                 vHolder.tv_executor_inspection_user.setText("");
             }
             vHolder.tv_executor_user_type.setText("被指派人:");
@@ -200,9 +211,9 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
         } else if (data.getTaskState() == ConstantInt.TASK_STATE_2) {
             vHolder.ll_actual_time.setVisibility(View.GONE);
             vHolder.tv_executor_user_type.setText("领 取 人:");
-            if (data.getReceiveUser()!=null){
+            if (data.getReceiveUser() != null) {
                 vHolder.tv_executor_inspection_user.setText(data.getReceiveUser().getRealName());
-            }else {
+            } else {
                 vHolder.tv_executor_inspection_user.setText("");
             }
             vHolder.actualStartTimeTv.setText("实际开始:");
@@ -210,9 +221,9 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
         } else if (data.getTaskState() == ConstantInt.TASK_STATE_3) {
             vHolder.ll_actual_time.setVisibility(View.GONE);
             vHolder.tv_executor_user_type.setText("领 取 人:");
-            if (data.getReceiveUser()!=null){
+            if (data.getReceiveUser() != null) {
                 vHolder.tv_executor_inspection_user.setText(data.getReceiveUser().getRealName());
-            }else {
+            } else {
                 vHolder.tv_executor_inspection_user.setText("");
             }
             vHolder.actualStartTimeTv.setText("实际开始:");
@@ -223,7 +234,7 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
             vHolder.tv_time_actual.setText(DataUtil.timeFormat(data.getStartTime(), "yyyy-MM-dd HH:mm"));
             vHolder.tv_time_actual_end.setText(DataUtil.timeFormat(data.getEndTime(), "yyyy-MM-dd HH:mm"));
             StringBuilder sb = new StringBuilder();
-            if (data.getUsers()!=null){
+            if (data.getUsers() != null) {
                 for (int i = 0; i < data.getUsers().size(); i++) {
                     if (data.getUsers().get(i) == null) {
                         continue;
@@ -239,7 +250,7 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
             vHolder.startTaskTv.setText("开始任务");
         }
         StringBuilder sb = new StringBuilder();
-        if (data.getRooms()!=null){
+        if (data.getRooms() != null) {
             for (int i = 0; i < data.getRooms().size(); i++) {
                 sb.append(data.getRooms().get(i));
                 if (i != data.getRooms().size() - 1) {
@@ -285,12 +296,12 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
                 int groupPosition = (int) v.getTag(R.id.tag_position_2);
                 int childPosition = (int) v.getTag(R.id.tag_position);
                 if (data.getTaskState() == ConstantInt.TASK_STATE_1) {
-                    listener.operationTask(String.valueOf(data.getTaskId()),groupPosition,childPosition);
+                    listener.operationTask(String.valueOf(data.getTaskId()), groupPosition, childPosition);
                     return;
                 }
                 long taskId = (long) v.getTag(R.id.tag_task);
                 long securityId = (long) v.getTag(R.id.tag_position_1);
-                listener.toStartActivity(taskId,securityId);
+                listener.toStartActivity(taskId, securityId);
             }
         });
         convertView.setOnClickListener(new View.OnClickListener() {

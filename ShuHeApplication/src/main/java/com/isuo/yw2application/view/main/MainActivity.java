@@ -37,6 +37,7 @@ import com.isuo.yw2application.mode.bean.db.ShareDataDb;
 import com.isuo.yw2application.mode.bean.db.TaskDb;
 import com.isuo.yw2application.mode.bean.db.UserInfo;
 import com.isuo.yw2application.mode.bean.db.Voice;
+import com.isuo.yw2application.utils.ACache;
 import com.isuo.yw2application.utils.PhotoUtils;
 import com.isuo.yw2application.utils.UpdateManager;
 import com.isuo.yw2application.view.base.BaseActivity;
@@ -278,6 +279,7 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
                 .doOnNext(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
+                        ACache.get(Yw2Application.getInstance()).clear();
                         GlideUtils.cleanGlideDishCache(MainActivity.this);
                         deleteDirWithFile(new File(Yw2Application.getInstance().voiceCacheFile()));
                         Yw2Application.getInstance().getDaoSession().deleteAll(RoomDb.class);

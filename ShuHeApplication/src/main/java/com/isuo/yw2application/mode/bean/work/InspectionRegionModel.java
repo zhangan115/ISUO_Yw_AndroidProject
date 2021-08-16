@@ -17,6 +17,9 @@ public class InspectionRegionModel {
     }
 
     public List<InspectionBean> getInspectionBeanList() {
+        if (inspectionBeanList == null) {
+            return new ArrayList<>();
+        }
         return inspectionBeanList;
     }
 

@@ -25,8 +25,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/drop_down_arrow"
-                android:gravity="center"
                 android:drawablePadding="5dp"
+                android:gravity="center"
                 android:text="2020-11-11"
                 android:textColor="@color/text333"
                 android:textSize="18sp"
@@ -274,18 +274,71 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_show_weak"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/screenLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#f7f7f7"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/screenConditionsLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="筛选条件："
+                        android:textColor="@color/text333"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/conditionsTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/list_arrow"
+                        android:drawablePadding="6dp"
+                        android:text="默认"
+                        android:textColor="@color/text333"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/switchSt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:padding="10dp"
+                    android:text="使用时间分类"
+                    android:textColor="@color/text333"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/ll_show_weak"
+            android:layout_below="@+id/screen"
             android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycleViewId"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
-                android:scrollbars="none" />
+                android:scrollbars="none"
+                android:visibility="gone" />
 
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/swipeLayout"
@@ -297,18 +350,18 @@
                     android:id="@+id/expandableListView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/DP_10"
+                    android:background="#f7f7f7"
                     android:cacheColorHint="@null"
                     android:childDivider="@null"
                     android:childIndicatorLeft="0dp"
                     android:divider="@null"
-                    android:background="#f7f7f7"
                     android:dividerHeight="0dp"
                     android:groupIndicator="@null"
+                    android:listSelector="@color/transparent"
                     android:paddingTop="10dp"
-                    android:layout_marginBottom="@dimen/DP_10"
                     android:scrollbarAlwaysDrawHorizontalTrack="false"
-                    android:scrollbars="none"
-                    android:listSelector="@color/transparent" />
+                    android:scrollbars="none" />
 
 
             </android.support.v4.widget.SwipeRefreshLayout>

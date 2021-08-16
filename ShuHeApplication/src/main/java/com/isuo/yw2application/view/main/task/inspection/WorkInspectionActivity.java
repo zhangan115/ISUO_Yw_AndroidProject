@@ -21,8 +21,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -68,6 +70,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     private LinearLayout mChooseDayLayout;
     private DatePickerView mDatePickerView;
     private TextView mYearTv;
+    private TextView conditionsTv;
     private TextView[] dayTvs = new TextView[7];
     private TextView[] dayWeekNumTvs = new TextView[7];
     private LinearLayout[] dayOfWeekLayout = new LinearLayout[7];
@@ -90,6 +93,8 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     private NfcAdapter nfcAdapter;
     private PendingIntent mPendingIntent;
     private NdefMessage ndefMessage;
+    private Switch mTimeSt;
+    private int currentState = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,12 +143,22 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         dayOfWeekLayout[4] = findViewById(R.id.ll_friday);
         dayOfWeekLayout[5] = findViewById(R.id.ll_saturday);
         dayOfWeekLayout[6] = findViewById(R.id.ll_sunday);
+        conditionsTv = findViewById(R.id.conditionsTv);
 
         for (LinearLayout layout : dayOfWeekLayout) {
             layout.setOnClickListener(this);
         }
+        findViewById(R.id.screenConditionsLayout).setOnClickListener(this);
         findViewById(R.id.ll_choose_month_day).setOnClickListener(this);
         findViewById(R.id.ll_choose_day_empty).setOnClickListener(this);
+        mTimeSt = findViewById(R.id.switchSt);
+        mTimeSt.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                timeData(currentState);
+            } else {
+                defaultData(currentState);
+            }
+        });
         getDate(mCurrentDay.get(Calendar.YEAR), mCurrentDay.get(Calendar.MONTH), mCurrentDay.get(Calendar.DAY_OF_MONTH));
         mList = new ArrayList<>();
         initRecycleView();
@@ -274,6 +289,26 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                 mDatePickerView.startAnimation(animation);
                 animation.setAnimationListener(animationListener);
                 break;
+            case R.id.screenConditionsLayout:
+                ArrayList<String> mTypeItem = new ArrayList<>();
+                mTypeItem.add("默认");
+                mTypeItem.add("未领取");
+                mTypeItem.add("已领取");
+                mTypeItem.add("进行中");
+                mTypeItem.add("已完成");
+                new MaterialDialog.Builder(this)
+                        .items(mTypeItem)
+                        .itemsCallback((dialog, itemView, position, text) -> {
+                            currentState = position;
+                            if (mTimeSt.isChecked()) {
+                                timeData(currentState);
+                            } else {
+                                defaultData(currentState);
+                            }
+                            conditionsTv.setText(text);
+                        })
+                        .show();
+                break;
         }
     }
 
@@ -293,6 +328,8 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
             dayTvs[i].setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
         }
         getDate(mCurrentDay.get(Calendar.YEAR), mCurrentDay.get(Calendar.MONTH), mCurrentDay.get(Calendar.DAY_OF_MONTH));
+        dataList.clear();
+        inspectionAdapter.notifyDataSetChanged();
         onRefresh();
     }
 
@@ -325,6 +362,13 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         noDataLayout.setVisibility(View.GONE);
         mList.clear();
         mList.addAll(been);
+        defaultData(0);
+        if (mRecyclerView.getAdapter() != null) {
+            mRecyclerView.getAdapter().notifyDataSetChanged();
+        }
+    }
+
+    private void defaultData(int state) {
         dataList.clear();
         for (InspectionBean bean : mList) {
             boolean hasBean = false;
@@ -340,21 +384,81 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                 }
             }
             if (hasBean) {
-                regionModel.addInspection(bean);
+                if (state == 0) {
+                    regionModel.addInspection(bean);
+                } else if (state == bean.getTaskState()) {
+                    regionModel.addInspection(bean);
+                }
             } else {
                 InspectionRegionModel model = new InspectionRegionModel();
                 model.setRegionName(bean.getRegionName());
-                model.addInspection(bean);
+                if (state == 0) {
+                    model.addInspection(bean);
+                } else if (state == bean.getTaskState()) {
+                    model.addInspection(bean);
+                }
                 dataList.add(model);
             }
         }
         inspectionAdapter.setData(this.dataList);
-        if (!expandableListView.isGroupExpanded(0)) {
-            expandableListView.expandGroup(0, true);
+    }
+
+    private void timeData(int state) {
+        //早班、白班、前夜班
+        dataList.clear();
+        InspectionRegionModel model1 = new InspectionRegionModel();
+        model1.setRegionName("早班");
+        model1.setInspectionBeanList(new ArrayList<>());
+        InspectionRegionModel model2 = new InspectionRegionModel();
+        model2.setRegionName("白班");
+        model2.setInspectionBeanList(new ArrayList<>());
+        InspectionRegionModel model3 = new InspectionRegionModel();
+        model3.setRegionName("前夜班");
+        model3.setInspectionBeanList(new ArrayList<>());
+        InspectionRegionModel model4 = new InspectionRegionModel();
+        model4.setRegionName("未分区域");
+        model4.setInspectionBeanList(new ArrayList<>());
+
+        for (InspectionBean bean : mList) {
+            if (bean.getTaskName().contains(model1.getRegionName())) {
+                if (0 == state) {
+                    model1.getInspectionBeanList().add(bean);
+                } else if (bean.getTaskState() == state) {
+                    model1.getInspectionBeanList().add(bean);
+                }
+            } else if (bean.getTaskName().contains(model2.getRegionName())) {
+                if (0 == state) {
+                    model2.getInspectionBeanList().add(bean);
+                } else if (bean.getTaskState() == state) {
+                    model2.getInspectionBeanList().add(bean);
+                }
+            } else if (bean.getTaskName().contains(model3.getRegionName())) {
+                if (0 == state) {
+                    model3.getInspectionBeanList().add(bean);
+                } else if (bean.getTaskState() == state) {
+                    model3.getInspectionBeanList().add(bean);
+                }
+            } else if (TextUtils.isEmpty(bean.getRegionName())) {
+                if (0 == state) {
+                    model4.getInspectionBeanList().add(bean);
+                } else if (bean.getTaskState() == state) {
+                    model4.getInspectionBeanList().add(bean);
+                }
+            }
         }
-        if (mRecyclerView.getAdapter() != null) {
-            mRecyclerView.getAdapter().notifyDataSetChanged();
+        if (!model1.getInspectionBeanList().isEmpty()) {
+            this.dataList.add(model1);
         }
+        if (!model2.getInspectionBeanList().isEmpty()) {
+            this.dataList.add(model2);
+        }
+        if (!model3.getInspectionBeanList().isEmpty()) {
+            this.dataList.add(model3);
+        }
+        if (!model4.getInspectionBeanList().isEmpty()) {
+            this.dataList.add(model4);
+        }
+        inspectionAdapter.setData(this.dataList);
     }
 
     @Override
