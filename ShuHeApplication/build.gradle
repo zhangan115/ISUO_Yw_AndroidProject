@@ -26,8 +26,8 @@ android {
         applicationId "com.isuo.shuhe"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 5
+        versionName "1.0.5"
         ndk {
             abiFilters "armeabi","x86","x86_64"
         }
@@ -40,7 +40,6 @@ android {
             dimension "default"
             resValue "string", "app_name", "蜀河电厂智能任务管理"
             buildConfigField "String", "HOST", '"https://isuo.cloud/shuhe/api"'
-//            buildConfigField "String", "HOST", '"https://isuo.cloud/api"'
             buildConfigField "String", "UMENG_CHANNEL", '"defaultChannel"'
             manifestPlaceholders = [
                     TASK_AFFINITY_VALUE: "android.task.isuo.shuhe.application",
@@ -82,7 +81,7 @@ android {
     }
     //green dao 配置
     greendao {
-        schemaVersion 5//版本号
+        schemaVersion 7//版本号
     }
 }
 

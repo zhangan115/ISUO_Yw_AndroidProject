@@ -10,6 +10,7 @@ import com.isuo.yw2application.mode.bean.db.DaoMaster;
 import com.isuo.yw2application.mode.bean.db.EquipmentDataDbDao;
 import com.isuo.yw2application.mode.bean.db.EquipmentDbDao;
 import com.isuo.yw2application.mode.bean.db.ImageDao;
+import com.isuo.yw2application.mode.bean.db.InspectionTaskDbDao;
 import com.isuo.yw2application.mode.bean.db.NewsBeanDao;
 import com.isuo.yw2application.mode.bean.db.RoomDbDao;
 import com.isuo.yw2application.mode.bean.db.ShareDataDbDao;
@@ -47,7 +48,7 @@ public class CustomerOpenHelp extends DaoMaster.OpenHelper {
         MigrationHelper.migrate(db, NewsBeanDao.class, VoiceDao.class, ImageDao.class, EquipmentDbDao.class
                 , EquipmentDataDbDao.class, RoomDbDao.class, ShareDataDbDao.class
                 , UserInfoDao.class, TaskDbDao.class
-                , CreateEquipmentDbDao.class, CreateRoomDbDao.class);
+                , CreateEquipmentDbDao.class, CreateRoomDbDao.class, InspectionTaskDbDao.class);
     }
 
 }

@@ -43,17 +43,12 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
     private String[] inspectionTypeStr = new String[]{"日检", "周检", "月检", "特检"};
 
     private ItemClickListener listener;
-    private View.OnClickListener startTaskListener;
-
-    public void setStartTaskListener(View.OnClickListener startTaskListener) {
-        this.startTaskListener = startTaskListener;
-    }
 
     interface ItemClickListener {
 
         void onItemClick(InspectionBean inspectionBean);
 
-        void operationTask(String id,int position);
+        void operationTask(String id,int groupPosition,int childPosition);
 
         void toStartActivity(long taskId,long securityId);
 
@@ -276,6 +271,7 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
         } else {
             vHolder.startTaskLayout.setVisibility(View.VISIBLE);
         }
+        vHolder.startTaskLayout.setTag(R.id.tag_position_2, groupPosition);
         vHolder.startTaskLayout.setTag(R.id.tag_position, childPosition);
         vHolder.startTaskLayout.setTag(R.id.tag_task, data.getTaskId());
         vHolder.startTaskLayout.setTag(R.id.tag_position_1, data.getSecurityPackage() == null ? -1L : data.getSecurityPackage().getSecurityId());
@@ -286,9 +282,10 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
                 if (listener == null) {
                     return;
                 }
-                int position = (int) v.getTag(R.id.tag_position);
+                int groupPosition = (int) v.getTag(R.id.tag_position_2);
+                int childPosition = (int) v.getTag(R.id.tag_position);
                 if (data.getTaskState() == ConstantInt.TASK_STATE_1) {
-                    listener.operationTask(String.valueOf(data.getTaskId()),position);
+                    listener.operationTask(String.valueOf(data.getTaskId()),groupPosition,childPosition);
                     return;
                 }
                 long taskId = (long) v.getTag(R.id.tag_task);

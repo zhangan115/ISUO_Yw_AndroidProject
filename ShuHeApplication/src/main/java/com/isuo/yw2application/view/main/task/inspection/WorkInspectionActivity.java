@@ -1,48 +1,61 @@
 package com.isuo.yw2application.view.main.task.inspection;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.iflytek.cloud.thirdparty.V;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.work.InspectionBean;
 import com.isuo.yw2application.mode.bean.work.InspectionRegionModel;
+import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.main.task.inspection.detial.InspectDetailActivity;
 import com.isuo.yw2application.view.main.task.inspection.security.SecurityPackageActivity;
 import com.isuo.yw2application.view.main.task.inspection.work.InspectionRoomActivity;
-import com.sito.library.adapter.RVAdapter;
+import com.king.zxing.CaptureActivity;
+import com.orhanobut.logger.Logger;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.utils.CalendarUtil;
 import com.sito.library.utils.DataUtil;
-import com.sito.library.utils.DisplayUtil;
 import com.sito.library.utils.SPHelper;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
-import com.umeng.commonsdk.debug.I;
 import com.wdullaer.materialdatetimepicker.date.DatePickerView;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 /**
  * 巡检列表
@@ -71,12 +84,12 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     private List<InspectionBean> mList;
     private List<InspectionRegionModel> dataList = new ArrayList<>();
 
-    private int[] icons = new int[]{R.drawable.work_day_icon
-            , R.drawable.work_week_icon
-            , R.drawable.work_month_icon
-            , R.drawable.work_special_icon};
-    private String[] inspectionTypeStr = new String[]{"日检", "周检", "月检", "特检"};
     private WorkInspectionAdapter inspectionAdapter;
+
+    @Nullable
+    private NfcAdapter nfcAdapter;
+    private PendingIntent mPendingIntent;
+    private NdefMessage ndefMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,29 +114,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         mCurrentDay = Calendar.getInstance(Locale.CHINA);
         dateList = CalendarUtil.getDaysOfWeek(mCurrentDay.getTime());
         expandableListView = findViewById(R.id.expandableListView);
-//        expandableListView.setOnHeaderUpdateListener(new PinnedHeaderExpandableListView.OnHeaderUpdateListener() {
-//            @Override
-//            public View getPinnedHeader() {
-//                View view = LayoutInflater.from(WorkInspectionActivity.this).inflate(R.layout.item_equip_group, null);
-//                view.findViewById(R.id.unitTv).setVisibility(View.GONE);
-//                view.findViewById(R.id.iv_state).setVisibility(View.GONE);
-//                view.findViewById(R.id.id_item_equip_line).setVisibility(View.GONE);
-//                view.setBackgroundColor(findColorById(R.color.equip_search_bg_gray));
-//                view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtil.dip2px(WorkInspectionActivity.this, 44)));
-//                return view;
-//            }
-//
-//            @Override
-//            public void updatePinnedHeader(View headerView, int firstVisibleGroupPos) {
-//                Log.d("zhangan", "firstVisibleGroupPos" + firstVisibleGroupPos);
-//            }
-//        });
-//        expandableListView.setOnHeaderViewClickListener(new PinnedHeaderExpandableListView.OnHeaderViewClickListener() {
-//            @Override
-//            public void onViewClick(int groupPosition) {
-//
-//            }
-//        });
+
         dayTvs[0] = findViewById(R.id.tv_1);
         dayTvs[1] = findViewById(R.id.tv_2);
         dayTvs[2] = findViewById(R.id.tv_3);
@@ -157,148 +148,37 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         mList = new ArrayList<>();
         initRecycleView();
         setDayToView();
+        initNfcAdapter();
+    }
+
+    private void initNfcAdapter() {
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        //拦截系统级的NFC扫描，例如扫描蓝牙
+        mPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,
+                getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        ndefMessage = new NdefMessage(new NdefRecord[]{Utils.newTextRecord("",
+                Locale.ENGLISH, true)});
+        //只允许使用NFC开启任务
+        if (nfcAdapter == null) {
+            Yw2Application.getInstance().showToast("当前设备不支持NFC");
+        } else if (!nfcAdapter.isEnabled()) {
+            new MaterialDialog.Builder(this)
+                    .content("请打开NFC功能")
+                    .negativeText("取消")
+                    .positiveText("确定")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    })
+                    .show();
+        }
     }
 
     private void initRecycleView() {
-//        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-//        RVAdapter<InspectionBean> adapter = new RVAdapter<InspectionBean>(mRecyclerView, mList, R.layout.item_day_inspection) {
-//            @Override
-//            public void showData(ViewHolder vHolder, InspectionBean data, int position) {
-//                TextView tv_belong_place = (TextView) vHolder.getView(R.id.tv_belong_place);
-//                TextView tv_task_name = (TextView) vHolder.getView(R.id.tv_task_name);
-//                TextView tv_equip_num = (TextView) vHolder.getView(R.id.tv_equip_num);
-//                TextView tv_time_plan = (TextView) vHolder.getView(R.id.tv_time_plan_start);
-//                TextView tv_time_actual = (TextView) vHolder.getView(R.id.tv_time_actual_start);
-//                TextView tv_executor_user_type = (TextView) vHolder.getView(R.id.tv_executor_user_type);
-//                TextView tv_time_plan_end = (TextView) vHolder.getView(R.id.tv_time_plan_end);
-//                TextView tv_time_actual_end = (TextView) vHolder.getView(R.id.tv_time_actual_end);
-//                TextView planStartTimeTv = (TextView) vHolder.getView(R.id.planStartTimeTv);
-//                TextView actualStartTimeTv = (TextView) vHolder.getView(R.id.actualStartTimeTv);
-//                TextView startTaskTv = (TextView) vHolder.getView(R.id.startTaskTv);
-//                LinearLayout ll_inspection_type = (LinearLayout) vHolder.getView(R.id.ll_inspection_type);
-//                LinearLayout ll_actual_time = (LinearLayout) vHolder.getView(R.id.ll_actual_time);
-//                ImageView iv_inspection_type = (ImageView) vHolder.getView(R.id.iv_inspection_type);
-//                TextView tv_inspection_type = (TextView) vHolder.getView(R.id.tv_inspection_type);
-//                TextView tv_executor_inspection_user = (TextView) vHolder.getView(R.id.tv_executor_inspection_user);
-//                LinearLayout startTaskLayout = (LinearLayout) vHolder.getView(R.id.ll_start_task);
-//                if (data.getIsManualCreated() == 0) {
-//                    if (data.getPlanPeriodType() == 0) {
-//                        ll_inspection_type.setVisibility(View.GONE);
-//                    } else {
-//                        ll_inspection_type.setVisibility(View.VISIBLE);
-//                        iv_inspection_type.setImageDrawable(findDrawById(icons[data.getPlanPeriodType() - 1]));
-//                        tv_inspection_type.setText(inspectionTypeStr[data.getPlanPeriodType() - 1]);
-//                    }
-//                } else {
-//                    ll_inspection_type.setVisibility(View.VISIBLE);
-//                    iv_inspection_type.setImageDrawable(findDrawById(icons[3]));
-//                    tv_inspection_type.setText(inspectionTypeStr[3]);
-//                }
-//                tv_task_name.setText(data.getTaskName());
-//                if (data.getTaskState() == ConstantInt.TASK_STATE_1) {
-//                    ll_actual_time.setVisibility(View.GONE);
-//                    if (data.getExecutorUserList() != null && data.getExecutorUserList().size() > 0) {
-//                        StringBuilder sb = new StringBuilder();
-//                        for (int i = 0; i < data.getExecutorUserList().size(); i++) {
-//                            if (data.getExecutorUserList().get(i).getUser() == null) {
-//                                continue;
-//                            }
-//                            if (!TextUtils.isEmpty(data.getExecutorUserList().get(i).getUser().getRealName())) {
-//                                sb.append(data.getExecutorUserList().get(i).getUser().getRealName());
-//                                if (i != data.getExecutorUserList().size() - 1) {
-//                                    sb.append("、");
-//                                }
-//                            }
-//                        }
-//                        tv_executor_inspection_user.setText(sb.toString());
-//                    }
-//                    tv_executor_user_type.setText("被指派人:");
-//                    actualStartTimeTv.setText("实际开始:");
-//                    startTaskTv.setText("领取任务");
-//                } else if (data.getTaskState() == ConstantInt.TASK_STATE_2) {
-//                    ll_actual_time.setVisibility(View.GONE);
-//                    tv_executor_user_type.setText("领 取 人:");
-//                    tv_executor_inspection_user.setText(data.getReceiveUser().getRealName());
-//                    actualStartTimeTv.setText("实际开始:");
-//                    startTaskTv.setText("开始任务");
-//                } else if (data.getTaskState() == ConstantInt.TASK_STATE_3) {
-//                    ll_actual_time.setVisibility(View.GONE);
-//                    tv_executor_user_type.setText("领 取 人:");
-//                    tv_executor_inspection_user.setText(data.getReceiveUser().getRealName());
-//                    actualStartTimeTv.setText("实际开始:");
-//                    startTaskTv.setText("开始任务");
-//                } else if (data.getTaskState() == ConstantInt.TASK_STATE_4) {
-//                    actualStartTimeTv.setText("巡检截至:");
-//                    ll_actual_time.setVisibility(View.VISIBLE);
-//                    tv_time_actual.setText(DataUtil.timeFormat(data.getStartTime(), "yyyy-MM-dd HH:mm"));
-//                    tv_time_actual_end.setText(DataUtil.timeFormat(data.getEndTime(), "yyyy-MM-dd HH:mm"));
-//                    StringBuilder sb = new StringBuilder();
-//                    for (int i = 0; i < data.getUsers().size(); i++) {
-//                        if (data.getUsers().get(i) == null) {
-//                            continue;
-//                        }
-//                        sb.append(data.getUsers().get(i).getRealName());
-//                        if (i != data.getUsers().size() - 1) {
-//                            sb.append("、");
-//                        }
-//                    }
-//                    tv_executor_inspection_user.setText(sb.toString());
-//                    tv_executor_user_type.setText("执 行 人:");
-//                    startTaskTv.setText("开始任务");
-//                }
-//                StringBuilder sb = new StringBuilder();
-//                for (int i = 0; i < data.getRooms().size(); i++) {
-//                    sb.append(data.getRooms().get(i));
-//                    if (i != data.getRooms().size() - 1) {
-//                        sb.append("、");
-//                    }
-//                }
-//                tv_belong_place.setText(sb.toString());
-//                String str = data.getUploadCount() + "/" + data.getCount();
-//                tv_equip_num.setText(str);
-//                if (data.getPlanStartTime() != 0) {
-//                    tv_time_plan.setVisibility(View.VISIBLE);
-//                    planStartTimeTv.setText("计划起止:");
-//                    tv_time_plan.setText(MessageFormat.format("{0}"
-//                            , DataUtil.timeFormat(data.getPlanStartTime(), "yyyy-MM-dd HH:mm")));
-//                } else {
-//                    planStartTimeTv.setVisibility(View.GONE);
-//                    tv_time_plan.setVisibility(View.GONE);
-//                }
-//                if (data.getPlanEndTime() != 0) {
-//                    tv_time_plan_end.setVisibility(View.VISIBLE);
-//                    tv_time_plan_end.setText(DataUtil.timeFormat(data.getPlanEndTime()
-//                            , "yyyy-MM-dd HH:mm"));
-//                } else {
-//                    tv_time_plan_end.setVisibility(View.GONE);
-//                }
-//                if (data.getTaskState() == ConstantInt.TASK_STATE_4){
-//                    startTaskLayout.setVisibility(View.GONE);
-//                }else{
-//                    startTaskLayout.setVisibility(View.VISIBLE);
-//                }
-//                startTaskLayout.setTag(R.id.tag_position, position);
-//                startTaskLayout.setTag(R.id.tag_task, data.getTaskId());
-//                startTaskLayout.setTag(R.id.tag_position_1, data.getSecurityPackage() == null ? -1L : data.getSecurityPackage().getSecurityId());
-//                startTaskLayout.setOnClickListener(startTaskListener);
-//            }
-//        };
-//        mRecyclerView.setAdapter(adapter);
-//        adapter.setOnItemClickListener(new RVAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                if (mList == null || mList.size() == 0) {
-//                    return;
-//                }
-//                Intent intent = new Intent(WorkInspectionActivity.this, InspectDetailActivity.class);
-//                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, mList.get(position).getTaskId());
-//                intent.putExtra(ConstantStr.KEY_BUNDLE_STR, mList.get(position).getTaskName());
-//                startActivity(intent);
-//            }
-//        });
         inspectionAdapter = new WorkInspectionAdapter(this, expandableListView, R.layout.item_equip_group, R.layout.item_day_inspection);
         expandableListView.setAdapter(inspectionAdapter);
-//        inspectionAdapter.setStartTaskListener(startTaskListener);
         inspectionAdapter.setItemListener(new WorkInspectionAdapter.ItemClickListener() {
             @Override
             public void onItemClick(InspectionBean inspectionBean) {
@@ -309,11 +189,11 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
             }
 
             @Override
-            public void operationTask(String id, int position) {
+            public void operationTask(String id, int groupPosition, int childPosition) {
                 if (isClick) {
                     return;
                 }
-                mPresenter.operationTask(id,position);
+                mPresenter.operationTask(id, groupPosition, childPosition);
             }
 
             @Override
@@ -460,9 +340,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                 }
             }
             if (hasBean) {
-                if (regionModel != null) {
-                    regionModel.addInspection(bean);
-                }
+                regionModel.addInspection(bean);
             } else {
                 InspectionRegionModel model = new InspectionRegionModel();
                 model.setRegionName(bean.getRegionName());
@@ -471,10 +349,12 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
             }
         }
         inspectionAdapter.setData(this.dataList);
-        if (!expandableListView.isGroupExpanded(0)){
-            expandableListView.expandGroup(0,true);
+        if (!expandableListView.isGroupExpanded(0)) {
+            expandableListView.expandGroup(0, true);
         }
-        mRecyclerView.getAdapter().notifyDataSetChanged();
+        if (mRecyclerView.getAdapter() != null) {
+            mRecyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -505,18 +385,12 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     }
 
     @Override
-    public void noMoreData() {
-
-    }
-
-    @Override
-    public void hideLoadingMore() {
-
-    }
-
-    @Override
-    public void operationSuccess(int position) {
-        onRefresh();
+    public void operationSuccess(int group, int child) {
+        dataList.get(group).getInspectionBeanList().get(child).setTaskState(ConstantInt.TASK_STATE_2);
+        dataList.get(group).getInspectionBeanList().get(child).setReceiveUser(Yw2Application.getInstance().getCurrentUser());
+        if (inspectionAdapter != null) {
+            inspectionAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -533,33 +407,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     }
 
     private boolean isClick;
-    private View.OnClickListener startTaskListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (isClick) {
-                return;
-            }
-            int position = (int) v.getTag(R.id.tag_position);
 
-            if (mList.get(position).getTaskState() == ConstantInt.TASK_STATE_1 && mPresenter != null) {
-                mPresenter.operationTask(String.valueOf(mList.get(position).getTaskId()), position);
-                return;
-            }
-            Intent intent = new Intent();
-            long taskId = (long) v.getTag(R.id.tag_task);
-            long securityId = (long) v.getTag(R.id.tag_position_1);
-            if (!SPHelper.readBoolean(WorkInspectionActivity.this
-                    , ConstantStr.SECURITY_INFO, String.valueOf(taskId), false) && securityId != -1) {
-                intent.setClass(WorkInspectionActivity.this, SecurityPackageActivity.class);
-            } else {
-                intent.setClass(WorkInspectionActivity.this, InspectionRoomActivity.class);
-            }
-            intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, taskId);
-            intent.putExtra(ConstantStr.KEY_BUNDLE_LONG_1, securityId);
-            isClick = true;
-            startActivity(intent);
-        }
-    };
 
     @Override
     public void onResume() {
@@ -568,20 +416,153 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
             onRefresh();
         }
         isClick = false;
+        if (nfcAdapter != null) {
+            //隐式启动
+            nfcAdapter.enableForegroundDispatch(this, mPendingIntent, null, null);
+            nfcAdapter.enableForegroundNdefPush(this, ndefMessage);
+        }
     }
 
-    private View.OnClickListener unReceiveListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v.getTag(R.id.tag_object) != null) {
-                int position = (int) v.getTag(R.id.tag_position);
-                if (mList.get(position).getTaskState() > ConstantInt.TASK_STATE_1) {
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (nfcAdapter != null) {
+            nfcAdapter.disableForegroundDispatch(this);
+            nfcAdapter.disableForegroundNdefPush(this);
+        }
+    }
+
+    //获取系统隐式启动的
+    @Override
+    public void onNewIntent(Intent intent) {
+        setIntent(intent);
+        processAdapterAction(intent);
+    }
+
+    public void processAdapterAction(Intent intent) {
+        // 当系统检测到tag中含有NDEF格式的数据时，且系统中有activity声明可以接受包含NDEF数据的Intent的时候，系统会优先发出这个action的intent。
+        // 得到是否检测到ACTION_NDEF_DISCOVERED触发 序号1
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+            // 处理该intent
+            processIntent(intent);
+            return;
+        }
+        // 当没有任何一个activity声明自己可以响应ACTION_NDEF_DISCOVERED时，系统会尝试发出TECH的intent.即便你的tag中所包含的数据是NDEF的，但是如果这个数据的MIME
+        // type或URI不能和任何一个activity所声明的想吻合，系统也一样会尝试发出tech格式的intent，而不是NDEF.
+        // 得到是否检测到ACTION_TECH_DISCOVERED触发 序号2
+        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
+            // 处理该intent
+            processIntent(intent);
+            return;
+        }
+        // 当系统发现前两个intent在系统中无人会接受的时候，就只好发这个默认的TAG类型的
+        // 得到是否检测到ACTION_TAG_DISCOVERED触发 序号3
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
+            // 处理该intent
+            processIntent(intent);
+        }
+    }
+
+    @Nullable
+    private String read(Tag tag) throws Exception {
+        if (tag != null) {
+            Ndef ndef = Ndef.get(tag);
+            if (ndef == null) {
+                return null;
+            }
+            //打开连接
+            ndef.connect();
+            NdefMessage message = ndef.getNdefMessage();
+            if (message != null) {
+                //将消息转换成字节数组
+                byte[] data = message.toByteArray();
+                //将字节数组转换成字符串
+                String str = new String(data, "UTF-8");
+                //关闭连接
+                ndef.close();
+                if (str.length() > 7) {
+                    str = str.substring(7);
+                }
+                return str;
+            }
+        } else {
+            Yw2Application.getInstance().showToast("设备与nfc卡连接断开，请重新连接...");
+        }
+        return null;
+    }
+
+    private void processIntent(Intent intent) {
+        if (intent == null) {
+            return;
+        }
+        Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        String roomId = "";
+        try {
+            roomId = read(tagFromIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        findRoom(roomId);
+    }
+
+    private final int SCANNER_CODE = 202;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == SCANNER_CODE) {
+            if (data != null) {
+                String result = data.getStringExtra(CaptureActivity.KEY_RESULT);
+                if (TextUtils.isEmpty(result)) {
+                    Yw2Application.getInstance().showToast("未找到数据,请从新扫码");
                     return;
                 }
-                if (mPresenter != null) {
-                    mPresenter.operationTask(String.valueOf(mList.get(position).getTaskId()), position);
-                }
+                findRoom(result);
+            } else {
+                Yw2Application.getInstance().showToast("扫码失败");
             }
         }
-    };
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_scan, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_id_scan) {
+            scan();
+        }
+        return true;
+    }
+
+    private void scan() {
+        SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.CAMERA,
+                new CheckRequestPermissionListener() {
+                    @Override
+                    public void onPermissionOk(Permission permission) {
+                        startActivityForResult(new Intent(WorkInspectionActivity.this, CaptureActivity.class), SCANNER_CODE);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(Permission permission) {
+                        new AppSettingsDialog.Builder(WorkInspectionActivity.this)
+                                .setRationale(getString(R.string.need_camera_setting))
+                                .setTitle(getString(R.string.request_permissions))
+                                .setPositiveButton(getString(R.string.sure))
+                                .setNegativeButton(getString(R.string.cancel))
+                                .build()
+                                .show();
+
+                    }
+                });
+    }
+
+    private void findRoom(String roomId) {
+        Logger.d(roomId);
+    }
+
+
 }

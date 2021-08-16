@@ -5,6 +5,7 @@
     <item name="tag_object_2" type="id" />
     <item name="tag_position" type="id" />
     <item name="tag_position_1" type="id" />
+    <item name="tag_position_2" type="id" />
     <item name="tag_task" type="id" />
     <item name="image_tag" type="id" />
     <item name="tag_group_position" type="id" />

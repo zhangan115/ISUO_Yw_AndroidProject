@@ -15,7 +15,7 @@ public interface ConstantStr {
     String NOTIFICATION_CHANNEL_NAME = "ISUO";
     String NOTIFICATION_CHANNEL_DESCRIPTION = "消息提示";
     String NOTIFICATION_CHANNEL_ID = "isuo_news_id";
-
+    String NET_CACHE_NAME = "inspection_task";
     /**
      * 是否使用过App
      **/

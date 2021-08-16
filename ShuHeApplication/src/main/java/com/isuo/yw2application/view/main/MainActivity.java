@@ -30,6 +30,7 @@ import com.isuo.yw2application.mode.bean.db.CreateRoomDb;
 import com.isuo.yw2application.mode.bean.db.EquipmentDataDb;
 import com.isuo.yw2application.mode.bean.db.EquipmentDb;
 import com.isuo.yw2application.mode.bean.db.Image;
+import com.isuo.yw2application.mode.bean.db.InspectionTaskDb;
 import com.isuo.yw2application.mode.bean.db.NewsBean;
 import com.isuo.yw2application.mode.bean.db.RoomDb;
 import com.isuo.yw2application.mode.bean.db.ShareDataDb;
@@ -290,6 +291,7 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
                         Yw2Application.getInstance().getDaoSession().deleteAll(CreateRoomDb.class);
                         Yw2Application.getInstance().getDaoSession().deleteAll(UserInfo.class);
                         Yw2Application.getInstance().getDaoSession().deleteAll(ShareDataDb.class);
+                        Yw2Application.getInstance().getDaoSession().deleteAll(InspectionTaskDb.class);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())

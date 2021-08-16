@@ -62,31 +62,11 @@ public class InspectionPresenter implements InspectionContract.Presenter {
     }
 
     @Override
-    public void getDataMore(int inspectionType, @NonNull String time, @NonNull String lastId) {
-        mSubscriptions.add(mRepository.getInspectionData(inspectionType, time, lastId, new IListCallBack<InspectionBean>() {
-            @Override
-            public void onSuccess(@NonNull List<InspectionBean> list) {
-                mView.showMoreData(list);
-            }
-
-            @Override
-            public void onError(String message) {
-                mView.noMoreData();
-            }
-
-            @Override
-            public void onFinish() {
-                mView.hideLoadingMore();
-            }
-        }));
-    }
-
-    @Override
-    public void operationTask(String taskId, final int position) {
+    public void operationTask(String taskId, final int group,final int child) {
         mSubscriptions.add(mRepository.getOperationTask(taskId, new IObjectCallBack<String>() {
             @Override
             public void onSuccess(@NonNull String s) {
-                mView.operationSuccess(position);
+                mView.operationSuccess(group,child);
             }
 
             @Override
