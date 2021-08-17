@@ -21,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -41,7 +40,6 @@ import com.isuo.yw2application.view.main.task.inspection.detial.InspectDetailAct
 import com.isuo.yw2application.view.main.task.inspection.security.SecurityPackageActivity;
 import com.isuo.yw2application.view.main.task.inspection.work.InspectionRoomActivity;
 import com.king.zxing.CaptureActivity;
-import com.orhanobut.logger.Logger;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
@@ -213,22 +211,26 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
 
             @Override
             public void toStartActivity(long taskId, long securityId) {
-                if (isClick) {
-                    return;
-                }
-                Intent intent = new Intent();
-                if (!SPHelper.readBoolean(WorkInspectionActivity.this
-                        , ConstantStr.SECURITY_INFO, String.valueOf(taskId), false) && securityId != -1) {
-                    intent.setClass(WorkInspectionActivity.this, SecurityPackageActivity.class);
-                } else {
-                    intent.setClass(WorkInspectionActivity.this, InspectionRoomActivity.class);
-                }
-                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, taskId);
-                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG_1, securityId);
-                isClick = true;
-                startActivity(intent);
+                startTask(taskId, securityId);
             }
         });
+    }
+
+    private void startTask(long taskId, long securityId) {
+        if (isClick) {
+            return;
+        }
+        Intent intent = new Intent();
+        if (!SPHelper.readBoolean(WorkInspectionActivity.this
+                , ConstantStr.SECURITY_INFO, String.valueOf(taskId), false) && securityId != -1) {
+            intent.setClass(WorkInspectionActivity.this, SecurityPackageActivity.class);
+        } else {
+            intent.setClass(WorkInspectionActivity.this, InspectionRoomActivity.class);
+        }
+        intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, taskId);
+        intent.putExtra(ConstantStr.KEY_BUNDLE_LONG_1, securityId);
+        isClick = true;
+        startActivity(intent);
     }
 
     @Override
@@ -665,7 +667,43 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     }
 
     private void findRoom(String roomId) {
-        Logger.d(roomId);
+        try {
+            List<InspectionBean> inspectionBeans = new ArrayList<>();
+            long roomIdLong = Long.parseLong(roomId);
+            for (int i = 0; i < mList.size(); i++) {
+                if (mList.get(i).getRooms() == null) {
+                    continue;
+                }
+                for (int j = 0; j < mList.get(i).getRooms().size(); j++) {
+                    long roomIds = mList.get(i).getRoomIds()[j];
+                    if (roomIdLong == roomIds) {
+                        inspectionBeans.add(mList.get(i));
+                    }
+                }
+            }
+            if (inspectionBeans.isEmpty()) {
+                Yw2Application.getInstance().showToast("没有找到相关的任务");
+            } else {
+                if (inspectionBeans.size() == 1) {
+                    if (inspectionBeans.get(0).getTaskState() < ConstantInt.TASK_STATE_2) {
+                        //去领取
+
+                    } else {
+                        //打开
+                        long taskId = inspectionBeans.get(0).getTaskId();
+                        int securityId = -1;
+                        if (inspectionBeans.get(0).getSecurityPackage() != null) {
+                            securityId = inspectionBeans.get(0).getSecurityPackage().getSecurityId();
+                        }
+                        startTask(taskId, securityId);
+                    }
+                } else {
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
