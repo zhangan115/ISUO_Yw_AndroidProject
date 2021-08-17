@@ -18,7 +18,7 @@ interface InspectionContract {
 
         void getData(int inspectionType, @NonNull String time);
 
-        void operationTask(String taskId, int groupPosition,int childPosition);
+        void operationTask(String taskId, InspectionBean inspectionBean);
     }
 
     interface View extends BaseView<Presenter> {
@@ -33,7 +33,7 @@ interface InspectionContract {
 
         void noData();
 
-        void operationSuccess(int group,int child);
+        void operationSuccess(InspectionBean bean);
     }
 
 }

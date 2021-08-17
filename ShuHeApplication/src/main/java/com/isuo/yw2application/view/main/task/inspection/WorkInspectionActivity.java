@@ -34,6 +34,7 @@ import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.work.InspectionBean;
 import com.isuo.yw2application.mode.bean.work.InspectionRegionModel;
+import com.isuo.yw2application.utils.ACache;
 import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.main.task.inspection.detial.InspectDetailActivity;
@@ -206,7 +207,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                 if (isClick) {
                     return;
                 }
-                mPresenter.operationTask(id, groupPosition, childPosition);
+                mPresenter.operationTask(id, dataList.get(groupPosition).getInspectionBeanList().get(childPosition));
             }
 
             @Override
@@ -330,6 +331,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
             dayTvs[i].setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
         }
         getDate(mCurrentDay.get(Calendar.YEAR), mCurrentDay.get(Calendar.MONTH), mCurrentDay.get(Calendar.DAY_OF_MONTH));
+        ACache.get(Yw2Application.getInstance()).clear();
         dataList.clear();
         inspectionAdapter.notifyDataSetChanged();
         onRefresh();
@@ -342,7 +344,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         mYearTv.setText(DataUtil.timeFormat(newCalendar.getTime().getTime(), "yyyy年MM月dd日"));
     }
 
-    private Animation.AnimationListener animationListener = new Animation.AnimationListener() {
+    private final Animation.AnimationListener animationListener = new Animation.AnimationListener() {
         @Override
         public void onAnimationStart(Animation animation) {
 
@@ -491,12 +493,17 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     }
 
     @Override
-    public void operationSuccess(int group, int child) {
-        dataList.get(group).getInspectionBeanList().get(child).setTaskState(ConstantInt.TASK_STATE_2);
-        dataList.get(group).getInspectionBeanList().get(child).setReceiveUser(Yw2Application.getInstance().getCurrentUser());
+    public void operationSuccess(InspectionBean inspectionBean) {
+        inspectionBean.setTaskState(ConstantInt.TASK_STATE_2);
+        inspectionBean.setReceiveUser(Yw2Application.getInstance().getCurrentUser());
         if (inspectionAdapter != null) {
             inspectionAdapter.notifyDataSetChanged();
         }
+        int securityId = -1;
+        if (inspectionBean.getSecurityPackage() != null) {
+            securityId = inspectionBean.getSecurityPackage().getSecurityId();
+        }
+        startTask(inspectionBean.getTaskId(),securityId);
     }
 
     @Override
@@ -685,20 +692,18 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                 Yw2Application.getInstance().showToast("没有找到相关的任务");
             } else {
                 if (inspectionBeans.size() == 1) {
-                    if (inspectionBeans.get(0).getTaskState() < ConstantInt.TASK_STATE_2) {
-                        //去领取
-
-                    } else {
-                        //打开
-                        long taskId = inspectionBeans.get(0).getTaskId();
-                        int securityId = -1;
-                        if (inspectionBeans.get(0).getSecurityPackage() != null) {
-                            securityId = inspectionBeans.get(0).getSecurityPackage().getSecurityId();
-                        }
-                        startTask(taskId, securityId);
-                    }
+                    scanResult(inspectionBeans, 0);
                 } else {
-
+                    List<String> taskNames = new ArrayList<>();
+                    for (int i = 0; i < inspectionBeans.size(); i++) {
+                        taskNames.add(inspectionBeans.get(i).getTaskName());
+                    }
+                    new MaterialDialog.Builder(this)
+                            .items(taskNames)
+                            .itemsCallback((dialog, itemView, position, text) -> {
+                                scanResult(inspectionBeans, position);
+                            })
+                            .show();
                 }
             }
         } catch (Exception e) {
@@ -706,5 +711,18 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         }
     }
 
-
+    private void scanResult(List<InspectionBean> inspectionBeans, int index) {
+        if (inspectionBeans.get(index).getTaskState() < ConstantInt.TASK_STATE_2) {
+            //去领取
+            mPresenter.operationTask(String.valueOf(inspectionBeans.get(index).getTaskId()), inspectionBeans.get(0));
+        } else {
+            //打开
+            long taskId = inspectionBeans.get(index).getTaskId();
+            int securityId = -1;
+            if (inspectionBeans.get(index).getSecurityPackage() != null) {
+                securityId = inspectionBeans.get(index).getSecurityPackage().getSecurityId();
+            }
+            startTask(taskId, securityId);
+        }
+    }
 }

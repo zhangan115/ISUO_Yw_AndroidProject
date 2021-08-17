@@ -62,11 +62,11 @@ public class InspectionPresenter implements InspectionContract.Presenter {
     }
 
     @Override
-    public void operationTask(String taskId, final int group,final int child) {
+    public void operationTask(String taskId, final InspectionBean bean) {
         mSubscriptions.add(mRepository.getOperationTask(taskId, new IObjectCallBack<String>() {
             @Override
             public void onSuccess(@NonNull String s) {
-                mView.operationSuccess(group,child);
+                mView.operationSuccess(bean);
             }
 
             @Override
