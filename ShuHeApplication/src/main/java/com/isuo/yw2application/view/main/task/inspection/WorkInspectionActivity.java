@@ -366,7 +366,11 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         noDataLayout.setVisibility(View.GONE);
         mList.clear();
         mList.addAll(been);
-        defaultData(0);
+        if (mTimeSt.isChecked()) {
+            timeData(currentState);
+        } else {
+            defaultData(currentState);
+        }
         if (mRecyclerView.getAdapter() != null) {
             mRecyclerView.getAdapter().notifyDataSetChanged();
         }
