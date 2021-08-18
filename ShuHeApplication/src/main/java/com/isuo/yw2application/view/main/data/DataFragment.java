@@ -79,6 +79,7 @@ public class DataFragment extends MvpFragmentV4<DataContract.Presenter> implemen
         payTitle.setText(MessageFormat.format("当前为{0}", payMenuBean.getMenuName()));
         payTitle.setOnClickListener(this);
         convenientBanner = rootView.findViewById(R.id.convenientBanner);
+        convenientBanner.setVisibility(View.GONE);
         int width = getContext().getResources().getDisplayMetrics().widthPixels - DisplayUtil.dip2px(getContext(), 30);
         int height = width / 16 * 9;
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
