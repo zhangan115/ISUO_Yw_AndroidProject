@@ -41,6 +41,33 @@ public class InspectionPresenter implements InspectionContract.Presenter {
     }
 
     @Override
+    public void getDataFromCache(int inspection, String time) {
+        mView.showLoading();
+        mSubscriptions.add(mRepository.getInspectionDataFromCache(inspection, time, new IListCallBack<InspectionBean>() {
+            @Override
+            public void onSuccess(@NonNull List<InspectionBean> list) {
+                mView.hideLoading();
+                mView.showData(list);
+            }
+
+            @Override
+            public void onError(String message) {
+                mView.noData();
+            }
+
+            @Override
+            public void onFinish() {
+                mView.hideLoading();
+            }
+        }));
+    }
+
+    @Override
+    public void toSaveInspectionDataToCache(int inspection, String time, List<InspectionBean> inspectionBeanList) {
+        mRepository.saveInspectionDataToCache(inspection, time, inspectionBeanList);
+    }
+
+    @Override
     public void getData(int inspectionType, @NonNull String time) {
         mView.showLoading();
         mSubscriptions.add(mRepository.getInspectionData(inspectionType, time, null, new IListCallBack<InspectionBean>() {

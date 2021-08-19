@@ -141,4 +141,7 @@ public interface ConstantStr {
     String INSPECTION_CACHE_DATA = "inspection_cache_data";
     String INSPECTION_KEY_EQUIP = "inspection_cache_equip";
     String INSPECTION_KEY_DATA = "inspection_cache_all_data";
+
+    String TASK_STATE_START = "task_state_start";//巡检任务开始
+    String TASK_STATE_FINISH = "task_state_finish";//巡检任务完成
 }

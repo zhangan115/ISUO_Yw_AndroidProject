@@ -52,6 +52,28 @@ public interface WorkDataSource {
     Subscription getIncrementData(String time, boolean isFinish, @Nullable String lastId, @NonNull IListCallBack<IncrementBean> callBack);
 
     /**
+     * 从缓存中获取巡检数据
+     *
+     * @param inspectionType 巡检类型
+     * @param data           时间
+     * @param callBack       回调
+     * @return 订阅
+     */
+    @NonNull
+    Subscription getInspectionDataFromCache(int inspectionType, String data, IListCallBack<InspectionBean> callBack);
+
+    /**
+     * 保存数据到缓存中
+     *
+     * @param inspectionType     巡检类型
+     * @param data               时间
+     * @param inspectionBeanList 回调
+     * @return 订阅
+     */
+    @NonNull
+    Subscription saveInspectionDataToCache(int inspectionType, String data, List<InspectionBean> inspectionBeanList);
+
+    /**
      * 获取巡检列表
      *
      * @param data     时间
@@ -138,5 +160,5 @@ public interface WorkDataSource {
     Subscription getTodayFaultList(boolean isRemain, String time, @NonNull IListCallBack<FaultList> callBack);
 
     @NonNull
-    Subscription get24HFaultList(Map<String,String> map, @NonNull IListCallBack<FaultList> callBack);
+    Subscription get24HFaultList(Map<String, String> map, @NonNull IListCallBack<FaultList> callBack);
 }

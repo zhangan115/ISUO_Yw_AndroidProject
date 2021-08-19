@@ -124,6 +124,10 @@ public interface CustomerDataSource {
     //今日昨日到岗统计
     Subscription getTodayCount(@NonNull String time, @NonNull String deptId, @NonNull IListCallBack<ComeCount> callBack);
 
+    //到岗统计
+    @NonNull
+    Subscription getSituation(@NonNull String startTime,@NonNull String endTime, @NonNull String deptId, @NonNull IListCallBack<ComeCount> callBack);
+
     //本周未到岗统计
     Subscription getWeekCount(@NonNull String time, @NonNull String deptId, @NonNull IListCallBack<WeekCount> callBack);
 

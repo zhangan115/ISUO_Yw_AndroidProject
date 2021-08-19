@@ -15,6 +15,7 @@ import android.os.SystemProperties;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -227,6 +228,15 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         addEmployee();
     }
 
+    private LocalBroadcastManager manager;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getActivity() != null)
+            manager = LocalBroadcastManager.getInstance(getActivity());
+    }
+
     @Override
     public void updateRoomStateSuccess() {
         Yw2Application.getInstance().showToast("成功");
@@ -234,6 +244,12 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
             //开始
             addRoomToLayout();
             startReportActivity();
+            if (inspectionDetailBean.getTaskState() == ConstantInt.TASK_STATE_2) {
+                Intent intent = new Intent();
+                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, this.taskId);
+                intent.setAction(ConstantStr.TASK_STATE_START);
+                manager.sendBroadcast(intent);
+            }
         } else if (mOperation == 2) {
             addRoomToLayout();
         }
@@ -243,6 +259,11 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     public void finishAllRoom() {
         getApp().showToast("已完成所有的检测");
         if (getActivity() != null) {
+            Intent intent = new Intent();
+            intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, this.taskId);
+            intent.putExtra(ConstantStr.KEY_BUNDLE_LIST, chooseEmployeeBeen);
+            intent.setAction(ConstantStr.TASK_STATE_FINISH);
+            manager.sendBroadcast(intent);
             getActivity().setResult(Activity.RESULT_OK);
             getActivity().finish();
         }
@@ -256,15 +277,15 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (taskStartType.equals(ConstantStr.START_TYPE_0)){
+        if (taskStartType.equals(ConstantStr.START_TYPE_0)) {
             inflater.inflate(R.menu.menu_scan, menu);
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (taskStartType.equals(ConstantStr.START_TYPE_0)){
-            if (item.getItemId()==R.id.menu_id_scan){
+        if (taskStartType.equals(ConstantStr.START_TYPE_0)) {
+            if (item.getItemId() == R.id.menu_id_scan) {
                 scan();
             }
             return true;
@@ -542,7 +563,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         }
     }
 
-    private void scan(){
+    private void scan() {
         SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.CAMERA,
                 new CheckRequestPermissionListener() {
                     @Override

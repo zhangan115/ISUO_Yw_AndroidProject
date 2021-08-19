@@ -66,6 +66,7 @@ public class StaffCountActivity extends BaseActivity implements StaffCountContra
     private TextView mMonthNum;
     private String mNowTime;//当前时间
     private String mChoseTime;
+    private String mStartTime, mEndTime;
     @Inject
     StaffCountPresenter mStaffCountPresenter;
     StaffCountContract.Presenter mPresenter;
@@ -163,7 +164,7 @@ public class StaffCountActivity extends BaseActivity implements StaffCountContra
 
                 long time = System.currentTimeMillis() - 24 * 60 * 60 * 1000;
                 mChoseTime = DataUtil.timeFormat(time, "yyyy-MM-dd");
-                mPresenter.getComeCount(mChoseTime, mDeptId + "");
+                mPresenter.getComeCount(mStartTime, mEndTime, mDeptId + "");
                 mNowTime = mChoseTime;
             }
         });
@@ -177,7 +178,7 @@ public class StaffCountActivity extends BaseActivity implements StaffCountContra
 
                 long time = System.currentTimeMillis();
                 mNowTime = DataUtil.timeFormat(time, "yyyy-MM-dd");
-                mPresenter.getComeCount(mNowTime, mDeptId + "");
+                mPresenter.getComeCount(mStartTime, mEndTime, mDeptId + "");
             }
         });
     }
@@ -596,14 +597,14 @@ public class StaffCountActivity extends BaseActivity implements StaffCountContra
                                 mDeptId = mDeptTypes.get(position).getDeptId();
                                 isShowGroup = false;
                                 Utils.setDrawable(StaffCountActivity.this, R.drawable.drop_down_arrow, mGroup, 2);
-                                mPresenter.getComeCount(mNowTime, mDeptId + "");
+                                mPresenter.getComeCount(mStartTime, mEndTime, mDeptId + "");
                             }
                         })
                         .show();
             }
         });
         if (mDeptId != -1) {
-            mPresenter.getComeCount(mNowTime, mDeptId + "");
+            mPresenter.getComeCount(mStartTime, mEndTime, mDeptId + "");
         }
     }
 
@@ -676,10 +677,14 @@ public class StaffCountActivity extends BaseActivity implements StaffCountContra
 
     @Override
     public void onTimeChange(String startTime, String endTime, String title) {
+        this.mStartTime = startTime;
+        this.mEndTime = endTime;
         llChooseTime.setVisibility(View.GONE);
         llEmpty.setVisibility(View.GONE);
         ivTime.setImageDrawable(findDrawById(R.drawable.drop_down));
         tvTime.setText(title);
-//        mPresenter.getCStatisticsPartData(startTime, endTime);
+        if (mPresenter != null && this.mDeptId != -1) {
+            mPresenter.getComeCount(startTime, endTime, String.valueOf(this.mDeptId));
+        }
     }
 }

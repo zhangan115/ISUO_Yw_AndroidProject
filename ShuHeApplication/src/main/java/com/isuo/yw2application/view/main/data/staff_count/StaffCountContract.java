@@ -19,6 +19,8 @@ interface StaffCountContract {
     interface Presenter extends BasePresenter {
         void getDeptId(String types);
 
+        void getComeCount(String startTime, String endTime,String deptId);
+
         void getComeCount(String time, String deptId);
 
         void getWeekCount(String time, String deptId);

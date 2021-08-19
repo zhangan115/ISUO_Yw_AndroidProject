@@ -46,7 +46,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -141,6 +140,49 @@ public class WorkRepository implements WorkDataSource {
 
     @NonNull
     @Override
+    public Subscription getInspectionDataFromCache(int inspectionType, String data, IListCallBack<InspectionBean> callBack) {
+        return Observable.just(ACache.get(Yw2Application.getInstance()).getAsString(data + "_" + inspectionType))
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .flatMap((Func1<String, Observable<List<InspectionBean>>>) s -> {
+                    if (TextUtils.isEmpty(s)) {
+                        return Observable.just(null);
+                    }
+                    Type type = new TypeToken<List<InspectionBean>>() {
+                    }.getType();
+                    List<InspectionBean> inspectionBeans = new Gson().fromJson(s, type);
+                    return Observable.just(inspectionBeans);
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(inspectionBeans -> {
+                    if (inspectionBeans != null && inspectionBeans.size() > 0) {
+                        callBack.onSuccess(inspectionBeans);
+                    } else {
+                        getInspectionData(inspectionType, data, null, callBack);
+                    }
+                });
+    }
+
+    @NonNull
+    @Override
+    public Subscription saveInspectionDataToCache(int inspectionType, String data, List<InspectionBean> inspectionBeanList) {
+        return Observable.just(inspectionBeanList)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .flatMap((Func1<List<InspectionBean>, Observable<Boolean>>) s -> {
+                    boolean isSuccess = false;
+                    if (s != null && s.size() > 0) {
+                        ACache.get(Yw2Application.getInstance()).put(data + "_" + inspectionType, new Gson().toJson(s));
+                        isSuccess = true;
+                    }
+                    return Observable.just(isSuccess);
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
+    @NonNull
+    @Override
     public Subscription getInspectionData(int inspectionType, @NonNull String data, @Nullable String lastId
             , @NonNull final IListCallBack<InspectionBean> callBack) {
         JSONObject jsonObject = new JSONObject();
@@ -165,24 +207,6 @@ public class WorkRepository implements WorkDataSource {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Observable.just(ACache.get(Yw2Application.getInstance()).getAsString("inspection_task"))
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .flatMap((Func1<String, Observable<List<InspectionBean>>>) s -> {
-                    if (TextUtils.isEmpty(s)){
-                        return Observable.just(null);
-                    }
-                    Type type = new TypeToken<List<InspectionBean>>() {
-                    }.getType();
-                    List<InspectionBean> inspectionBeans = new Gson().fromJson(s, type);
-                    return Observable.just(inspectionBeans);
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(inspectionBeans -> {
-                    if (inspectionBeans!=null&&inspectionBeans.size()>0){
-                        callBack.onSuccess(inspectionBeans);
-                    }
-                });
         Observable<Bean<List<InspectionBean>>> observable =
                 Api.createRetrofit().create(WorkApi.class).getInspection(jsonObject.toString());
         return new ApiCallBack<List<InspectionBean>>(observable) {
@@ -196,7 +220,7 @@ public class WorkRepository implements WorkDataSource {
                             .subscribeOn(Schedulers.io())
                             .observeOn(Schedulers.io())
                             .doOnNext(inspectionDetailBean -> {
-                                ACache.get(Yw2Application.getInstance()).put("inspection_task", new Gson().toJson(result));
+                                ACache.get(Yw2Application.getInstance()).put(data + "_" + inspectionType, new Gson().toJson(result));
                             })
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Subscriber<List<InspectionBean>>() {

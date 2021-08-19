@@ -321,6 +321,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:padding="10dp"
+                    android:visibility="gone"
                     android:text="使用时间分类"
                     android:textColor="@color/text333"
                     android:textSize="14sp" />

@@ -16,16 +16,43 @@ interface InspectionContract {
 
     interface Presenter extends BasePresenter {
 
+        /**
+         * 从网络中获取数据
+         *
+         * @param inspectionType 巡检类型
+         * @param time           时间
+         */
         void getData(int inspectionType, @NonNull String time);
 
+        /**
+         * 从缓存中获取数据
+         *
+         * @param inspection 巡检类型
+         * @param time       时间
+         */
+        void getDataFromCache(int inspection, String time);
+
+        /**
+         * 保存数据到缓存中
+         *
+         * @param inspection         巡检类型
+         * @param time               时间
+         * @param inspectionBeanList 数据
+         */
+        void toSaveInspectionDataToCache(int inspection, String time, List<InspectionBean> inspectionBeanList);
+
+        /**
+         * 领取任务
+         *
+         * @param taskId         任务id
+         * @param inspectionBean 任务
+         */
         void operationTask(String taskId, InspectionBean inspectionBean);
     }
 
     interface View extends BaseView<Presenter> {
 
         void showData(List<InspectionBean> been);
-
-        void showMoreData(List<InspectionBean> been);
 
         void showLoading();
 

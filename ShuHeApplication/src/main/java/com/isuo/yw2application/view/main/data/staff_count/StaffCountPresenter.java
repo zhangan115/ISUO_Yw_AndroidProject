@@ -89,6 +89,26 @@ final class StaffCountPresenter implements StaffCountContract.Presenter {
     }
 
     @Override
+    public void getComeCount(String startTime, String endTime, String deptId) {
+        mSubscruptions.add(mRepository.getSituation(startTime, endTime, deptId, new IListCallBack<ComeCount>() {
+            @Override
+            public void onSuccess(@NonNull List<ComeCount> list) {
+                mView.showComeCount(list);
+            }
+
+            @Override
+            public void onError(String message) {
+                mView.noData();
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }));
+    }
+
+    @Override
     public void getWeekCount(String time, String deptId) {
         mSubscruptions.add(mRepository.getWeekCount(time, deptId, new IListCallBack<WeekCount>() {
             @Override
