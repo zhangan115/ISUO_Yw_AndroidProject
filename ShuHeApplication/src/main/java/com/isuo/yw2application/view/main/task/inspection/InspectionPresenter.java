@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
+import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
 import com.isuo.yw2application.mode.bean.work.InspectionBean;
 import com.isuo.yw2application.mode.work.WorkRepository;
 
@@ -94,6 +95,7 @@ public class InspectionPresenter implements InspectionContract.Presenter {
             @Override
             public void onSuccess(@NonNull String s) {
                 mView.operationSuccess(bean);
+                getInspectionDataList(bean.getTaskId());
             }
 
             @Override
@@ -104,6 +106,26 @@ public class InspectionPresenter implements InspectionContract.Presenter {
             @Override
             public void onFinish() {
 
+            }
+        }));
+    }
+
+    @Override
+    public void getInspectionDataList(long taskId) {
+        mSubscriptions.add(mRepository.getInspectionDetailList(taskId, new IObjectCallBack<InspectionDetailBean>() {
+            @Override
+            public void onSuccess(@NonNull InspectionDetailBean inspectionDetailBean) {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                mView.hideLoading();
             }
         }));
     }

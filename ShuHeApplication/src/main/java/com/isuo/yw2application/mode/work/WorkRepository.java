@@ -21,6 +21,13 @@ import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.PayMenuBean;
 import com.isuo.yw2application.mode.bean.check.FaultList;
+import com.isuo.yw2application.mode.bean.db.EquipmentDataDbDao;
+import com.isuo.yw2application.mode.bean.db.RoomDb;
+import com.isuo.yw2application.mode.bean.db.RoomDbDao;
+import com.isuo.yw2application.mode.bean.inspection.DataItemValueListBean;
+import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
+import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
+import com.isuo.yw2application.mode.bean.inspection.TaskEquipmentBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulBean;
 import com.isuo.yw2application.mode.bean.today.TodayToDoBean;
 import com.isuo.yw2application.mode.bean.work.AwaitWorkBean;
@@ -29,6 +36,7 @@ import com.isuo.yw2application.mode.bean.work.InspectionBean;
 import com.isuo.yw2application.mode.bean.work.InspectionDataBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.mode.bean.work.WorkState;
+import com.isuo.yw2application.mode.inspection.InspectionApi;
 import com.isuo.yw2application.utils.ACache;
 
 import org.json.JSONException;
@@ -46,6 +54,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -387,6 +396,60 @@ public class WorkRepository implements WorkDataSource {
                 if (dataBean != null) {
                     callBack.onSuccess(dataBean);
                 } else {
+                    callBack.onError("");
+                }
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription getInspectionDetailList(final long taskId, @NonNull final IObjectCallBack<InspectionDetailBean> callBack) {
+        Observable<Bean<InspectionDetailBean>> observable = Api.createRetrofit().create(InspectionApi.class)
+                .getInspectionDetailList(taskId);
+        return new ApiCallBack<InspectionDetailBean>(observable) {
+            @Override
+            public void onSuccess(final InspectionDetailBean data) {
+                if (data.getRoomList() != null) {
+                    Observable.just(data)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io())
+                            .doOnNext(new Action1<InspectionDetailBean>() {
+
+                                @Override
+                                public void call(InspectionDetailBean inspectionDetailBean) {
+                                    String result = new Gson().toJson(inspectionDetailBean);
+                                    ACache.get(Yw2Application.getInstance()).put("inspection_detail_data_"+taskId,result);
+                                }
+                            })
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Subscriber<InspectionDetailBean>() {
+                                @Override
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    e.printStackTrace();
+                                    callBack.onFinish();
+                                    callBack.onError(e.getMessage());
+                                }
+
+                                @Override
+                                public void onNext(InspectionDetailBean inspectionDetailBean) {
+                                    callBack.onFinish();
+                                    callBack.onSuccess(inspectionDetailBean);
+                                }
+                            });
+                } else {
+                    callBack.onFinish();
                     callBack.onError("");
                 }
             }

@@ -49,6 +49,22 @@ public interface InspectionSourceData {
     Subscription getInspectionDetailList(long taskId, @NonNull IObjectCallBack<InspectionDetailBean> callBack);
 
     /**
+     * 更新任务后保存到本地
+     *
+     * @param detailBean 数据
+     */
+    void saveInspectionDataToAcCache(InspectionDetailBean detailBean);
+
+    /**
+     * h获取缓存的数据
+     *
+     * @param taskId 任务ID
+     * @return 数据
+     */
+    @Nullable
+    InspectionDetailBean getInspectionDataFromAcCache(long taskId);
+
+    /**
      * 保存任务详情到cache
      *
      * @param bean 任务

@@ -48,6 +48,13 @@ interface InspectionContract {
          * @param inspectionBean 任务
          */
         void operationTask(String taskId, InspectionBean inspectionBean);
+
+        /**
+         * 获取任务数据
+         *
+         * @param taskId 任务id
+         */
+        void getInspectionDataList(long taskId);
     }
 
     interface View extends BaseView<Presenter> {

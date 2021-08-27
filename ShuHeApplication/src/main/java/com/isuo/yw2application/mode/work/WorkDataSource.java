@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.check.FaultList;
+import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulBean;
 import com.isuo.yw2application.mode.bean.today.TodayToDoBean;
 import com.isuo.yw2application.mode.bean.work.AwaitWorkBean;
@@ -129,6 +130,16 @@ public interface WorkDataSource {
 
     @NonNull
     Subscription getIncrement(@NonNull Long taskId, @NonNull IObjectCallBack<IncrementBean> callBack);
+
+    /**
+     * 获取任务详情
+     *
+     * @param taskId   任务id
+     * @param callBack 回调
+     * @return 订阅
+     */
+    @NonNull
+    Subscription getInspectionDetailList(long taskId, @NonNull IObjectCallBack<InspectionDetailBean> callBack);
 
     interface WorkItemCallBack {
 

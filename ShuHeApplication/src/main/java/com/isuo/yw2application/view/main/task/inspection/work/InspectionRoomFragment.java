@@ -82,7 +82,6 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     private final int SCANNER_CODE = 202;
     private String taskStartType, taskStartDesc;
     private List<RoomListLayout> roomListLayouts;
-    private boolean canScan = ConstantStr.ALPS.equals(SystemUtil.getDeviceBrand());
     //需要保存的状态
     private boolean isFlag = false;
     private boolean isAutoSendAction = true;
@@ -373,13 +372,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
             mPosition = position;
             roomListBean = data;
             if (roomListBean.getTaskRoomState() == ConstantInt.ROOM_STATE_1) {
-                if (taskStartType.equals(ConstantStr.START_TYPE_0)) {//无要求，直接开始任务
-                    receiverAction();
-                } else if (canScan && taskStartType.equals(ConstantStr.START_TYPE_1)) {//手机支持扫描，去扫码
-                    startScan();
-                } else {
-                    Yw2Application.getInstance().showToast(taskStartDesc);
-                }
+                scan();
             } else {
                 startReportActivity();
             }
@@ -542,7 +535,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     }
 
     private void startScan() {
-        if (canScan) {
+        if (false) {
             getApp().showToast("扫描中...");
             Intent intent = new Intent();
             intent.setAction(ConstantStr.STOP_SCAN);
@@ -553,7 +546,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
                 SystemClock.sleep(20);
                 SystemProperties.set("persist.sys.scanstopimme", "false");
             } catch (Exception e) {
-                canScan = false;
+//                canScan = false;
                 return;
             }
             intent.setAction(ConstantStr.START_SCAN_ACTION);
@@ -594,12 +587,12 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         IntentFilter iFilter = new IntentFilter();
         iFilter.addAction(ConstantStr.RECE_DATA_ACTION);
         getActivity().registerReceiver(receiver, iFilter);
-        if (canScan) {
+        if (false) {
             try {
                 SystemProperties.set("persist.sys.scanstopimme", "false");
             } catch (Exception e) {
                 e.printStackTrace();
-                canScan = false;
+//                canScan = false;
             }
         }
     }
@@ -637,13 +630,13 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         Intent intent = new Intent();
         intent.setAction("com.geomobile.se4500barcodestop");
         getActivity().sendBroadcast(intent);
-        if (canScan) {
-            try {
-                SystemProperties.set("persist.sys.scanstopimme", "true");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        if (canScan) {
+//            try {
+//                SystemProperties.set("persist.sys.scanstopimme", "true");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     @Override
