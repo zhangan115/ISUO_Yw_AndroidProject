@@ -2,12 +2,17 @@ package com.isuo.yw2application.view.main.task.inspection;
 
 import android.support.annotation.NonNull;
 
+import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
+import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
 import com.isuo.yw2application.mode.bean.work.InspectionBean;
+import com.isuo.yw2application.mode.inspection.InspectionRepository;
+import com.isuo.yw2application.mode.inspection.InspectionSourceData;
 import com.isuo.yw2application.mode.work.WorkRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.subscriptions.CompositeSubscription;
@@ -20,12 +25,14 @@ import rx.subscriptions.CompositeSubscription;
 public class InspectionPresenter implements InspectionContract.Presenter {
 
     private final WorkRepository mRepository;
+    private final InspectionRepository inspectionRepository;
     private final InspectionContract.View mView;
     @NonNull
     private CompositeSubscription mSubscriptions;
 
-    InspectionPresenter(WorkRepository mRepository, InspectionContract.View mView) {
+    InspectionPresenter(WorkRepository mRepository,InspectionRepository inspectionRepository, InspectionContract.View mView) {
         this.mRepository = mRepository;
+        this.inspectionRepository = inspectionRepository;
         this.mView = mView;
         mView.setPresenter(this);
         mSubscriptions = new CompositeSubscription();
@@ -35,6 +42,8 @@ public class InspectionPresenter implements InspectionContract.Presenter {
     public void subscribe() {
 
     }
+
+
 
     @Override
     public void unSubscribe() {
@@ -126,6 +135,48 @@ public class InspectionPresenter implements InspectionContract.Presenter {
             @Override
             public void onFinish() {
                 mView.hideLoading();
+            }
+        }));
+    }
+
+    @Override
+    public List<InspectionBean> getUploadTask(List<InspectionBean> list) {
+        // TODO: 8/30/21 去拿到需要上传的数据
+        List<InspectionBean> uploadTask = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getTaskState() != ConstantInt.TASK_STATE_3){
+                continue;
+            }
+            long taskId = list.get(i).getTaskId();
+           InspectionDetailBean detailBean =  inspectionRepository.getInspectionDataFromAcCache(taskId);
+            for (int j = 0; j < detailBean.getRoomList().size(); j++) {
+               RoomListBean roomListBean = detailBean.getRoomList().get(j);
+               if (roomListBean.getTaskRoomState() == ConstantInt.TASK_STATE_3 &&roomListBean.getRoomDb().getCheckCount() == roomListBean.getTaskEquipment().size()){
+
+               }
+
+            }
+
+        }
+        return uploadTask;
+    }
+
+    @Override
+    public void uploadTaskData(long taskId) {
+        mSubscriptions.add(inspectionRepository.uploadTaskData(taskId, new InspectionSourceData.UploadTaskCallBack() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void noDataUpload() {
+
+            }
+
+            @Override
+            public void onError() {
+
             }
         }));
     }

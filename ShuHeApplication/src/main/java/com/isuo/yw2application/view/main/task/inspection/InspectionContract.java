@@ -55,6 +55,20 @@ interface InspectionContract {
          * @param taskId 任务id
          */
         void getInspectionDataList(long taskId);
+
+        /**
+         * 获取可以上传的数据
+         *
+         * @param list 集合
+         */
+        List<InspectionBean>  getUploadTask(List<InspectionBean> list);
+
+        /**
+         * 上传任务数据
+         *
+         * @param taskId 任务Id
+         */
+        void uploadTaskData(long taskId);
     }
 
     interface View extends BaseView<Presenter> {
@@ -68,6 +82,7 @@ interface InspectionContract {
         void noData();
 
         void operationSuccess(InspectionBean bean);
+
     }
 
 }

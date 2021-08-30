@@ -182,6 +182,16 @@ public interface InspectionSourceData {
         void onError();
 
     }
+    //上传任务数据
+    interface UploadTaskCallBack {
+
+        void onSuccess();
+
+        void noDataUpload();
+
+        void onError();
+
+    }
 
     /**
      * 上传配电室数据
@@ -193,6 +203,9 @@ public interface InspectionSourceData {
      */
     @NonNull
     Subscription uploadRoomListData(int position, InspectionDetailBean detailBean, @NonNull UploadRoomListCallBack callBack);
+
+    @NonNull
+    Subscription uploadTaskData(long taskId, @NonNull UploadTaskCallBack callBack);
 
     /**
      * 上传设备数据

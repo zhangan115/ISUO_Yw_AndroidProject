@@ -40,6 +40,7 @@ import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.db.TaskDb;
 import com.isuo.yw2application.mode.bean.work.InspectionBean;
 import com.isuo.yw2application.mode.bean.work.InspectionRegionModel;
+import com.isuo.yw2application.mode.inspection.InspectionRepository;
 import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.main.task.inspection.detial.InspectDetailActivity;
@@ -112,7 +113,8 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         }
         inspectionType = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT, -1);
         setLayoutAndToolbar(R.layout.activivity_inspection_work_list, title);
-        new InspectionPresenter(Yw2Application.getInstance().getWorkRepositoryComponent().getRepository(), this);
+        new InspectionPresenter(Yw2Application.getInstance().getWorkRepositoryComponent().getRepository(),
+                InspectionRepository.getRepository(this), this);
         mRecyclerView = findViewById(R.id.recycleViewId);
         swipeRefreshLayout = findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setColorSchemeColors(findColorById(R.color.colorPrimary));
@@ -158,6 +160,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         findViewById(R.id.screenConditionsLayout).setOnClickListener(this);
         findViewById(R.id.ll_choose_month_day).setOnClickListener(this);
         findViewById(R.id.ll_choose_day_empty).setOnClickListener(this);
+        findViewById(R.id.uploadBtn).setOnClickListener(this);
         mTimeSt = findViewById(R.id.switchSt);
         if (this.inspectionType == 1) {
             mTimeSt.setVisibility(View.VISIBLE);
@@ -330,8 +333,20 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                         })
                         .show();
                 break;
+            case R.id.uploadBtn:
+                if (mPresenter != null) {
+                    uploadTask = mPresenter.getUploadTask(this.mList);
+                    if (uploadTask != null && !uploadTask.isEmpty()) {
+                        currentUploadIndex = 0;
+                        mPresenter.uploadTaskData(uploadTask.get(currentUploadIndex).getTaskId());
+                    }
+                }
+                break;
         }
     }
+
+    private int currentUploadIndex = 0;
+    private List<InspectionBean> uploadTask;
 
     private void setDayToView() {
         Calendar calendar = Calendar.getInstance(Locale.CHINA);
