@@ -30,7 +30,7 @@ public class InspectionPresenter implements InspectionContract.Presenter {
     @NonNull
     private CompositeSubscription mSubscriptions;
 
-    InspectionPresenter(WorkRepository mRepository,InspectionRepository inspectionRepository, InspectionContract.View mView) {
+    InspectionPresenter(WorkRepository mRepository, InspectionRepository inspectionRepository, InspectionContract.View mView) {
         this.mRepository = mRepository;
         this.inspectionRepository = inspectionRepository;
         this.mView = mView;
@@ -42,7 +42,6 @@ public class InspectionPresenter implements InspectionContract.Presenter {
     public void subscribe() {
 
     }
-
 
 
     @Override
@@ -141,22 +140,24 @@ public class InspectionPresenter implements InspectionContract.Presenter {
 
     @Override
     public List<InspectionBean> getUploadTask(List<InspectionBean> list) {
-        // TODO: 8/30/21 去拿到需要上传的数据
         List<InspectionBean> uploadTask = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getTaskState() != ConstantInt.TASK_STATE_3){
+            if (list.get(i).getTaskState() != ConstantInt.TASK_STATE_3) {
                 continue;
             }
             long taskId = list.get(i).getTaskId();
-           InspectionDetailBean detailBean =  inspectionRepository.getInspectionDataFromAcCache(taskId);
-            for (int j = 0; j < detailBean.getRoomList().size(); j++) {
-               RoomListBean roomListBean = detailBean.getRoomList().get(j);
-               if (roomListBean.getTaskRoomState() == ConstantInt.TASK_STATE_3 &&roomListBean.getRoomDb().getCheckCount() == roomListBean.getTaskEquipment().size()){
-
-               }
-
+            InspectionDetailBean detailBean = inspectionRepository.getInspectionDataFromAcCache(taskId);
+            if (detailBean == null) {
+                continue;
             }
-
+            for (int j = 0; j < detailBean.getRoomList().size(); j++) {
+                RoomListBean roomListBean = detailBean.getRoomList().get(j);
+                int count = inspectionRepository.getEquipmentFinishPutCount(taskId, roomListBean);
+                if (roomListBean.getTaskRoomState() == ConstantInt.ROOM_STATE_2
+                        && count == roomListBean.getTaskEquipment().size()) {
+                    uploadTask.add(list.get(i));
+                }
+            }
         }
         return uploadTask;
     }
@@ -166,17 +167,17 @@ public class InspectionPresenter implements InspectionContract.Presenter {
         mSubscriptions.add(inspectionRepository.uploadTaskData(taskId, new InspectionSourceData.UploadTaskCallBack() {
             @Override
             public void onSuccess() {
-
+                mView.uploadNext();
             }
 
             @Override
             public void noDataUpload() {
-
+                mView.hideLoading();
             }
 
             @Override
             public void onError() {
-
+                mView.hideLoading();
             }
         }));
     }

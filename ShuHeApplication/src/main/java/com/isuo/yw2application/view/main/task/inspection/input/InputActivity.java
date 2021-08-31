@@ -543,7 +543,7 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
     }
 
     private void dateEditFinish() {
-        mPresenter.saveData(taskEquipmentBean, true);
+        mPresenter.saveData(taskEquipmentBean, false);
         mPresenter.saveTaskEquipToCache(taskEquipmentBean);
         setResult(Activity.RESULT_OK);
         finish();

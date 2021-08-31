@@ -338,7 +338,10 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                     uploadTask = mPresenter.getUploadTask(this.mList);
                     if (uploadTask != null && !uploadTask.isEmpty()) {
                         currentUploadIndex = 0;
+                        showProgressDialog("数据上传中...");
                         mPresenter.uploadTaskData(uploadTask.get(currentUploadIndex).getTaskId());
+                    } else {
+                        Yw2Application.getInstance().showToast("暂无数据需要上传");
                     }
                 }
                 break;
@@ -347,6 +350,17 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
 
     private int currentUploadIndex = 0;
     private List<InspectionBean> uploadTask;
+
+
+    @Override
+    public void uploadNext() {
+        currentUploadIndex++;
+        if (currentUploadIndex >= uploadTask.size()) {
+            hideProgressDialog();
+        } else {
+            mPresenter.uploadTaskData(uploadTask.get(currentUploadIndex).getTaskId());
+        }
+    }
 
     private void setDayToView() {
         Calendar calendar = Calendar.getInstance(Locale.CHINA);
@@ -509,6 +523,8 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     @Override
     public void hideLoading() {
         swipeRefreshLayout.setRefreshing(false);
+        hideProgressDialog();
+        hidePopupLoading();
     }
 
     @Override

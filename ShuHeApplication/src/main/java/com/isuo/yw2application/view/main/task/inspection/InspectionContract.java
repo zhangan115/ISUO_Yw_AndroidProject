@@ -83,6 +83,8 @@ interface InspectionContract {
 
         void operationSuccess(InspectionBean bean);
 
+        void uploadNext();
+
     }
 
 }

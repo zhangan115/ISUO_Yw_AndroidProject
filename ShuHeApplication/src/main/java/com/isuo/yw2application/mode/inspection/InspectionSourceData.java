@@ -182,6 +182,7 @@ public interface InspectionSourceData {
         void onError();
 
     }
+
     //上传任务数据
     interface UploadTaskCallBack {
 
@@ -382,6 +383,15 @@ public interface InspectionSourceData {
      * @return 数量
      */
     int getEquipmentFinishCount(long taskId, RoomListBean roomListBean);
+
+    /**
+     * 获取设备输入完成的数量
+     *
+     * @param taskId       任务ID
+     * @param roomListBean 配电室
+     * @return 数量
+     */
+    int getEquipmentFinishPutCount(long taskId, RoomListBean roomListBean);
 
     /**
      * 获取设备录入项的完成数量
