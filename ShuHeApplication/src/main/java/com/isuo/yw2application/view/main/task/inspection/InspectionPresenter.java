@@ -164,7 +164,7 @@ public class InspectionPresenter implements InspectionContract.Presenter {
 
     @Override
     public void uploadTaskData(InspectionBean task) {
-        mSubscriptions.add(inspectionRepository.uploadTaskData(task.getTaskId(), new InspectionSourceData.UploadTaskCallBack() {
+        mSubscriptions.add(inspectionRepository.uploadTaskData(task, new InspectionSourceData.UploadTaskCallBack() {
             @Override
             public void onSuccess() {
                 task.setTaskState(ConstantInt.TASK_STATE_4);

@@ -14,6 +14,7 @@ import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.Bean;
 import com.isuo.yw2application.mode.IObjectCallBack;
+import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.db.EquipmentDataDb;
 import com.isuo.yw2application.mode.bean.db.EquipmentDataDbDao;
 import com.isuo.yw2application.mode.bean.db.EquipmentDb;
@@ -28,6 +29,8 @@ import com.isuo.yw2application.mode.bean.employee.EmployeeBean;
 import com.isuo.yw2application.mode.bean.equip.FocusBean;
 import com.isuo.yw2application.mode.bean.inspection.DataItemBean;
 import com.isuo.yw2application.mode.bean.inspection.DataItemValueListBean;
+import com.isuo.yw2application.mode.bean.inspection.ExecutorUserList;
+import com.isuo.yw2application.mode.bean.inspection.InspectionBean;
 import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
 import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
 import com.isuo.yw2application.mode.bean.inspection.SecureBean;
@@ -43,6 +46,7 @@ import com.isuo.yw2application.mode.bean.inspection.upload.UploadTaskInfo;
 import com.isuo.yw2application.utils.ACache;
 import com.orhanobut.logger.Logger;
 import com.sito.library.utils.CalendarUtil;
+import com.umeng.commonsdk.debug.E;
 
 import org.greenrobot.greendao.annotation.NotNull;
 import org.json.JSONException;
@@ -768,7 +772,8 @@ public class InspectionRepository implements InspectionSourceData {
 
     @NonNull
     @Override
-    public Subscription uploadTaskData(long taskId, @NonNull final UploadTaskCallBack callBack) {
+    public Subscription uploadTaskData(com.isuo.yw2application.mode.bean.work.InspectionBean task, @NonNull final UploadTaskCallBack callBack) {
+        long taskId = task.getTaskId();
         InspectionDetailBean detailBean = getInspectionDataFromAcCache(taskId);
         needUploadEquip = new ArrayList<>();
         List<UploadRoomListBean> uploadRoomList = new ArrayList<>();
@@ -923,6 +928,7 @@ public class InspectionRepository implements InspectionSourceData {
                                 for (int i = 0; i < detailBean.getRoomList().size(); i++) {
                                     detailBean.getRoomList().get(i).setEndTime(System.currentTimeMillis());
                                 }
+                                List<User> users = new ArrayList<>();
                                 List<TaskDb> taskDbList = Yw2Application.getInstance().getDaoSession().getTaskDbDao().queryBuilder()
                                         .where(TaskDbDao.Properties.TaskId.eq(taskId))
                                         .list();
@@ -933,16 +939,22 @@ public class InspectionRepository implements InspectionSourceData {
                                         if (i != taskDbList.size() - 1) {
                                             sb.append(",");
                                         }
+                                        User user = new User();
+                                        user.setUserId((int) taskDbList.get(i).getUserId());
+                                        user.setRealName(taskDbList.get(i).getUserName());
+                                        users.add(user);
                                     }
                                 }else {
                                     sb.append(Yw2Application.getInstance().getCurrentUser().getUserId());
+                                    users.add(Yw2Application.getInstance().getCurrentUser());
                                 }
                                 roomListFinish(taskId, 3, sb.toString(), new IObjectCallBack<String>() {
                                     @Override
                                     public void onSuccess(@NonNull String s) {
                                         detailBean.setEndTime(System.currentTimeMillis());
-                                        detailBean.setTaskState(3);
+                                        detailBean.setTaskState(ConstantInt.TASK_STATE_4);
                                         saveInspectionDataToAcCache(detailBean);
+                                        task.setUsers(users);
                                         callBack.onSuccess();
                                     }
 

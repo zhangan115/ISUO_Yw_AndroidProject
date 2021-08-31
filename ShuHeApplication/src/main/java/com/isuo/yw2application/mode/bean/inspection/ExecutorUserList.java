@@ -14,6 +14,11 @@ public class ExecutorUserList implements Parcelable {
     private long taskId;
     private User user;
 
+    public ExecutorUserList(long taskId, User user) {
+        this.taskId = taskId;
+        this.user = user;
+    }
+
     public long getTaskId() {
         return taskId;
     }

@@ -9,6 +9,7 @@ import com.isuo.yw2application.mode.bean.db.TaskDb;
 import com.isuo.yw2application.mode.bean.employee.EmployeeBean;
 import com.isuo.yw2application.mode.bean.equip.FocusBean;
 import com.isuo.yw2application.mode.bean.inspection.DataItemBean;
+import com.isuo.yw2application.mode.bean.inspection.InspectionBean;
 import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
 import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
 import com.isuo.yw2application.mode.bean.inspection.SecureBean;
@@ -206,7 +207,7 @@ public interface InspectionSourceData {
     Subscription uploadRoomListData(int position, InspectionDetailBean detailBean, @NonNull UploadRoomListCallBack callBack);
 
     @NonNull
-    Subscription uploadTaskData(long taskId, @NonNull UploadTaskCallBack callBack);
+    Subscription uploadTaskData(com.isuo.yw2application.mode.bean.work.InspectionBean task, @NonNull UploadTaskCallBack callBack);
 
     /**
      * 上传设备数据
