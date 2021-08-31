@@ -66,9 +66,9 @@ interface InspectionContract {
         /**
          * 上传任务数据
          *
-         * @param taskId 任务Id
+         * @param task 任务
          */
-        void uploadTaskData(long taskId);
+        void uploadTaskData(InspectionBean task);
     }
 
     interface View extends BaseView<Presenter> {

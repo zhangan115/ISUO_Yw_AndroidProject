@@ -934,6 +934,8 @@ public class InspectionRepository implements InspectionSourceData {
                                             sb.append(",");
                                         }
                                     }
+                                }else {
+                                    sb.append(Yw2Application.getInstance().getCurrentUser().getUserId());
                                 }
                                 roomListFinish(taskId, 3, sb.toString(), new IObjectCallBack<String>() {
                                     @Override

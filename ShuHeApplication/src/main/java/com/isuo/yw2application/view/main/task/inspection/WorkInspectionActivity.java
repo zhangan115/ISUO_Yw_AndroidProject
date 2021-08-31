@@ -339,7 +339,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                     if (uploadTask != null && !uploadTask.isEmpty()) {
                         currentUploadIndex = 0;
                         showProgressDialog("数据上传中...");
-                        mPresenter.uploadTaskData(uploadTask.get(currentUploadIndex).getTaskId());
+                        mPresenter.uploadTaskData(uploadTask.get(currentUploadIndex));
                     } else {
                         Yw2Application.getInstance().showToast("暂无数据需要上传");
                     }
@@ -356,9 +356,13 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     public void uploadNext() {
         currentUploadIndex++;
         if (currentUploadIndex >= uploadTask.size()) {
+            mPresenter.toSaveInspectionDataToCache(WorkInspectionActivity.this.inspectionType, WorkInspectionActivity.this.mDate, mList);
+            if (inspectionAdapter != null) {
+                inspectionAdapter.notifyDataSetChanged();
+            }
             hideProgressDialog();
         } else {
-            mPresenter.uploadTaskData(uploadTask.get(currentUploadIndex).getTaskId());
+            mPresenter.uploadTaskData(uploadTask.get(currentUploadIndex));
         }
     }
 
