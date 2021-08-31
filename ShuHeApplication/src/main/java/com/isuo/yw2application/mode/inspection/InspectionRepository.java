@@ -831,8 +831,7 @@ public class InspectionRepository implements InspectionSourceData {
                     }
                 }
                 if (needUpload) {
-                    if (!taskEquipmentBeans.get(i).getEquipment().getEquipmentDb().getUploadState()
-                            && taskEquipmentBeans.get(i).getEquipment().getEquipmentDb().getCanUpload()) {
+                    if (!taskEquipmentBeans.get(i).getEquipment().getEquipmentDb().getUploadState()) {
                         needUploadEquip.add(taskEquipmentBeans.get(i));
                     }
                 }
