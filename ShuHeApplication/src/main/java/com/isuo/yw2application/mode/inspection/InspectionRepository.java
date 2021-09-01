@@ -537,6 +537,7 @@ public class InspectionRepository implements InspectionSourceData {
                                     equipmentData.setRoomId(roomId);
                                     equipmentData.setTaskId(taskId);
                                     equipmentData.setEquipmentId(equipmentId);
+                                    equipmentData.setIsRequired(dataItemValueListBean.getDataItem().getIsRequired());
                                     equipmentData.setDataItemId(dataItemValueListBean.getDataItemValueId());
                                     equipmentData.setType(dataItemValueListBean.getDataItem().getInspectionType());
                                     equipmentData.setIsShareValue(dataItemValueListBean.getDataItem().getIsShareValue());
@@ -1420,9 +1421,16 @@ public class InspectionRepository implements InspectionSourceData {
                             , EquipmentDataDbDao.Properties.EquipmentId.eq(bean.getTaskEquipmentId())
                             , EquipmentDataDbDao.Properties.RoomId.eq(roomBean.getTaskRoomId())
                             , EquipmentDataDbDao.Properties.TaskId.eq(taskId)
+                            , EquipmentDataDbDao.Properties.IsRequired.eq(1)//必须填写
                             , EquipmentDataDbDao.Properties.Value.isNotNull())
                     .count();
-            if (equipmentCount == bean.getDataList().get(0).getDataItemValueList().size()) {
+            int requireCount = 0;
+            for (int i = 0; i < bean.getDataList().get(0).getDataItemValueList().size(); i++) {
+                if (bean.getDataList().get(0).getDataItemValueList().get(i).getDataItem().getIsRequired()==1){
+                    ++requireCount;
+                }
+            }
+            if (equipmentCount == requireCount) {
                 count++;
             }
         }

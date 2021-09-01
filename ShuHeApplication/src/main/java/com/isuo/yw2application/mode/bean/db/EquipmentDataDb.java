@@ -29,6 +29,7 @@ public class EquipmentDataDb implements Parcelable {
     private long dataItemId;
     private long inspectionId;
     private int isShareValue;
+    private int isRequired;//1 必填，0 非必填
 
     private boolean isUpload;
     private long userId;
@@ -146,28 +147,17 @@ public class EquipmentDataDb implements Parcelable {
         isUpload = upload;
     }
 
-    public EquipmentDataDb() {
+    public int getIsRequired() {
+        return isRequired;
     }
 
-    @Generated(hash = 1543051859)
-    public EquipmentDataDb(Long _id, String value, String chooseInspectionName, String localPhoto, int type,
-            long taskId, long roomId, long equipmentId, long dataItemId, long inspectionId, int isShareValue,
-            boolean isUpload, long userId, long currentUserId) {
-        this._id = _id;
-        this.value = value;
-        this.chooseInspectionName = chooseInspectionName;
-        this.localPhoto = localPhoto;
-        this.type = type;
-        this.taskId = taskId;
-        this.roomId = roomId;
-        this.equipmentId = equipmentId;
-        this.dataItemId = dataItemId;
-        this.inspectionId = inspectionId;
-        this.isShareValue = isShareValue;
-        this.isUpload = isUpload;
-        this.userId = userId;
-        this.currentUserId = currentUserId;
+    public void setIsRequired(int isRequired) {
+        this.isRequired = isRequired;
     }
+
+    public EquipmentDataDb() {
+    }
+    
 
     @Override
     public int describeContents() {
@@ -187,6 +177,7 @@ public class EquipmentDataDb implements Parcelable {
         dest.writeString(this.localPhoto);
         dest.writeLong(this.inspectionId);
         dest.writeInt(this.isShareValue);
+        dest.writeInt(this.isRequired);
         dest.writeLong(this.userId);
         dest.writeLong(this.currentUserId);
     }
@@ -211,8 +202,31 @@ public class EquipmentDataDb implements Parcelable {
         this.localPhoto = in.readString();
         this.inspectionId = in.readLong();
         this.isShareValue = in.readInt();
+        this.isRequired = in.readInt();
         this.userId =in.readInt();
         this.currentUserId = in.readLong();
+    }
+
+    @Generated(hash = 1565587596)
+    public EquipmentDataDb(Long _id, String value, String chooseInspectionName,
+            String localPhoto, int type, long taskId, long roomId, long equipmentId,
+            long dataItemId, long inspectionId, int isShareValue, int isRequired,
+            boolean isUpload, long userId, long currentUserId) {
+        this._id = _id;
+        this.value = value;
+        this.chooseInspectionName = chooseInspectionName;
+        this.localPhoto = localPhoto;
+        this.type = type;
+        this.taskId = taskId;
+        this.roomId = roomId;
+        this.equipmentId = equipmentId;
+        this.dataItemId = dataItemId;
+        this.inspectionId = inspectionId;
+        this.isShareValue = isShareValue;
+        this.isRequired = isRequired;
+        this.isUpload = isUpload;
+        this.userId = userId;
+        this.currentUserId = currentUserId;
     }
 
     public static final Creator<EquipmentDataDb> CREATOR = new Creator<EquipmentDataDb>() {
