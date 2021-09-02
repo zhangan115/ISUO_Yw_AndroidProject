@@ -52,9 +52,9 @@ interface InspectionContract {
         /**
          * 获取任务数据
          *
-         * @param taskId 任务id
+         * @param inspectionBean 任务
          */
-        void getInspectionDataList(long taskId);
+        void getInspectionDataList(InspectionBean inspectionBean);
 
         /**
          * 获取可以上传的数据

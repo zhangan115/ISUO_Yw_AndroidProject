@@ -557,7 +557,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         if (mPresenter != null) {
             mPresenter.toSaveInspectionDataToCache(this.inspectionType, this.mDate, mList);
         }
-        startTask(inspectionBean.getTaskId(), securityId);
+//        startTask(inspectionBean.getTaskId(), securityId);
     }
 
     @Override

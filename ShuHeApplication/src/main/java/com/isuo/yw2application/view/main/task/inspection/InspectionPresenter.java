@@ -102,8 +102,7 @@ public class InspectionPresenter implements InspectionContract.Presenter {
         mSubscriptions.add(mRepository.getOperationTask(taskId, new IObjectCallBack<String>() {
             @Override
             public void onSuccess(@NonNull String s) {
-                mView.operationSuccess(bean);
-                getInspectionDataList(bean.getTaskId());
+                getInspectionDataList(bean);
             }
 
             @Override
@@ -119,11 +118,11 @@ public class InspectionPresenter implements InspectionContract.Presenter {
     }
 
     @Override
-    public void getInspectionDataList(long taskId) {
-        mSubscriptions.add(mRepository.getInspectionDetailList(taskId, new IObjectCallBack<InspectionDetailBean>() {
+    public void getInspectionDataList(InspectionBean bean) {
+        mSubscriptions.add(mRepository.getInspectionDetailList(bean.getTaskId(), new IObjectCallBack<InspectionDetailBean>() {
             @Override
             public void onSuccess(@NonNull InspectionDetailBean inspectionDetailBean) {
-
+                mView.operationSuccess(bean);
             }
 
             @Override
