@@ -24,7 +24,7 @@ public interface ConstantStr {
     /**
      * APP版本号number
      **/
-    int VERSION_NO = 8;
+    int VERSION_NO = 9;
 
 
     String NOTIFY_GROUP = "notify_group";

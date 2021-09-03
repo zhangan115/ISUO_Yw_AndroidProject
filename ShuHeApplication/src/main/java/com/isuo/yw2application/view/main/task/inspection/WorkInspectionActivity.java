@@ -557,6 +557,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         if (mPresenter != null) {
             mPresenter.toSaveInspectionDataToCache(this.inspectionType, this.mDate, mList);
         }
+        Yw2Application.getInstance().showToast("任务领取成功");
 //        startTask(inspectionBean.getTaskId(), securityId);
     }
 
@@ -771,7 +772,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     private void scanResult(List<InspectionBean> inspectionBeans, int index) {
         if (inspectionBeans.get(index).getTaskState() < ConstantInt.TASK_STATE_2) {
             //去领取
-            mPresenter.operationTask(String.valueOf(inspectionBeans.get(index).getTaskId()), inspectionBeans.get(0));
+            mPresenter.operationTask(String.valueOf(inspectionBeans.get(index).getTaskId()), inspectionBeans.get(index));
         } else {
             //打开
             long taskId = inspectionBeans.get(index).getTaskId();
