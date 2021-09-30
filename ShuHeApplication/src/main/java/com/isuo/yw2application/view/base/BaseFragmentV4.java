@@ -33,6 +33,16 @@ public class BaseFragmentV4 extends AbsBaseFragmentV4 implements BaseActivity.On
         }
     }
 
+    @Override
+    public void showEvLoading() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void hideEvLoading() {
+        hideProgressDialog();
+    }
+
     protected MaterialDialog loadingDialog = null;
 
     public Dialog showProgressDialog() {

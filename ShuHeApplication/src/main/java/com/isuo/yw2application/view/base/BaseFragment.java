@@ -56,13 +56,23 @@ public class BaseFragment extends AbsBaseFragment implements DialogInterface.OnC
         }
     }
 
+    @Override
+    public void showEvLoading() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void hideEvLoading() {
+        hideProgressDialog();
+    }
+
     public Dialog showProgressDialog() {
         return showProgressDialog("加载中...");
     }
 
     public void hideProgressDialog() {
         if (loadingDialog != null) {
-            loadingDialog.hide();
+            loadingDialog.dismiss();
         }
     }
 

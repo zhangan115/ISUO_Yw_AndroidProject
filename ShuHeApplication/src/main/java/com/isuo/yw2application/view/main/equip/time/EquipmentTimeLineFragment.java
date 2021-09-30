@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.equip.time;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +20,10 @@ import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.equip.TimeLineBean;
 import com.isuo.yw2application.view.base.MvpFragment;
 import com.isuo.yw2application.view.main.equip.time.detail.EquipmentRecordDetailActivity;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.bean.Permissions;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
 import com.sito.library.adapter.RVAdapter;
 import com.sito.library.utils.DataUtil;
 import com.sito.library.widget.ExpendRecycleView;
@@ -110,9 +115,20 @@ public class EquipmentTimeLineFragment extends MvpFragment<EquipmentTimeLineCont
         adapter.setOnItemClickListener(new RVAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), EquipmentRecordDetailActivity.class);
-                intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, mList.get(position));
-                startActivity(intent);
+                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                SoulPermission.getInstance().checkAndRequestPermissions(permissions, new CheckRequestPermissionsListener() {
+                    @Override
+                    public void onAllPermissionOk(Permission[] allPermissions) {
+                        Intent intent = new Intent(getActivity(), EquipmentRecordDetailActivity.class);
+                        intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, mList.get(position));
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(Permission[] refusedPermissions) {
+                        Yw2Application.getInstance().showToast("请赋予权限");
+                    }
+                });
             }
         });
         onRefresh();

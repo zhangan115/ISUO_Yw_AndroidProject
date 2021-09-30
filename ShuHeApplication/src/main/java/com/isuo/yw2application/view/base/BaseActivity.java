@@ -3,9 +3,11 @@ package com.isuo.yw2application.view.base;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,11 +17,14 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.isuo.yw2application.BuildConfig;
 import com.isuo.yw2application.R;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
@@ -87,6 +92,16 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
     }
 
     @Override
+    public void showEvLoading() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void hideEvLoading() {
+        hideProgressDialog();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
@@ -146,7 +161,7 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
             if (mTitleTv == null) {
                 mTitleTv = toolbar.findViewById(R.id.titleId);
             }
-            if (titleResId != -1){
+            if (titleResId != -1) {
                 mTitleTv.setText(titleResId);
             }
             setSupportActionBar(toolbar);
@@ -337,7 +352,7 @@ public abstract class BaseActivity extends AbsBaseActivity implements OnClickLis
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this, "com.isuo.yw2application.fileprovider", photoFile);
+                Uri photoURI = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileprovider", photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 activity.startActivityForResult(takePictureIntent, REQUEST_CODE);
             }

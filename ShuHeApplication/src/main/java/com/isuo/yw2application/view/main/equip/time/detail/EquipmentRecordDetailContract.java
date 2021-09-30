@@ -1,8 +1,11 @@
 package com.isuo.yw2application.view.main.equip.time.detail;
 
+import com.isuo.yw2application.api.Api;
 import com.isuo.yw2application.mode.bean.equip.EquipRecordDetail;
 import com.sito.library.base.BasePresenter;
 import com.sito.library.base.BaseView;
+
+import java.io.File;
 
 /**
  * * 检测详情,大修详情,实验详情
@@ -27,7 +30,7 @@ interface EquipmentRecordDetailContract {
 
         void showData(EquipRecordDetail equipRecordDetail);
 
-        void downLoadSuccess(String filePath);
+        void downLoadSuccess(File file);
 
         void showDownLoadProgress();
 
