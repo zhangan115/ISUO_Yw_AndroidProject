@@ -7,6 +7,8 @@ import com.isuo.yw2application.mode.bean.equip.EquipRecordDetail;
 import com.isuo.yw2application.mode.equipment.EquipmentDataSource;
 import com.isuo.yw2application.mode.equipment.EquipmentRepository;
 
+import java.io.File;
+
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -57,7 +59,7 @@ class RecordDetailPresenter implements EquipmentRecordDetailContract.Presenter {
             @Override
             public void onSuccess(String fileName, String filePath) {
                 mView.hideDownProgress();
-                mView.downLoadSuccess(filePath);
+                mView.downLoadSuccess(new File(filePath,fileName));
             }
 
             @Override

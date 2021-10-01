@@ -22,6 +22,7 @@ import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.equip.EquipRecordDetail;
 import com.isuo.yw2application.mode.bean.equip.TimeLineBean;
+import com.isuo.yw2application.utils.OpenFileUtils;
 import com.isuo.yw2application.view.base.MvpFragment;
 import com.isuo.yw2application.view.photo.ViewPagePhotoActivity;
 import com.sito.library.utils.DataUtil;
@@ -116,27 +117,8 @@ public class EquipmentRecordDetailFragment extends MvpFragment<EquipmentRecordDe
     }
 
     @Override
-    public void downLoadSuccess(final String filePath) {
-        new MaterialDialog.Builder(getActivity())
-                .content("文件已经下载成功，请在ISUO文件夹中查看!")
-                .positiveText("确定")
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                        openFileByWps(getActivity(), new File(filePath));
-                    }
-                })
-                .show();
-    }
-
-    public static void openFileByWps(Context context, File file) {
-        Intent intent = new Intent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setAction(android.content.Intent.ACTION_VIEW);
-        intent.setClassName("cn.wps.moffice", "cn.wps.moffice.documentmanager.PreStartActivity");
-        Uri uri = Uri.fromFile(file);
-        intent.setData(uri);
-        context.startActivity(intent);
+    public void downLoadSuccess(File file) {
+        checkFile(file);
     }
 
     @Override
@@ -209,9 +191,7 @@ public class EquipmentRecordDetailFragment extends MvpFragment<EquipmentRecordDe
             String filePath = DOWNLOAD_PATH + fileName;
             File file = new File(filePath);
             if (file.exists()) {
-                new MaterialDialog.Builder(getActivity())
-                        .content("文件已经存在，请在EvPro文件夹中查看!")
-                        .positiveText("确定").show();
+                checkFile(file);
             } else {
                 if (mPresenter != null) {
                     mPresenter.downLoadFile(url, DOWNLOAD_PATH, fileName);
@@ -219,6 +199,30 @@ public class EquipmentRecordDetailFragment extends MvpFragment<EquipmentRecordDe
             }
         }
     };
+
+    private void checkFile(File file) {
+        new MaterialDialog.Builder(getActivity())
+                .content("文件下载成功，是否查看文件")
+                .positiveText("打开文件").negativeText("取消")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if (null == file || !file.exists()) {
+                            return;
+                        }
+                        try {
+                            OpenFileUtils.openFile(Yw2Application.getInstance(), file);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).onNegative(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                dialog.dismiss();
+            }
+        }).show();
+    }
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {

@@ -300,18 +300,23 @@ public class EquipmentRepository implements EquipmentDataSource {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    boolean isSuccess = writeResponseBodyToDisk(filePath, fileName, response.body());
-                    if (isSuccess) {
-                        Message message = new Message();
-                        message.what = 0;
-                        Bundle bundle = new Bundle();
-                        bundle.putString(ConstantStr.KEY_BUNDLE_STR, fileName);
-                        bundle.putString(ConstantStr.KEY_BUNDLE_STR_1, filePath);
-                        message.setData(bundle);
-                        downLoadHandle.sendMessage(message);
-                    } else {
-                        downLoadHandle.sendEmptyMessage(1);
-                    }
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            boolean isSuccess = writeResponseBodyToDisk(filePath, fileName, response.body());
+                            if (isSuccess) {
+                                Message message = new Message();
+                                message.what = 0;
+                                Bundle bundle = new Bundle();
+                                bundle.putString(ConstantStr.KEY_BUNDLE_STR, fileName);
+                                bundle.putString(ConstantStr.KEY_BUNDLE_STR_1, filePath);
+                                message.setData(bundle);
+                                downLoadHandle.sendMessage(message);
+                            } else {
+                                downLoadHandle.sendEmptyMessage(1);
+                            }
+                        }
+                    }).start();
                 } else {
                     downLoadHandle.sendEmptyMessage(1);
                 }
