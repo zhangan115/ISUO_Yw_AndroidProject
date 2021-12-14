@@ -109,7 +109,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:text="25次"
+                            android:text="-次"
                             android:textColor="@color/text333"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -133,7 +133,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:text="365台"
+                            android:text="-台"
                             android:textColor="@color/text333"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -157,7 +157,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:text="6次"
+                            android:text="-次"
                             android:textColor="@color/text333"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -181,7 +181,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:text="6个"
+                            android:text="-个"
                             android:textColor="@color/text333"
                             android:textSize="14sp" />
 
@@ -198,7 +198,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:text="6个"
+                            android:text="-个"
                             android:textColor="@color/text333"
                             android:textSize="14sp" />
                     </LinearLayout>
