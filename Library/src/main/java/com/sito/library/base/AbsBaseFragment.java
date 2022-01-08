@@ -7,6 +7,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.sito.library.R;
 
@@ -21,14 +22,12 @@ public abstract class AbsBaseFragment extends Fragment implements DialogInterfac
 
     public void showEvLoading() {
         if (evLoading == null) {
-            ImageView imageView = (ImageView) LayoutInflater.from(getActivity()).inflate(R.layout.loading_layout, null);
+            RelativeLayout imageView = (RelativeLayout) LayoutInflater.from(getActivity()).inflate(R.layout.loading_layout, null);
             evLoading = new AlertDialog.Builder(getActivity(), R.style.ProgressDialogTheme)
                     .setView(imageView)
                     .setCancelable(false)
                     .setOnCancelListener(this)
                     .create();
-            AnimationDrawable animationDrawable = (AnimationDrawable) imageView.getDrawable();
-            animationDrawable.start();
         }
         evLoading.show();
     }

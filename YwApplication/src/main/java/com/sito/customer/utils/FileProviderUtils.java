@@ -6,7 +6,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
 
-import com.isuo.yw2application.BuildConfig;
+
+import com.sito.customer.BuildConfig;
 
 import java.io.File;
 

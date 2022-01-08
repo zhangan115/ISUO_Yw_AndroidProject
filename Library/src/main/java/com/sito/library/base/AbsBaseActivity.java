@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.sito.library.R;
 
@@ -86,13 +87,11 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements Dialo
 
     public void showEvLoading() {
         if (evLoading == null) {
-            ImageView imageView = (ImageView) LayoutInflater.from(this).inflate(R.layout.loading_layout, null);
+            RelativeLayout imageView = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.loading_layout, null);
             evLoading = new AlertDialog.Builder(this, R.style.ProgressDialogTheme)
                     .setView(imageView)
                     .setOnCancelListener(this)
                     .create();
-            AnimationDrawable animationDrawable = (AnimationDrawable) imageView.getDrawable();
-            animationDrawable.start();
         }
         evLoading.show();
     }
