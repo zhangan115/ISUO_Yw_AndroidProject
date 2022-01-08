@@ -100,11 +100,23 @@ public class PayContentView extends LinearLayout {
         TextView text1 = findViewById(R.id.text1);
         TextView text2 = findViewById(R.id.text2);
         TextView text3 = findViewById(R.id.text3);
+        TextView text4 = findViewById(R.id.text4);
         text1.setText(bean.getMenuName());
-        if (bean.getMenuType()==1) {
+        if (bean.getMenuName().equals("旗舰版")) {
+            text2.setText(String.format("%.0f", bean.getPrice()));
+            if (bean.getPrice() == 0) {
+                text3.setText("元");
+            } else {
+                text3.setText("元/年");
+            }
+            text4.setVisibility(View.VISIBLE);
+            text4.setText("请联系客服");
+        } else if (bean.getMenuType() == 1) {
             text2.setText("请联系客服");
             text3.setText("");
+            text4.setVisibility(GONE);
         } else {
+            text4.setVisibility(GONE);
             text2.setText(String.format("%.0f", bean.getPrice()));
             if (bean.getPrice() == 0) {
                 text3.setText("元");
