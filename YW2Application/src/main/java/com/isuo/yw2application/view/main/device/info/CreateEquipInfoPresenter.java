@@ -101,8 +101,8 @@ class CreateEquipInfoPresenter implements CreateEquipInfoContract.Presenter {
     }
 
     @Override
-    public void addEquipmentType(@NonNull String equipmentType) {
-        subscription.add(mRepository.addEquipmentType(equipmentType, new IObjectCallBack<String>() {
+    public void addEquipmentType(Long parentId, Integer level, @NonNull String equipmentType) {
+        subscription.add(mRepository.addEquipmentType(parentId,level,equipmentType, new IObjectCallBack<String>() {
             @Override
             public void onSuccess(@NonNull String chooseRoomOrType) {
                 mView.addRoomOrTypeSuccess();

@@ -38,7 +38,7 @@ public interface CreateDataSource {
     Subscription addRoom(int roomType, @NonNull String name, @NonNull IObjectCallBack<String> callBack);
 
     @NonNull
-    Subscription addEquipmentType(@NonNull String name, @NonNull IObjectCallBack<String> callBack);
+    Subscription addEquipmentType(Long parentId, Integer level,@NonNull String name, @NonNull IObjectCallBack<String> callBack);
 
     @NonNull
     Subscription addEquipment(JSONObject jsonObject, @NonNull IObjectCallBack<String> callBack);

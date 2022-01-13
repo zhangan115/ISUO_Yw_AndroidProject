@@ -15,7 +15,7 @@ public interface ConstantStr {
     String NOTIFICATION_CHANNEL_NAME = "ISUO";
     String NOTIFICATION_CHANNEL_DESCRIPTION = "消息提示";
     String NOTIFICATION_CHANNEL_ID = "isuo_news_id";
-
+    String NET_CACHE_NAME = "inspection_task";
     /**
      * 是否使用过App
      **/
@@ -24,7 +24,7 @@ public interface ConstantStr {
     /**
      * APP版本号number
      **/
-    int VERSION_NO = 6;
+    int VERSION_NO = 12;
 
 
     String NOTIFY_GROUP = "notify_group";
@@ -141,4 +141,7 @@ public interface ConstantStr {
     String INSPECTION_CACHE_DATA = "inspection_cache_data";
     String INSPECTION_KEY_EQUIP = "inspection_cache_equip";
     String INSPECTION_KEY_DATA = "inspection_cache_all_data";
+
+    String TASK_STATE_START = "task_state_start";//巡检任务开始
+    String TASK_STATE_FINISH = "task_state_finish";//巡检任务完成
 }

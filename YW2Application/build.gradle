@@ -26,7 +26,7 @@ android {
         applicationId "com.isuo.yw2application"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
+        versionCode 7
         versionName "1.5"
         ndk {
             abiFilters "armeabi"
@@ -71,7 +71,7 @@ android {
     }
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "小梭运维＋${variant.flavorName}_V${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}.apk"
+            outputFileName = "小梭任务通_V${defaultConfig.versionName}.apk"
         }
     }
     sourceSets {
@@ -81,7 +81,7 @@ android {
     }
     //green dao 配置
     greendao {
-        schemaVersion 3//版本号
+        schemaVersion 4//版本号
     }
 }
 

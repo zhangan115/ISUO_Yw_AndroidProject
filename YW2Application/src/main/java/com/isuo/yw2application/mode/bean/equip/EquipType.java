@@ -9,11 +9,12 @@ public class EquipType {
     private String name;
     private boolean isSelect;
     private long createTime;
+    private long parentId;
     private int deleteState;
     private int equipmentTypeId;
     private String equipmentTypeName;
     private String equipmentTypeRemark;
-
+    private int level;
     public boolean isSelect() {
         return isSelect;
     }
@@ -68,5 +69,21 @@ public class EquipType {
 
     public void setEquipmentTypeRemark(String equipmentTypeRemark) {
         this.equipmentTypeRemark = equipmentTypeRemark;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(long parentId) {
+        this.parentId = parentId;
     }
 }

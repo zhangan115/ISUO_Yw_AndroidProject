@@ -34,6 +34,7 @@
             tools:text="10" />
 
         <TextView
+            android:id="@+id/unitTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="台"

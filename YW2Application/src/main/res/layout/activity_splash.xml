@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:text="西安小梭易智信息科技有限公司@2018-2021版权信息"
+        android:text="西安小梭易智信息科技有限公司@2018-2022版权信息"
         android:textColor="@color/gray_666666"
         android:textSize="14sp" />
 

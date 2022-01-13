@@ -25,8 +25,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/drop_down_arrow"
-                android:gravity="center"
                 android:drawablePadding="5dp"
+                android:gravity="center"
                 android:text="2020-11-11"
                 android:textColor="@color/text333"
                 android:textSize="18sp"
@@ -43,6 +43,7 @@
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingTop="12dp"
+            android:background="@color/colorWhite"
             android:paddingRight="10dp"
             android:paddingBottom="12dp"
             android:weightSum="7">
@@ -274,22 +275,95 @@
 
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/screen"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/ll_show_weak"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/screenLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#f7f7f7"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/screenConditionsLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="筛选条件："
+                        android:textColor="@color/text333"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/conditionsTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/list_arrow"
+                        android:drawablePadding="6dp"
+                        android:text="默认"
+                        android:textColor="@color/text333"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/switchSt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    android:text="使用时间分类"
+                    android:textColor="@color/text333"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/listLayout"
+            android:layout_above="@+id/uploadBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/screen"
             android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycleViewId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:visibility="gone" />
 
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/swipeLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#f7f7f7">
+                android:layout_height="match_parent">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycleViewId"
+                <com.sito.library.widget.PinnedHeaderExpandableListView
+                    android:id="@+id/expandableListView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/DP_10"
+                    android:background="#f7f7f7"
+                    android:cacheColorHint="@null"
+                    android:childDivider="@null"
+                    android:childIndicatorLeft="0dp"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:groupIndicator="@null"
+                    android:listSelector="@color/transparent"
+                    android:paddingTop="10dp"
+                    android:scrollbarAlwaysDrawHorizontalTrack="false"
                     android:scrollbars="none" />
 
 
@@ -298,6 +372,20 @@
             <include layout="@layout/layout_no_data" />
 
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/uploadBtn"
+            android:text="提交数据"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/colorWhite"
+            android:layout_marginBottom="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textSize="14sp"
+            android:background="@drawable/bg_btn_report"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"/>
 
         <LinearLayout
             android:id="@+id/ll_choose_day"

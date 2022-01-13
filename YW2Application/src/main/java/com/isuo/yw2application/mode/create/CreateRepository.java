@@ -117,7 +117,10 @@ public class CreateRepository implements CreateDataSource {
                 } else {
                     List<ChooseRoomOrType> resultList = new ArrayList<>();
                     for (int i = 0; i < equipTypes.size(); i++) {
-                        resultList.add(new ChooseRoomOrType(equipTypes.get(i).getEquipmentTypeName(), equipTypes.get(i).getEquipmentTypeId()));
+                        ChooseRoomOrType type = new ChooseRoomOrType(equipTypes.get(i).getEquipmentTypeName(), equipTypes.get(i).getEquipmentTypeId());
+                        type.setLevel(equipTypes.get(i).getLevel());
+                        type.setParentId(equipTypes.get(i).getParentId());
+                        resultList.add(type);
                     }
                     callBack.onSuccess(resultList);
                 }
@@ -153,9 +156,9 @@ public class CreateRepository implements CreateDataSource {
 
     @NonNull
     @Override
-    public Subscription addEquipmentType(@NonNull String name, final @NonNull IObjectCallBack<String> callBack) {
+    public Subscription addEquipmentType(Long parentId, Integer level, @NonNull String name, @NonNull IObjectCallBack<String> callBack) {
         Observable<Bean<String>> observable = Api.createRetrofit().create(CreateApi.class)
-                .addEquipmentType(name);
+                .addEquipmentType(parentId,level,name);
         return new ApiCallBack<String>(observable) {
             @Override
             public void onSuccess(String string) {

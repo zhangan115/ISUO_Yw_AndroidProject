@@ -24,7 +24,7 @@ public interface CreateApi {
 
     @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
     @GET("equipment/type/add.json")
-    Observable<Bean<String>> addEquipmentType(@Query("equipmentTypeName") String roomName);
+    Observable<Bean<String>> addEquipmentType(@Query("parentId") Long parentId,@Query("level") int level,@Query("equipmentTypeName") String roomName);
 
     @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
     @POST("equipment/app/add.json")

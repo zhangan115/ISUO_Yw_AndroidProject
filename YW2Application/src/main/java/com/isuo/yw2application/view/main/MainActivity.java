@@ -129,6 +129,9 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
             mainPresenter.postCidInfo(Yw2Application.getInstance().getCid());
             Logger.d(Yw2Application.getInstance().getCid());
         }
+        if (mainPresenter != null) {
+            mainPresenter.getNewVersion(false);
+        }
     }
 
     private void initView() {
@@ -220,7 +223,7 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
             startActivity(new Intent(this, QuestionActivity.class));
         } else if (id == R.id.layout_5) {
             if (mainPresenter != null) {
-                mainPresenter.getNewVersion();
+                mainPresenter.getNewVersion(true);
             }
         } else if (id == R.id.layout_6) {
             startActivity(new Intent(this, AboutActivity.class));

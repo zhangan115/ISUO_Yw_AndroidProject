@@ -15,7 +15,7 @@ interface MainContract {
 
     interface Presenter extends BasePresenter {
 
-        void getNewVersion();
+        void getNewVersion(boolean showNote);
 
         void uploadUserPhoto(File file);
 

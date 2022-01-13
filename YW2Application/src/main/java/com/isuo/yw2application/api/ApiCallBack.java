@@ -47,6 +47,7 @@ public abstract class ApiCallBack<T> {
                         t.printStackTrace();
                         Yw2Application.getInstance().showToast(t.getMessage());
                         onFail();
+                        netError();
                     }
                 })
                 .doOnNext(new Action1<Bean<T>>() {
@@ -145,4 +146,8 @@ public abstract class ApiCallBack<T> {
     public abstract void onSuccess(@Nullable T t);
 
     public abstract void onFail();
+
+    public void netError(){
+
+    };
 }

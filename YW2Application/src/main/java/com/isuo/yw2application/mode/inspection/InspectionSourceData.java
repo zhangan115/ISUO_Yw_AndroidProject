@@ -9,6 +9,7 @@ import com.isuo.yw2application.mode.bean.db.TaskDb;
 import com.isuo.yw2application.mode.bean.employee.EmployeeBean;
 import com.isuo.yw2application.mode.bean.equip.FocusBean;
 import com.isuo.yw2application.mode.bean.inspection.DataItemBean;
+import com.isuo.yw2application.mode.bean.inspection.InspectionBean;
 import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
 import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
 import com.isuo.yw2application.mode.bean.inspection.SecureBean;
@@ -47,6 +48,22 @@ public interface InspectionSourceData {
      */
     @NonNull
     Subscription getInspectionDetailList(long taskId, @NonNull IObjectCallBack<InspectionDetailBean> callBack);
+
+    /**
+     * 更新任务后保存到本地
+     *
+     * @param detailBean 数据
+     */
+    void saveInspectionDataToAcCache(InspectionDetailBean detailBean);
+
+    /**
+     * h获取缓存的数据
+     *
+     * @param taskId 任务ID
+     * @return 数据
+     */
+    @Nullable
+    InspectionDetailBean getInspectionDataFromAcCache(long taskId);
 
     /**
      * 保存任务详情到cache
@@ -167,6 +184,17 @@ public interface InspectionSourceData {
 
     }
 
+    //上传任务数据
+    interface UploadTaskCallBack {
+
+        void onSuccess();
+
+        void noDataUpload();
+
+        void onError();
+
+    }
+
     /**
      * 上传配电室数据
      *
@@ -177,6 +205,9 @@ public interface InspectionSourceData {
      */
     @NonNull
     Subscription uploadRoomListData(int position, InspectionDetailBean detailBean, @NonNull UploadRoomListCallBack callBack);
+
+    @NonNull
+    Subscription uploadTaskData(com.isuo.yw2application.mode.bean.work.InspectionBean task, @NonNull UploadTaskCallBack callBack);
 
     /**
      * 上传设备数据
@@ -353,6 +384,15 @@ public interface InspectionSourceData {
      * @return 数量
      */
     int getEquipmentFinishCount(long taskId, RoomListBean roomListBean);
+
+    /**
+     * 获取设备输入完成的数量
+     *
+     * @param taskId       任务ID
+     * @param roomListBean 配电室
+     * @return 数量
+     */
+    int getEquipmentFinishPutCount(long taskId, RoomListBean roomListBean);
 
     /**
      * 获取设备录入项的完成数量

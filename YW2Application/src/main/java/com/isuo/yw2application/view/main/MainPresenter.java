@@ -60,7 +60,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void getNewVersion() {
+    public void getNewVersion(boolean showNote) {
         mSubscription.add(mRepository.getNewVersion(new CustomerDataSource.NewVersionCallBack() {
             @Override
             public void newVersion(NewVersion result) {
@@ -69,7 +69,9 @@ public class MainPresenter implements MainContract.Presenter {
 
             @Override
             public void noNewVersion() {
-                mView.currentVersion();
+                if (showNote) {
+                    mView.currentVersion();
+                }
             }
         }));
     }

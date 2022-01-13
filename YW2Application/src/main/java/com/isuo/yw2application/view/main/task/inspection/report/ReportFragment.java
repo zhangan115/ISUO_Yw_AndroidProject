@@ -29,7 +29,6 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.common.ConstantStr;
-import com.isuo.yw2application.mode.bean.db.EquipmentDataDb;
 import com.isuo.yw2application.mode.bean.db.RoomDb;
 import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
 import com.isuo.yw2application.mode.bean.inspection.RoomListBean;

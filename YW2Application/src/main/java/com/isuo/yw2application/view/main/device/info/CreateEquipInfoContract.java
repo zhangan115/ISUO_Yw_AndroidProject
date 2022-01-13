@@ -23,7 +23,7 @@ interface CreateEquipInfoContract {
 
         void addRoom(int type, @NonNull String roomName);
 
-        void addEquipmentType(@NonNull String equipmentType);
+        void addEquipmentType(Long parentId, Integer level, @NonNull String equipmentType);
 
         void deleteRoom(long roomId);
 

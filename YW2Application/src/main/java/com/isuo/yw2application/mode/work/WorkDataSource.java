@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.check.FaultList;
+import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulBean;
 import com.isuo.yw2application.mode.bean.today.TodayToDoBean;
 import com.isuo.yw2application.mode.bean.work.AwaitWorkBean;
@@ -50,6 +51,28 @@ public interface WorkDataSource {
      */
     @NonNull
     Subscription getIncrementData(String time, boolean isFinish, @Nullable String lastId, @NonNull IListCallBack<IncrementBean> callBack);
+
+    /**
+     * 从缓存中获取巡检数据
+     *
+     * @param inspectionType 巡检类型
+     * @param data           时间
+     * @param callBack       回调
+     * @return 订阅
+     */
+    @NonNull
+    Subscription getInspectionDataFromCache(int inspectionType, String data, IListCallBack<InspectionBean> callBack);
+
+    /**
+     * 保存数据到缓存中
+     *
+     * @param inspectionType     巡检类型
+     * @param data               时间
+     * @param inspectionBeanList 回调
+     * @return 订阅
+     */
+    @NonNull
+    Subscription saveInspectionDataToCache(int inspectionType, String data, List<InspectionBean> inspectionBeanList);
 
     /**
      * 获取巡检列表
@@ -108,6 +131,16 @@ public interface WorkDataSource {
     @NonNull
     Subscription getIncrement(@NonNull Long taskId, @NonNull IObjectCallBack<IncrementBean> callBack);
 
+    /**
+     * 获取任务详情
+     *
+     * @param taskId   任务id
+     * @param callBack 回调
+     * @return 订阅
+     */
+    @NonNull
+    Subscription getInspectionDetailList(long taskId, @NonNull IObjectCallBack<InspectionDetailBean> callBack);
+
     interface WorkItemCallBack {
 
         void showWorkItem(List<WorkItem> workItems);
@@ -138,5 +171,5 @@ public interface WorkDataSource {
     Subscription getTodayFaultList(boolean isRemain, String time, @NonNull IListCallBack<FaultList> callBack);
 
     @NonNull
-    Subscription get24HFaultList(Map<String,String> map, @NonNull IListCallBack<FaultList> callBack);
+    Subscription get24HFaultList(Map<String, String> map, @NonNull IListCallBack<FaultList> callBack);
 }

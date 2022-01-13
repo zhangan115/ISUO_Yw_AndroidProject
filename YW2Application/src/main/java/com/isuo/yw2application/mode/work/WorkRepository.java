@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.api.Api;
 import com.isuo.yw2application.api.ApiCallBack;
@@ -18,8 +20,14 @@ import com.isuo.yw2application.mode.Bean;
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.PayMenuBean;
-import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.check.FaultList;
+import com.isuo.yw2application.mode.bean.db.EquipmentDataDbDao;
+import com.isuo.yw2application.mode.bean.db.RoomDb;
+import com.isuo.yw2application.mode.bean.db.RoomDbDao;
+import com.isuo.yw2application.mode.bean.inspection.DataItemValueListBean;
+import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
+import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
+import com.isuo.yw2application.mode.bean.inspection.TaskEquipmentBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulBean;
 import com.isuo.yw2application.mode.bean.today.TodayToDoBean;
 import com.isuo.yw2application.mode.bean.work.AwaitWorkBean;
@@ -28,10 +36,13 @@ import com.isuo.yw2application.mode.bean.work.InspectionBean;
 import com.isuo.yw2application.mode.bean.work.InspectionDataBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.mode.bean.work.WorkState;
+import com.isuo.yw2application.mode.inspection.InspectionApi;
+import com.isuo.yw2application.utils.ACache;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +51,12 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * 工作mode
@@ -133,6 +149,49 @@ public class WorkRepository implements WorkDataSource {
 
     @NonNull
     @Override
+    public Subscription getInspectionDataFromCache(int inspectionType, String data, IListCallBack<InspectionBean> callBack) {
+        return Observable.just(ACache.get(Yw2Application.getInstance()).getAsString(data + "_" + inspectionType))
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .flatMap((Func1<String, Observable<List<InspectionBean>>>) s -> {
+                    if (TextUtils.isEmpty(s)) {
+                        return Observable.just(null);
+                    }
+                    Type type = new TypeToken<List<InspectionBean>>() {
+                    }.getType();
+                    List<InspectionBean> inspectionBeans = new Gson().fromJson(s, type);
+                    return Observable.just(inspectionBeans);
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(inspectionBeans -> {
+                    if (inspectionBeans != null && inspectionBeans.size() > 0) {
+                        callBack.onSuccess(inspectionBeans);
+                    } else {
+                        getInspectionData(inspectionType, data, null, callBack);
+                    }
+                });
+    }
+
+    @NonNull
+    @Override
+    public Subscription saveInspectionDataToCache(int inspectionType, String data, List<InspectionBean> inspectionBeanList) {
+        return Observable.just(inspectionBeanList)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .flatMap((Func1<List<InspectionBean>, Observable<Boolean>>) s -> {
+                    boolean isSuccess = false;
+                    if (s != null && s.size() > 0) {
+                        ACache.get(Yw2Application.getInstance()).put(data + "_" + inspectionType, new Gson().toJson(s));
+                        isSuccess = true;
+                    }
+                    return Observable.just(isSuccess);
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
+    @NonNull
+    @Override
     public Subscription getInspectionData(int inspectionType, @NonNull String data, @Nullable String lastId
             , @NonNull final IListCallBack<InspectionBean> callBack) {
         JSONObject jsonObject = new JSONObject();
@@ -161,12 +220,37 @@ public class WorkRepository implements WorkDataSource {
                 Api.createRetrofit().create(WorkApi.class).getInspection(jsonObject.toString());
         return new ApiCallBack<List<InspectionBean>>(observable) {
             @Override
-            public void onSuccess(List<InspectionBean> been) {
+            public void onSuccess(List<InspectionBean> result) {
                 callBack.onFinish();
-                if (been == null || been.size() == 0) {
+                if (result == null || result.size() == 0) {
                     callBack.onError("");
                 } else {
-                    callBack.onSuccess(been);
+                    Observable.just(result)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io())
+                            .doOnNext(inspectionDetailBean -> {
+                                ACache.get(Yw2Application.getInstance()).put(data + "_" + inspectionType, new Gson().toJson(result));
+                            })
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Subscriber<List<InspectionBean>>() {
+                                @Override
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    e.printStackTrace();
+                                    callBack.onFinish();
+                                    callBack.onError(e.getMessage());
+                                }
+
+                                @Override
+                                public void onNext(List<InspectionBean> inspectionDetailBean) {
+                                    callBack.onFinish();
+                                    callBack.onSuccess(inspectionDetailBean);
+                                }
+                            });
                 }
             }
 
@@ -326,6 +410,60 @@ public class WorkRepository implements WorkDataSource {
 
     @NonNull
     @Override
+    public Subscription getInspectionDetailList(final long taskId, @NonNull final IObjectCallBack<InspectionDetailBean> callBack) {
+        Observable<Bean<InspectionDetailBean>> observable = Api.createRetrofit().create(InspectionApi.class)
+                .getInspectionDetailList(taskId);
+        return new ApiCallBack<InspectionDetailBean>(observable) {
+            @Override
+            public void onSuccess(final InspectionDetailBean data) {
+                if (data.getRoomList() != null) {
+                    Observable.just(data)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io())
+                            .doOnNext(new Action1<InspectionDetailBean>() {
+
+                                @Override
+                                public void call(InspectionDetailBean inspectionDetailBean) {
+                                    String result = new Gson().toJson(inspectionDetailBean);
+                                    ACache.get(Yw2Application.getInstance()).put("inspection_detail_data_"+taskId,result);
+                                }
+                            })
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Subscriber<InspectionDetailBean>() {
+                                @Override
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    e.printStackTrace();
+                                    callBack.onFinish();
+                                    callBack.onError(e.getMessage());
+                                }
+
+                                @Override
+                                public void onNext(InspectionDetailBean inspectionDetailBean) {
+                                    callBack.onFinish();
+                                    callBack.onSuccess(inspectionDetailBean);
+                                }
+                            });
+                } else {
+                    callBack.onFinish();
+                    callBack.onError("");
+                }
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
     public Subscription getWorkState(final IObjectCallBack<WorkState> callBack) {
         return new ApiCallBack<WorkState>(Api.createRetrofit().create(Api.Count.class).getWorkStat()) {
             @Override
@@ -402,9 +540,10 @@ public class WorkRepository implements WorkDataSource {
             }
         }.execute1();
     }
+
     @NonNull
     @Override
-    public Subscription get24HFaultList(Map<String,String> map, @NonNull final IListCallBack<FaultList> callBack) {
+    public Subscription get24HFaultList(Map<String, String> map, @NonNull final IListCallBack<FaultList> callBack) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("latelyTime", 1);
@@ -430,6 +569,7 @@ public class WorkRepository implements WorkDataSource {
             }
         }.execute1();
     }
+
     @Override
     public void getWorkItems(final WorkItemCallBack callBack) {
         List<WorkItem> allWorkItems = new ArrayList<>();
@@ -447,17 +587,17 @@ public class WorkRepository implements WorkDataSource {
         PayMenuBean payMenuBean = Yw2Application.getInstance().getCurrentUser().getCustomerSetMenu();
         if (payMenuBean.getIncrementWorkSo() == 0) {
             payWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
-        }else {
+        } else {
             allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
         }
         if (payMenuBean.getOilSo() == 0) {
             payWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
-        }else {
+        } else {
             allWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
         }
         if (payMenuBean.getToolSo() == 0) {
             payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
-        }else {
+        } else {
             allWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
         }
 
@@ -515,17 +655,17 @@ public class WorkRepository implements WorkDataSource {
         PayMenuBean payMenuBean = Yw2Application.getInstance().getCurrentUser().getCustomerSetMenu();
         if (payMenuBean.getIncrementWorkSo() == 0) {
             payWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
-        }else {
+        } else {
             allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
         }
         if (payMenuBean.getOilSo() == 0) {
             payWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
-        }else {
+        } else {
             allWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
         }
         if (payMenuBean.getToolSo() == 0) {
             payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
-        }else {
+        } else {
             allWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
         }
         callBack.showAllWorkItem(allWorkItems);
