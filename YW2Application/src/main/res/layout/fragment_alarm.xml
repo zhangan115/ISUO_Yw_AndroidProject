@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
-                    android:text="故障"
+                    android:text="事件"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
-                    android:text="故障列表"
+                    android:text="事件列表"
                     android:textColor="@color/colorWhite"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -82,7 +82,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="故障统计"
+                            android:text="事件统计"
                             android:textColor="@color/text333"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -225,7 +225,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="7dp"
-                                    android:text="遗留故障"
+                                    android:text="遗留事件"
                                     android:textColor="@color/text333"
                                     android:textSize="12sp" />
                             </LinearLayout>

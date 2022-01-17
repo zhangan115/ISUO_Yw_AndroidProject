@@ -44,7 +44,7 @@
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/text333"
                 android:textSize="14sp"
-                tools:text="照明故障" />
+                tools:text="照明事件" />
         </LinearLayout>
 
         <LinearLayout
@@ -102,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="44dp"
                     android:gravity="center_vertical"
-                    android:text="故障描述"
+                    android:text="事件描述"
                     android:textColor="@color/text333"
                     android:textSize="14sp" />
 

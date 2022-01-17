@@ -148,7 +148,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:text="故障类型"
+                            android:text="事件类型"
                             android:textColor="@color/color6983A5"
                             android:textSize="16sp" />
 

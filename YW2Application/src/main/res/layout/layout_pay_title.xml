@@ -66,7 +66,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="故障闭\n环管理"
+                    android:text="事件闭\n环管理"
                     android:textColor="@color/text333"
                     android:textSize="14sp" />
 
@@ -252,7 +252,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="故障报修"
+                    android:text="事件报修"
                     android:textColor="@color/text333"
                     android:textSize="14sp" />
 
@@ -782,7 +782,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="故障上报、\n故障闭环管理"
+                    android:text="事件上报、\n事件闭环管理"
                     android:textColor="@color/gray_999999"
                     android:textSize="12sp" />
 
@@ -804,7 +804,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="故障管理看板"
+                    android:text="事件管理看板"
                     android:textColor="@color/gray_999999"
                     android:textSize="12sp" />
 
@@ -1024,7 +1024,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="故障数据统计"
+                    android:text="事件数据统计"
                     android:textColor="@color/gray_999999"
                     android:textSize="12sp" />
 

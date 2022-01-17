@@ -16,7 +16,7 @@ public class AlarmListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_container_toolbar, "故障列表");
+        setLayoutAndToolbar(R.layout.activity_container_toolbar, "事件列表");
         AlarmListFragment fragment = (AlarmListFragment) getFragmentManager().findFragmentById(R.id.frame_container);
         if (fragment == null) {
             fragment = AlarmListFragment.newInstance();

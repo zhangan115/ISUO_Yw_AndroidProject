@@ -18,7 +18,7 @@ public class NewsListActivity extends BaseActivity {
                 title = "工作动态";
                 break;
             case 1:
-                title = "故障消息";
+                title = "事件消息";
                 break;
             case 2:
                 title = "企业通知";
@@ -27,7 +27,7 @@ public class NewsListActivity extends BaseActivity {
                 title = "与我相关";
                 break;
             case 4:
-                title = "故障任务";
+                title = "事件任务";
                 break;
         }
         setLayoutAndToolbar(R.layout.activity_container_toolbar, title, true);

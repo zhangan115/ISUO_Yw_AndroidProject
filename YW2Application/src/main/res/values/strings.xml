@@ -5,7 +5,7 @@
     <string name="home_tv_energy">能量隔离</string>
     <string name="home_tv_greasing">润油管理</string>
     <string name="home_tv_increment">专项工作</string>
-    <string name="home_tv_fault">故障上报</string>
+    <string name="home_tv_fault">事件上报</string>
     <string name="home_tv_sos">SOS</string>
     <string name="str_request_error">请求出错</string>
 
@@ -14,7 +14,7 @@
     <string name="str_first_nav_1">工作</string>
     <string name="str_first_nav_2">台账</string>
     <string name="str_first_nav_3">任务</string>
-    <string name="str_first_nav_4">故障</string>
+    <string name="str_first_nav_4">事件</string>
     <string name="str_first_nav_5">数据</string>
 
     <string name="no_data">没有您找的数据</string>
@@ -82,7 +82,7 @@
     <string name="text_friday">周五</string>
     <string name="text_saturday">周六</string>
 
-    <string name="title_equipment_1">故障记录</string>
+    <string name="title_equipment_1">事件记录</string>
     <string name="title_equipment_2">检修记录</string>
     <string name="title_equipment_3">巡检数据</string>
     <string name="title_alarm_detail_1">指派</string>
@@ -117,7 +117,7 @@
     <string name="str_take_photo">重新拍照</string>
 
     <string name="new_me">"与我相关"</string>
-    <string name="new_alarm">故障消息</string>
+    <string name="new_alarm">事件消息</string>
     <string name="new_work">工作动态</string>
     <string name="new_notify">企业通知</string>
     <string name="please_waite">马上重启，请稍等</string>

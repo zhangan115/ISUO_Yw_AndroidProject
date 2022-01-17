@@ -119,7 +119,7 @@ public class NewsUtils {
                 newsBean.setTaskId(contentBean.getFaultId());
                 StringBuilder sb101 = new StringBuilder();
                 sb101.append(contentBean.getUserRealName());
-                sb101.append("上报一条故障");
+                sb101.append("上报一条事件");
                 sb101.append(contentBean.getEquipmentName());
                 if (!TextUtils.isEmpty(contentBean.getEquipmentSn())) {
                     sb101.append("(").append(contentBean.getEquipmentSn()).append(")");
@@ -129,7 +129,7 @@ public class NewsUtils {
                 sb101.append(contentBean.getUserRealNames());
                 newsBean.setNewsContent(sb101.toString());
                 newsBean.setNotifyId(1);
-                newsBean.setNotifyContent("你有新的消息(工作动态,故障消息),请注意查看");
+                newsBean.setNotifyContent("你有新的消息(工作动态,事件消息),请注意查看");
                 if (!TextUtils.isEmpty(message.getContentInfo().getUserIds())) {
                     String[] userIds = message.getContentInfo().getUserIds().split(",");
                     for (String userId : userIds) {
@@ -147,7 +147,7 @@ public class NewsUtils {
                             newsBean.setMeContent(sb.toString());
                             newsBean.setNotifyId(-1);
                             StringBuilder sbNotify = new StringBuilder();
-                            sbNotify.append("故障流转：").append(contentBean.getEquipmentName());
+                            sbNotify.append("事件流转：").append(contentBean.getEquipmentName());
                             if (!TextUtils.isEmpty(contentBean.getEquipmentSn())) {
                                 sbNotify.append("(").append(contentBean.getEquipmentSn()).append(")");
                             }
@@ -171,7 +171,7 @@ public class NewsUtils {
                 sb102.append("已关闭");
                 newsBean.setNewsContent(sb102.toString());
                 newsBean.setNotifyId(1);
-                newsBean.setNotifyContent("你有新的消息(工作动态,故障消息),请注意查看");
+                newsBean.setNotifyContent("你有新的消息(工作动态,事件消息),请注意查看");
                 break;
             case 103:
                 newsBean.setAlarm(true);
@@ -190,7 +190,7 @@ public class NewsUtils {
                 sb103.append(contentBean.getFaultType());
                 newsBean.setNewsContent(sb103.toString());
                 newsBean.setNotifyId(1);
-                newsBean.setNotifyContent("你有新的消息(工作动态,故障消息),请注意查看");
+                newsBean.setNotifyContent("你有新的消息(工作动态,事件消息),请注意查看");
                 if (!TextUtils.isEmpty(message.getContentInfo().getUserIds())) {
                     String[] userIds = message.getContentInfo().getUserIds().split(",");
                     for (String userId : userIds) {
@@ -208,7 +208,7 @@ public class NewsUtils {
                             newsBean.setMeContent(sb.toString());
                             newsBean.setNotifyId(-1);
                             StringBuilder sbNotify = new StringBuilder();
-                            sbNotify.append("故障流转：").append(contentBean.getEquipmentName());
+                            sbNotify.append("事件流转：").append(contentBean.getEquipmentName());
                             if (!TextUtils.isEmpty(contentBean.getEquipmentSn())) {
                                 sbNotify.append("(").append(contentBean.getEquipmentSn()).append(")");
                             }
@@ -237,7 +237,7 @@ public class NewsUtils {
                 sb104.append("执行");
                 newsBean.setNewsContent(sb104.toString());
                 newsBean.setNotifyId(1);
-                newsBean.setNotifyContent("你有新的消息(工作动态,故障消息),请注意查看");
+                newsBean.setNotifyContent("你有新的消息(工作动态,事件消息),请注意查看");
                 if (!TextUtils.isEmpty(message.getContentInfo().getUserIds())) {
                     String[] userIds = message.getContentInfo().getUserIds().split(",");
                     for (String userId : userIds) {
@@ -257,7 +257,7 @@ public class NewsUtils {
                             newsBean.setMeContent(sb.toString());
                             newsBean.setNotifyId(-1);
                             StringBuilder sbNotify = new StringBuilder();
-                            sbNotify.append("故障流转：").append(contentBean.getEquipmentName());
+                            sbNotify.append("事件流转：").append(contentBean.getEquipmentName());
                             if (!TextUtils.isEmpty(contentBean.getEquipmentSn())) {
                                 sbNotify.append("(").append(contentBean.getEquipmentSn()).append(")");
                             }
@@ -280,7 +280,7 @@ public class NewsUtils {
                 }
                 newsBean.setNewsContent(sb201.toString());
                 newsBean.setNotifyId(1);
-                newsBean.setNotifyContent("你有新的消息(工作动态,故障消息),请注意查看");
+                newsBean.setNotifyContent("你有新的消息(工作动态,事件消息),请注意查看");
                 break;
             case 202:
                 newsBean.setWork(true);
@@ -294,7 +294,7 @@ public class NewsUtils {
                 newsBean.setTaskId(contentBean.getTaskId());
                 newsBean.setNewsContent(sb202.toString());
                 newsBean.setNotifyId(1);
-                newsBean.setNotifyContent("你有新的消息(工作动态,故障消息),请注意查看");
+                newsBean.setNotifyContent("你有新的消息(工作动态,事件消息),请注意查看");
                 break;
             case 203:
                 newsBean.setWork(true);
@@ -308,7 +308,7 @@ public class NewsUtils {
                 sb203.append("巡检");
                 newsBean.setNewsContent(sb203.toString());
                 newsBean.setNotifyId(1);
-                newsBean.setNotifyContent("你有新的消息(工作动态,故障消息),请注意查看");
+                newsBean.setNotifyContent("你有新的消息(工作动态,事件消息),请注意查看");
                 break;
             case 204:
                 newsBean.setTaskId(contentBean.getRepairId());
@@ -323,7 +323,7 @@ public class NewsUtils {
                         "执行";
                 newsBean.setNewsContent(sb204);
                 newsBean.setNotifyId(1);
-                newsBean.setNotifyContent("你有新的消息(工作动态,故障消息),请注意查看");
+                newsBean.setNotifyContent("你有新的消息(工作动态,事件消息),请注意查看");
                 if (!TextUtils.isEmpty(message.getContentInfo().getUserIds())) {
                     String[] userIds = message.getContentInfo().getUserIds().split(",");
                     for (String userId : userIds) {
@@ -358,7 +358,7 @@ public class NewsUtils {
                 sb205.append("检修工作");
                 newsBean.setNewsContent(sb205.toString());
                 newsBean.setNotifyId(1);
-                newsBean.setNotifyContent("你有新的消息(工作动态,故障消息),请注意查看");
+                newsBean.setNotifyContent("你有新的消息(工作动态,事件消息),请注意查看");
                 break;
             case 206:
                 newsBean.setWork(true);
@@ -372,7 +372,7 @@ public class NewsUtils {
                 sb206.append("检修工作");
                 newsBean.setNewsContent(sb206.toString());
                 newsBean.setNotifyId(1);
-                newsBean.setNotifyContent("你有新的消息(工作动态,故障消息),请注意查看");
+                newsBean.setNotifyContent("你有新的消息(工作动态,事件消息),请注意查看");
                 break;
             case 207:
                 newsBean.setTaskId(contentBean.getWorkId());
@@ -386,7 +386,7 @@ public class NewsUtils {
                         "执行";
                 newsBean.setNewsContent(sb207);
                 newsBean.setNotifyId(1);
-                newsBean.setNotifyContent("你有新的消息(工作动态,故障消息),请注意查看");
+                newsBean.setNotifyContent("你有新的消息(工作动态,事件消息),请注意查看");
                 if (!TextUtils.isEmpty(message.getContentInfo().getUserIds())) {
                     String[] userIds = message.getContentInfo().getUserIds().split(",");
                     for (String userId : userIds) {
@@ -418,7 +418,7 @@ public class NewsUtils {
                         "专项工作''";
                 newsBean.setNewsContent(sb208);
                 newsBean.setNotifyId(1);
-                newsBean.setNotifyContent("你有新的消息(工作动态,故障消息),请注意查看");
+                newsBean.setNotifyContent("你有新的消息(工作动态,事件消息),请注意查看");
                 break;
             case 209:
                 newsBean.setWork(true);
@@ -429,7 +429,7 @@ public class NewsUtils {
                         "专项工作''";
                 newsBean.setNewsContent(sb209);
                 newsBean.setNotifyId(1);
-                newsBean.setNotifyContent("你有新的消息(工作动态,故障消息),请注意查看");
+                newsBean.setNotifyContent("你有新的消息(工作动态,事件消息),请注意查看");
                 break;
             case 301:
                 newsBean.setEnterprise(true);

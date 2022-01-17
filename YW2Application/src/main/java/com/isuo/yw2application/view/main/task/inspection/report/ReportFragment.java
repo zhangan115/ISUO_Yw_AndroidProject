@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -91,7 +92,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
         if (inspectionDetailBean != null) {
             mRoomListBean = inspectionDetailBean.getRoomList().get(roomPosition);
             roomDb = mRoomListBean.getRoomDb();
-            caEdit = !(mRoomListBean.getTaskRoomState() == ConstantInt.ROOM_STATE_3);
+            caEdit = inspectionDetailBean.getTaskState() != ConstantInt.TASK_STATE_4;
         }
     }
 
@@ -174,7 +175,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                 TextView tv_equipment_name = (TextView) vHolder.getView(R.id.tv_equipment_name);
                 TextView tv_equipment_state = (TextView) vHolder.getView(R.id.tv_equipment_state);
                 ImageView iv_state = (ImageView) vHolder.getView(R.id.iv_state);
-                ImageView haveDataIv = (ImageView)vHolder.getView(R.id.haveDataIv);
+                ImageView haveDataIv = (ImageView) vHolder.getView(R.id.haveDataIv);
                 View view_division = vHolder.getView(R.id.view_division);
                 String str = position + 1 + ".  " + data.getEquipment().getEquipmentName().replace("\n", "");
                 tv_equipment_name.setText(str);
@@ -183,16 +184,17 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                 } else {
                     iv_state.setVisibility(View.GONE);
                 }
-                long count = mPresenter.getEquipmentDataFinishCount(inspectionDetailBean.getTaskId(), mRoomListBean.getTaskRoomId(), data.getTaskEquipmentId());
-                if (count == 0){
-                    tv_equipment_state.setVisibility(View.GONE);
-                    haveDataIv.setVisibility(View.GONE);
-                }else if(count > 0 && count < data.getDataList().get(0).getDataItemValueList().size()){
-                    tv_equipment_state.setVisibility(View.GONE);
-                    haveDataIv.setVisibility(View.VISIBLE);
-                }else{
+                if (mPresenter.getEquipmentFinishState(inspectionDetailBean.getTaskId(), mRoomListBean.getTaskRoomId(), data.getTaskEquipmentId())) {
                     tv_equipment_state.setVisibility(View.VISIBLE);
                     haveDataIv.setVisibility(View.GONE);
+                } else {
+                    tv_equipment_state.setVisibility(View.GONE);
+                    long count = mPresenter.getEquipmentDataFinishCount(inspectionDetailBean.getTaskId(), mRoomListBean.getTaskRoomId(), data.getTaskEquipmentId());
+                    if (count > 0) {
+                        haveDataIv.setVisibility(View.VISIBLE);
+                    } else {
+                        haveDataIv.setVisibility(View.GONE);
+                    }
                 }
                 if (position == showBean.size() - 1) {
                     view_division.setVisibility(View.GONE);
@@ -202,19 +204,16 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
             }
         };
         mRecyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new RVAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                editPosition = position;
-                Intent intent = new Intent(getActivity(), InputActivity.class);
-                mPresenter.saveEditTaskEquipToCache(showBean.get(position));
-                intent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, caEdit);
-                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, roomDb.getTaskId());
-                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG_1, roomDb.get_id());
-                intent.putExtra(ConstantStr.KEY_BUNDLE_INT, roomPosition);
-                Yw2Application.getInstance().hideSoftKeyBoard(getActivity());
-                startActivityForResult(intent, ACTION_START_INPUT);
-            }
+        adapter.setOnItemClickListener((view, position) -> {
+            editPosition = position;
+            Intent intent = new Intent(getActivity(), InputActivity.class);
+            mPresenter.saveEditTaskEquipToCache(showBean.get(position));
+            intent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, caEdit);
+            intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, roomDb.getTaskId());
+            intent.putExtra(ConstantStr.KEY_BUNDLE_LONG_1, roomDb.get_id());
+            intent.putExtra(ConstantStr.KEY_BUNDLE_INT, roomPosition);
+            Yw2Application.getInstance().hideSoftKeyBoard(getActivity());
+            startActivityForResult(intent, ACTION_START_INPUT);
         });
         return rootView;
     }
@@ -241,32 +240,6 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!caEdit) {
-            bottomView.setVisibility(View.GONE);
-        }
-        bottomView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mPresenter == null) {
-                    return;
-                }
-                if (roomDb.getCheckCount() != mRoomListBean.getTaskEquipment().size()) {
-                    getApp().showToast("有漏检项目!请检查");
-                } else {
-                    new MaterialDialog.Builder(getActivity()).content("是否确认完成巡检？")
-                            .negativeText("取消")
-                            .positiveText("确定")
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    roomDb.setTaskState(ConstantInt.ROOM_STATE_3);
-                                    getActivity().setResult(Activity.RESULT_OK);
-                                    getActivity().finish();
-                                }
-                            }).show();
-                }
-            }
-        });
         if (mPresenter != null && mRoomListBean != null) {
             mPresenter.loadInspectionDataFromDb(roomDb.getTaskId(), mRoomListBean);
         }
@@ -292,12 +265,6 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
         onDataChange();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        onDataChange();
-    }
-
     public void onDataChange() {
         int checkCount = mPresenter.getEquipmentFinishCount(this.inspectionDetailBean.getTaskId(), mRoomListBean);
         roomDb.setCheckCount(checkCount);
@@ -305,6 +272,13 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
         mTitleTv.setText(str);
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getActivity() != null) {
+            manager = LocalBroadcastManager.getInstance(getActivity());
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -325,8 +299,33 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                     onDataChange();
                 }
             }
+            if (roomDb.getTaskState() == ConstantInt.ROOM_STATE_2 && roomDb.getCheckCount() == mRoomListBean.getTaskEquipment().size()) {
+                //状态进行中，完成了任务
+                roomDb.setTaskState(ConstantInt.ROOM_STATE_3);
+                roomDb.setEndTime(System.currentTimeMillis());
+                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+                Intent intent = new Intent(ConstantStr.ROOM_STATE_CHANGE);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, roomDb.getTaskRoomId());
+                intent.putExtra(ConstantStr.KEY_BUNDLE_INT, 2);
+                if (manager != null) {
+                    manager.sendBroadcast(intent);
+                }
+            } else if (roomDb.getTaskState() == ConstantInt.ROOM_STATE_3 && roomDb.getCheckCount() != mRoomListBean.getTaskEquipment().size()) {
+                //状态已经完成，未完成任务
+                roomDb.setTaskState(ConstantInt.ROOM_STATE_2);
+                roomDb.setEndTime(0);
+                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+                Intent intent = new Intent(ConstantStr.ROOM_STATE_CHANGE);
+                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, roomDb.getTaskRoomId());
+                intent.putExtra(ConstantStr.KEY_BUNDLE_INT, 1);
+                if (manager != null) {
+                    manager.sendBroadcast(intent);
+                }
+            }
         }
     }
+
+    LocalBroadcastManager manager;
 
     @Override
     public void showLoading() {

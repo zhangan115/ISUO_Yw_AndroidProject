@@ -46,7 +46,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * 故障详情界面（分已检修，未检修）
+ * 事件详情界面（分已检修，未检修）
  * Created by zhangan on 2017/7/2.
  */
 
@@ -76,7 +76,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_alarm_detail, " 故障详情");
+        setLayoutAndToolbar(R.layout.activity_alarm_detail, " 事件详情");
         isAwait = getIntent().getBooleanExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, false);
         new AlarmDetailPresenter(Yw2Application.getInstance().getFaultRepositoryComponent().getRepository(), this);
         String mFaultId = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR);
@@ -95,9 +95,9 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
         progressTitleLayout2 = findViewById(R.id.progress_2);
         progressTitleLayout3 = findViewById(R.id.progress_3);
         ProgressTitleLayout progressTitleLayout4 = findViewById(R.id.progress_4);
-        progressTitleLayout1.setContent(findDrawById(R.drawable.found_icon_press), "故障上报", true);
+        progressTitleLayout1.setContent(findDrawById(R.drawable.found_icon_press), "事件上报", true);
         progressTitleLayout2.setContent(findDrawById(R.drawable.assign_icon_press), "指派流转", true);
-        progressTitleLayout3.setContent(findDrawById(R.drawable.overhaul_icon_press), "故障检修", true);
+        progressTitleLayout3.setContent(findDrawById(R.drawable.overhaul_icon_press), "事件检修", true);
         progressTitleLayout4.setContent(findDrawById(R.drawable.result_icon_press), "结果检验", true);
         ivNo = findViewById(R.id.iv_no);
         ivYes = findViewById(R.id.iv_yes);
@@ -141,7 +141,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
             tv_alarm_type.setText("C");
             tv_alarm_type.setTextColor(findColorById(R.color.colorAlarmC));
         }
-        faultPlaySoundLayout.setContent(faultDetail.getVoiceUrl(), faultDetail.getSoundTimescale(), "故障描述", faultDetail.getFaultDescript());
+        faultPlaySoundLayout.setContent(faultDetail.getVoiceUrl(), faultDetail.getSoundTimescale(), "事件描述", faultDetail.getFaultDescript());
         faultPlaySoundLayout.setOnPlaySoundListener(new PlaySoundLayout.OnPlaySoundListener() {
             @Override
             public void onPlaySound() {
@@ -697,7 +697,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
                 case 1:
                     StringBuilder sb1 = new StringBuilder();
                     sb1.append(faultFlows.get(i).getUser().getRealName());
-                    sb1.append("上报故障给");
+                    sb1.append("上报事件给");
                     for (int j = 0; j < faultFlows.get(i).getUsersN().size(); j++) {
                         sb1.append(faultFlows.get(i).getUsersN().get(j).getRealName());
                         if (j != faultFlows.get(i).getUsersN().size() - 1) {
@@ -727,7 +727,7 @@ public class AlarmDetailActivity extends BaseActivity implements AlarmDetailCont
                     break;
                 case 3:
                     String sb3 = faultFlows.get(i).getUser().getRealName() +
-                            "关闭故障";
+                            "关闭事件";
                     ProgressItemLayout itemLayout3 = new ProgressItemLayout(this);
                     itemLayout3.setLayoutParams(params);
                     itemLayout3.setContent(time, sb3, content, i == faultFlows.size() - 1);

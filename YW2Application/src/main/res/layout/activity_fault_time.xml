@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/DP_2"
-                        android:text="A类故障"
+                        android:text="A类事件"
                         android:textColor="@color/news_text_black" />
                 </LinearLayout>
 
@@ -103,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/DP_2"
-                        android:text="B类故障"
+                        android:text="B类事件"
                         android:textColor="@color/news_text_black" />
                 </LinearLayout>
 
@@ -123,7 +123,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/DP_2"
-                        android:text="C类故障"
+                        android:text="C类事件"
                         android:textColor="@color/news_text_black" />
                 </LinearLayout>
             </LinearLayout>

@@ -39,7 +39,7 @@ public class FaultTypeActivity extends BaseActivity implements FaultTypeContract
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_fault_type, "故障等级");
+        setLayoutAndToolbar(R.layout.activity_fault_type, "事件等级");
         DaggerFaultTypeComponent.builder().customerRepositoryComponent(Yw2Application.getInstance().getRepositoryComponent())
                 .faultTypeModule(new FaultTypeModule(this)).build()
                 .inject(this);
@@ -115,7 +115,7 @@ public class FaultTypeActivity extends BaseActivity implements FaultTypeContract
         data.setValueFormatter(new ChartXFormatter());
         data.setValueTextSize(12f);
         data.setValueTextColor(findColorById(R.color.text333));
-        pieChart.setCenterText("故障总数:"+bean.getAllFaultCount());
+        pieChart.setCenterText("事件总数:"+bean.getAllFaultCount());
         pieChart.setData(data);
         pieChart.highlightValues(null);
         pieChart.invalidate();

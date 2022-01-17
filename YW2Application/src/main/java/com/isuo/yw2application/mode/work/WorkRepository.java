@@ -420,13 +420,9 @@ public class WorkRepository implements WorkDataSource {
                     Observable.just(data)
                             .subscribeOn(Schedulers.io())
                             .observeOn(Schedulers.io())
-                            .doOnNext(new Action1<InspectionDetailBean>() {
-
-                                @Override
-                                public void call(InspectionDetailBean inspectionDetailBean) {
-                                    String result = new Gson().toJson(inspectionDetailBean);
-                                    ACache.get(Yw2Application.getInstance()).put("inspection_detail_data_"+taskId,result);
-                                }
+                            .doOnNext(inspectionDetailBean -> {
+                                String result = new Gson().toJson(inspectionDetailBean);
+                                ACache.get(Yw2Application.getInstance()).put("inspection_detail_data_"+taskId,result);
                             })
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Subscriber<InspectionDetailBean>() {
@@ -578,7 +574,7 @@ public class WorkRepository implements WorkDataSource {
         allWorkItems.add(new WorkItem(2, "执行检修", R.drawable.overhaul));
         allWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
         allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
-        allWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
+        allWorkItems.add(new WorkItem(5, "事件上报", R.drawable.fault_report));
         allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.drive_input));
         allWorkItems.add(new WorkItem(7, "查看规则", R.drawable.standard));
         allWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));
@@ -629,7 +625,7 @@ public class WorkRepository implements WorkDataSource {
             myWorkItems.add(new WorkItem(2, "执行检修", R.drawable.overhaul));
             myWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
             myWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
-            myWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
+            myWorkItems.add(new WorkItem(5, "事件上报", R.drawable.fault_report));
             myWorkItems.add(new WorkItem(6, "台账录入", R.drawable.drive_input));
             myWorkItems.add(new WorkItem(7, "查看规则", R.drawable.standard));
         }
@@ -646,7 +642,7 @@ public class WorkRepository implements WorkDataSource {
         allWorkItems.add(new WorkItem(2, "执行检修", R.drawable.overhaul));
         allWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
         allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
-        allWorkItems.add(new WorkItem(5, "故障上报", R.drawable.fault_report));
+        allWorkItems.add(new WorkItem(5, "事件上报", R.drawable.fault_report));
         allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.drive_input));
         allWorkItems.add(new WorkItem(7, "查看规则", R.drawable.standard));
         allWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));

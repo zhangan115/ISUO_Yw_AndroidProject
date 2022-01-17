@@ -50,9 +50,9 @@ public class InspectionPresenter implements InspectionContract.Presenter {
     }
 
     @Override
-    public void getDataFromCache(int inspection, String time) {
+    public void getDataFromCache(int inspectionType, String time) {
         mView.showLoading();
-        mSubscriptions.add(mRepository.getInspectionDataFromCache(inspection, time, new IListCallBack<InspectionBean>() {
+        mSubscriptions.add(mRepository.getInspectionDataFromCache(inspectionType, time, new IListCallBack<InspectionBean>() {
             @Override
             public void onSuccess(@NonNull List<InspectionBean> list) {
                 mView.hideLoading();
@@ -119,7 +119,7 @@ public class InspectionPresenter implements InspectionContract.Presenter {
 
     @Override
     public void getInspectionDataList(InspectionBean bean) {
-        mSubscriptions.add(mRepository.getInspectionDetailList(bean.getTaskId(), new IObjectCallBack<InspectionDetailBean>() {
+        mSubscriptions.add(inspectionRepository.getInspectionDetailList(bean.getTaskId(), new IObjectCallBack<InspectionDetailBean>() {
             @Override
             public void onSuccess(@NonNull InspectionDetailBean inspectionDetailBean) {
                 mView.operationSuccess(bean);
@@ -141,19 +141,20 @@ public class InspectionPresenter implements InspectionContract.Presenter {
     public List<InspectionBean> getUploadTask(List<InspectionBean> list) {
         List<InspectionBean> uploadTask = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getTaskState() != ConstantInt.TASK_STATE_3) {
-                continue;
-            }
-            long taskId = list.get(i).getTaskId();
-            InspectionDetailBean detailBean = inspectionRepository.getInspectionDataFromAcCache(taskId);
-            if (detailBean == null) {
-                continue;
-            }
-            for (int j = 0; j < detailBean.getRoomList().size(); j++) {
-                RoomListBean roomListBean = detailBean.getRoomList().get(j);
-                int count = inspectionRepository.getEquipmentFinishPutCount(taskId, roomListBean);
-                if (roomListBean.getTaskRoomState() == ConstantInt.ROOM_STATE_2
-                        && count == roomListBean.getTaskEquipment().size()) {
+            if (list.get(i).getTaskState() == ConstantInt.TASK_STATE_3) {
+                long taskId = list.get(i).getTaskId();
+                InspectionDetailBean detailBean = inspectionRepository.getInspectionDataFromAcCache(taskId);
+                if (detailBean == null) {
+                    continue;
+                }
+                int count = 0;
+                for (int j = 0; j < detailBean.getRoomList().size(); j++) {
+                    RoomListBean roomListBean = detailBean.getRoomList().get(j);
+                    if (roomListBean.getTaskRoomState() == ConstantInt.ROOM_STATE_3) {
+                        count++;
+                    }
+                }
+                if (count == detailBean.getRoomList().size()) {
                     uploadTask.add(list.get(i));
                 }
             }
@@ -163,12 +164,12 @@ public class InspectionPresenter implements InspectionContract.Presenter {
 
     @Override
     public void uploadTaskData(InspectionBean task) {
-        mSubscriptions.add(inspectionRepository.uploadTaskData(task, new InspectionSourceData.UploadTaskCallBack() {
+        inspectionRepository.startUploadTask(task, new InspectionSourceData.UploadTaskCallBack() {
             @Override
             public void onSuccess() {
                 task.setTaskState(ConstantInt.TASK_STATE_4);
                 task.setEndTime(System.currentTimeMillis());
-                task.setCount(task.getCount());
+                task.setUploadCount(task.getCount());
                 mView.uploadNext();
             }
 
@@ -181,6 +182,6 @@ public class InspectionPresenter implements InspectionContract.Presenter {
             public void onError() {
                 mView.hideLoading();
             }
-        }));
+        });
     }
 }

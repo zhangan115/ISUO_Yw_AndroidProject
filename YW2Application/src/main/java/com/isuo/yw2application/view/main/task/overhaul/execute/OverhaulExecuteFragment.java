@@ -370,7 +370,7 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
                     mFaultPlayTv.setBackgroundResource(R.drawable.play_anim);
                     final AnimationDrawable animation = (AnimationDrawable) mFaultPlayTv.getBackground();
 
-                    //播放故障语音
+                    //播放事件语音
                     mFaultTimer = new CountDownTimerUtils(mFaultPlayTv, timeScale * 1000, 1000
                             , timeScale + "s", "#999999");
                     MediaPlayerManager.playSound(url, new MediaPlayer.OnCompletionListener() {
@@ -412,7 +412,7 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
                     mWorkSoundTimeTv.setBackgroundResource(R.drawable.play_anim);
                    final AnimationDrawable animation = (AnimationDrawable) mWorkSoundTimeTv.getBackground();
                     animation.start();
-                    //播放故障语音
+                    //播放事件语音
                     mRepairTimer = new CountDownTimerUtils(mWorkSoundTimeTv, Integer.valueOf(mWorkBean.getVoice().getVoiceTime()) * 1000, 1000
                             , Integer.valueOf(mWorkBean.getVoice().getVoiceTime()) + "s", "#999999");
                     MediaPlayerManager.playSound(mWorkBean.getVoice().getVoiceLocal(), new MediaPlayer.OnCompletionListener() {

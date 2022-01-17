@@ -117,7 +117,7 @@
                     android:layout_marginRight="@dimen/overhaul_alarm_margin_right"
 
                     android:gravity="center"
-                    android:text="B类故障"
+                    android:text="B类事件"
                     android:textColor="@color/news_text_gray"
                     android:textSize="@dimen/overhaul_alarm_text_size" />
 
@@ -150,7 +150,7 @@
                         android:layout_marginBottom="@dimen/increment_alarm_margin_bottom"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="@dimen/increment_alarm_margin_top"
-                        android:text="照明故障"
+                        android:text="照明事件"
                         android:textSize="@dimen/increment_alarm_text_size"
                         android:visibility="gone" />
 
@@ -190,7 +190,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/increment_alarm_margin_bottom"
                             android:layout_marginTop="@dimen/increment_alarm_margin_top"
-                            android:text="故障描述"
+                            android:text="事件描述"
                             android:textColor="@color/item_increment_title_tv"
                             android:textSize="14sp" />
 

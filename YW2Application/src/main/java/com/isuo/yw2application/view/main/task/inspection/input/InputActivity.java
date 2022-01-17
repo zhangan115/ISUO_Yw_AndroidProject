@@ -10,7 +10,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
@@ -45,7 +43,6 @@ import com.isuo.yw2application.view.main.task.inspection.input.widget.Type3Layou
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.bean.Permissions;
-import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
 import com.sito.library.utils.ActivityUtils;
 import com.sito.library.utils.DataUtil;
@@ -77,7 +74,6 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
     private int roomPosition;
 
     private boolean canEdit;
-    private boolean isPhotoUpload;//图片正在上传
 
     private MaterialDialog takePhotoDialog;
     private ProgressBar dialogProgressBar;
@@ -112,6 +108,7 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
         mPresenter.getTaskEquipFromCache();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -124,11 +121,7 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
                 startActivityForResult(intent, ACTION_START_ALARM);
                 break;
             case R.id.tv_finish_input:
-                if (roomDb != null && roomDb.getTakePhotoPosition() == taskEquipmentBean.getTaskEquipmentId()&&TextUtils.isEmpty(roomDb.getUploadPhotoUrl())) {
-                    toUploadEquipmentPhoto();
-                } else {
-                    toCheckUploadData();
-                }
+                toCheckUploadData();
                 break;
         }
     }
@@ -140,50 +133,37 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
             mark = mark + " " + taskEquipmentBean.getEquipment().getEquipmentFsn();
         }
         if (requestCode == ACTION_START_EQUIPMENT && resultCode == Activity.RESULT_OK) {
-            PhotoUtils.cropPhoto(InputActivity.this, photoFile, mark, new PhotoUtils.PhotoListener() {
-                @Override
-                public void onSuccess(File file) {
-                    if (mPresenter == null) {
-                        return;
-                    }
-                    if (roomDb != null) {
-                        roomDb.setPhotoUrl(file.getAbsolutePath());
-                    }
-                    if (equipmentTakePhotoIV != null) {
-                        GlideUtils.ShowImage(InputActivity.this, file, equipmentTakePhotoIV, R.drawable.photograph);
-                    }
-                    if (dialogProgressBar != null) {
-                        dialogProgressBar.setVisibility(View.VISIBLE);
-                    }
-                    isPhotoUpload = true;
-                    mPresenter.uploadEquipmentPhotoImage(roomDb);
+            PhotoUtils.cropPhoto(InputActivity.this, photoFile, mark, file -> {
+                if (mPresenter == null) {
+                    return;
+                }
+                if (roomDb != null) {
+                    roomDb.setPhotoUrl(file.getAbsolutePath());
+                }
+                if (equipmentTakePhotoIV != null) {
+                    GlideUtils.ShowImage(InputActivity.this, file, equipmentTakePhotoIV, R.drawable.photograph);
                 }
             });
         } else if (requestCode == ACTION_START_CAMERA && resultCode == Activity.RESULT_OK) {
-            PhotoUtils.cropPhoto(this, photoFile, mark, new PhotoUtils.PhotoListener() {
-                @Override
-                public void onSuccess(File file) {
-                    if (mPresenter == null) {
-                        return;
+            PhotoUtils.cropPhoto(this, photoFile, mark, file -> {
+                if (mPresenter == null) {
+                    return;
+                }
+                if (mDataItemBean != null) {
+                    mDataItemBean.setValue(file.getAbsolutePath());
+                    if (taskEquipmentBean.getEquipment().getEquipmentDb().getUploadState()) {
+                        taskEquipmentBean.getEquipment().getEquipmentDb().setUploadState(false);
                     }
-                    if (mDataItemBean != null) {
-                        mDataItemBean.setLocalFile(file.getAbsolutePath());
-                        mDataItemBean.setUploading(true);
-                        if (taskEquipmentBean.getEquipment().getEquipmentDb().getUploadState()) {
-                            taskEquipmentBean.getEquipment().getEquipmentDb().setUploadState(false);
-                        }
-                        if (taskEquipmentBean.getEquipment().getEquipmentDb().getCanUpload()) {
-                            taskEquipmentBean.getEquipment().getEquipmentDb().setCanUpload(false);
-                        }
-                        Yw2Application.getInstance().getDaoSession().getEquipmentDbDao()
-                                .insertOrReplace(taskEquipmentBean.getEquipment().getEquipmentDb());
+                    if (taskEquipmentBean.getEquipment().getEquipmentDb().getCanUpload()) {
+                        taskEquipmentBean.getEquipment().getEquipmentDb().setCanUpload(false);
+                    }
+                    Yw2Application.getInstance().getDaoSession().getEquipmentDbDao()
+                            .insertOrReplace(taskEquipmentBean.getEquipment().getEquipmentDb());
 
-                        mDataItemBean.getEquipmentDataDb().setLocalPhoto(file.getAbsolutePath());
-                        Yw2Application.getInstance().getDaoSession().getEquipmentDataDbDao()
-                                .insertOrReplace(mDataItemBean.getEquipmentDataDb());
-                        mPresenter.uploadImage(mDataItemBean);
-                        refreshUi();
-                    }
+                    mDataItemBean.getEquipmentDataDb().setValue(file.getAbsolutePath());
+                    Yw2Application.getInstance().getDaoSession().getEquipmentDataDbDao()
+                            .insertOrReplace(mDataItemBean.getEquipmentDataDb());
+                    refreshUi();
                 }
             });
         } else if (Activity.RESULT_OK == resultCode && requestCode == ACTION_START_ALARM) {
@@ -284,7 +264,7 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
     /*****录入数据拍照******/
     @Override
     public void onTakePhoto(final DataItemBean dataItemBean) {
-        Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+        Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
         SoulPermission.getInstance().checkAndRequestPermissions(permissions,
                 new CheckRequestPermissionsListener() {
                     @Override
@@ -310,10 +290,8 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
     @Override
     public void onDeletePhoto(DataItemBean dataItemBean) {
         dataItemBean.setValue("");
-        dataItemBean.setLocalFile(null);
         EquipmentDataDb dataDb = dataItemBean.getEquipmentDataDb();
         dataDb.setValue(null);
-        dataDb.setLocalPhoto(null);
         Yw2Application.getInstance().getDaoSession().getEquipmentDataDbDao().insertOrReplaceInTx(dataDb);
         refreshUi();
     }
@@ -341,12 +319,9 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
     private void toUploadEquipmentPhoto() {
         @SuppressLint("InflateParams")
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_take_photo, null);
-        view.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (takePhotoDialog != null) {
-                    takePhotoDialog.dismiss();
-                }
+        view.findViewById(R.id.tv_cancel).setOnClickListener(v -> {
+            if (takePhotoDialog != null) {
+                takePhotoDialog.dismiss();
             }
         });
         TextView equipmentName = view.findViewById(R.id.tv_equipment_name);
@@ -355,105 +330,90 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
         equipmentTakePhotoIV = view.findViewById(R.id.iv_take_equipment_photo);
         dialogProgressBar = view.findViewById(R.id.progressBar);
         GlideUtils.ShowImage(this, roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photograph);
-        equipmentTakePhotoIV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
-                SoulPermission.getInstance().checkAndRequestPermissions(permissions,
-                        new CheckRequestPermissionsListener() {
-                            @Override
-                            public void onAllPermissionOk(Permission[] allPermissions) {
-                                if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
-                                    photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                                    ActivityUtils.startCameraToPhoto(InputActivity.this, photoFile, ACTION_START_EQUIPMENT);
-                                } else {
-                                    ViewPagePhotoActivity.startActivity(InputActivity.this, new String[]{roomDb.getPhotoUrl()}, 0);
-                                }
+        equipmentTakePhotoIV.setOnClickListener(v -> {
+            Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
+            SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                    new CheckRequestPermissionsListener() {
+                        @Override
+                        public void onAllPermissionOk(Permission[] allPermissions) {
+                            if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
+                                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                ActivityUtils.startCameraToPhoto(InputActivity.this, photoFile, ACTION_START_EQUIPMENT);
+                            } else {
+                                ViewPagePhotoActivity.startActivity(InputActivity.this, new String[]{roomDb.getPhotoUrl()}, 0);
                             }
-
-                            @Override
-                            public void onPermissionDenied(Permission[] refusedPermissions) {
-                                new AppSettingsDialog.Builder(InputActivity.this)
-                                        .setRationale(getString(R.string.need_save_setting))
-                                        .setTitle(getString(R.string.request_permissions))
-                                        .setPositiveButton(getString(R.string.sure))
-                                        .setNegativeButton(getString(R.string.cancel))
-                                        .build()
-                                        .show();
-                            }
-                        });
-            }
-        });
-        equipmentTakePhotoIV.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
-                    return false;
-                }
-                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
-                SoulPermission.getInstance().checkAndRequestPermissions(permissions,
-                        new CheckRequestPermissionsListener() {
-                            @Override
-                            public void onAllPermissionOk(Permission[] allPermissions) {
-                                new MaterialDialog.Builder(InputActivity.this)
-                                        .items(R.array.choose_condition_2)
-                                        .itemsCallback(new MaterialDialog.ListCallback() {
-                                            @Override
-                                            public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                                                //重新拍照
-                                                if (position == 0) {//删除照片
-                                                    roomDb.setUploadPhotoUrl(null);
-                                                    roomDb.setPhotoUrl(null);
-                                                    Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
-                                                    if (equipmentTakePhotoIV != null) {
-                                                        GlideUtils.ShowImage(InputActivity.this, roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photograph);
-                                                    }
-                                                } else {
-                                                    roomDb.setUploadPhotoUrl(null);
-                                                    roomDb.setPhotoUrl(null);
-                                                    Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
-                                                    if (equipmentTakePhotoIV != null) {
-                                                        GlideUtils.ShowImage(InputActivity.this, roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photograph);
-                                                    }
-                                                    photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
-                                                    ActivityUtils.startCameraToPhoto(InputActivity.this, photoFile, ACTION_START_EQUIPMENT);
-                                                }
-                                            }
-                                        })
-                                        .show();
-                            }
-
-                            @Override
-                            public void onPermissionDenied(Permission[] refusedPermissions) {
-                                new AppSettingsDialog.Builder(InputActivity.this)
-                                        .setRationale(getString(R.string.need_save_setting))
-                                        .setTitle(getString(R.string.request_permissions))
-                                        .setPositiveButton(getString(R.string.sure))
-                                        .setNegativeButton(getString(R.string.cancel))
-                                        .build()
-                                        .show();
-                            }
-                        });
-                return true;
-            }
-        });
-        view.findViewById(R.id.tv_sure).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (takePhotoDialog != null) {
-                    if (!TextUtils.isEmpty(roomDb.getPhotoUrl())) {
-                        if (isPhotoUpload) {
-                            Yw2Application.getInstance().showToast("照片正在上传中...");
-                            return;
                         }
-                        takePhotoDialog.dismiss();
-                    } else {
-                        Yw2Application.getInstance().showToast("请拍照!");
-                    }
-                    if (mPresenter != null) {
-                        mPresenter.uploadEquipmentInfo(InputActivity.this.taskId, taskEquipmentBean.getEquipment().getEquipmentId(), roomDb.getUploadPhotoUrl());
-                    }
+
+                        @Override
+                        public void onPermissionDenied(Permission[] refusedPermissions) {
+                            new AppSettingsDialog.Builder(InputActivity.this)
+                                    .setRationale(getString(R.string.need_save_setting))
+                                    .setTitle(getString(R.string.request_permissions))
+                                    .setPositiveButton(getString(R.string.sure))
+                                    .setNegativeButton(getString(R.string.cancel))
+                                    .build()
+                                    .show();
+                        }
+                    });
+        });
+        equipmentTakePhotoIV.setOnLongClickListener(v -> {
+            if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
+                return false;
+            }
+            Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
+            SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                    new CheckRequestPermissionsListener() {
+                        @Override
+                        public void onAllPermissionOk(Permission[] allPermissions) {
+                            new MaterialDialog.Builder(InputActivity.this)
+                                    .items(R.array.choose_condition_2)
+                                    .itemsCallback(new MaterialDialog.ListCallback() {
+                                        @Override
+                                        public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                            //重新拍照
+                                            if (position == 0) {//删除照片
+                                                roomDb.setUploadPhotoUrl(null);
+                                                roomDb.setPhotoUrl(null);
+                                                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+                                                if (equipmentTakePhotoIV != null) {
+                                                    GlideUtils.ShowImage(InputActivity.this, roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photograph);
+                                                }
+                                            } else {
+                                                roomDb.setUploadPhotoUrl(null);
+                                                roomDb.setPhotoUrl(null);
+                                                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+                                                if (equipmentTakePhotoIV != null) {
+                                                    GlideUtils.ShowImage(InputActivity.this, roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photograph);
+                                                }
+                                                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                                ActivityUtils.startCameraToPhoto(InputActivity.this, photoFile, ACTION_START_EQUIPMENT);
+                                            }
+                                        }
+                                    })
+                                    .show();
+                        }
+
+                        @Override
+                        public void onPermissionDenied(Permission[] refusedPermissions) {
+                            new AppSettingsDialog.Builder(InputActivity.this)
+                                    .setRationale(getString(R.string.need_save_setting))
+                                    .setTitle(getString(R.string.request_permissions))
+                                    .setPositiveButton(getString(R.string.sure))
+                                    .setNegativeButton(getString(R.string.cancel))
+                                    .build()
+                                    .show();
+                        }
+                    });
+            return true;
+        });
+        view.findViewById(R.id.tv_sure).setOnClickListener(v -> {
+            if (takePhotoDialog != null) {
+                if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
+                    Yw2Application.getInstance().showToast("请拍照!");
+                    return;
                 }
+                takePhotoDialog.dismiss();
+                finishInput();
             }
         });
         takePhotoDialog = new MaterialDialog.Builder(this)
@@ -463,82 +423,47 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
     }
 
     private void toCheckUploadData() {
-        boolean isPhotoUpload = false;
-        if (taskEquipmentBean.getDataList().get(0).getDataItemValueList() != null) {
-            for (int i = 0; i < taskEquipmentBean.getDataList().get(0).getDataItemValueList().size(); i++) {
-                if (taskEquipmentBean.getDataList().get(0).getDataItemValueList().get(i).getDataItem().getInspectionType() == ConstantInt.DATA_VALUE_TYPE_3) {
-                    if (taskEquipmentBean.getDataList().get(0).getDataItemValueList().get(i).getDataItem().isUploading()) {
-                        isPhotoUpload = true;
-                        break;
-                    }
+        boolean canFinish = true;
+        for (int i = 0; i < taskEquipmentBean.getDataList().get(0).getDataItemValueList().size(); i++) {
+            DataItemBean dataItemBean = taskEquipmentBean.getDataList().get(0).getDataItemValueList().get(i).getDataItem();
+            if (dataItemBean.getIsRequired() == 0)
+                continue;
+            if (dataItemBean.getInspectionType() == ConstantInt.DATA_VALUE_TYPE_3) {
+                if (TextUtils.isEmpty(dataItemBean.getValue())) {
+                    canFinish = false;
+                    break;
                 }
-            }
-        }
-        if (isPhotoUpload) {
-            new MaterialDialog.Builder(this).content("照片正在上传中,请等待照片上传完成后重试！")
-                    .negativeText("取消")
-                    .positiveText("确定")
-                    .show();
-        } else {
-            boolean canFinish = true;
-            for (int i = 0; i < taskEquipmentBean.getDataList().get(0).getDataItemValueList().size(); i++) {
-                if (taskEquipmentBean.getDataList().get(0).getDataItemValueList().get(i).getDataItem().getIsRequired() == 0)
-                    continue;
-                if (taskEquipmentBean.getDataList().get(0).getDataItemValueList().get(i).getDataItem().getInspectionType() == ConstantInt.DATA_VALUE_TYPE_3) {
-                    if (TextUtils.isEmpty(taskEquipmentBean.getDataList().get(0).getDataItemValueList().get(i).getDataItem().getLocalFile())) {
-                        canFinish = false;
-                        break;
-                    }
-                } else {
-                    if (TextUtils.isEmpty(taskEquipmentBean.getDataList().get(0).getDataItemValueList().get(i).getDataItem().getValue())) {
-                        canFinish = false;
-                        break;
-                    }
-                }
-            }
-            if (canFinish) {
-                uploadData();
             } else {
-                new MaterialDialog.Builder(this).title("提示").content("还有数据没有录入,是否继续提交数据？")
-                        .negativeText("取消")
-                        .positiveText("确定")
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                uploadData();
-                            }
-                        }).build().show();
+                if (TextUtils.isEmpty(dataItemBean.getValue())) {
+                    canFinish = false;
+                    break;
+                }
             }
         }
+        if (canFinish) {
+            if (roomDb != null && roomDb.getTakePhotoPosition() == taskEquipmentBean.getEquipment().getEquipmentId() && TextUtils.isEmpty(roomDb.getUploadPhotoUrl())) {
+                toUploadEquipmentPhoto();
+            } else {
+                finishInput();
+            }
+        } else {
+            new MaterialDialog.Builder(this)
+                    .title("提示").content("还有数据没有录入,无法提交数据？")
+                    .positiveText("确定").build().show();
+        }
+    }
 
+    private void finishInput() {
+        if (mPresenter != null) {
+            mPresenter.saveData(taskEquipmentBean, true);
+            mPresenter.saveTaskEquipToCache(taskEquipmentBean);
+        }
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 
     private void finishInputDataToBack() {
-        boolean isPhotoUpload = false;
-        if (taskEquipmentBean.getDataList().get(0).getDataItemValueList() != null) {
-            for (int i = 0; i < taskEquipmentBean.getDataList().get(0).getDataItemValueList().size(); i++) {
-                if (taskEquipmentBean.getDataList().get(0).getDataItemValueList().get(i).getDataItem().getInspectionType() == ConstantInt.DATA_VALUE_TYPE_3) {
-                    if (taskEquipmentBean.getDataList().get(0).getDataItemValueList().get(i).getDataItem().isUploading()) {
-                        isPhotoUpload = true;
-                        break;
-                    }
-                }
-            }
-        }
-        if (isPhotoUpload) {
-            new MaterialDialog.Builder(this).content("照片正在上传中,是否退出？")
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            dateEditFinish();
-                        }
-                    })
-                    .negativeText("取消")
-                    .positiveText("确定")
-                    .show();
-        } else {
-            dateEditFinish();
-        }
+        dateEditFinish();
     }
 
     private void dateEditFinish() {
@@ -576,7 +501,7 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
     @Override
     public void uploadDataSuccess() {
         Yw2Application.getInstance().showToast("上传成功");
-        if (mPresenter!=null){
+        if (mPresenter != null) {
             mPresenter.saveData(taskEquipmentBean, false);
             mPresenter.saveTaskEquipToCache(taskEquipmentBean);
         }
@@ -589,17 +514,16 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
         if (dialogProgressBar != null) {
             dialogProgressBar.setVisibility(View.GONE);
         }
-        isPhotoUpload = false;
     }
 
     @Override
     public void uploadEquipmentInfoFinish(boolean isSuccess) {
-        if (isSuccess){
+        if (isSuccess) {
             if (dialogProgressBar != null) {
                 dialogProgressBar.setVisibility(View.GONE);
             }
             uploadData();
-        }else {
+        } else {
             roomDb.setPhotoUrl(null);
             roomDb.setUploadPhotoUrl(null);
             Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplace(roomDb);
@@ -672,7 +596,7 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
         @Override
         public void onReceive(Context context, Intent intent) {
             if (mPresenter != null && taskEquipmentBean != null) {
-                mPresenter.saveData(taskEquipmentBean, true);
+                mPresenter.saveData(taskEquipmentBean, false);
             }
         }
     }

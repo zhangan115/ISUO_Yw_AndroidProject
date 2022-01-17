@@ -17,7 +17,7 @@ public class FaultLineActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_container_toolbar, "故障曲线");
+        setLayoutAndToolbar(R.layout.activity_container_toolbar, "事件曲线");
         FaultLineFragment fragment;
         fragment = (FaultLineFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
         if (fragment == null) {

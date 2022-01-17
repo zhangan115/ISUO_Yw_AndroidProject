@@ -113,14 +113,14 @@ public class StatisticsPartActivity extends BaseActivity implements ChooseTimeLa
             llIncrementItem.addView(view);
         }
         if (!TextUtils.isEmpty(statistics.getTheMostStat().getFlimsyEquipmentType().getEquipmentTypeName())){
-            ((TextView) findViewById(R.id.tv_4_1)).setText(MessageFormat.format("最多故障设备类型:{0}", statistics.getTheMostStat().getFlimsyEquipmentType().getEquipmentTypeName()));
+            ((TextView) findViewById(R.id.tv_4_1)).setText(MessageFormat.format("最多事件设备类型:{0}", statistics.getTheMostStat().getFlimsyEquipmentType().getEquipmentTypeName()));
         }else{
-            ((TextView) findViewById(R.id.tv_4_1)).setText("最多故障设备类型:");
+            ((TextView) findViewById(R.id.tv_4_1)).setText("最多事件设备类型:");
         }
         if (!TextUtils.isEmpty(statistics.getTheMostStat().getTheMostFaultType())){
-            ((TextView) findViewById(R.id.tv_4_2)).setText(MessageFormat.format("最多故障类型:{0}", statistics.getTheMostStat().getTheMostFaultType()));
+            ((TextView) findViewById(R.id.tv_4_2)).setText(MessageFormat.format("最多事件类型:{0}", statistics.getTheMostStat().getTheMostFaultType()));
         }else {
-            ((TextView) findViewById(R.id.tv_4_2)).setText("最多故障类型:");
+            ((TextView) findViewById(R.id.tv_4_2)).setText("最多事件类型:");
         }
         String value1 = String.format("%.2f",statistics.getTheMostStat().getFastestTimeCost() / 60000.00);
         ((TextView) findViewById(R.id.tv_4_3_1)).setText( value1 + "分钟");

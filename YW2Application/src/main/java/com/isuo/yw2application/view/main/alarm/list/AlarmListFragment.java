@@ -484,7 +484,7 @@ public class AlarmListFragment extends MvpFragment<AlarmListContact.Presenter> i
         }
     }
 
-    private String[] alarmTypes = new String[]{"A类故障", "B类故障", "C类故障"};
+    private String[] alarmTypes = new String[]{"A类事件", "B类事件", "C类事件"};
     private String[] alarmState = new String[]{"待处理", "处理中", "关闭", "转检修"};
     private String[] alarmTime = new String[]{"当天", "最近三天", "最近一周", "最近一月", "其他"};
 
@@ -492,7 +492,7 @@ public class AlarmListFragment extends MvpFragment<AlarmListContact.Presenter> i
         if (chooseAlarmType != null) {
             if (chooseAlarmType.equals(type)) {
                 chooseAlarmType = null;
-                conditionTitleTvs[1].setText("故障等级");
+                conditionTitleTvs[1].setText("事件等级");
             } else {
                 conditionTitleTvs[1].setText(alarmTypes[Integer.parseInt(type) - 1]);
                 chooseAlarmType = type;
@@ -525,7 +525,7 @@ public class AlarmListFragment extends MvpFragment<AlarmListContact.Presenter> i
         if (chooseAlarmState != null) {
             if (chooseAlarmState.equals(type)) {
                 chooseAlarmState = null;
-                conditionTitleTvs[2].setText("故障状态");
+                conditionTitleTvs[2].setText("事件状态");
             } else {
                 conditionTitleTvs[2].setText(alarmState[Integer.parseInt(type) - 1]);
                 chooseAlarmState = type;

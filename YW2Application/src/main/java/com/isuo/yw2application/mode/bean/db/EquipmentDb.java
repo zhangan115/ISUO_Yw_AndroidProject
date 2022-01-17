@@ -26,6 +26,7 @@ public class EquipmentDb implements Parcelable {
     private boolean alarmState;//是否异常
     private boolean uploadState;//是否上传
     private boolean canUpload;//是否可以上传
+
     private long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
 
     public Long get_id() {

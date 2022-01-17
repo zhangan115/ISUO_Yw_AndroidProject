@@ -90,4 +90,9 @@ class ReportPresenter implements ReportContract.Presenter {
     public long getEquipmentDataFinishCount(long taskId, long roomId, long equipmentId) {
         return mRepository.getEquipmentInputCount(taskId,roomId,equipmentId);
     }
+
+    @Override
+    public boolean getEquipmentFinishState(long taskId, long roomId, long equipmentId) {
+        return mRepository.getEquipmentFinishState(taskId,roomId,equipmentId);
+    }
 }

@@ -244,9 +244,9 @@ public class AlarmFragment extends MvpFragmentV4<AlarmContract.Presenter> implem
                     Calendar calendar = Calendar.getInstance();
                     intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT, DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd"));
                     intent.putExtra(ConstantStr.KEY_BUNDLE_OBJECT_1, DataUtil.timeFormat(calendar.getTimeInMillis(), "yyyy-MM-dd"));
-                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "故障统计");
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "事件统计");
                 } else {
-                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "遗留故障");
+                    intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "遗留事件");
                 }
                 startActivity(intent);
                 break;

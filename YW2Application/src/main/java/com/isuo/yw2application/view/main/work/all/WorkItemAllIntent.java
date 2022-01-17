@@ -41,7 +41,7 @@ public class WorkItemAllIntent {
             case 4://发布通知
                 intent.setClass(activity, SendMessageActivity.class);
                 break;
-            case 5://故障上报
+            case 5://事件上报
                 intent.setClass(activity, FaultActivity.class);
                 break;
             case 6://台账录入

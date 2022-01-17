@@ -401,7 +401,7 @@
                         android:layout_height="wrap_content"
                         android:drawableTop="@drawable/fault_record"
                         android:drawablePadding="15dp"
-                        android:text="故障记录"
+                        android:text="事件记录"
                         android:textColor="@color/color535862"
                         android:textSize="12sp" />
                 </LinearLayout>

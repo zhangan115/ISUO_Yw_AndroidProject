@@ -27,7 +27,6 @@ public class DataItemBean implements Parcelable {
     private String value;
     private int isRequired;//1 必填，0 非必填
     private int isShareValue;//是否共享
-    private String localFile;
     //本地添加的字段，进行逻辑处理
     private String chooseInspectionName;//本地添加属性：选择结果名称
     private EquipmentDataDb equipmentDataDb;//本地添加属性：保存的设备数据
@@ -129,13 +128,6 @@ public class DataItemBean implements Parcelable {
         this.isShareValue = isShareValue;
     }
 
-    public String getLocalFile() {
-        return localFile;
-    }
-
-    public void setLocalFile(String localFile) {
-        this.localFile = localFile;
-    }
 
     public String getChooseInspectionName() {
         return chooseInspectionName;
@@ -193,7 +185,6 @@ public class DataItemBean implements Parcelable {
         dest.writeString(this.value);
         dest.writeInt(this.isRequired);
         dest.writeInt(this.isShareValue);
-        dest.writeString(this.localFile);
         dest.writeString(this.chooseInspectionName);
         dest.writeParcelable(this.equipmentDataDb, flags);
         dest.writeByte(this.isUploading ? (byte) 1 : (byte) 0);
@@ -213,7 +204,6 @@ public class DataItemBean implements Parcelable {
         this.value = in.readString();
         this.isRequired = in.readInt();
         this.isShareValue = in.readInt();
-        this.localFile = in.readString();
         this.chooseInspectionName = in.readString();
         this.equipmentDataDb = in.readParcelable(EquipmentDataDb.class.getClassLoader());
         this.isUploading = in.readByte() != 0;

@@ -144,4 +144,6 @@ public interface ConstantStr {
 
     String TASK_STATE_START = "task_state_start";//巡检任务开始
     String TASK_STATE_FINISH = "task_state_finish";//巡检任务完成
+
+    String ROOM_STATE_CHANGE = "room_state_change";//配电室状态发生改变
 }

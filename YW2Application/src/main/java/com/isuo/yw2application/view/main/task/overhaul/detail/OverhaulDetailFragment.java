@@ -135,7 +135,7 @@ public class OverhaulDetailFragment extends MvpFragment<OverhaulDetailContract.P
                 faultPicUrl[i] = overhaulBean.getFault().getFaultPics().get(i).getPicUrl();
             }
             alarmSoundLayout.setContent(overhaulBean.getFault().getVoiceUrl()
-                    , overhaulBean.getFault().getSoundTimescale(), "故障内容", overhaulBean.getFault().getFaultDescript());
+                    , overhaulBean.getFault().getSoundTimescale(), "事件内容", overhaulBean.getFault().getFaultDescript());
         } else {
             faultPicUrl = new String[overhaulBean.getRepairPicsAdd().size()];
             for (int i = 0; i < overhaulBean.getRepairPicsAdd().size(); i++) {

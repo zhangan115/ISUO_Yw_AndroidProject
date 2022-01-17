@@ -22,28 +22,19 @@
 
             <ImageView
                 android:id="@+id/icon"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:background="@mipmap/ic_launcher" />
-
-            <TextView
-                android:id="@+id/splash_app_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="小梭运维＋"
-                android:textSize="22sp"
-                android:visibility="gone" />
+                android:background="@drawable/ui_log" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="多维度即时协同数字化\n运维任务增效管理系统"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="多维度多场景企业数字化\n任务精益到位协同管理系统"
                 android:textColor="@color/gray_666666"
-                android:textSize="14sp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
     </LinearLayout>

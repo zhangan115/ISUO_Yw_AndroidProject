@@ -17,7 +17,7 @@ public class EquipmentAlarmActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_container_toolbar, "故障记录");
+        setLayoutAndToolbar(R.layout.activity_container_toolbar, "事件记录");
         long equipmentId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG, -1);
         if (equipmentId == -1) {
             finish();

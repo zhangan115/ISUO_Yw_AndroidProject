@@ -96,13 +96,13 @@ public class AwaitFragment extends LazyLoadFragmentV4<AwaitContract.Presenter> i
                     }
                 }
                 if (data.getFaultType() == 1) {
-                    tv_alarm_name.setText("A类故障");
+                    tv_alarm_name.setText("A类事件");
                     tv_alarm_name.setTextColor(findColorById(R.color.colorFA5B58));
                 } else if (data.getFaultType() == 2) {
-                    tv_alarm_name.setText("B类故障");
+                    tv_alarm_name.setText("B类事件");
                     tv_alarm_name.setTextColor(findColorById(R.color.colorF0A326));
                 } else {
-                    tv_alarm_name.setText("C类故障");
+                    tv_alarm_name.setText("C类事件");
                     tv_alarm_name.setTextColor(findColorById(R.color.color3A87EE));
                 }
                 tv_time.setText(DataUtil.timeFormat(data.getCreateTime(), null));

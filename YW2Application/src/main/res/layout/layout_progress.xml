@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
-            android:text="故障上报"
+            android:text="事件上报"
             android:textColor="@color/color69A7FB"
             android:textSize="14sp" />
     </LinearLayout>

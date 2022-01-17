@@ -30,9 +30,9 @@ public interface InputContract {
          * 保存数据
          *
          * @param taskEquipmentBean 设备数据
-         * @param isAuto            是否自动保存
+         * @param isFinish            是否完成巡检，并可以上传
          */
-        void saveData(TaskEquipmentBean taskEquipmentBean, boolean isAuto);
+        void saveData(TaskEquipmentBean taskEquipmentBean, boolean isFinish);
 
         /**
          * 获取设备重点关注数据

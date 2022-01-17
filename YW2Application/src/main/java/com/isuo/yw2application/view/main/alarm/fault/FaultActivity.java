@@ -42,6 +42,7 @@ import com.isuo.yw2application.view.main.device.list.EquipListActivity;
 import com.isuo.yw2application.widget.FlowLayout;
 import com.isuo.yw2application.widget.SpeechDialog;
 import com.isuo.yw2application.widget.TakePhotoView;
+import com.orhanobut.logger.Logger;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.bean.Permissions;
@@ -58,7 +59,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,7 +108,7 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_fault, "故障上报");
+        setLayoutAndToolbar(R.layout.activity_fault, "事件上报");
         new FaultPresenter(Yw2Application.getInstance().getFaultRepositoryComponent().getRepository(), this);
         mTaskId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG, -1);
         initView();
@@ -155,7 +155,7 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
         takePhotoView.setTakePhotoListener(new TakePhotoView.TakePhotoListener() {
             @Override
             public void onTakePhoto() {
-                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
                 SoulPermission.getInstance().checkAndRequestPermissions(permissions,
                         new CheckRequestPermissionsListener() {
                             @Override
@@ -202,7 +202,7 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
 
             @Override
             public void onTakePhoto(int position, final Image image) {
-                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
                 SoulPermission.getInstance().checkAndRequestPermissions(permissions,
                         new CheckRequestPermissionsListener() {
                             @Override
@@ -437,12 +437,12 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
                     }
                     jsonObject.put("equipmentId", equipId);
                     if (mFaultCode == -1) {
-                        Yw2Application.getInstance().showToast("请选择故障类型");
+                        Yw2Application.getInstance().showToast("请选择事件类型");
                         return;
                     }
                     jsonObject.put("faultType", mFaultCode);
                     if (TextUtils.isEmpty(mContent.getText().toString())) {
-                        Yw2Application.getInstance().showToast("请输入故障内容");
+                        Yw2Application.getInstance().showToast("请输入事件内容");
                         return;
                     }
                     jsonObject.put("faultDescript", mContent.getText().toString());
@@ -528,7 +528,7 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTION_START_CAMERA && resultCode == RESULT_OK) {
-            PhotoUtils.cropPhoto(this, photoFile, "",new PhotoUtils.PhotoListener() {
+            PhotoUtils.cropPhoto(this, photoFile, "", new PhotoUtils.PhotoListener() {
                 @Override
                 public void onSuccess(File file) {
                     uploadPhoto(file);
@@ -537,7 +537,7 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
         } else if (requestCode == ACTION_START_PHOTO && resultCode == RESULT_OK) {
             try {
                 File photo = FileFromUri.from(this, data.getData());
-                PhotoUtils.cropPhoto(this, photo,"",new PhotoUtils.PhotoListener() {
+                PhotoUtils.cropPhoto(this, photo, "", new PhotoUtils.PhotoListener() {
                     @Override
                     public void onSuccess(File file) {
                         uploadPhoto(file);
@@ -558,12 +558,14 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
             if (employeeBeen != null && employeeBeen.size() > 0) {
                 chooseEmployeeBeen.addAll(employeeBeen);
             }
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < chooseEmployeeBeen.size(); i++) {
-                mNextUserId = MessageFormat.format("{0}{1},", mNextUserId, chooseEmployeeBeen.get(i).getUser().getUserId());
+                sb.append(chooseEmployeeBeen.get(i).getUser().getUserId());
+                if (chooseEmployeeBeen.size() - 1 != i) {
+                    sb.append(",");
+                }
             }
-            if (!TextUtils.isEmpty(mNextUserId)) {
-                mNextUserId = mNextUserId.substring(0, mNextUserId.length() - 1);
-            }
+            mNextUserId = sb.toString();
             addEmployee();
         }
     }
@@ -690,7 +692,7 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
     public void showDefaultFlowList(@NonNull List<DefaultFlowBean> defaultFlowBeen) {
         mFlowLayoutList.clear();
         mDefaultFlowBeen = defaultFlowBeen;
-        chooseTitleType2.setText("故障审批人已由管理员预设");
+        chooseTitleType2.setText("事件审批人已由管理员预设");
         defaultFlowId = defaultFlowBeen.get(0).getDefaultFlowId();
         if (defaultFlowBeen.size() == 1) {
             FlowLayout flowLayout = new FlowLayout(this);
@@ -725,7 +727,7 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
 
     @Override
     public void showDefaultFlowError() {
-        chooseTitleType2.setText("未设置故障审批人，请去后台设置");
+        chooseTitleType2.setText("未设置事件审批人，请去后台设置");
     }
 
     @Override

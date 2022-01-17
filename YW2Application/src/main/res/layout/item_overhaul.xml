@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:gravity="center"
-                        android:text="B类故障"
+                        android:text="B类事件"
                         android:textColor="@color/gray_999999"
                         android:textSize="14sp" />
                 </LinearLayout>

@@ -54,7 +54,7 @@ public class FaultHistoryActivity extends BaseActivity implements FaultHistoryCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_fault_history, "历史故障");
+        setLayoutAndToolbar(R.layout.activity_fault_history, "历史事件");
         new FaultHistoryPresenter(Yw2Application.getInstance().getFaultRepositoryComponent().getRepository(), this);
         userId = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT, -1);
         initView();

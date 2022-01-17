@@ -27,7 +27,10 @@ interface InspectionRoomContract {
          *
          * @param taskId 任务id
          */
-        void getInspectionDataList(long taskId);
+        @Nullable
+        InspectionDetailBean getInspectionDataList(long taskId);
+
+        void getInspectionDataListFormNet(long taskId);
 
         /**
          * 从数据库获取保存的巡检人员
@@ -71,34 +74,21 @@ interface InspectionRoomContract {
         void loadRoomDataFromDb(long taskId, List<RoomListBean> list);
 
         /**
-         * 从cache获取任务数据
-         *
-         * @return 任务
-         */
-        InspectionDetailBean getInspectionFromCache();
-
-        /**
          * 保存巡检到cache
          *
          * @param bean 任务
          */
         void saveInspectionToCache(@Nullable InspectionDetailBean bean);
 
-        /**
-         * 获取设备完成的数量
-         *
-         * @param taskId       任务id
-         * @param roomListBean 配电室
-         * @return 数量
-         */
-        int getEquipmentFinishCount(long taskId, @NonNull RoomListBean roomListBean);
+        void saveInspectionToAcCache(@Nullable InspectionDetailBean bean);
+
     }
 
     interface View extends BaseView<Presenter> {
 
-        void showData(InspectionDetailBean inspectionBeen);
-
         void showData();
+
+        void setInspectionData(InspectionDetailBean inspectionData);
 
         void showLoading();
 

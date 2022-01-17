@@ -32,7 +32,7 @@ public class Aggregate {
     private int finish;
     private int repairCount;//检修
     private int allCount;//巡检工作
-    private int allFault;//故障
+    private int allFault;//事件
     private List<RepairListBean> repairList;
     private List<SpecialListBean> specialList;
 

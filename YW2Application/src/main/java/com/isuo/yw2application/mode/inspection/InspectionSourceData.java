@@ -57,7 +57,7 @@ public interface InspectionSourceData {
     void saveInspectionDataToAcCache(InspectionDetailBean detailBean);
 
     /**
-     * h获取缓存的数据
+     * 获取缓存的数据
      *
      * @param taskId 任务ID
      * @return 数据
@@ -124,6 +124,8 @@ public interface InspectionSourceData {
      */
     @NonNull
     Subscription updateRoomState(long taskId, RoomListBean roomListBean, int operation, @NonNull final IObjectCallBack<String> callBack);
+
+    Subscription updateRoomStateNet(long taskId, RoomListBean roomListBean, int operation, @NonNull final IObjectCallBack<String> callBack);
 
     //读取配电室数据回调
     interface LoadRoomDataCallBack {
@@ -287,6 +289,14 @@ public interface InspectionSourceData {
     boolean checkPhotoInspectionData(List<TaskEquipmentBean> taskEquipmentBeans);
 
     /**
+     * 上传任务数据
+     *
+     * @param task     任务
+     * @param callBack 回调
+     */
+    void startUploadTask(com.isuo.yw2application.mode.bean.work.InspectionBean task, @NonNull UploadTaskCallBack callBack);
+
+    /**
      * 更新用户照片
      *
      * @param taskId      任务id
@@ -400,4 +410,14 @@ public interface InspectionSourceData {
      * @return 数量
      */
     long getEquipmentInputCount(long taskId, long roomId, long equipmentId);
+
+    /**
+     * 获取设备的完成状态
+     *
+     * @param taskId      taskId
+     * @param roomId      roomId
+     * @param equipmentId equipmentId
+     * @return 是否完成
+     */
+    boolean getEquipmentFinishState(long taskId, long roomId, long equipmentId);
 }

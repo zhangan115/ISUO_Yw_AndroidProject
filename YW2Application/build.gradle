@@ -81,7 +81,7 @@ android {
     }
     //green dao 配置
     greendao {
-        schemaVersion 4//版本号
+        schemaVersion 5//版本号
     }
 }
 

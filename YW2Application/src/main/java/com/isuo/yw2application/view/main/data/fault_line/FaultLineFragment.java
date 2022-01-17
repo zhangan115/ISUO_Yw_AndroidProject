@@ -150,7 +150,7 @@ public class FaultLineFragment extends MvpFragmentV4<FaultLineContract.Presenter
                         intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "今日统计");
                         break;
                     case 2:
-                        intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "遗留故障");
+                        intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "遗留事件");
                         break;
                 }
                 startActivity(intent);

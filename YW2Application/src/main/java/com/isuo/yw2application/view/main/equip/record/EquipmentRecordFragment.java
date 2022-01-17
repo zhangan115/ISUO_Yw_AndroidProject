@@ -104,13 +104,13 @@ public class EquipmentRecordFragment extends MvpFragment<EquipmentRecordContact.
                         iv_state.setVisibility(View.VISIBLE);
                         tv_alarm.setVisibility(View.VISIBLE);
                         if (data.getFault().getFaultType() == 1) {
-                            tv_alarm.setText("A类故障");
+                            tv_alarm.setText("A类事件");
                             iv_state.setImageDrawable(findDrawById(R.drawable.work_a));
                         } else if (data.getFault().getFaultType() == 2) {
-                            tv_alarm.setText("B类故障");
+                            tv_alarm.setText("B类事件");
                             iv_state.setImageDrawable(findDrawById(R.drawable.work_b));
                         } else {
-                            tv_alarm.setText("C类故障");
+                            tv_alarm.setText("C类事件");
                             iv_state.setImageDrawable(findDrawById(R.drawable.work_c));
                         }
                     }

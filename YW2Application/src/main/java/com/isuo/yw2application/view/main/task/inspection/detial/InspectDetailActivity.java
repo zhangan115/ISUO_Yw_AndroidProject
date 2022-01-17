@@ -121,15 +121,15 @@ public class InspectDetailActivity extends NotifyActivity implements InspectDeta
                 TextView mFault = (TextView) vHolder.getView(R.id.tv_alarm);
                 ImageView mFaultImg = (ImageView) vHolder.getView(R.id.img_alarm);
                 if (data.getFaultType() == 1) {
-                    mFault.setText("A类故障");
+                    mFault.setText("A类事件");
                     mFaultImg.setImageDrawable(findDrawById(R.drawable.work_a));
                 }
                 if (data.getFaultType() == 2) {
-                    mFault.setText("B类故障");
+                    mFault.setText("B类事件");
                     mFaultImg.setImageDrawable(findDrawById(R.drawable.work_b));
                 }
                 if (data.getFaultType() == 3) {
-                    mFault.setText("C类故障");
+                    mFault.setText("C类事件");
                     mFaultImg.setImageDrawable(findDrawById(R.drawable.work_c));
                 }
                 TextView mFaultDec = (TextView) vHolder.getView(R.id.tv_content);

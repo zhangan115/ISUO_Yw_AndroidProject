@@ -49,22 +49,22 @@ public class Type3Layout extends LinearLayout {
         TextView tv_title = findViewById(R.id.tv_title);
         iv_take_photo = findViewById(R.id.iv_take_photo);
         tv_title.setText(dataItemBean.getInspectionName());
-        if (dataItemBean.getEquipmentDataDb() != null && TextUtils.isEmpty(dataItemBean.getLocalFile())) {
-            dataItemBean.setLocalFile(dataItemBean.getEquipmentDataDb().getLocalPhoto());
+        if (dataItemBean.getEquipmentDataDb() != null && TextUtils.isEmpty(dataItemBean.getValue())) {
+            dataItemBean.setValue(dataItemBean.getEquipmentDataDb().getValue());
         }
-        if (TextUtils.isEmpty(dataItemBean.getLocalFile())) {
+        if (TextUtils.isEmpty(dataItemBean.getValue())) {
             if (!TextUtils.isEmpty(dataItemBean.getEquipmentDataDb().getValue())){
                 GlideUtils.ShowImage(mContext, dataItemBean.getEquipmentDataDb().getValue(), iv_take_photo, R.drawable.img_default);
             }
             iv_take_photo.setImageDrawable(mContext.getResources().getDrawable(R.drawable.photograph));
         } else {
-            GlideUtils.ShowImage(mContext, dataItemBean.getLocalFile(), iv_take_photo, R.drawable.img_default);
+            GlideUtils.ShowImage(mContext, dataItemBean.getValue(), iv_take_photo, R.drawable.img_default);
         }
         iv_take_photo.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(dataItemBean.getLocalFile())) {
-                    ViewPagePhotoActivity.startActivity(mContext, new String[]{dataItemBean.getLocalFile()}, 0);
+                if (!TextUtils.isEmpty(dataItemBean.getValue())) {
+                    ViewPagePhotoActivity.startActivity(mContext, new String[]{dataItemBean.getValue()}, 0);
                     return;
                 }else if (!TextUtils.isEmpty(dataItemBean.getEquipmentDataDb().getValue())){
                     ViewPagePhotoActivity.startActivity(mContext, new String[]{dataItemBean.getEquipmentDataDb().getValue()}, 0);
@@ -81,7 +81,7 @@ public class Type3Layout extends LinearLayout {
         iv_take_photo.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (TextUtils.isEmpty(dataItemBean.getLocalFile())) {
+                if (TextUtils.isEmpty(dataItemBean.getValue())) {
                     return false;
                 }
                 new MaterialDialog.Builder(mContext)
@@ -118,10 +118,10 @@ public class Type3Layout extends LinearLayout {
         } else {
             progressBar.setVisibility(View.GONE);
         }
-        if (TextUtils.isEmpty(dataItemBean.getLocalFile())) {
+        if (TextUtils.isEmpty(dataItemBean.getValue())) {
             iv_take_photo.setImageDrawable(mContext.getResources().getDrawable(R.drawable.photograph));
         } else {
-            GlideUtils.ShowImage(mContext, dataItemBean.getLocalFile(), iv_take_photo, R.drawable.img_default);
+            GlideUtils.ShowImage(mContext, dataItemBean.getValue(), iv_take_photo, R.drawable.img_default);
         }
     }
 

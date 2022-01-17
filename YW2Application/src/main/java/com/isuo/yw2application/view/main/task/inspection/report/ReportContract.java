@@ -70,6 +70,8 @@ public interface ReportContract {
          * @return 数量
          */
         long getEquipmentDataFinishCount(long taskId, long roomId, long equipmentId);
+
+        boolean getEquipmentFinishState(long taskId, long roomId, long equipmentId);
     }
 
     interface View extends BaseView<Presenter> {

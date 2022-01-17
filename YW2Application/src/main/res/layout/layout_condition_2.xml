@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="A类故障"
+            android:text="A类事件"
             android:textColor="@color/text_item_content_1" />
 
         <ImageView
@@ -47,7 +47,7 @@
             android:layout_weight="1"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="B类故障"
+            android:text="B类事件"
             android:textColor="@color/text_item_content_1" />
 
         <ImageView
@@ -74,7 +74,7 @@
             android:layout_weight="1"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="C类故障"
+            android:text="C类事件"
             android:textColor="@color/text_item_content_1" />
 
         <ImageView

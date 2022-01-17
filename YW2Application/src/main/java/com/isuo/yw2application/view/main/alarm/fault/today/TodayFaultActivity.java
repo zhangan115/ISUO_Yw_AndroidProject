@@ -49,7 +49,7 @@ public class TodayFaultActivity extends BaseActivity implements TodayFaultContra
         super.onCreate(savedInstanceState);
         Calendar calendar = Calendar.getInstance();
         time = DataUtil.timeFormat(calendar.getTimeInMillis(),"yyyy-MM-dd");
-        setLayoutAndToolbar(R.layout.activity_today_doing,"24h新增故障");
+        setLayoutAndToolbar(R.layout.activity_today_doing,"24h新增事件");
         new TodayFaultPresenter(Yw2Application.getInstance().getWorkRepositoryComponent().getRepository(), this);
         refreshLayout = findViewById(R.id.swipeLayout);
         refreshLayout.setColorSchemeColors(findColorById(R.color.colorPrimary));

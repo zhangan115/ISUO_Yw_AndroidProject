@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_alarm_list_title_2"
                     android:gravity="center"
-                    android:text="故障等级" />
+                    android:text="事件等级" />
 
                 <View
                     android:id="@+id/view_division_white_2"
@@ -118,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_alarm_list_title_2"
-                    android:text="故障状态" />
+                    android:text="事件状态" />
 
                 <View
                     android:id="@+id/view_division_white_3"

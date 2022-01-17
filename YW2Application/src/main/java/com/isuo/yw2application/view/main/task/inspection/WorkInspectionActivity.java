@@ -52,14 +52,12 @@ import com.king.zxing.CaptureActivity;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
-import com.sito.library.adapter.RVAdapter;
 import com.sito.library.utils.CalendarUtil;
 import com.sito.library.utils.DataUtil;
 import com.sito.library.utils.SPHelper;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerView;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -166,9 +164,9 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         findViewById(R.id.ll_choose_day_empty).setOnClickListener(this);
         findViewById(R.id.uploadBtn).setOnClickListener(this);
         mTimeSt = findViewById(R.id.switchSt);
-        if (this.inspectionType == 1) {
+//        if (this.inspectionType == 1) {
 //            mTimeSt.setVisibility(View.VISIBLE);
-        }
+//        }
         mTimeSt.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
                 timeData(currentState);
@@ -547,6 +545,11 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         noDataLayout.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * 领取成功后保存数据
+     *
+     * @param inspectionBean 巡检数据
+     */
     @Override
     public void operationSuccess(InspectionBean inspectionBean) {
         inspectionBean.setTaskState(ConstantInt.TASK_STATE_2);
@@ -554,15 +557,10 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         if (inspectionAdapter != null) {
             inspectionAdapter.notifyDataSetChanged();
         }
-        int securityId = -1;
-        if (inspectionBean.getSecurityPackage() != null) {
-            securityId = inspectionBean.getSecurityPackage().getSecurityId();
-        }
         if (mPresenter != null) {
             mPresenter.toSaveInspectionDataToCache(this.inspectionType, this.mDate, mList);
         }
         Yw2Application.getInstance().showToast("任务领取成功");
-//        startTask(inspectionBean.getTaskId(), securityId);
     }
 
     @Override
@@ -816,7 +814,6 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                     }
                 } else if (intent.getAction().equals(ConstantStr.TASK_STATE_FINISH)) {
                     if (inspectionBean != null) {
-                        inspectionBean.setTaskState(ConstantInt.TASK_STATE_4);
                         ArrayList<TaskDb> taskDbs = intent.getParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST);
                         ArrayList<User> users = new ArrayList<>();
                         for (int i = 0; i < taskDbs.size(); i++) {

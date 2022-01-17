@@ -46,7 +46,7 @@ public class DealAlarmCountActivity extends BaseActivity implements FaultCountCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_fault_work, "故障处理");
+        setLayoutAndToolbar(R.layout.activity_fault_work, "事件处理");
         new FaultCountPresenter(Yw2Application.getInstance().getCountRepositoryComponent().getRepository(), this);
         mCurrentCalendar = Calendar.getInstance(Locale.CHINA);
         mPresenter.getDeptList(deptType);

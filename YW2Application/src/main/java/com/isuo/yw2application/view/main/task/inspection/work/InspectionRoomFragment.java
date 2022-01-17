@@ -10,8 +10,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
-import android.os.SystemProperties;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -34,6 +32,8 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.BroadcastAction;
 import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.common.ConstantStr;
+import com.isuo.yw2application.mode.bean.db.RoomDb;
+import com.isuo.yw2application.mode.bean.db.RoomDbDao;
 import com.isuo.yw2application.mode.bean.db.TaskDb;
 import com.isuo.yw2application.mode.bean.employee.EmployeeBean;
 import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
@@ -48,7 +48,6 @@ import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.utils.DisplayUtil;
-import com.sito.library.utils.SystemUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -77,7 +76,6 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     private final int SCANNER_CODE = 202;
     private String taskStartType, taskStartDesc;
     private List<RoomListLayout> roomListLayouts;
-    private boolean canScan = ConstantStr.ALPS.equals(SystemUtil.getDeviceBrand());
     //需要保存的状态
     private boolean isFlag = false;
     private boolean isAutoSendAction = true;
@@ -113,13 +111,6 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
             isAutoSendAction = savedInstanceState.getBoolean("isAutoSendAction");
             mPosition = savedInstanceState.getInt("mPosition");
             mOperation = savedInstanceState.getInt("mOperation");
-            inspectionDetailBean = mPresenter.getInspectionFromCache();
-            if (inspectionDetailBean != null) {
-                mList.addAll(inspectionDetailBean.getRoomList());
-                if (mPosition != -1) {
-                    roomListBean = mList.get(mPosition);
-                }
-            }
             chooseEmployeeBeen = savedInstanceState.getParcelableArrayList("chooseEmployeeBeen");
         }
         if (chooseEmployeeBeen == null) {
@@ -142,13 +133,17 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
             taskStartType = ConstantStr.START_TYPE_0;
         }
         setHasOptionsMenu(taskStartType.equals(ConstantStr.START_TYPE_0));
-        myHandle = new MyHandle(new WeakReference<>(getActivity()));
-        refreshUiReceiver = new RefreshUiReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(BroadcastAction.AUTO_UPLOAD_DATA);
-        getActivity().registerReceiver(refreshUiReceiver, filter);
-        autoRefresh = true;
-        new Thread(new MyRunnable()).start();
+        if (getActivity() != null) {
+            myHandle = new MyHandle(new WeakReference<>(getActivity()));
+            refreshUiReceiver = new RefreshUiReceiver();
+            roomStateChangeBr = new RoomStateChangeBr();
+            IntentFilter refreshFilter = new IntentFilter(BroadcastAction.AUTO_UPLOAD_DATA);
+            IntentFilter roomStateFilter = new IntentFilter(ConstantStr.ROOM_STATE_CHANGE);
+            LocalBroadcastManager.getInstance(getActivity()).registerReceiver(refreshUiReceiver, refreshFilter);
+            LocalBroadcastManager.getInstance(getActivity()).registerReceiver(roomStateChangeBr, roomStateFilter);
+            autoRefresh = true;
+            new Thread(new MyRunnable()).start();
+        }
     }
 
     @SuppressLint("InflateParams")
@@ -163,18 +158,22 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         finishInspectionTv.setVisibility(View.GONE);
         headerView = LayoutInflater.from(getActivity()).inflate(R.layout.layout_header_inspection_detail, null);
         addEmployeeLayout = headerView.findViewById(R.id.ll_employee_add);
-        if (inspectionDetailBean != null && roomListBean != null && chooseEmployeeBeen != null) {
-            showData(inspectionDetailBean);
-            showTaskUser(chooseEmployeeBeen);
-        } else if (mPresenter != null) {
-            mPresenter.getInspectionDataList(taskId);
-            mPresenter.loadTaskUserFromDb(taskId);
+        if (mPresenter != null) {
+            inspectionDetailBean = mPresenter.getInspectionDataList(taskId);
+            if (inspectionDetailBean != null) {
+                mPresenter.loadTaskUserFromDb(taskId);
+                mList.clear();
+                mList.addAll(inspectionDetailBean.getRoomList());
+                mPresenter.loadRoomDataFromDb(taskId, mList);
+            } else {
+                mPresenter.getInspectionDataListFormNet(taskId);
+            }
         }
         return rootView;
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("isFlag", isFlag);
         outState.putBoolean("isAutoSendAction", isAutoSendAction);
@@ -189,17 +188,22 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     }
 
     @Override
-    public void showData(InspectionDetailBean inspectionBeen) {
-        this.inspectionDetailBean = inspectionBeen;
-        mList.clear();
-        mList.addAll(inspectionBeen.getRoomList());
-        finishInspectionTv.setVisibility(View.VISIBLE);
-        addRoomToLayout();
+    public void showData() {
+        if (inspectionDetailBean != null) {
+//            finishInspectionTv.setVisibility(View.VISIBLE);
+            addRoomToLayout();
+        }
     }
 
     @Override
-    public void showData() {
-        addRoomToLayout();
+    public void setInspectionData(InspectionDetailBean inspectionData) {
+        if (inspectionData != null) {
+            this.inspectionDetailBean = inspectionData;
+            mPresenter.loadTaskUserFromDb(taskId);
+            mList.clear();
+            mList.addAll(inspectionDetailBean.getRoomList());
+            mPresenter.loadRoomDataFromDb(taskId, mList);
+        }
     }
 
     @Override
@@ -228,18 +232,24 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (getActivity() != null)
+        if (getActivity() != null) {
             manager = LocalBroadcastManager.getInstance(getActivity());
+        }
     }
 
     @Override
     public void updateRoomStateSuccess() {
-        Yw2Application.getInstance().showToast("成功");
         if (mOperation == 1) {
             //开始
             addRoomToLayout();
             startReportActivity();
             if (inspectionDetailBean.getTaskState() == ConstantInt.TASK_STATE_2) {
+
+                inspectionDetailBean.setTaskState(ConstantInt.TASK_STATE_3);
+                inspectionDetailBean.setStartTime(System.currentTimeMillis());
+
+                mPresenter.saveInspectionToCache(inspectionDetailBean);
+                mPresenter.saveInspectionToAcCache(inspectionDetailBean);
                 Intent intent = new Intent();
                 intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, this.taskId);
                 intent.setAction(ConstantStr.TASK_STATE_START);
@@ -260,7 +270,6 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
             intent.setAction(ConstantStr.TASK_STATE_FINISH);
             manager.sendBroadcast(intent);
             getActivity().setResult(Activity.RESULT_OK);
-            getActivity().finish();
         }
     }
 
@@ -286,29 +295,6 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    private void scan() {
-        SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.CAMERA,
-                new CheckRequestPermissionListener() {
-                    @Override
-                    public void onPermissionOk(Permission permission) {
-                        startActivityForResult(new Intent(getActivity(), CaptureActivity.class), SCANNER_CODE);
-                    }
-
-                    @Override
-                    public void onPermissionDenied(Permission permission) {
-                        if (getActivity() != null)
-                            new AppSettingsDialog.Builder(getActivity())
-                                    .setRationale(getString(R.string.need_camera_setting))
-                                    .setTitle(getString(R.string.request_permissions))
-                                    .setPositiveButton(getString(R.string.sure))
-                                    .setNegativeButton(getString(R.string.cancel))
-                                    .build()
-                                    .show();
-                    }
-                });
     }
 
     @Override
@@ -383,7 +369,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         }
     }
 
-    private RoomListLayout.OnStartListener onStartListener = new RoomListLayout.OnStartListener() {
+    private final RoomListLayout.OnStartListener onStartListener = new RoomListLayout.OnStartListener() {
 
         @Override
         public void onStart(RoomListBean data, int position) {
@@ -393,8 +379,8 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
             if (roomListBean.getTaskRoomState() == ConstantInt.ROOM_STATE_1) {
                 if (taskStartType.equals(ConstantStr.START_TYPE_0)) {//无要求，直接开始任务
                     receiverAction();
-                } else if (canScan && taskStartType.equals(ConstantStr.START_TYPE_1)) {//手机支持扫描，去扫码
-                    startScan();
+                } else if (taskStartType.equals(ConstantStr.START_TYPE_1)) {//手机支持扫描，去扫码
+                    scan();
                 } else {
                     Yw2Application.getInstance().showToast(taskStartDesc);
                 }
@@ -404,7 +390,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         }
     };
 
-    private RoomListLayout.OnFinishListener onFinishListener = new RoomListLayout.OnFinishListener() {
+    private final RoomListLayout.OnFinishListener onFinishListener = new RoomListLayout.OnFinishListener() {
 
         @Override
         public void onFinish(RoomListBean data, int position) {
@@ -436,7 +422,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
             if (msg.what == 1 && activity != null && activity.get() != null) {
                 Intent intent = new Intent();
                 intent.setAction(BroadcastAction.AUTO_UPLOAD_DATA);
-                activity.get().sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(activity.get()).sendBroadcast(intent);
             }
         }
     }
@@ -559,23 +545,26 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         startActivityForResult(reportIntent, REQUEST_CODE_START);
     }
 
-    private void startScan() {
-        getApp().showToast("扫描中...");
-        Intent intent = new Intent();
-        intent.setAction(ConstantStr.STOP_SCAN);
-        getActivity().sendBroadcast(intent);
-        if (canScan) {
-            try {
-                SystemProperties.set("persist.sys.scanstopimme", "true");
-                SystemClock.sleep(20);
-                SystemProperties.set("persist.sys.scanstopimme", "false");
-            } catch (Exception e) {
-                canScan = false;
-                return;
-            }
-        }
-        intent.setAction(ConstantStr.START_SCAN_ACTION);
-        getActivity().sendBroadcast(intent, null);
+    private void scan() {
+        SoulPermission.getInstance().checkAndRequestPermission(Manifest.permission.CAMERA,
+                new CheckRequestPermissionListener() {
+                    @Override
+                    public void onPermissionOk(Permission permission) {
+                        startActivityForResult(new Intent(getActivity(), CaptureActivity.class), SCANNER_CODE);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(Permission permission) {
+                        if (getActivity() != null)
+                            new AppSettingsDialog.Builder(getActivity())
+                                    .setRationale(getString(R.string.need_camera_setting))
+                                    .setTitle(getString(R.string.request_permissions))
+                                    .setPositiveButton(getString(R.string.sure))
+                                    .setNegativeButton(getString(R.string.cancel))
+                                    .build()
+                                    .show();
+                    }
+                });
     }
 
 
@@ -583,29 +572,12 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     public void onResume() {
         super.onResume();
         isFlag = false;
-        //注册系统广播  解码扫描到的数据
-        IntentFilter iFilter = new IntentFilter();
-        iFilter.addAction(ConstantStr.RECE_DATA_ACTION);
-        getActivity().registerReceiver(receiver, iFilter);
-        if (canScan) {
-            try {
-                SystemProperties.set("persist.sys.scanstopimme", "false");
-            } catch (Exception e) {
-                e.printStackTrace();
-                canScan = false;
-            }
-        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         cancelRepeat();
-        try {
-            getActivity().unregisterReceiver(receiver);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -617,8 +589,11 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
             if (myHandle != null) {
                 myHandle.removeCallbacksAndMessages(null);
             }
-            if (refreshUiReceiver != null) {
-                getActivity().unregisterReceiver(refreshUiReceiver);
+            if (refreshUiReceiver != null && getActivity() != null) {
+                LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(refreshUiReceiver);
+            }
+            if (roomStateChangeBr != null && getActivity() != null) {
+                LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(roomStateChangeBr);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -630,44 +605,35 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         Intent intent = new Intent();
         intent.setAction("com.geomobile.se4500barcodestop");
         getActivity().sendBroadcast(intent);
-        if (canScan) {
-            try {
-                SystemProperties.set("persist.sys.scanstopimme", "true");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_finish_inspection:
-                int finishCount = 0;
-                for (int i = 0; i < mList.size(); i++) {
-                    if (mList.get(i).getTaskRoomState() == ConstantInt.ROOM_STATE_3) {
-                        finishCount++;
-                    }
+        if (v.getId() == R.id.tv_finish_inspection) {
+            int finishCount = 0;
+            for (int i = 0; i < mList.size(); i++) {
+                if (mList.get(i).getTaskRoomState() == ConstantInt.ROOM_STATE_3) {
+                    finishCount++;
                 }
-                if (finishCount == mList.size()) {
-                    //全部完成
-                    StringBuilder sb = new StringBuilder();
-                    if (chooseEmployeeBeen != null && chooseEmployeeBeen.size() > 0) {
-                        for (int i = 0; i < chooseEmployeeBeen.size(); i++) {
-                            sb.append(chooseEmployeeBeen.get(i).getUserId());
-                            if (i != chooseEmployeeBeen.size() - 1) {
-                                sb.append(",");
-                            }
+            }
+            if (finishCount == mList.size()) {
+                //全部完成
+                StringBuilder sb = new StringBuilder();
+                if (chooseEmployeeBeen != null && chooseEmployeeBeen.size() > 0) {
+                    for (int i = 0; i < chooseEmployeeBeen.size(); i++) {
+                        sb.append(chooseEmployeeBeen.get(i).getUserId());
+                        if (i != chooseEmployeeBeen.size() - 1) {
+                            sb.append(",");
                         }
                     }
-                    if (mPresenter != null) {
-                        mOperation = 3;
-                        mPresenter.roomListFinish(taskId, mOperation, sb.toString());
-                    }
-                } else {
-                    Yw2Application.getInstance().showToast("还有没有完成的巡检");
                 }
-                break;
+                if (mPresenter != null) {
+                    mOperation = 3;
+                    mPresenter.roomListFinish(taskId, mOperation, sb.toString());
+                }
+            } else {
+                Yw2Application.getInstance().showToast("还有没有完成的巡检");
+            }
         }
     }
 
@@ -691,7 +657,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         return false;
     }
 
-    private View.OnClickListener addEmployeeClickListener = new View.OnClickListener() {
+    private final View.OnClickListener addEmployeeClickListener = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
@@ -706,5 +672,34 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
             startActivityForResult(addEmployeeIntent, REQUEST_CODE);
         }
     };
+
+    RoomStateChangeBr roomStateChangeBr;
+
+    private class RoomStateChangeBr extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            long roomTaskId = intent.getLongExtra(ConstantStr.KEY_BUNDLE_LONG, -1);
+            int mOperation = intent.getIntExtra(ConstantStr.KEY_BUNDLE_INT, -1);
+            if (roomTaskId != -1 && mOperation != -1) {
+                if (mPresenter != null && mList.size() > 0) {
+                    mPresenter.loadRoomDataFromDb(taskId, mList);
+                    int count = 0;
+                    for (int i = 0; i < mList.size(); i++) {
+                        if (mList.get(i).getTaskRoomState() == ConstantInt.ROOM_STATE_3) {
+                            count++;
+                        }
+                    }
+                    if (count == mList.size()) {
+                        inspectionDetailBean.setEndTime(System.currentTimeMillis());
+                    } else {
+                        inspectionDetailBean.setEndTime(0);
+                    }
+                    mPresenter.saveInspectionToCache(inspectionDetailBean);
+                    mPresenter.saveInspectionToAcCache(inspectionDetailBean);
+                }
+            }
+        }
+    }
 
 }

@@ -64,7 +64,7 @@
                             android:layout_weight="1"
                             android:drawableLeft="@drawable/message_title_tag"
                             android:drawablePadding="5dp"
-                            android:text="故障描述"
+                            android:text="事件描述"
                             android:textColor="@color/text333"
                             android:textSize="14sp" />
 
@@ -108,7 +108,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="故障类型:"
+                                android:text="事件类型:"
                                 android:textColor="@color/text333"
                                 android:textSize="14sp" />
 

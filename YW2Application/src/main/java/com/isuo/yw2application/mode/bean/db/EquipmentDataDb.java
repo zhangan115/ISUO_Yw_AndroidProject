@@ -30,7 +30,7 @@ public class EquipmentDataDb implements Parcelable {
     private long inspectionId;
     private int isShareValue;
     private int isRequired;//1 必填，0 非必填
-
+    private boolean isFinishInput;//是否完成巡检
     private boolean isUpload;
     private long userId;
     private long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
@@ -158,10 +158,10 @@ public class EquipmentDataDb implements Parcelable {
     public EquipmentDataDb() {
     }
 
-    @Generated(hash = 1565587596)
-    public EquipmentDataDb(Long _id, String value, String chooseInspectionName, String localPhoto, int type,
-            long taskId, long roomId, long equipmentId, long dataItemId, long inspectionId, int isShareValue,
-            int isRequired, boolean isUpload, long userId, long currentUserId) {
+    @Generated(hash = 469418906)
+    public EquipmentDataDb(Long _id, String value, String chooseInspectionName, String localPhoto, int type, long taskId,
+            long roomId, long equipmentId, long dataItemId, long inspectionId, int isShareValue, int isRequired,
+            boolean isFinishInput, boolean isUpload, long userId, long currentUserId) {
         this._id = _id;
         this.value = value;
         this.chooseInspectionName = chooseInspectionName;
@@ -174,6 +174,7 @@ public class EquipmentDataDb implements Parcelable {
         this.inspectionId = inspectionId;
         this.isShareValue = isShareValue;
         this.isRequired = isRequired;
+        this.isFinishInput = isFinishInput;
         this.isUpload = isUpload;
         this.userId = userId;
         this.currentUserId = currentUserId;
@@ -210,6 +211,14 @@ public class EquipmentDataDb implements Parcelable {
         this.isUpload = isUpload;
     }
 
+    public boolean getIsFinishInput() {
+        return this.isFinishInput;
+    }
+
+    public void setIsFinishInput(boolean isFinishInput) {
+        this.isFinishInput = isFinishInput;
+    }
+
     protected EquipmentDataDb(Parcel in) {
         this._id = (Long) in.readValue(Long.class.getClassLoader());
         this.value = in.readString();
@@ -223,7 +232,7 @@ public class EquipmentDataDb implements Parcelable {
         this.inspectionId = in.readLong();
         this.isShareValue = in.readInt();
         this.isRequired = in.readInt();
-        this.userId =in.readInt();
+        this.userId = in.readInt();
         this.currentUserId = in.readLong();
     }
 

@@ -24,7 +24,7 @@ class InspectionRoomPresenter implements InspectionRoomContract.Presenter {
 
     private final InspectionRoomContract.View mView;
     private final InspectionSourceData mSourceData;
-    private CompositeSubscription mSubscription;
+    private final CompositeSubscription mSubscription;
 
     InspectionRoomPresenter(InspectionRoomContract.View mView, InspectionSourceData mSourceData) {
         this.mView = mView;
@@ -34,17 +34,22 @@ class InspectionRoomPresenter implements InspectionRoomContract.Presenter {
     }
 
     @Override
-    public void getInspectionDataList(long taskId) {
+    public InspectionDetailBean getInspectionDataList(long taskId) {
+        return mSourceData.getInspectionDataFromAcCache(taskId);
+    }
+
+    @Override
+    public void getInspectionDataListFormNet(long taskId) {
         mView.showLoading();
         mSubscription.add(mSourceData.getInspectionDetailList(taskId, new IObjectCallBack<InspectionDetailBean>() {
             @Override
             public void onSuccess(@NonNull InspectionDetailBean inspectionDetailBean) {
-                mView.showData(inspectionDetailBean);
+                mView.setInspectionData(inspectionDetailBean);
             }
 
             @Override
             public void onError(String message) {
-                mView.showMessage(message);
+
             }
 
             @Override
@@ -54,6 +59,26 @@ class InspectionRoomPresenter implements InspectionRoomContract.Presenter {
         }));
     }
 
+
+    @Override
+    public void loadRoomDataFromDb(long taskId, List<RoomListBean> list) {
+        mSubscription.add(mSourceData.loadRoomDataFromDb(taskId, list, new InspectionSourceData.LoadRoomDataCallBack() {
+            @Override
+            public void onSuccess(List<RoomListBean> list) {
+                mView.showData();
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        }));
+    }
+
+    @Override
+    public void saveEmployee(long taskId, @NonNull List<EmployeeBean> taskDbList) {
+        mSubscription.add(mSourceData.saveTaskUserToDb(taskId, taskDbList));
+    }
 
     @Override
     public void loadTaskUserFromDb(long taskId) {
@@ -70,10 +95,6 @@ class InspectionRoomPresenter implements InspectionRoomContract.Presenter {
         }));
     }
 
-    @Override
-    public void saveEmployee(long taskId, @NonNull List<EmployeeBean> taskDbList) {
-        mSubscription.add(mSourceData.saveTaskUserToDb(taskId, taskDbList));
-    }
 
     @Override
     public void updateRoomState(long taskId, RoomListBean roomListBean, int operation) {
@@ -117,25 +138,6 @@ class InspectionRoomPresenter implements InspectionRoomContract.Presenter {
         }));
     }
 
-    @Override
-    public void loadRoomDataFromDb(long taskId, List<RoomListBean> list) {
-        mSubscription.add(mSourceData.loadRoomDataFromDb(taskId, list, new InspectionSourceData.LoadRoomDataCallBack() {
-            @Override
-            public void onSuccess(List<RoomListBean> list) {
-                mView.showData();
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        }));
-    }
-
-    @Override
-    public InspectionDetailBean getInspectionFromCache() {
-        return mSourceData.getInspectionDataFromCache();
-    }
 
     @Override
     public void saveInspectionToCache(@Nullable InspectionDetailBean bean) {
@@ -143,9 +145,10 @@ class InspectionRoomPresenter implements InspectionRoomContract.Presenter {
     }
 
     @Override
-    public int getEquipmentFinishCount(long taskId, @NonNull RoomListBean roomListBean) {
-        return mSourceData.getEquipmentFinishCount(taskId,roomListBean);
+    public void saveInspectionToAcCache(@Nullable InspectionDetailBean bean) {
+        mSourceData.saveInspectionDataToAcCache(bean);
     }
+
 
     @Override
     public void subscribe() {

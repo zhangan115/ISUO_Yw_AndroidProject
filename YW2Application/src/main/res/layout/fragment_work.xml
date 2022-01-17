@@ -173,7 +173,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="故障消息"
+                                android:text="事件消息"
                                 android:textColor="@color/text333"
                                 android:textSize="14sp" />
 

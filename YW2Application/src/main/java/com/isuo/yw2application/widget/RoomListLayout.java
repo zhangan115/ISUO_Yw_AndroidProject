@@ -113,7 +113,7 @@ public class RoomListLayout extends LinearLayout implements View.OnClickListener
 
     public void timer() {
         if (roomListBean != null && roomListBean.getRoomDb().getStartTime() != 0
-                && roomListBean.getTaskRoomState() == ConstantInt.ROOM_STATE_2) {
+                && roomListBean.getState() == ConstantInt.ROOM_STATE_2) {
             tv_equip_time.setText(DataUtil.timeFormat((System.currentTimeMillis()
                     - roomListBean.getRoomDb().getStartTime() - 28800 * 1000), "HH:mm:ss"));
         }

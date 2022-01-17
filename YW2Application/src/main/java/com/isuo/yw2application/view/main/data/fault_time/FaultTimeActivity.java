@@ -40,7 +40,7 @@ public class FaultTimeActivity extends BaseActivity implements FaultTimeContract
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_fault_time, "故障排除时效");
+        setLayoutAndToolbar(R.layout.activity_fault_time, "事件排除时效");
         DaggerFaultTimeComponent.builder().customerRepositoryComponent(Yw2Application.getInstance().getRepositoryComponent())
                 .faultTimeModule(new FaultTimeModule(this)).build()
                 .inject(this);

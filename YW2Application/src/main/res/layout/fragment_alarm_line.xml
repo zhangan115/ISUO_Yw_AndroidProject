@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_alarm_total_count"
                     android:layout_alignParentRight="true"
-                    android:text="累计故障"
+                    android:text="累计事件"
                     android:textColor="@color/colorWhite"
                     android:textSize="16sp" />
 
@@ -219,7 +219,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="遗留故障"
+                                    android:text="遗留事件"
                                     android:textColor="@color/text_item_title_1"
                                     android:textSize="15sp" />
 
@@ -469,7 +469,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="故障统计"
+                                android:text="事件事件"
                                 android:textColor="@color/text333"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
