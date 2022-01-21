@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.common.ConstantInt;
-import com.isuo.yw2application.mode.bean.work.InspectionBean;
-import com.isuo.yw2application.mode.bean.work.InspectionRegionModel;
+import com.isuo.yw2application.mode.bean.inspection.InspectionBean;
+import com.isuo.yw2application.mode.bean.inspection.InspectionRegionModel;
 import com.sito.library.utils.DataUtil;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 

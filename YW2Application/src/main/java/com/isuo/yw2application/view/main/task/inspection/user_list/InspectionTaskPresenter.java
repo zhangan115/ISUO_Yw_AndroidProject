@@ -3,10 +3,9 @@ package com.isuo.yw2application.view.main.task.inspection.user_list;
 import android.support.annotation.NonNull;
 
 import com.isuo.yw2application.mode.IListCallBack;
-import com.isuo.yw2application.mode.bean.work.InspectionBean;
+import com.isuo.yw2application.mode.bean.work.WorkInspectionBean;
 import com.isuo.yw2application.mode.work.WorkRepository;
 import com.sito.library.utils.DataUtil;
-import com.umeng.commonsdk.debug.I;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,9 +59,9 @@ public class InspectionTaskPresenter implements InspectionTaskContract.Presenter
             e.printStackTrace();
         }
         mView.showLoading();
-        mSubscriptions.add(mRepository.getInspectionData(jsonObject, new IListCallBack<InspectionBean>() {
+        mSubscriptions.add(mRepository.getInspectionData(jsonObject, new IListCallBack<WorkInspectionBean>() {
             @Override
-            public void onSuccess(@NonNull List<InspectionBean> list) {
+            public void onSuccess(@NonNull List<WorkInspectionBean> list) {
                 mView.showData(list);
             }
 
@@ -98,9 +97,9 @@ public class InspectionTaskPresenter implements InspectionTaskContract.Presenter
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        mSubscriptions.add(mRepository.getInspectionData(jsonObject, new IListCallBack<InspectionBean>() {
+        mSubscriptions.add(mRepository.getInspectionData(jsonObject, new IListCallBack<WorkInspectionBean>() {
             @Override
-            public void onSuccess(@NonNull List<InspectionBean> list) {
+            public void onSuccess(@NonNull List<WorkInspectionBean> list) {
                 mView.showMoreData(list);
             }
 

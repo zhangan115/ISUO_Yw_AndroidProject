@@ -138,14 +138,9 @@ class InspectionRoomPresenter implements InspectionRoomContract.Presenter {
         }));
     }
 
-
-    @Override
-    public void saveInspectionToCache(@Nullable InspectionDetailBean bean) {
-        mSourceData.saveInspectionDataToCache(bean);
-    }
-
     @Override
     public void saveInspectionToAcCache(@Nullable InspectionDetailBean bean) {
+        assert bean != null;
         mSourceData.saveInspectionDataToAcCache(bean);
     }
 

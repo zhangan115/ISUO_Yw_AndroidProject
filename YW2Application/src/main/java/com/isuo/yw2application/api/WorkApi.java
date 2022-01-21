@@ -5,8 +5,8 @@ import com.isuo.yw2application.mode.bean.equip.EquipType;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulBean;
 import com.isuo.yw2application.mode.bean.work.AwaitWorkBean;
 import com.isuo.yw2application.mode.bean.work.IncrementBean;
-import com.isuo.yw2application.mode.bean.work.InspectionBean;
 import com.isuo.yw2application.mode.bean.work.InspectionDataBean;
+import com.isuo.yw2application.mode.bean.work.WorkInspectionBean;
 
 import java.util.List;
 
@@ -84,7 +84,7 @@ public interface WorkApi {
      */
     @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
     @POST("task/list.json")
-    Observable<Bean<List<InspectionBean>>> getInspection(@Body() String info);
+    Observable<Bean<List<WorkInspectionBean>>> getInspection(@Body() String info);
 
 
     /**

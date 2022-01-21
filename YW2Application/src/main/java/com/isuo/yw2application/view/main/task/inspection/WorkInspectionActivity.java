@@ -1,6 +1,7 @@
 package com.isuo.yw2application.view.main.task.inspection;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -18,7 +19,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -26,7 +26,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -40,8 +39,8 @@ import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.db.TaskDb;
-import com.isuo.yw2application.mode.bean.work.InspectionBean;
-import com.isuo.yw2application.mode.bean.work.InspectionRegionModel;
+import com.isuo.yw2application.mode.bean.inspection.InspectionBean;
+import com.isuo.yw2application.mode.bean.inspection.InspectionRegionModel;
 import com.isuo.yw2application.mode.inspection.InspectionRepository;
 import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.base.BaseActivity;
@@ -71,28 +70,28 @@ import pub.devrel.easypermissions.AppSettingsDialog;
  * Created by zhangan on 2018/3/27.
  */
 
-public class WorkInspectionActivity extends BaseActivity implements DatePickerView.OnDateSetListener, InspectionContract.View
+public class WorkInspectionActivity extends BaseActivity implements DatePickerView.OnDateSetListener, WorkInspectionContract.View
         , SwipeRefreshLayout.OnRefreshListener {
 
     private LinearLayout mChooseDayLayout;
     private DatePickerView mDatePickerView;
     private TextView mYearTv;
     private TextView conditionsTv;
-    private TextView[] dayTvs = new TextView[7];
-    private TextView[] dayWeekNumTvs = new TextView[7];
-    private LinearLayout[] dayOfWeekLayout = new LinearLayout[7];
+    private final TextView[] dayTvs = new TextView[7];
+    private final TextView[] dayWeekNumTvs = new TextView[7];
+    private final LinearLayout[] dayOfWeekLayout = new LinearLayout[7];
     private RecyclerView mRecyclerView;
     private RelativeLayout noDataLayout;
     private PinnedHeaderExpandableListView expandableListView;
 
-    private InspectionContract.Presenter mPresenter;
+    private WorkInspectionContract.Presenter mPresenter;
     private List<Date> dateList = new ArrayList<>();
     private Calendar mCurrentDay;
     private SwipeRefreshLayout swipeRefreshLayout;
     private String mDate;
     private int inspectionType;//巡检类型
     private List<InspectionBean> mList;
-    private List<InspectionRegionModel> dataList = new ArrayList<>();
+    private final List<InspectionRegionModel> dataList = new ArrayList<>();
 
     private WorkInspectionAdapter inspectionAdapter;
 
@@ -104,7 +103,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     private int currentState = 0;
 
     private LocalBroadcastManager manager;
-    private LocalReceiver localReceiver;
+    private TaskStateChangeReceiver taskStateChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,8 +114,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         }
         inspectionType = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT, -1);
         setLayoutAndToolbar(R.layout.activivity_inspection_work_list, title);
-        new InspectionPresenter(Yw2Application.getInstance().getWorkRepositoryComponent().getRepository(),
-                InspectionRepository.getRepository(this), this);
+        new WorkInspectionPresenter(InspectionRepository.getRepository(this), this);
         mRecyclerView = findViewById(R.id.recycleViewId);
         swipeRefreshLayout = findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setColorSchemeColors(findColorById(R.color.colorPrimary));
@@ -164,9 +162,6 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         findViewById(R.id.ll_choose_day_empty).setOnClickListener(this);
         findViewById(R.id.uploadBtn).setOnClickListener(this);
         mTimeSt = findViewById(R.id.switchSt);
-//        if (this.inspectionType == 1) {
-//            mTimeSt.setVisibility(View.VISIBLE);
-//        }
         mTimeSt.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
                 timeData(currentState);
@@ -181,11 +176,11 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         initNfcAdapter();
 
         manager = LocalBroadcastManager.getInstance(this);
-        localReceiver = new LocalReceiver();
+        taskStateChangeReceiver = new TaskStateChangeReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConstantStr.TASK_STATE_START);
         intentFilter.addAction(ConstantStr.TASK_STATE_FINISH);
-        manager.registerReceiver(localReceiver, intentFilter);
+        manager.registerReceiver(taskStateChangeReceiver, intentFilter);
     }
 
     private void initNfcAdapter() {
@@ -268,6 +263,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         animation.setAnimationListener(animationListener);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -341,7 +337,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                     if (uploadTask != null && !uploadTask.isEmpty()) {
                         currentUploadIndex = 0;
                         showProgressDialog("数据上传中...");
-                        mPresenter.uploadTaskData(uploadTask.get(currentUploadIndex));
+                        mPresenter.uploadTaskData(uploadTask.get(currentUploadIndex), null);
                     } else {
                         Yw2Application.getInstance().showToast("暂无数据需要上传");
                     }
@@ -358,13 +354,13 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     public void uploadNext() {
         currentUploadIndex++;
         if (currentUploadIndex >= uploadTask.size()) {
-            mPresenter.toSaveInspectionDataToCache(WorkInspectionActivity.this.inspectionType, WorkInspectionActivity.this.mDate, mList);
+            mPresenter.toSaveInspectionDataToAcCache(WorkInspectionActivity.this.inspectionType, WorkInspectionActivity.this.mDate, mList);
             if (inspectionAdapter != null) {
                 inspectionAdapter.notifyDataSetChanged();
             }
             hideProgressDialog();
         } else {
-            mPresenter.uploadTaskData(uploadTask.get(currentUploadIndex));
+            mPresenter.uploadTaskData(uploadTask.get(currentUploadIndex), null);
         }
     }
 
@@ -527,6 +523,11 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     }
 
     @Override
+    public void showToast(String message) {
+        Yw2Application.getInstance().showToast(message);
+    }
+
+    @Override
     public void hideLoading() {
         swipeRefreshLayout.setRefreshing(false);
         hideProgressDialog();
@@ -558,20 +559,20 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
             inspectionAdapter.notifyDataSetChanged();
         }
         if (mPresenter != null) {
-            mPresenter.toSaveInspectionDataToCache(this.inspectionType, this.mDate, mList);
+            mPresenter.toSaveInspectionDataToAcCache(this.inspectionType, this.mDate, mList);
         }
         Yw2Application.getInstance().showToast("任务领取成功");
     }
 
     @Override
-    public void setPresenter(InspectionContract.Presenter presenter) {
+    public void setPresenter(WorkInspectionContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
     private void getDataFromCache() {
         if (mPresenter != null) {
             noDataLayout.setVisibility(View.GONE);
-            mPresenter.getDataFromCache(inspectionType, mDate);
+            mPresenter.getDataFromAcCache(inspectionType, mDate);
         }
     }
 
@@ -590,7 +591,6 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         super.onResume();
         isClick = false;
         if (nfcAdapter != null) {
-            //隐式启动
             nfcAdapter.enableForegroundDispatch(this, mPendingIntent, null, null);
             nfcAdapter.enableForegroundNdefPush(this, ndefMessage);
         }
@@ -605,7 +605,6 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         }
     }
 
-    //获取系统隐式启动的
     @Override
     public void onNewIntent(Intent intent) {
         setIntent(intent);
@@ -613,25 +612,15 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     }
 
     public void processAdapterAction(Intent intent) {
-        // 当系统检测到tag中含有NDEF格式的数据时，且系统中有activity声明可以接受包含NDEF数据的Intent的时候，系统会优先发出这个action的intent。
-        // 得到是否检测到ACTION_NDEF_DISCOVERED触发 序号1
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
-            // 处理该intent
             processIntent(intent);
             return;
         }
-        // 当没有任何一个activity声明自己可以响应ACTION_NDEF_DISCOVERED时，系统会尝试发出TECH的intent.即便你的tag中所包含的数据是NDEF的，但是如果这个数据的MIME
-        // type或URI不能和任何一个activity所声明的想吻合，系统也一样会尝试发出tech格式的intent，而不是NDEF.
-        // 得到是否检测到ACTION_TECH_DISCOVERED触发 序号2
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
-            // 处理该intent
             processIntent(intent);
             return;
         }
-        // 当系统发现前两个intent在系统中无人会接受的时候，就只好发这个默认的TAG类型的
-        // 得到是否检测到ACTION_TAG_DISCOVERED触发 序号3
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
-            // 处理该intent
             processIntent(intent);
         }
     }
@@ -789,12 +778,12 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (manager != null && localReceiver != null) {
-            manager.unregisterReceiver(localReceiver);
+        if (manager != null && taskStateChangeReceiver != null) {
+            manager.unregisterReceiver(taskStateChangeReceiver);
         }
     }
 
-    private class LocalReceiver extends BroadcastReceiver {
+    private class TaskStateChangeReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -814,20 +803,26 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                     }
                 } else if (intent.getAction().equals(ConstantStr.TASK_STATE_FINISH)) {
                     if (inspectionBean != null) {
-                        ArrayList<TaskDb> taskDbs = intent.getParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST);
                         ArrayList<User> users = new ArrayList<>();
-                        for (int i = 0; i < taskDbs.size(); i++) {
-                            TaskDb taskDb = taskDbs.get(i);
-                            User user = new User();
-                            user.setUserId(((int) taskDb.getUserId()));
-                            user.setRealName(taskDb.getUserName());
-                            users.add(user);
+                        ArrayList<TaskDb> taskDbs = intent.getParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST);
+                        ArrayList<User> userList = intent.getParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST_1);
+                        if (taskDbs != null) {
+                            for (int i = 0; i < taskDbs.size(); i++) {
+                                TaskDb taskDb = taskDbs.get(i);
+                                User user = new User();
+                                user.setUserId(((int) taskDb.getUserId()));
+                                user.setRealName(taskDb.getUserName());
+                                users.add(user);
+                            }
+                        } else if (userList != null) {
+                            users.addAll(userList);
                         }
+                        inspectionBean.setTaskState(ConstantInt.TASK_STATE_4);
                         inspectionBean.setUsers(users);
                         inspectionBean.setEndTime(System.currentTimeMillis());
                     }
                 }
-                mPresenter.toSaveInspectionDataToCache(WorkInspectionActivity.this.inspectionType, WorkInspectionActivity.this.mDate, mList);
+                mPresenter.toSaveInspectionDataToAcCache(WorkInspectionActivity.this.inspectionType, WorkInspectionActivity.this.mDate, mList);
                 if (inspectionAdapter != null) {
                     inspectionAdapter.notifyDataSetChanged();
                 }

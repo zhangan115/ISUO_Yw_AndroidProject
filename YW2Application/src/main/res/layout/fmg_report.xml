@@ -128,7 +128,7 @@
             android:background="@drawable/bg_btn_report"
             android:gravity="center"
             android:visibility="gone"
-            android:text="确定完成"
+            android:text="完成"
             android:textColor="@color/colorWhite"
             android:textSize="14sp"
             android:textStyle="bold" />

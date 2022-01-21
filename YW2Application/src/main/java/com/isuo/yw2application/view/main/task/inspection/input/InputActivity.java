@@ -104,7 +104,7 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
         IntentFilter filter = new IntentFilter();
         filter.addAction(BroadcastAction.AUTO_SAVE_DATA);
         registerReceiver(autoSaveReceiver, filter);
-        inspectionDetailBean = mPresenter.getInspectionData();
+        inspectionDetailBean = mPresenter.getInspectionData(taskId);
         mPresenter.getTaskEquipFromCache();
     }
 
@@ -428,27 +428,16 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
             DataItemBean dataItemBean = taskEquipmentBean.getDataList().get(0).getDataItemValueList().get(i).getDataItem();
             if (dataItemBean.getIsRequired() == 0)
                 continue;
-            if (dataItemBean.getInspectionType() == ConstantInt.DATA_VALUE_TYPE_3) {
-                if (TextUtils.isEmpty(dataItemBean.getValue())) {
-                    canFinish = false;
-                    break;
-                }
-            } else {
-                if (TextUtils.isEmpty(dataItemBean.getValue())) {
-                    canFinish = false;
-                    break;
-                }
+            if (TextUtils.isEmpty(dataItemBean.getValue())) {
+                canFinish = false;
+                break;
             }
         }
         if (canFinish) {
-            if (roomDb != null && roomDb.getTakePhotoPosition() == taskEquipmentBean.getEquipment().getEquipmentId() && TextUtils.isEmpty(roomDb.getUploadPhotoUrl())) {
-                toUploadEquipmentPhoto();
-            } else {
-                finishInput();
-            }
+            finishInput();
         } else {
             new MaterialDialog.Builder(this)
-                    .title("提示").content("还有数据没有录入,无法提交数据？")
+                    .title("提示").content("还有数据没有录入,无法提交数据")
                     .positiveText("确定").build().show();
         }
     }

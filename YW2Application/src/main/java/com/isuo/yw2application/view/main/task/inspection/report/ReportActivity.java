@@ -19,9 +19,10 @@ public class ReportActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setLayoutAndToolbar(R.layout.activity_container, "开始巡检");
         int position = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT, -1);
+        long taskId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG, -1);
         ReportFragment reportFragment = (ReportFragment) getFragmentManager().findFragmentById(R.id.frame_container);
         if (reportFragment == null) {
-            reportFragment = ReportFragment.newInstance(position);
+            reportFragment = ReportFragment.newInstance(taskId,position);
             ActivityUtils.addFragmentToActivity(getFragmentManager(), reportFragment, R.id.frame_container);
         }
     }

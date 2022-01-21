@@ -21,19 +21,13 @@ import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.PayMenuBean;
 import com.isuo.yw2application.mode.bean.check.FaultList;
-import com.isuo.yw2application.mode.bean.db.EquipmentDataDbDao;
-import com.isuo.yw2application.mode.bean.db.RoomDb;
-import com.isuo.yw2application.mode.bean.db.RoomDbDao;
-import com.isuo.yw2application.mode.bean.inspection.DataItemValueListBean;
 import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
-import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
-import com.isuo.yw2application.mode.bean.inspection.TaskEquipmentBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulBean;
 import com.isuo.yw2application.mode.bean.today.TodayToDoBean;
 import com.isuo.yw2application.mode.bean.work.AwaitWorkBean;
 import com.isuo.yw2application.mode.bean.work.IncrementBean;
-import com.isuo.yw2application.mode.bean.work.InspectionBean;
 import com.isuo.yw2application.mode.bean.work.InspectionDataBean;
+import com.isuo.yw2application.mode.bean.work.WorkInspectionBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.isuo.yw2application.mode.inspection.InspectionApi;
@@ -54,7 +48,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -149,51 +142,8 @@ public class WorkRepository implements WorkDataSource {
 
     @NonNull
     @Override
-    public Subscription getInspectionDataFromCache(int inspectionType, String data, IListCallBack<InspectionBean> callBack) {
-        return Observable.just(ACache.get(Yw2Application.getInstance()).getAsString(data + "_" + inspectionType))
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .flatMap((Func1<String, Observable<List<InspectionBean>>>) s -> {
-                    if (TextUtils.isEmpty(s)) {
-                        return Observable.just(null);
-                    }
-                    Type type = new TypeToken<List<InspectionBean>>() {
-                    }.getType();
-                    List<InspectionBean> inspectionBeans = new Gson().fromJson(s, type);
-                    return Observable.just(inspectionBeans);
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(inspectionBeans -> {
-                    if (inspectionBeans != null && inspectionBeans.size() > 0) {
-                        callBack.onSuccess(inspectionBeans);
-                    } else {
-                        getInspectionData(inspectionType, data, null, callBack);
-                    }
-                });
-    }
-
-    @NonNull
-    @Override
-    public Subscription saveInspectionDataToCache(int inspectionType, String data, List<InspectionBean> inspectionBeanList) {
-        return Observable.just(inspectionBeanList)
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .flatMap((Func1<List<InspectionBean>, Observable<Boolean>>) s -> {
-                    boolean isSuccess = false;
-                    if (s != null && s.size() > 0) {
-                        ACache.get(Yw2Application.getInstance()).put(data + "_" + inspectionType, new Gson().toJson(s));
-                        isSuccess = true;
-                    }
-                    return Observable.just(isSuccess);
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
-    }
-
-    @NonNull
-    @Override
     public Subscription getInspectionData(int inspectionType, @NonNull String data, @Nullable String lastId
-            , @NonNull final IListCallBack<InspectionBean> callBack) {
+            , @NonNull final IListCallBack<WorkInspectionBean> callBack) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("time", data);
@@ -216,11 +166,11 @@ public class WorkRepository implements WorkDataSource {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Observable<Bean<List<InspectionBean>>> observable =
+        Observable<Bean<List<WorkInspectionBean>>> observable =
                 Api.createRetrofit().create(WorkApi.class).getInspection(jsonObject.toString());
-        return new ApiCallBack<List<InspectionBean>>(observable) {
+        return new ApiCallBack<List<WorkInspectionBean>>(observable) {
             @Override
-            public void onSuccess(List<InspectionBean> result) {
+            public void onSuccess(List<WorkInspectionBean> result) {
                 callBack.onFinish();
                 if (result == null || result.size() == 0) {
                     callBack.onError("");
@@ -232,7 +182,7 @@ public class WorkRepository implements WorkDataSource {
                                 ACache.get(Yw2Application.getInstance()).put(data + "_" + inspectionType, new Gson().toJson(result));
                             })
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Subscriber<List<InspectionBean>>() {
+                            .subscribe(new Subscriber<List<WorkInspectionBean>>() {
                                 @Override
                                 public void onCompleted() {
 
@@ -246,7 +196,7 @@ public class WorkRepository implements WorkDataSource {
                                 }
 
                                 @Override
-                                public void onNext(List<InspectionBean> inspectionDetailBean) {
+                                public void onNext(List<WorkInspectionBean> inspectionDetailBean) {
                                     callBack.onFinish();
                                     callBack.onSuccess(inspectionDetailBean);
                                 }
@@ -264,12 +214,12 @@ public class WorkRepository implements WorkDataSource {
 
     @NonNull
     @Override
-    public Subscription getInspectionData(JSONObject jsonObject, @NonNull final IListCallBack<InspectionBean> callBack) {
-        Observable<Bean<List<InspectionBean>>> observable =
+    public Subscription getInspectionData(JSONObject jsonObject, @NonNull final IListCallBack<WorkInspectionBean> callBack) {
+        Observable<Bean<List<WorkInspectionBean>>> observable =
                 Api.createRetrofit().create(WorkApi.class).getInspection(jsonObject.toString());
-        return new ApiCallBack<List<InspectionBean>>(observable) {
+        return new ApiCallBack<List<WorkInspectionBean>>(observable) {
             @Override
-            public void onSuccess(List<InspectionBean> been) {
+            public void onSuccess(List<WorkInspectionBean> been) {
                 callBack.onFinish();
                 if (been == null || been.size() == 0) {
                     callBack.onError("");
@@ -309,26 +259,6 @@ public class WorkRepository implements WorkDataSource {
                 } else {
                     callBack.onSuccess(been);
                 }
-            }
-
-            @Override
-            public void onFail() {
-                callBack.onFinish();
-                callBack.onError("");
-            }
-        }.execute1();
-    }
-
-    @NonNull
-    @Override
-    public Subscription getOperationTask(@NonNull String taskId, @NonNull final IObjectCallBack<String> callBack) {
-        Observable<Bean<String>> observable =
-                Api.createRetrofit().create(WorkApi.class).operationTask(taskId, ConstantInt.OPERATION_STATE_1);
-        return new ApiCallBack<String>(observable) {
-            @Override
-            public void onSuccess(String s) {
-                callBack.onFinish();
-                callBack.onSuccess(s);
             }
 
             @Override
@@ -410,56 +340,6 @@ public class WorkRepository implements WorkDataSource {
 
     @NonNull
     @Override
-    public Subscription getInspectionDetailList(final long taskId, @NonNull final IObjectCallBack<InspectionDetailBean> callBack) {
-        Observable<Bean<InspectionDetailBean>> observable = Api.createRetrofit().create(InspectionApi.class)
-                .getInspectionDetailList(taskId);
-        return new ApiCallBack<InspectionDetailBean>(observable) {
-            @Override
-            public void onSuccess(final InspectionDetailBean data) {
-                if (data.getRoomList() != null) {
-                    Observable.just(data)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(Schedulers.io())
-                            .doOnNext(inspectionDetailBean -> {
-                                String result = new Gson().toJson(inspectionDetailBean);
-                                ACache.get(Yw2Application.getInstance()).put("inspection_detail_data_"+taskId,result);
-                            })
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Subscriber<InspectionDetailBean>() {
-                                @Override
-                                public void onCompleted() {
-
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-                                    e.printStackTrace();
-                                    callBack.onFinish();
-                                    callBack.onError(e.getMessage());
-                                }
-
-                                @Override
-                                public void onNext(InspectionDetailBean inspectionDetailBean) {
-                                    callBack.onFinish();
-                                    callBack.onSuccess(inspectionDetailBean);
-                                }
-                            });
-                } else {
-                    callBack.onFinish();
-                    callBack.onError("");
-                }
-            }
-
-            @Override
-            public void onFail() {
-                callBack.onFinish();
-                callBack.onError("");
-            }
-        }.execute1();
-    }
-
-    @NonNull
-    @Override
     public Subscription getWorkState(final IObjectCallBack<WorkState> callBack) {
         return new ApiCallBack<WorkState>(Api.createRetrofit().create(Api.Count.class).getWorkStat()) {
             @Override
@@ -467,63 +347,6 @@ public class WorkRepository implements WorkDataSource {
                 callBack.onFinish();
                 if (workState != null) {
                     callBack.onSuccess(workState);
-                } else {
-                    callBack.onError("");
-                }
-            }
-
-            @Override
-            public void onFail() {
-                callBack.onFinish();
-                callBack.onError("");
-            }
-        }.execute1();
-    }
-
-    @NonNull
-    @Override
-    public Subscription getTodayToList(@NonNull final IListCallBack<TodayToDoBean> callBack) {
-        return new ApiCallBack<List<TodayToDoBean>>(Api.createRetrofit().create(Api.Count.class).getTodayToList()) {
-            @Override
-            public void onSuccess(@Nullable List<TodayToDoBean> s) {
-                callBack.onFinish();
-                if (s != null && s.size() > 0) {
-                    callBack.onSuccess(s);
-                } else {
-                    callBack.onError("");
-                }
-            }
-
-            @Override
-            public void onFail() {
-                callBack.onFinish();
-                callBack.onError("");
-            }
-        }.execute1();
-    }
-
-    @NonNull
-    @Override
-    public Subscription getTodayFaultList(boolean isRemain, String time, @NonNull final IListCallBack<FaultList> callBack) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            if (TextUtils.isEmpty(time)) {
-                jsonObject.put("legacyTime", 1);
-                jsonObject.put("executeUser", 1);
-            } else {
-                jsonObject.put("startTime", time);
-                jsonObject.put("endTime", time);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return new ApiCallBack<List<FaultList>>(Api.createRetrofit().create(FaultApi.class).getFaultList(jsonObject.toString())) {
-
-            @Override
-            public void onSuccess(@Nullable List<FaultList> faultLists) {
-                callBack.onFinish();
-                if (faultLists != null && faultLists.size() > 0) {
-                    callBack.onSuccess(faultLists);
                 } else {
                     callBack.onError("");
                 }

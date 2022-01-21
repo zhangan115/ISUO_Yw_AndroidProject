@@ -45,8 +45,8 @@ class InputPresenter implements InputContract.Presenter {
 
     @Nullable
     @Override
-    public InspectionDetailBean getInspectionData() {
-        return mRepository.getInspectionDataFromCache();
+    public InspectionDetailBean getInspectionData(long taskId) {
+        return mRepository.getInspectionDataFromAcCache(taskId);
     }
 
     @Override
@@ -143,7 +143,7 @@ class InputPresenter implements InputContract.Presenter {
 
     @Override
     public void uploadEquipmentInfo(long taskId, long equipmentId, String url) {
-        mSubscriptions.add(mRepository.uploadUserPhotoInfo(taskId, equipmentId, url, new IObjectCallBack<String>() {
+        mSubscriptions.add(mRepository.uploadRandomPhotoInfo(taskId, equipmentId, url, new IObjectCallBack<String>() {
             @Override
             public void onSuccess(@NonNull String s) {
                 mView.uploadEquipmentInfoFinish(true);
@@ -166,7 +166,7 @@ class InputPresenter implements InputContract.Presenter {
     @Override
     public void uploadTaskData(int position, InspectionDetailBean inspectionDetailBean, TaskEquipmentBean equipmentBean) {
         canUpload = false;
-        Subscription uploadSub = mRepository.uploadTaskEquipmentListData(position, inspectionDetailBean,equipmentBean
+        Subscription uploadSub = mRepository.uploadTaskEquipmentListData(position, inspectionDetailBean, equipmentBean
                 , new InspectionSourceData.UploadRoomListCallBack() {
 
                     @Override

@@ -1,4 +1,5 @@
-package com.isuo.yw2application.mode.bean.work;
+package com.isuo.yw2application.mode.bean.inspection;
+
 
 import java.util.ArrayList;
 import java.util.List;

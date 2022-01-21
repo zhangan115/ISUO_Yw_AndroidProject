@@ -66,7 +66,7 @@ public interface InputContract {
          * @return 任务
          */
         @Nullable
-        InspectionDetailBean getInspectionData();
+        InspectionDetailBean getInspectionData(long taskId);
 
         /**
          * step 1

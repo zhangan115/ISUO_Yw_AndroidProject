@@ -375,7 +375,7 @@
 
         <Button
             android:id="@+id/uploadBtn"
-            android:text="提交数据"
+            android:text="批量上传"
             android:layout_marginTop="15dp"
             android:textColor="@color/colorWhite"
             android:layout_marginBottom="15dp"

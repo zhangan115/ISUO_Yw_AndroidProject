@@ -8,11 +8,11 @@ import com.isuo.yw2application.mode.bean.User;
 import java.util.List;
 
 /**
- * 巡检任务
+ * 工作巡检任务
  * Created by zhangan on 2017-07-14.
  */
 
-public class InspectionBean implements Parcelable{
+public class WorkInspectionBean implements Parcelable {
     private int count;
     private long planEndTime;
     private long planStartTime;
@@ -259,10 +259,10 @@ public class InspectionBean implements Parcelable{
         dest.writeLongArray(this.roomIds);
     }
 
-    public InspectionBean() {
+    public WorkInspectionBean() {
     }
 
-    protected InspectionBean(Parcel in) {
+    protected WorkInspectionBean(Parcel in) {
         this.count = in.readInt();
         this.planEndTime = in.readLong();
         this.planStartTime = in.readLong();
@@ -281,15 +281,15 @@ public class InspectionBean implements Parcelable{
         this.regionName = in.readString();
     }
 
-    public static final Creator<InspectionBean> CREATOR = new Creator<InspectionBean>() {
+    public static final Creator<WorkInspectionBean> CREATOR = new Creator<WorkInspectionBean>() {
         @Override
-        public InspectionBean createFromParcel(Parcel source) {
-            return new InspectionBean(source);
+        public WorkInspectionBean createFromParcel(Parcel source) {
+            return new WorkInspectionBean(source);
         }
 
         @Override
-        public InspectionBean[] newArray(int size) {
-            return new InspectionBean[size];
+        public WorkInspectionBean[] newArray(int size) {
+            return new WorkInspectionBean[size];
         }
     };
 }

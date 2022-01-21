@@ -3,7 +3,9 @@ package com.isuo.yw2application.view.main.task.inspection.report;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.db.RoomDb;
+import com.isuo.yw2application.mode.bean.inspection.InspectionBean;
 import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
 import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
 import com.isuo.yw2application.mode.bean.inspection.TaskEquipmentBean;
@@ -50,7 +52,7 @@ public interface ReportContract {
          * @return 任务
          */
         @Nullable
-        InspectionDetailBean getInspectionData();
+        InspectionDetailBean getInspectionData(long taskId);
 
         /**
          * 获取设备完成的数量
@@ -72,15 +74,39 @@ public interface ReportContract {
         long getEquipmentDataFinishCount(long taskId, long roomId, long equipmentId);
 
         boolean getEquipmentFinishState(long taskId, long roomId, long equipmentId);
+
+        /**
+         * 上传任务数据
+         *
+         * @param task         任务
+         * @param roomListBean 配电室
+         */
+        void uploadTaskData(InspectionDetailBean task, RoomListBean roomListBean);
     }
 
     interface View extends BaseView<Presenter> {
 
-        void showLoading();
-
-        void hideLoading();
-
         void showData(@NonNull RoomListBean roomListBean);
+
+        /**
+         * 显示上传loading
+         */
+        void showUploadLoading();
+
+        /**
+         * 隐藏上传loading
+         */
+        void hideUploadLoading();
+
+        /**
+         * 上传设备录入数据失败
+         */
+        void uploadDataError();
+
+        /**
+         * 上传设备录入数据成功
+         */
+        void uploadDataSuccess(List<User> users);
 
     }
 

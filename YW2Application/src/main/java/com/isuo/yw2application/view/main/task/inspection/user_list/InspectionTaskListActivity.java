@@ -15,7 +15,7 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.common.ConstantStr;
-import com.isuo.yw2application.mode.bean.work.InspectionBean;
+import com.isuo.yw2application.mode.bean.work.WorkInspectionBean;
 import com.isuo.yw2application.view.base.BaseActivity;
 import com.isuo.yw2application.view.main.task.inspection.detial.InspectDetailActivity;
 import com.sito.library.adapter.RVAdapter;
@@ -35,7 +35,7 @@ public class InspectionTaskListActivity extends BaseActivity implements Inspecti
     private RelativeLayout mNoDataLayout;
     private ExpendRecycleView mExpendRecycleView;
     private RecycleRefreshLoadLayout mRecycleRefreshLoadLayout;
-    private List<InspectionBean> mList;
+    private List<WorkInspectionBean> mList;
 
     private int[] icons = new int[]{R.drawable.work_day_icon
             , R.drawable.work_week_icon
@@ -62,9 +62,9 @@ public class InspectionTaskListActivity extends BaseActivity implements Inspecti
 
     private void initRecycleView() {
         mExpendRecycleView.setLayoutManager(new GridLayoutManager(this, 1));
-        RVAdapter<InspectionBean> adapter = new RVAdapter<InspectionBean>(mExpendRecycleView, mList, R.layout.item_day_inspection) {
+        RVAdapter<WorkInspectionBean> adapter = new RVAdapter<WorkInspectionBean>(mExpendRecycleView, mList, R.layout.item_day_inspection) {
             @Override
-            public void showData(ViewHolder vHolder, InspectionBean data, int position) {
+            public void showData(ViewHolder vHolder, WorkInspectionBean data, int position) {
                 TextView tv_belong_place = (TextView) vHolder.getView(R.id.tv_belong_place);
                 TextView tv_task_name = (TextView) vHolder.getView(R.id.tv_task_name);
                 TextView tv_equip_num = (TextView) vHolder.getView(R.id.tv_equip_num);
@@ -204,7 +204,7 @@ public class InspectionTaskListActivity extends BaseActivity implements Inspecti
     }
 
     @Override
-    public void showData(List<InspectionBean> lists) {
+    public void showData(List<WorkInspectionBean> lists) {
         mList.clear();
         mList.addAll(lists);
         mExpendRecycleView.getAdapter().notifyDataSetChanged();
@@ -212,7 +212,7 @@ public class InspectionTaskListActivity extends BaseActivity implements Inspecti
     }
 
     @Override
-    public void showMoreData(List<InspectionBean> lists) {
+    public void showMoreData(List<WorkInspectionBean> lists) {
         mList.addAll(lists);
         mExpendRecycleView.getAdapter().notifyDataSetChanged();
     }

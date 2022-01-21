@@ -24,6 +24,7 @@ public class RoomDb implements Parcelable {
     private long taskRoomId;//本次巡检任务配电室id
     private long lastSaveTime;//最后保存时间
     private long takePhotoPosition = -1;
+    private String dataItemName = null;
     private long startTime;
     private long endTime;
     private String roomName;
@@ -31,7 +32,43 @@ public class RoomDb implements Parcelable {
     private String uploadPhotoUrl;
     private int taskState;//状态 0 未开始，1进行中，2已完成
     private int checkCount;
+    private boolean isUpload = false;
     private long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
+
+    protected RoomDb(Parcel in) {
+        if (in.readByte() == 0) {
+            _id = null;
+        } else {
+            _id = in.readLong();
+        }
+        taskId = in.readLong();
+        roomId = in.readLong();
+        taskRoomId = in.readLong();
+        lastSaveTime = in.readLong();
+        takePhotoPosition = in.readLong();
+        dataItemName = in.readString();
+        startTime = in.readLong();
+        endTime = in.readLong();
+        roomName = in.readString();
+        photoUrl = in.readString();
+        uploadPhotoUrl = in.readString();
+        taskState = in.readInt();
+        checkCount = in.readInt();
+        isUpload = in.readByte() != 0;
+        currentUserId = in.readLong();
+    }
+
+    public static final Creator<RoomDb> CREATOR = new Creator<RoomDb>() {
+        @Override
+        public RoomDb createFromParcel(Parcel in) {
+            return new RoomDb(in);
+        }
+
+        @Override
+        public RoomDb[] newArray(int size) {
+            return new RoomDb[size];
+        }
+    };
 
     public Long get_id() {
         return _id;
@@ -79,6 +116,14 @@ public class RoomDb implements Parcelable {
 
     public void setTakePhotoPosition(long takePhotoPosition) {
         this.takePhotoPosition = takePhotoPosition;
+    }
+
+    public String getDataItemName() {
+        return dataItemName;
+    }
+
+    public void setDataItemName(String dataItemName) {
+        this.dataItemName = dataItemName;
     }
 
     public long getStartTime() {
@@ -146,60 +191,30 @@ public class RoomDb implements Parcelable {
     }
 
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public boolean isUpload() {
+        return isUpload;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this._id);
-        dest.writeLong(this.taskId);
-        dest.writeLong(this.roomId);
-        dest.writeLong(this.taskRoomId);
-        dest.writeLong(this.lastSaveTime);
-        dest.writeLong(this.takePhotoPosition);
-        dest.writeLong(this.startTime);
-        dest.writeLong(this.endTime);
-        dest.writeString(this.roomName);
-        dest.writeString(this.photoUrl);
-        dest.writeString(this.uploadPhotoUrl);
-        dest.writeInt(this.taskState);
-        dest.writeInt(this.checkCount);
-        dest.writeLong(this.currentUserId);
+    public void setUpload(boolean upload) {
+        isUpload = upload;
     }
 
     public RoomDb() {
     }
 
-    protected RoomDb(Parcel in) {
-        this._id = (Long) in.readValue(Long.class.getClassLoader());
-        this.taskId = in.readLong();
-        this.roomId = in.readLong();
-        this.taskRoomId = in.readLong();
-        this.lastSaveTime = in.readLong();
-        this.takePhotoPosition = in.readLong();
-        this.startTime = in.readLong();
-        this.endTime = in.readLong();
-        this.roomName = in.readString();
-        this.photoUrl = in.readString();
-        this.uploadPhotoUrl = in.readString();
-        this.taskState = in.readInt();
-        this.checkCount = in.readInt();
-        this.currentUserId = in.readLong();
-    }
 
-    @Generated(hash = 1698537001)
+    @Generated(hash = 1453413949)
     public RoomDb(Long _id, long taskId, long roomId, long taskRoomId, long lastSaveTime,
-            long takePhotoPosition, long startTime, long endTime, String roomName,
-            String photoUrl, String uploadPhotoUrl, int taskState, int checkCount,
-            long currentUserId) {
+            long takePhotoPosition, String dataItemName, long startTime, long endTime,
+            String roomName, String photoUrl, String uploadPhotoUrl, int taskState,
+            int checkCount, boolean isUpload, long currentUserId) {
         this._id = _id;
         this.taskId = taskId;
         this.roomId = roomId;
         this.taskRoomId = taskRoomId;
         this.lastSaveTime = lastSaveTime;
         this.takePhotoPosition = takePhotoPosition;
+        this.dataItemName = dataItemName;
         this.startTime = startTime;
         this.endTime = endTime;
         this.roomName = roomName;
@@ -207,18 +222,45 @@ public class RoomDb implements Parcelable {
         this.uploadPhotoUrl = uploadPhotoUrl;
         this.taskState = taskState;
         this.checkCount = checkCount;
+        this.isUpload = isUpload;
         this.currentUserId = currentUserId;
     }
 
-    public static final Creator<RoomDb> CREATOR = new Creator<RoomDb>() {
-        @Override
-        public RoomDb createFromParcel(Parcel source) {
-            return new RoomDb(source);
-        }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-        @Override
-        public RoomDb[] newArray(int size) {
-            return new RoomDb[size];
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (_id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(_id);
         }
-    };
+        dest.writeLong(taskId);
+        dest.writeLong(roomId);
+        dest.writeLong(taskRoomId);
+        dest.writeLong(lastSaveTime);
+        dest.writeLong(takePhotoPosition);
+        dest.writeString(dataItemName);
+        dest.writeLong(startTime);
+        dest.writeLong(endTime);
+        dest.writeString(roomName);
+        dest.writeString(photoUrl);
+        dest.writeString(uploadPhotoUrl);
+        dest.writeInt(taskState);
+        dest.writeInt(checkCount);
+        dest.writeByte((byte) (isUpload ? 1 : 0));
+        dest.writeLong(currentUserId);
+    }
+
+    public boolean getIsUpload() {
+        return this.isUpload;
+    }
+
+    public void setIsUpload(boolean isUpload) {
+        this.isUpload = isUpload;
+    }
 }

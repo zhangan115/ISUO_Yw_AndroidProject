@@ -32,8 +32,6 @@ import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.BroadcastAction;
 import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.common.ConstantStr;
-import com.isuo.yw2application.mode.bean.db.RoomDb;
-import com.isuo.yw2application.mode.bean.db.RoomDbDao;
 import com.isuo.yw2application.mode.bean.db.TaskDb;
 import com.isuo.yw2application.mode.bean.employee.EmployeeBean;
 import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
@@ -68,11 +66,10 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     private LinearLayout mRoomsLayout;
     private LinearLayout addEmployeeLayout;
     private View headerView;
-    private TextView finishInspectionTv;
     //data
     private long taskId;
-    private int REQUEST_CODE = 200;
-    private int REQUEST_CODE_START = 201;
+    private final int REQUEST_CODE = 200;
+    private final int REQUEST_CODE_START = 201;
     private final int SCANNER_CODE = 202;
     private String taskStartType, taskStartDesc;
     private List<RoomListLayout> roomListLayouts;
@@ -85,6 +82,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     private int mOperation = 1;
     private ArrayList<TaskDb> chooseEmployeeBeen;//已经添加的人员
     private InspectionDetailBean inspectionDetailBean;//巡检数据
+    private RoomStateChangeBr roomStateChangeBr;
 
     public static InspectionRoomFragment newInstance(long taskId) {
         Bundle args = new Bundle();
@@ -153,7 +151,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         View rootView = inflater.inflate(R.layout.inspection_room_fragment, container, false);
         noDataLayout = rootView.findViewById(R.id.layout_no_data);
         mRoomsLayout = rootView.findViewById(R.id.room_layout);
-        finishInspectionTv = rootView.findViewById(R.id.tv_finish_inspection);
+        TextView finishInspectionTv = rootView.findViewById(R.id.tv_finish_inspection);
         finishInspectionTv.setOnClickListener(this);
         finishInspectionTv.setVisibility(View.GONE);
         headerView = LayoutInflater.from(getActivity()).inflate(R.layout.layout_header_inspection_detail, null);
@@ -190,7 +188,6 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     @Override
     public void showData() {
         if (inspectionDetailBean != null) {
-//            finishInspectionTv.setVisibility(View.VISIBLE);
             addRoomToLayout();
         }
     }
@@ -248,7 +245,6 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
                 inspectionDetailBean.setTaskState(ConstantInt.TASK_STATE_3);
                 inspectionDetailBean.setStartTime(System.currentTimeMillis());
 
-                mPresenter.saveInspectionToCache(inspectionDetailBean);
                 mPresenter.saveInspectionToAcCache(inspectionDetailBean);
                 Intent intent = new Intent();
                 intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, this.taskId);
@@ -484,44 +480,6 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         addEmployeeLayout.addView(addIv);
     }
 
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (TextUtils.isEmpty(action)) {
-                return;
-            }
-            if (action.equals(ConstantStr.RECE_DATA_ACTION) && !isFlag && taskStartType.equals(ConstantStr.START_TYPE_1)) {
-                String data = intent.getStringExtra("se4500");
-                if (!TextUtils.isEmpty(data)) {
-                    //扫描成功
-                    if (isAutoSendAction) {
-                        roomListBean = null;
-                        for (int i = 0; i < mList.size(); i++) {
-                            if (mList.get(i).getRoom().getRoomId() == Long.parseLong(data)) {
-                                roomListBean = mList.get(i);
-                                mPosition = i;
-                                break;
-                            }
-                        }
-                        if (roomListBean == null) {
-                            getApp().showToast("无匹配的属地");
-                        } else {
-                            receiverAction();
-                        }
-                    } else {
-                        if (roomListBean.getRoom().getRoomId() == Long.parseLong(data)) {
-                            receiverAction();
-                        } else {
-                            getApp().showToast("二维码与属地不匹配");
-                        }
-                    }
-                    isAutoSendAction = true;
-                }
-                cancelRepeat();
-            }
-        }
-    };
-
     private void receiverAction() {
         isFlag = true;
         if (mPresenter == null) {
@@ -541,7 +499,7 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         isFlag = true;
         Intent reportIntent = new Intent(getActivity(), ReportActivity.class);
         reportIntent.putExtra(ConstantStr.KEY_BUNDLE_INT, mPosition);
-        mPresenter.saveInspectionToCache(inspectionDetailBean);
+        reportIntent.putExtra(ConstantStr.KEY_BUNDLE_LONG, taskId);
         startActivityForResult(reportIntent, REQUEST_CODE_START);
     }
 
@@ -577,13 +535,11 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
     @Override
     public void onPause() {
         super.onPause();
-        cancelRepeat();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        cancelRepeat();
         autoRefresh = false;
         try {
             if (myHandle != null) {
@@ -598,13 +554,6 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void cancelRepeat() {
-        isFlag = false;
-        Intent intent = new Intent();
-        intent.setAction("com.geomobile.se4500barcodestop");
-        getActivity().sendBroadcast(intent);
     }
 
     @Override
@@ -673,8 +622,6 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         }
     };
 
-    RoomStateChangeBr roomStateChangeBr;
-
     private class RoomStateChangeBr extends BroadcastReceiver {
 
         @Override
@@ -695,7 +642,6 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
                     } else {
                         inspectionDetailBean.setEndTime(0);
                     }
-                    mPresenter.saveInspectionToCache(inspectionDetailBean);
                     mPresenter.saveInspectionToAcCache(inspectionDetailBean);
                 }
             }

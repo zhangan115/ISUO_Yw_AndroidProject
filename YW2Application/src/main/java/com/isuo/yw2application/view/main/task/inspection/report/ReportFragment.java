@@ -1,5 +1,7 @@
 package com.isuo.yw2application.view.main.task.inspection.report;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,27 +23,41 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.iflytek.cloud.thirdparty.S;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.common.ConstantStr;
+import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.db.RoomDb;
 import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
 import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
 import com.isuo.yw2application.mode.bean.inspection.TaskEquipmentBean;
 import com.isuo.yw2application.mode.inspection.InspectionRepository;
+import com.isuo.yw2application.utils.PhotoUtils;
 import com.isuo.yw2application.view.base.MvpFragment;
 import com.isuo.yw2application.view.main.task.increment.submit.IncrementActivity;
 import com.isuo.yw2application.view.main.task.inspection.input.InputActivity;
+import com.isuo.yw2application.view.photo.ViewPagePhotoActivity;
+import com.qw.soul.permission.SoulPermission;
+import com.qw.soul.permission.bean.Permission;
+import com.qw.soul.permission.bean.Permissions;
+import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
 import com.sito.library.adapter.RVAdapter;
+import com.sito.library.utils.ActivityUtils;
+import com.sito.library.utils.GlideUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 
 
 /**
@@ -52,12 +68,13 @@ import java.util.List;
 public class ReportFragment extends MvpFragment<ReportContract.Presenter> implements ReportContract.View {
     //data
     private RoomDb roomDb;
+    private InspectionDetailBean mInspectionDetailBean;
     private RoomListBean mRoomListBean;
-    private InspectionDetailBean inspectionDetailBean;
     private ArrayList<TaskEquipmentBean> mTaskEquipmentBean;
     private ArrayList<TaskEquipmentBean> showBean;
     private int roomPosition = -1, editPosition;
-
+    private long taskId;
+    private boolean canUpload = false;
     private static final int ACTION_START_INPUT = 101;
     private boolean caEdit = true;
     //view
@@ -67,8 +84,9 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     private RelativeLayout noDataLayout;
 
 
-    public static ReportFragment newInstance(int position) {
+    public static ReportFragment newInstance(long taskId, int position) {
         Bundle args = new Bundle();
+        args.putLong(ConstantStr.KEY_BUNDLE_LONG, taskId);
         args.putInt(ConstantStr.KEY_BUNDLE_INT, position);
         ReportFragment fragment = new ReportFragment();
         fragment.setArguments(args);
@@ -79,7 +97,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new ReportPresenter(InspectionRepository.getRepository(getActivity()), this);
-        inspectionDetailBean = mPresenter.getInspectionData();
+
         mTaskEquipmentBean = new ArrayList<>();
         showBean = new ArrayList<>();
         if (savedInstanceState != null) {
@@ -88,11 +106,19 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
         Bundle bundle = getArguments();
         if (bundle != null) {
             roomPosition = bundle.getInt(ConstantStr.KEY_BUNDLE_INT);
+            taskId = bundle.getLong(ConstantStr.KEY_BUNDLE_LONG);
         }
-        if (inspectionDetailBean != null) {
-            mRoomListBean = inspectionDetailBean.getRoomList().get(roomPosition);
+        mInspectionDetailBean = mPresenter.getInspectionData(taskId);
+        if (mInspectionDetailBean != null) {
+            mRoomListBean = mInspectionDetailBean.getRoomList().get(roomPosition);
             roomDb = mRoomListBean.getRoomDb();
-            caEdit = inspectionDetailBean.getTaskState() != ConstantInt.TASK_STATE_4;
+            caEdit = mInspectionDetailBean.getTaskState() != ConstantInt.TASK_STATE_4;
+            for (int i = 0; i < mRoomListBean.getTaskEquipment().size(); i++) {
+                if (mRoomListBean.getTaskEquipment().get(i).getEquipment().getEquipmentId() == roomDb.getTakePhotoPosition()) {
+                    takePhotoEquipmentBean = mRoomListBean.getTaskEquipment().get(i);
+                    break;
+                }
+            }
         }
     }
 
@@ -114,9 +140,6 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
             }
         });
         mTitleTv = rootView.findViewById(R.id.titleId);
-        if (caEdit) {
-            rootView.findViewById(R.id.ib_increment).setVisibility(View.VISIBLE);
-        }
         rootView.findViewById(R.id.ib_increment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,12 +207,12 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                 } else {
                     iv_state.setVisibility(View.GONE);
                 }
-                if (mPresenter.getEquipmentFinishState(inspectionDetailBean.getTaskId(), mRoomListBean.getTaskRoomId(), data.getTaskEquipmentId())) {
+                if (mPresenter.getEquipmentFinishState(mInspectionDetailBean.getTaskId(), mRoomListBean.getTaskRoomId(), data.getTaskEquipmentId())) {
                     tv_equipment_state.setVisibility(View.VISIBLE);
                     haveDataIv.setVisibility(View.GONE);
                 } else {
                     tv_equipment_state.setVisibility(View.GONE);
-                    long count = mPresenter.getEquipmentDataFinishCount(inspectionDetailBean.getTaskId(), mRoomListBean.getTaskRoomId(), data.getTaskEquipmentId());
+                    long count = mPresenter.getEquipmentDataFinishCount(mInspectionDetailBean.getTaskId(), mRoomListBean.getTaskRoomId(), data.getTaskEquipmentId());
                     if (count > 0) {
                         haveDataIv.setVisibility(View.VISIBLE);
                     } else {
@@ -215,6 +238,24 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
             Yw2Application.getInstance().hideSoftKeyBoard(getActivity());
             startActivityForResult(intent, ACTION_START_INPUT);
         });
+        bottomView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!canUpload) {
+                    Yw2Application.getInstance().showToast("有设备没有完成巡检");
+                    return;
+                }
+                if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
+                    toUploadEquipmentPhoto();
+                } else {
+                    mPresenter.uploadTaskData(mInspectionDetailBean, mRoomListBean);
+                }
+            }
+        });
+        if (caEdit) {
+            rootView.findViewById(R.id.ib_increment).setVisibility(View.VISIBLE);
+            bottomView.setVisibility(View.VISIBLE);
+        }
         return rootView;
     }
 
@@ -234,7 +275,9 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
             mRecyclerView.setVisibility(View.VISIBLE);
             noDataLayout.setVisibility(View.GONE);
         }
-        mRecyclerView.getAdapter().notifyDataSetChanged();
+        if (mRecyclerView.getAdapter() != null) {
+            mRecyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -255,20 +298,205 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
         if (mTaskEquipmentBean != null && showBean != null) {
             mTaskEquipmentBean.clear();
             mTaskEquipmentBean.addAll(roomListBean.getTaskEquipment());
-            inspectionDetailBean.getRoomList().get(roomPosition).setTaskEquipment(mTaskEquipmentBean);
+            mInspectionDetailBean.getRoomList().get(roomPosition).setTaskEquipment(mTaskEquipmentBean);
             showBean.clear();
             showBean.addAll(roomListBean.getTaskEquipment());
         }
         noDataLayout.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        mRecyclerView.getAdapter().notifyDataSetChanged();
+        if (mRecyclerView.getAdapter() != null) {
+            mRecyclerView.getAdapter().notifyDataSetChanged();
+        }
         onDataChange();
     }
 
+    private MaterialDialog takePhotoDialog;
+    private ImageView equipmentTakePhotoIV;
+    TaskEquipmentBean takePhotoEquipmentBean;
+    private File photoFile;
+    private static final int ACTION_START_EQUIPMENT = 102;
+    LocalBroadcastManager manager;
+
+    /******* 随机生成的需要拍照的设备******/
+    private void toUploadEquipmentPhoto() {
+        @SuppressLint("InflateParams")
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_take_photo, null);
+        view.findViewById(R.id.tv_cancel).setOnClickListener(v -> {
+            if (takePhotoDialog != null) {
+                takePhotoDialog.dismiss();
+            }
+        });
+        TextView equipmentName = view.findViewById(R.id.tv_equipment_name);
+        String noteStr = "请拍一张" + takePhotoEquipmentBean.getEquipment().getEquipmentName() + "【" + roomDb.getDataItemName() + "】的照片";
+        equipmentName.setText(noteStr);
+        equipmentTakePhotoIV = view.findViewById(R.id.iv_take_equipment_photo);
+        GlideUtils.ShowImage(this, roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photograph);
+        equipmentTakePhotoIV.setOnClickListener(v -> {
+            Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
+            SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                    new CheckRequestPermissionsListener() {
+                        @Override
+                        public void onAllPermissionOk(Permission[] allPermissions) {
+                            if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
+                                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                ActivityUtils.startCameraToPhoto(ReportFragment.this, photoFile, ACTION_START_EQUIPMENT);
+                            } else {
+                                ViewPagePhotoActivity.startActivity(getActivity(), new String[]{roomDb.getPhotoUrl()}, 0);
+                            }
+                        }
+
+                        @Override
+                        public void onPermissionDenied(Permission[] refusedPermissions) {
+                            new AppSettingsDialog.Builder(getActivity())
+                                    .setRationale(getString(R.string.need_save_setting))
+                                    .setTitle(getString(R.string.request_permissions))
+                                    .setPositiveButton(getString(R.string.sure))
+                                    .setNegativeButton(getString(R.string.cancel))
+                                    .build()
+                                    .show();
+                        }
+                    });
+        });
+        equipmentTakePhotoIV.setOnLongClickListener(v -> {
+            if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
+                return false;
+            }
+            Permissions permissions = Permissions.build(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
+            SoulPermission.getInstance().checkAndRequestPermissions(permissions,
+                    new CheckRequestPermissionsListener() {
+                        @Override
+                        public void onAllPermissionOk(Permission[] allPermissions) {
+                            new MaterialDialog.Builder(getActivity())
+                                    .items(R.array.choose_condition_2)
+                                    .itemsCallback(new MaterialDialog.ListCallback() {
+                                        @Override
+                                        public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                            //重新拍照
+                                            if (position == 0) {//删除照片
+                                                roomDb.setUploadPhotoUrl(null);
+                                                roomDb.setPhotoUrl(null);
+                                                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+                                                if (equipmentTakePhotoIV != null) {
+                                                    GlideUtils.ShowImage(getActivity(), roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photograph);
+                                                }
+                                            } else {
+                                                roomDb.setUploadPhotoUrl(null);
+                                                roomDb.setPhotoUrl(null);
+                                                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+                                                if (equipmentTakePhotoIV != null) {
+                                                    GlideUtils.ShowImage(getActivity(), roomDb.getPhotoUrl(), equipmentTakePhotoIV, R.drawable.photograph);
+                                                }
+                                                photoFile = new File(Yw2Application.getInstance().imageCacheFile(), System.currentTimeMillis() + ".jpg");
+                                                ActivityUtils.startCameraToPhoto(ReportFragment.this, photoFile, ACTION_START_EQUIPMENT);
+                                            }
+                                        }
+                                    })
+                                    .show();
+                        }
+
+                        @Override
+                        public void onPermissionDenied(Permission[] refusedPermissions) {
+                            new AppSettingsDialog.Builder(getActivity())
+                                    .setRationale(getString(R.string.need_save_setting))
+                                    .setTitle(getString(R.string.request_permissions))
+                                    .setPositiveButton(getString(R.string.sure))
+                                    .setNegativeButton(getString(R.string.cancel))
+                                    .build()
+                                    .show();
+                        }
+                    });
+            return true;
+        });
+        view.findViewById(R.id.tv_sure).setOnClickListener(v -> {
+            if (takePhotoDialog != null) {
+                if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
+                    Yw2Application.getInstance().showToast("请拍照!");
+                    return;
+                }
+                takePhotoDialog.dismiss();
+                showUploadNoteDialog("是否上传巡检数据?");
+            }
+        });
+        view.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                roomDb.setPhotoUrl(null);
+                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+            }
+        });
+        takePhotoDialog = new MaterialDialog.Builder(getActivity())
+                .customView(view, false)
+                .build();
+        takePhotoDialog.show();
+    }
+
+    private void showUploadNoteDialog(String note) {
+        new MaterialDialog.Builder(getActivity())
+                .title("提示").content(note)
+                .negativeText("稍后")
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        //状态进行中，完成了任务
+                        finishRoom();
+                        getActivity().finish();
+                    }
+                })
+                .positiveText("确定")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        mPresenter.uploadTaskData(mInspectionDetailBean, mRoomListBean);
+                    }
+                }).build().show();
+    }
+
+    private void finishRoom() {
+        roomDb.setTaskState(ConstantInt.ROOM_STATE_3);
+        roomDb.setEndTime(System.currentTimeMillis());
+        Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+        Intent intent = new Intent(ConstantStr.ROOM_STATE_CHANGE);
+        intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, roomDb.getTaskRoomId());
+        intent.putExtra(ConstantStr.KEY_BUNDLE_INT, 2);
+        if (manager != null) {
+            manager.sendBroadcast(intent);
+        }
+    }
+
+    @Override
+    public void showUploadLoading() {
+        showProgressDialog("数据上传中...");
+    }
+
+    @Override
+    public void hideUploadLoading() {
+        hideProgressDialog();
+    }
+
+    @Override
+    public void uploadDataError() {
+        showUploadNoteDialog("数据上传失败了，是否重新上传？");
+    }
+
+    @Override
+    public void uploadDataSuccess(List<User> users) {
+        finishRoom();
+        if (users != null && !users.isEmpty()) {
+            //完成了任务巡检
+            Intent intent = new Intent();
+            intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, this.taskId);
+            intent.putParcelableArrayListExtra(ConstantStr.KEY_BUNDLE_LIST_1, new ArrayList<>(users));
+            intent.setAction(ConstantStr.TASK_STATE_FINISH);
+            manager.sendBroadcast(intent);
+        }
+        getActivity().finish();
+    }
+
     public void onDataChange() {
-        int checkCount = mPresenter.getEquipmentFinishCount(this.inspectionDetailBean.getTaskId(), mRoomListBean);
+        int checkCount = mPresenter.getEquipmentFinishCount(this.mInspectionDetailBean.getTaskId(), mRoomListBean);
         roomDb.setCheckCount(checkCount);
         String str = "开始巡检(" + checkCount + "/" + mRoomListBean.getTaskEquipment().size() + ")";
+        canUpload = checkCount == mRoomListBean.getTaskEquipment().size();
         mTitleTv.setText(str);
     }
 
@@ -295,22 +523,13 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                             break;
                         }
                     }
-                    mRecyclerView.getAdapter().notifyDataSetChanged();
+                    if (mRecyclerView.getAdapter() != null) {
+                        mRecyclerView.getAdapter().notifyDataSetChanged();
+                    }
                     onDataChange();
                 }
             }
-            if (roomDb.getTaskState() == ConstantInt.ROOM_STATE_2 && roomDb.getCheckCount() == mRoomListBean.getTaskEquipment().size()) {
-                //状态进行中，完成了任务
-                roomDb.setTaskState(ConstantInt.ROOM_STATE_3);
-                roomDb.setEndTime(System.currentTimeMillis());
-                Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
-                Intent intent = new Intent(ConstantStr.ROOM_STATE_CHANGE);
-                intent.putExtra(ConstantStr.KEY_BUNDLE_LONG, roomDb.getTaskRoomId());
-                intent.putExtra(ConstantStr.KEY_BUNDLE_INT, 2);
-                if (manager != null) {
-                    manager.sendBroadcast(intent);
-                }
-            } else if (roomDb.getTaskState() == ConstantInt.ROOM_STATE_3 && roomDb.getCheckCount() != mRoomListBean.getTaskEquipment().size()) {
+            if (roomDb.getTaskState() == ConstantInt.ROOM_STATE_3 && roomDb.getCheckCount() != mRoomListBean.getTaskEquipment().size()) {
                 //状态已经完成，未完成任务
                 roomDb.setTaskState(ConstantInt.ROOM_STATE_2);
                 roomDb.setEndTime(0);
@@ -322,20 +541,25 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                     manager.sendBroadcast(intent);
                 }
             }
+        } else if (requestCode == ACTION_START_EQUIPMENT && resultCode == Activity.RESULT_OK) {
+            String mark = takePhotoEquipmentBean.getEquipment().getEquipmentName();
+            if (!TextUtils.isEmpty(takePhotoEquipmentBean.getEquipment().getEquipmentFsn())) {
+                mark = mark + " " + takePhotoEquipmentBean.getEquipment().getEquipmentFsn();
+            }
+            PhotoUtils.cropPhoto(getActivity(), photoFile, mark, file -> {
+                if (mPresenter == null) {
+                    return;
+                }
+                if (roomDb != null) {
+                    roomDb.setPhotoUrl(file.getAbsolutePath());
+                }
+                if (equipmentTakePhotoIV != null) {
+                    GlideUtils.ShowImage(getActivity(), file, equipmentTakePhotoIV, R.drawable.photograph);
+                }
+            });
         }
     }
 
-    LocalBroadcastManager manager;
-
-    @Override
-    public void showLoading() {
-        showEvLoading();
-    }
-
-    @Override
-    public void hideLoading() {
-        hideEvLoading();
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

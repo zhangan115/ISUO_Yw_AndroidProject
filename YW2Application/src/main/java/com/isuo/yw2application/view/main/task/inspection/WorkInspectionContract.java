@@ -2,7 +2,8 @@ package com.isuo.yw2application.view.main.task.inspection;
 
 import android.support.annotation.NonNull;
 
-import com.isuo.yw2application.mode.bean.work.InspectionBean;
+import com.isuo.yw2application.mode.bean.inspection.InspectionBean;
+import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
 import com.sito.library.base.BasePresenter;
 import com.sito.library.base.BaseView;
 
@@ -11,8 +12,9 @@ import java.util.List;
 /**
  * 巡检界面
  * Created by zhangan on 2017-06-22.
+ * Update by zhangan on 2022-01-21.
  */
-interface InspectionContract {
+interface WorkInspectionContract {
 
     interface Presenter extends BasePresenter {
 
@@ -30,7 +32,7 @@ interface InspectionContract {
          * @param inspection 巡检类型
          * @param time       时间
          */
-        void getDataFromCache(int inspection, String time);
+        void getDataFromAcCache(int inspection, String time);
 
         /**
          * 保存数据到缓存中
@@ -39,7 +41,7 @@ interface InspectionContract {
          * @param time               时间
          * @param inspectionBeanList 数据
          */
-        void toSaveInspectionDataToCache(int inspection, String time, List<InspectionBean> inspectionBeanList);
+        void toSaveInspectionDataToAcCache(int inspection, String time, List<InspectionBean> inspectionBeanList);
 
         /**
          * 领取任务
@@ -54,35 +56,65 @@ interface InspectionContract {
          *
          * @param inspectionBean 任务
          */
-        void getInspectionDataList(InspectionBean inspectionBean);
+        void getInspectionDetailDataList(InspectionBean inspectionBean);
 
         /**
-         * 获取可以上传的数据
+         * 获取可以上传的任务数据
          *
          * @param list 集合
          */
-        List<InspectionBean>  getUploadTask(List<InspectionBean> list);
+        List<InspectionBean> getUploadTask(List<InspectionBean> list);
 
         /**
          * 上传任务数据
          *
-         * @param task 任务
+         * @param task         任务
+         * @param roomListBean 配电室
          */
-        void uploadTaskData(InspectionBean task);
+        void uploadTaskData(InspectionBean task, RoomListBean roomListBean);
     }
 
     interface View extends BaseView<Presenter> {
 
+        /**
+         * 显示数据
+         *
+         * @param been 巡检数据
+         */
         void showData(List<InspectionBean> been);
 
+        /**
+         * 显示Loading
+         */
         void showLoading();
 
+        /**
+         * 显示TOAST
+         *
+         * @param message 信息
+         */
+        void showToast(String message);
+
+        /**
+         * 隐藏Loading
+         */
         void hideLoading();
 
+        /**
+         * 没有数据
+         */
         void noData();
 
+        /**
+         * 领取数据
+         *
+         * @param bean 巡检数据
+         */
         void operationSuccess(InspectionBean bean);
 
+        /**
+         * 上传下一个任务
+         */
         void uploadNext();
 
     }

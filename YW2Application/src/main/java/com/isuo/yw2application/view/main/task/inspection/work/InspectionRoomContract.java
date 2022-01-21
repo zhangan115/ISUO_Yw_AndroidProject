@@ -30,7 +30,19 @@ interface InspectionRoomContract {
         @Nullable
         InspectionDetailBean getInspectionDataList(long taskId);
 
+        /**
+         * 从网络获取数据
+         *
+         * @param taskId 任务ID
+         */
         void getInspectionDataListFormNet(long taskId);
+
+        /**
+         * 保存巡检数据到AC cache
+         *
+         * @param bean 巡检数据
+         */
+        void saveInspectionToAcCache(@Nullable InspectionDetailBean bean);
 
         /**
          * 从数据库获取保存的巡检人员
@@ -72,15 +84,6 @@ interface InspectionRoomContract {
          * @param list   配电室集合
          */
         void loadRoomDataFromDb(long taskId, List<RoomListBean> list);
-
-        /**
-         * 保存巡检到cache
-         *
-         * @param bean 任务
-         */
-        void saveInspectionToCache(@Nullable InspectionDetailBean bean);
-
-        void saveInspectionToAcCache(@Nullable InspectionDetailBean bean);
 
     }
 

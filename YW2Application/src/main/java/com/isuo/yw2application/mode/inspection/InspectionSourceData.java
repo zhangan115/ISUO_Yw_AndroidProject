@@ -3,7 +3,9 @@ package com.isuo.yw2application.mode.inspection;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
+import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.db.RoomDb;
 import com.isuo.yw2application.mode.bean.db.TaskDb;
 import com.isuo.yw2application.mode.bean.employee.EmployeeBean;
@@ -30,6 +32,38 @@ import rx.Subscription;
 public interface InspectionSourceData {
 
     /**
+     * 领取任务
+     *
+     * @param taskId   任务id
+     * @param callBack 回调
+     * @return 订阅
+     */
+    @NonNull
+    Subscription getOperationTask(@NonNull String taskId, @NonNull IObjectCallBack<String> callBack);
+
+    /**
+     * 从缓存中获取巡检数据
+     *
+     * @param inspectionType 巡检类型
+     * @param data           时间
+     * @param callBack       回调
+     * @return 订阅
+     */
+    @NonNull
+    Subscription getInspectionDataFromCache(int inspectionType, String data, IListCallBack<InspectionBean> callBack);
+
+    /**
+     * 保存数据到缓存中
+     *
+     * @param inspectionType         巡检类型
+     * @param data                   时间
+     * @param WorkInspectionBeanList 回调
+     * @return 订阅
+     */
+    @NonNull
+    Subscription saveInspectionDataToCache(int inspectionType, String data, List<InspectionBean> WorkInspectionBeanList);
+
+    /**
      * 获取安全包
      *
      * @param securityId 安全包id
@@ -54,7 +88,7 @@ public interface InspectionSourceData {
      *
      * @param detailBean 数据
      */
-    void saveInspectionDataToAcCache(InspectionDetailBean detailBean);
+    void saveInspectionDataToAcCache(@NonNull InspectionDetailBean detailBean);
 
     /**
      * 获取缓存的数据
@@ -66,19 +100,15 @@ public interface InspectionSourceData {
     InspectionDetailBean getInspectionDataFromAcCache(long taskId);
 
     /**
-     * 保存任务详情到cache
+     * 获取巡检列表
      *
-     * @param bean 任务
+     * @param data     时间
+     * @param lastId   最后的id
+     * @param callBack 回调
+     * @return 订阅
      */
-    void saveInspectionDataToCache(InspectionDetailBean bean);
-
-    /**
-     * 获取cache中保存的任务
-     *
-     * @return 任务
-     */
-    @Nullable
-    InspectionDetailBean getInspectionDataFromCache();
+    @NonNull
+    Subscription getInspectionData(int inspectionType, @NonNull String data, @Nullable String lastId, @NonNull IListCallBack<InspectionBean> callBack);
 
     //从数据库获取任务执行人回调
     interface LoadTaskUserCallBack {
@@ -124,8 +154,6 @@ public interface InspectionSourceData {
      */
     @NonNull
     Subscription updateRoomState(long taskId, RoomListBean roomListBean, int operation, @NonNull final IObjectCallBack<String> callBack);
-
-    Subscription updateRoomStateNet(long taskId, RoomListBean roomListBean, int operation, @NonNull final IObjectCallBack<String> callBack);
 
     //读取配电室数据回调
     interface LoadRoomDataCallBack {
@@ -189,27 +217,13 @@ public interface InspectionSourceData {
     //上传任务数据
     interface UploadTaskCallBack {
 
-        void onSuccess();
+        void onSuccess(@Nullable List<User> users);
 
         void noDataUpload();
 
         void onError();
 
     }
-
-    /**
-     * 上传配电室数据
-     *
-     * @param position   位置
-     * @param detailBean 巡检数据
-     * @param callBack   回调
-     * @return 订阅
-     */
-    @NonNull
-    Subscription uploadRoomListData(int position, InspectionDetailBean detailBean, @NonNull UploadRoomListCallBack callBack);
-
-    @NonNull
-    Subscription uploadTaskData(com.isuo.yw2application.mode.bean.work.InspectionBean task, @NonNull UploadTaskCallBack callBack);
 
     /**
      * 上传设备数据
@@ -273,28 +287,21 @@ public interface InspectionSourceData {
     }
 
     /**
-     * 上传拍了照片但是没有上传的
-     *
-     * @param roomDb   完成时候拍的照片上传
-     * @param callBack 回调
-     */
-    void uploadPhotoList(RoomDb roomDb, IUploadOfflineCallBack callBack);
-
-    /**
-     * 检查巡检照片
-     *
-     * @param taskEquipmentBeans 巡检设备
-     * @return 检查巡检数据
-     */
-    boolean checkPhotoInspectionData(List<TaskEquipmentBean> taskEquipmentBeans);
-
-    /**
      * 上传任务数据
      *
      * @param task     任务
      * @param callBack 回调
      */
-    void startUploadTask(com.isuo.yw2application.mode.bean.work.InspectionBean task, @NonNull UploadTaskCallBack callBack);
+    void startUploadTask(InspectionBean task, @Nullable RoomListBean roomListBean, @NonNull UploadTaskCallBack callBack);
+
+    /**
+     * 上传任务数据
+     *
+     * @param task         任务
+     * @param roomListBean 配电室
+     * @param callBack     回调
+     */
+    void startRoomUploadTask(InspectionDetailBean task, @Nullable RoomListBean roomListBean, @NonNull UploadTaskCallBack callBack);
 
     /**
      * 更新用户照片
@@ -306,7 +313,7 @@ public interface InspectionSourceData {
      * @return 订阅
      */
     @NonNull
-    Subscription uploadUserPhotoInfo(long taskId, long equipmentId, @NonNull final String url, final IObjectCallBack<String> callBack);
+    Subscription uploadRandomPhotoInfo(long taskId, long equipmentId, @NonNull final String url, final IObjectCallBack<String> callBack);
 
     /**
      * 上传随机照片
@@ -383,10 +390,6 @@ public interface InspectionSourceData {
     @Nullable
     TaskEquipmentBean getTskEquipFromRepository();
 
-    /**
-     * 移除cache中的设备信息
-     */
-    void removeTaskEquipFormCache();
 
     /**
      * 获取设备完成的数量
@@ -395,14 +398,6 @@ public interface InspectionSourceData {
      */
     int getEquipmentFinishCount(long taskId, RoomListBean roomListBean);
 
-    /**
-     * 获取设备输入完成的数量
-     *
-     * @param taskId       任务ID
-     * @param roomListBean 配电室
-     * @return 数量
-     */
-    int getEquipmentFinishPutCount(long taskId, RoomListBean roomListBean);
 
     /**
      * 获取设备录入项的完成数量

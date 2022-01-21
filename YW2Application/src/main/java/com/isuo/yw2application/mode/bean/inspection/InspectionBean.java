@@ -24,118 +24,46 @@ public class InspectionBean implements Parcelable {
     private int taskState;
     private int uploadCount;
     private List<String> rooms;
+    private SecurityPackage securityPackage;
     private int planPeriodType;//检测周期类型 1：每日 2：每周 3：每月
     private int isManualCreated;//是否是人工创建的 1：是 0：不是 人工创建的均视为特检任务
     private User receiveUser;
     private List<User> users;
     private List<ExecutorUserList> executorUserList;//指定的执行人
+    private String regionName;
+    private long[] roomIds;
 
-    public List<ExecutorUserList> getExecutorUserList() {
-        return executorUserList;
+    protected InspectionBean(Parcel in) {
+        count = in.readInt();
+        planEndTime = in.readLong();
+        planStartTime = in.readLong();
+        startTime = in.readLong();
+        endTime = in.readLong();
+        taskId = in.readLong();
+        taskName = in.readString();
+        taskState = in.readInt();
+        uploadCount = in.readInt();
+        rooms = in.createStringArrayList();
+        planPeriodType = in.readInt();
+        isManualCreated = in.readInt();
+        receiveUser = in.readParcelable(User.class.getClassLoader());
+        users = in.createTypedArrayList(User.CREATOR);
+        executorUserList = in.createTypedArrayList(ExecutorUserList.CREATOR);
+        regionName = in.readString();
+        roomIds = in.createLongArray();
     }
 
-    public void setExecutorUserList(List<ExecutorUserList> executorUserList) {
-        this.executorUserList = executorUserList;
-    }
-
-    private SecurityPackage securityPackage;
-
-    public SecurityPackage getSecurityPackage() {
-        return securityPackage;
-    }
-
-    public void setSecurityPackage(SecurityPackage securityPackage) {
-        this.securityPackage = securityPackage;
-    }
-
-    public int getPlanPeriodType() {
-        return planPeriodType;
-    }
-
-    public void setPlanPeriodType(int planPeriodType) {
-        this.planPeriodType = planPeriodType;
-    }
-
-    public User getReceiveUser() {
-        return receiveUser;
-    }
-
-    public void setReceiveUser(User receiveUser) {
-        this.receiveUser = receiveUser;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public static class SecurityPackage {
-
-        private long createTime;
-        private int deleteState;
-        private long securityId;
-        private String securityName;
-        private String securityRemark;
-
-        public long getCreateTime() {
-            return createTime;
+    public static final Creator<InspectionBean> CREATOR = new Creator<InspectionBean>() {
+        @Override
+        public InspectionBean createFromParcel(Parcel in) {
+            return new InspectionBean(in);
         }
 
-        public void setCreateTime(long createTime) {
-            this.createTime = createTime;
+        @Override
+        public InspectionBean[] newArray(int size) {
+            return new InspectionBean[size];
         }
-
-        public int getDeleteState() {
-            return deleteState;
-        }
-
-        public void setDeleteState(int deleteState) {
-            this.deleteState = deleteState;
-        }
-
-        public long getSecurityId() {
-            return securityId;
-        }
-
-        public void setSecurityId(long securityId) {
-            this.securityId = securityId;
-        }
-
-        public String getSecurityName() {
-            return securityName;
-        }
-
-        public void setSecurityName(String securityName) {
-            this.securityName = securityName;
-        }
-
-        public String getSecurityRemark() {
-            return securityRemark;
-        }
-
-        public void setSecurityRemark(String securityRemark) {
-            this.securityRemark = securityRemark;
-        }
-    }
-
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
-
-    public long getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
-    }
+    };
 
     public int getCount() {
         return count;
@@ -143,14 +71,6 @@ public class InspectionBean implements Parcelable {
 
     public void setCount(int count) {
         this.count = count;
-    }
-
-    public int getIsManualCreated() {
-        return isManualCreated;
-    }
-
-    public void setIsManualCreated(int isManualCreated) {
-        this.isManualCreated = isManualCreated;
     }
 
     public long getPlanEndTime() {
@@ -167,6 +87,22 @@ public class InspectionBean implements Parcelable {
 
     public void setPlanStartTime(long planStartTime) {
         this.planStartTime = planStartTime;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 
     public long getTaskId() {
@@ -209,6 +145,70 @@ public class InspectionBean implements Parcelable {
         this.rooms = rooms;
     }
 
+    public SecurityPackage getSecurityPackage() {
+        return securityPackage;
+    }
+
+    public void setSecurityPackage(SecurityPackage securityPackage) {
+        this.securityPackage = securityPackage;
+    }
+
+    public int getPlanPeriodType() {
+        return planPeriodType;
+    }
+
+    public void setPlanPeriodType(int planPeriodType) {
+        this.planPeriodType = planPeriodType;
+    }
+
+    public int getIsManualCreated() {
+        return isManualCreated;
+    }
+
+    public void setIsManualCreated(int isManualCreated) {
+        this.isManualCreated = isManualCreated;
+    }
+
+    public User getReceiveUser() {
+        return receiveUser;
+    }
+
+    public void setReceiveUser(User receiveUser) {
+        this.receiveUser = receiveUser;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public List<ExecutorUserList> getExecutorUserList() {
+        return executorUserList;
+    }
+
+    public void setExecutorUserList(List<ExecutorUserList> executorUserList) {
+        this.executorUserList = executorUserList;
+    }
+
+    public String getRegionName() {
+        return regionName;
+    }
+
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
+    }
+
+    public long[] getRoomIds() {
+        return roomIds;
+    }
+
+    public void setRoomIds(long[] roomIds) {
+        this.roomIds = roomIds;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -216,53 +216,22 @@ public class InspectionBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.count);
-        dest.writeLong(this.planEndTime);
-        dest.writeLong(this.planStartTime);
-        dest.writeLong(this.startTime);
-        dest.writeLong(this.endTime);
-        dest.writeLong(this.taskId);
-        dest.writeString(this.taskName);
-        dest.writeInt(this.taskState);
-        dest.writeInt(this.uploadCount);
-        dest.writeStringList(this.rooms);
-        dest.writeInt(this.planPeriodType);
-        dest.writeInt(this.isManualCreated);
-        dest.writeParcelable(this.receiveUser, flags);
-        dest.writeTypedList(this.users);
-        dest.writeTypedList(this.executorUserList);
+        dest.writeInt(count);
+        dest.writeLong(planEndTime);
+        dest.writeLong(planStartTime);
+        dest.writeLong(startTime);
+        dest.writeLong(endTime);
+        dest.writeLong(taskId);
+        dest.writeString(taskName);
+        dest.writeInt(taskState);
+        dest.writeInt(uploadCount);
+        dest.writeStringList(rooms);
+        dest.writeInt(planPeriodType);
+        dest.writeInt(isManualCreated);
+        dest.writeParcelable(receiveUser, flags);
+        dest.writeTypedList(users);
+        dest.writeTypedList(executorUserList);
+        dest.writeString(regionName);
+        dest.writeLongArray(roomIds);
     }
-
-    public InspectionBean() {
-    }
-
-    protected InspectionBean(Parcel in) {
-        this.count = in.readInt();
-        this.planEndTime = in.readLong();
-        this.planStartTime = in.readLong();
-        this.startTime = in.readLong();
-        this.endTime = in.readLong();
-        this.taskId = in.readLong();
-        this.taskName = in.readString();
-        this.taskState = in.readInt();
-        this.uploadCount = in.readInt();
-        this.rooms = in.createStringArrayList();
-        this.planPeriodType = in.readInt();
-        this.isManualCreated = in.readInt();
-        this.receiveUser = in.readParcelable(User.class.getClassLoader());
-        this.users = in.createTypedArrayList(User.CREATOR);
-        this.executorUserList = in.createTypedArrayList(ExecutorUserList.CREATOR);
-    }
-
-    public static final Creator<InspectionBean> CREATOR = new Creator<InspectionBean>() {
-        @Override
-        public InspectionBean createFromParcel(Parcel source) {
-            return new InspectionBean(source);
-        }
-
-        @Override
-        public InspectionBean[] newArray(int size) {
-            return new InspectionBean[size];
-        }
-    };
 }
