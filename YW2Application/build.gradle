@@ -26,8 +26,8 @@ android {
         applicationId "com.isuo.yw2application"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.5"
+        versionCode 13
+        versionName "1.6"
         ndk {
             abiFilters "armeabi"
         }
