@@ -36,6 +36,7 @@ import com.isuo.yw2application.mode.bean.db.ShareDataDb;
 import com.isuo.yw2application.mode.bean.db.TaskDb;
 import com.isuo.yw2application.mode.bean.db.UserInfo;
 import com.isuo.yw2application.mode.bean.db.Voice;
+import com.isuo.yw2application.utils.ACache;
 import com.isuo.yw2application.utils.PhotoUtils;
 import com.isuo.yw2application.utils.UpdateManager;
 import com.isuo.yw2application.view.base.BaseActivity;
@@ -271,6 +272,7 @@ public class MainActivity extends BaseActivity implements WorkFragment.DrawClick
         SPHelper.write(this, ConstantStr.USER_INFO, Yw2Application.getInstance().getCurrentUser().getUserId() + ConstantStr.NEWS_NOTIFY_STATE, 0);
         SPHelper.write(this, ConstantStr.USER_INFO, Yw2Application.getInstance().getCurrentUser().getUserId() + ConstantStr.NEWS_ME_STATE, 0);
         SPHelper.clean(this, ConstantStr.INSPECTION_CACHE_DATA);
+        ACache.get(this).clear();
         Observable.just(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())

@@ -418,10 +418,8 @@ public class InspectionRepository implements InspectionSourceData {
 
     @Override
     public void saveInspectionDataToAcCache(@NonNull InspectionDetailBean detailBean) {
-        if (inspectionDataWf == null) {
-            inspectionDataWf = new WeakReference<>(detailBean);
-        }
-        taskId = detailBean.getTaskId();
+        inspectionDataWf = new WeakReference<>(detailBean);
+        this.taskId = detailBean.getTaskId();
         String result = new Gson().toJson(detailBean);
         ACache.get(Yw2Application.getInstance()).put("inspection_detail_data_" + detailBean.getTaskId(), result);
     }
@@ -1073,15 +1071,8 @@ public class InspectionRepository implements InspectionSourceData {
         currentRoomCount = 0;
         needUploadRoomData.clear();
         if (roomListBean != null) {
-            RoomDb roomDb = Yw2Application.getInstance().getDaoSession().getRoomDbDao().queryBuilder()
-                    .where(RoomDbDao.Properties.TaskId.eq(taskId)
-                            , RoomDbDao.Properties.UploadPhotoUrl.isNull()
-                            , RoomDbDao.Properties.PhotoUrl.isNotNull()
-                            , RoomDbDao.Properties.TaskRoomId.eq(roomListBean.getTaskRoomId())
-                            , RoomDbDao.Properties.CurrentUserId.eq(Yw2Application.getInstance().getCurrentUser().getUserId()))
-                    .unique();
-            if (roomDb != null) {
-                needUploadRoomData.add(roomDb);
+            if (roomListBean.getRoomDb() != null) {
+                needUploadRoomData.add(roomListBean.getRoomDb());
             }
         } else {
             List<RoomDb> roomDbList = Yw2Application.getInstance().getDaoSession().getRoomDbDao().queryBuilder()

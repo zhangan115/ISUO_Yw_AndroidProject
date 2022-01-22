@@ -248,7 +248,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                 if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
                     toUploadEquipmentPhoto();
                 } else {
-                    mPresenter.uploadTaskData(mInspectionDetailBean, mRoomListBean);
+                    showUploadNoteDialog("是否上传巡检数据?");
                 }
             }
         });

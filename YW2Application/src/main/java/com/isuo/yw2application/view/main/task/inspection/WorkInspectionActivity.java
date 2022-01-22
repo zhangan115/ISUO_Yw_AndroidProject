@@ -819,6 +819,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                         }
                         inspectionBean.setTaskState(ConstantInt.TASK_STATE_4);
                         inspectionBean.setUsers(users);
+                        inspectionBean.setUploadCount(inspectionBean.getCount());
                         inspectionBean.setEndTime(System.currentTimeMillis());
                     }
                 }

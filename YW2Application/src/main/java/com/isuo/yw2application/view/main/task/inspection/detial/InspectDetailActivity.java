@@ -247,7 +247,7 @@ public class InspectDetailActivity extends NotifyActivity implements InspectDeta
             mInspectReceive.setText(bean.getReceiveUser().getRealName());
             mInspectReceiveTime.setText(DataUtil.timeFormat(bean.getPlanStartTime(), "yyyy-MM-dd HH:mm"));
         }
-        if (bean.getUsers() != null && bean.getUsers().size() > 0 && bean.getStartTime() != 0) {
+        if (bean.getUsers() != null && bean.getUsers().size() > 0) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < bean.getUsers().size(); i++) {
                 sb.append(bean.getUsers().get(i).getRealName());
@@ -256,6 +256,8 @@ public class InspectDetailActivity extends NotifyActivity implements InspectDeta
                 }
             }
             mInspectCarry.setText(sb.toString());
+        }
+        if (bean.getStartTime() != 0) {
             mInspectCarryTime.setText(DataUtil.timeFormat(bean.getStartTime(), "yyyy-MM-dd HH:mm"));
         }
         tv_task_name.setText(bean.getTaskName());

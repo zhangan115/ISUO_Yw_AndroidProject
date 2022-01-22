@@ -3,10 +3,13 @@ package com.isuo.yw2application.view.main.task.inspection;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantInt;
 import com.isuo.yw2application.mode.IListCallBack;
 import com.isuo.yw2application.mode.IObjectCallBack;
 import com.isuo.yw2application.mode.bean.User;
+import com.isuo.yw2application.mode.bean.db.RoomDb;
+import com.isuo.yw2application.mode.bean.db.RoomDbDao;
 import com.isuo.yw2application.mode.bean.inspection.InspectionBean;
 import com.isuo.yw2application.mode.bean.inspection.InspectionDetailBean;
 import com.isuo.yw2application.mode.bean.inspection.RoomListBean;
@@ -106,7 +109,7 @@ public class WorkInspectionPresenter implements WorkInspectionContract.Presenter
 
             @Override
             public void onError(String message) {
-            mView.showLoading();
+                mView.showLoading();
             }
 
             @Override
@@ -162,8 +165,8 @@ public class WorkInspectionPresenter implements WorkInspectionContract.Presenter
     }
 
     @Override
-    public void uploadTaskData(InspectionBean task,RoomListBean roomListBean) {
-        mSourceData.startUploadTask(task, roomListBean,new InspectionSourceData.UploadTaskCallBack() {
+    public void uploadTaskData(InspectionBean task, RoomListBean roomListBean) {
+        mSourceData.startUploadTask(task, roomListBean, new InspectionSourceData.UploadTaskCallBack() {
 
             @Override
             public void onSuccess(@Nullable List<User> users) {
