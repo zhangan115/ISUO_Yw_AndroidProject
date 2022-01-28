@@ -422,6 +422,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
             public void onClick(View v) {
                 roomDb.setPhotoUrl(null);
                 Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+                takePhotoDialog.dismiss();
             }
         });
         takePhotoDialog = new MaterialDialog.Builder(getActivity())
@@ -542,9 +543,13 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                 }
             }
         } else if (requestCode == ACTION_START_EQUIPMENT && resultCode == Activity.RESULT_OK) {
-            String mark = takePhotoEquipmentBean.getEquipment().getEquipmentName();
+            String mark = mInspectionDetailBean.getTaskName();
+            mark = mark + "\n" + takePhotoEquipmentBean.getEquipment().getEquipmentName();
             if (!TextUtils.isEmpty(takePhotoEquipmentBean.getEquipment().getEquipmentFsn())) {
                 mark = mark + " " + takePhotoEquipmentBean.getEquipment().getEquipmentFsn();
+            }
+            if (roomDb != null && !TextUtils.isEmpty(roomDb.getDataItemName())) {
+                mark = mark + "\n" + roomDb.getDataItemName();
             }
             PhotoUtils.cropPhoto(getActivity(), photoFile, mark, file -> {
                 if (mPresenter == null) {

@@ -21,11 +21,16 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -33,6 +38,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.iflytek.cloud.thirdparty.V;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantInt;
@@ -53,10 +59,12 @@ import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionListener;
 import com.sito.library.utils.CalendarUtil;
 import com.sito.library.utils.DataUtil;
+import com.sito.library.utils.DisplayUtil;
 import com.sito.library.utils.SPHelper;
 import com.sito.library.widget.PinnedHeaderExpandableListView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerView;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -128,7 +136,58 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         mCurrentDay = Calendar.getInstance(Locale.CHINA);
         dateList = CalendarUtil.getDaysOfWeek(mCurrentDay.getTime());
         expandableListView = findViewById(R.id.expandableListView);
+        expandableListView.setOnHeaderUpdateListener(new PinnedHeaderExpandableListView.OnHeaderUpdateListener() {
 
+            @Override
+            public View getPinnedHeader() {
+                View headerView = LayoutInflater.from(WorkInspectionActivity.this).inflate(R.layout.item_equip_group_copy, expandableListView, false);
+                headerView.setBackgroundColor(findColorById(R.color.equip_search_bg_gray));
+                return headerView;
+            }
+
+            @Override
+            public void updatePinnedHeader(View headerView, int firstVisibleGroupPos) {
+                TextView mPlace = (TextView) headerView.findViewById(R.id.id_item_equip_place);
+                TextView unitTv = (TextView) headerView.findViewById(R.id.unitTv);
+                ImageView stateIv = (ImageView) headerView.findViewById(R.id.iv_state);
+                if (firstVisibleGroupPos != -1) {
+                    mPlace.setText(dataList.get(firstVisibleGroupPos).getRegionName());
+                    int notFinishCount = 0;
+                    int taskCount = 0;
+                    if (dataList.get(firstVisibleGroupPos).getInspectionBeanList() != null) {
+                        for (int i = 0; i < dataList.get(firstVisibleGroupPos).getInspectionBeanList().size(); i++) {
+                            if (dataList.get(firstVisibleGroupPos).getInspectionBeanList().get(i).getTaskState() < ConstantInt.TASK_STATE_4) {
+                                notFinishCount++;
+                            }
+                        }
+                        taskCount = dataList.get(firstVisibleGroupPos).getInspectionBeanList().size();
+                    }
+                    unitTv.setText(MessageFormat.format("总数:{0} 未完成:{1}", taskCount, notFinishCount));
+                    boolean isExpanded = expandableListView.isGroupExpanded(firstVisibleGroupPos);
+                    if (isExpanded) {
+                        stateIv.setImageDrawable(findDrawById(R.drawable.bg_employee_arrow_open));
+                    } else {
+                        stateIv.setImageDrawable(findDrawById(R.drawable.bg_employee_arrow));
+                    }
+                }
+            }
+        });
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return false;
+            }
+        }, true);
+        expandableListView.setOnHeaderViewClickListener(new PinnedHeaderExpandableListView.OnHeaderViewClickListener() {
+            @Override
+            public void onViewClick(int groupPosition) {
+                if (expandableListView.isGroupExpanded(groupPosition)) {
+                    expandableListView.collapseGroup(groupPosition);
+                } else {
+                    expandableListView.expandGroup(groupPosition, true);
+                }
+            }
+        });
         dayTvs[0] = findViewById(R.id.tv_1);
         dayTvs[1] = findViewById(R.id.tv_2);
         dayTvs[2] = findViewById(R.id.tv_3);

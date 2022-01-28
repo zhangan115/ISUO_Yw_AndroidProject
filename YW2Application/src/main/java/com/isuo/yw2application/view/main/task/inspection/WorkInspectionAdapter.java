@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.isuo.yw2application.R;
@@ -105,7 +106,6 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             holder = new GroupViewHolder();
             convertView = LayoutInflater.from(context).inflate(groupLayout, null);
-            holder.mGroup = (LinearLayout) convertView.findViewById(R.id.ll_item_group);
             holder.mPlace = (TextView) convertView.findViewById(R.id.id_item_equip_place);
             holder.mCount = (TextView) convertView.findViewById(R.id.id_item_equip_mum);
             holder.unitTv = (TextView) convertView.findViewById(R.id.unitTv);
@@ -323,7 +323,6 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
      * 外部显示ViewHolder
      */
     private class GroupViewHolder {
-        LinearLayout mGroup;
         View mLine;
         TextView mPlace;
         TextView mCount;

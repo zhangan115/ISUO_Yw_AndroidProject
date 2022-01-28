@@ -130,10 +130,8 @@ public class NewsListFragment extends LazyLoadFragmentV4<NewsListContract.Presen
                         MessageListBean.MessageItemListBean bean2 = new MessageListBean.MessageItemListBean();
                         bean2.setSmallType(type + 2);
                         if (data.getMessageItemList().size() == 1) {
-                            data.getMessageItemList().add(bean1);
                             data.getMessageItemList().add(bean2);
-                        } else if (data.getMessageItemList().size() == 2) {
-                            data.getMessageItemList().add(bean2);
+//                            data.getMessageItemList().add(bean2);
                         }
                     } else if (type == 208 || type == 205) {
                         MessageListBean.MessageItemListBean bean1 = new MessageListBean.MessageItemListBean();

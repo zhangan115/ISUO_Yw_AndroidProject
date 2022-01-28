@@ -46,14 +46,14 @@ public class PhotoUtils {
     }
 
     public static void cropPhoto(final Context context, File photoFile, final PhotoListener listener) {
-        cropPhoto(context, photoFile,false, "",false, listener);
+        cropPhoto(context, photoFile, false, "", false, listener);
     }
 
     public static void cropPhoto(final Context context, File photoFile, String mark, final PhotoListener listener) {
-        cropPhoto(context, photoFile, false, mark, true,listener);
+        cropPhoto(context, photoFile, false, mark, true, listener);
     }
 
-    public static void cropPhoto(final Context context, File photoFile, final boolean cleanFile, final String mark,final boolean showMark, final PhotoListener listener) {
+    public static void cropPhoto(final Context context, File photoFile, final boolean cleanFile, final String mark, final boolean showMark, final PhotoListener listener) {
         Observable.just(photoFile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
@@ -64,7 +64,7 @@ public class PhotoUtils {
                         File file2 = null;
                         try {
                             file1 = Luban.with(context).load(file).get().get(0);
-                            if (!showMark){
+                            if (!showMark) {
                                 file.delete();
                                 return Observable.just(file1);
                             }
@@ -164,8 +164,16 @@ public class PhotoUtils {
         canvas.drawText(appName, 20, 20 + textHeight, p);
         canvas.drawText(appContent, 20, 30 + 2 * textHeight, p);
         if (!TextUtils.isEmpty(mark)) {
-            float markWidth = p.measureText(mark);
-            canvas.drawText(mark, w - 20 - markWidth, 20 + textHeight, p);
+            if (mark.contains("\n")) {
+                String[] marks = mark.split("\n");
+                for (int i = 0; i < marks.length; i++) {
+                    float markWidth = p.measureText(marks[i]);
+                    canvas.drawText(marks[i], w - 20 - markWidth, 20 + textHeight + i * (textHeight), p);
+                }
+            } else {
+                float markWidth = p.measureText(mark);
+                canvas.drawText(mark, w - 20 - markWidth, 20 + textHeight, p);
+            }
         }
         String customerName = Yw2Application.getInstance().getCurrentUser().getCustomer().getCustomerName();
         canvas.drawText(customerName, 20, h - 20 - textHeight, p);
