@@ -18,7 +18,7 @@ public class InjectActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_container_toolbar, "润油管理");
+        setLayoutAndToolbar(R.layout.activity_container_toolbar, "润滑管理");
         InjectFragment injectFragment = (InjectFragment) getFragmentManager().findFragmentById(R.id.frame_container);
         long roomId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG, -1);
         if (injectFragment == null) {

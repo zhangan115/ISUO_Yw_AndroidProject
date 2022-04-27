@@ -43,9 +43,9 @@ android {
             buildConfigField "String", "UMENG_CHANNEL", '"defaultChannel"'
             manifestPlaceholders = [
                     TASK_AFFINITY_VALUE: "android.task.isuo.shuhe.application",
-                    GETUI_APP_ID       : "7eUw8vtivP8DdZnxkp3WS3",
-                    GETUI_APP_KEY      : "fFaJpZLS6w9qwXLhF7b2H5",
-                    GETUI_APP_SECRET   : "qlhdtETNTP9VaX5mZGHFt8",
+                    GETUI_APP_ID       : "Rb6OlpJgIp571rtm2xbss7",
+                    GETUI_APP_KEY      : "NHlvprkQGL7ovOvnc6JdB5",
+                    GETUI_APP_SECRET   : "9w2g09HtNN7VbPp3aBVSb3",
                     UMENG_CHANNEL      : "defaultChannel",
                     PACKAGE_NAME       : applicationId,
             ]

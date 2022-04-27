@@ -3,7 +3,7 @@
     <string name="home_account">切换账号</string>
     <string name="home_tv_repair">检修工作</string>
     <string name="home_tv_energy">能量隔离</string>
-    <string name="home_tv_greasing">润油管理</string>
+    <string name="home_tv_greasing">润滑管理</string>
     <string name="home_tv_increment">专项工作</string>
     <string name="home_tv_fault">事件上报</string>
     <string name="home_tv_sos">SOS</string>

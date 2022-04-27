@@ -42,7 +42,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="设备名称"
+                        android:text="对象名称"
                         android:textColor="@color/text333"
                         android:textSize="14sp" />
 

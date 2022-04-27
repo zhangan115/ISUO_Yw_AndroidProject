@@ -558,12 +558,14 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
             if (employeeBeen != null && employeeBeen.size() > 0) {
                 chooseEmployeeBeen.addAll(employeeBeen);
             }
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < chooseEmployeeBeen.size(); i++) {
-                mNextUserId = MessageFormat.format("{0}{1},", mNextUserId, chooseEmployeeBeen.get(i).getUser().getUserId());
+                sb.append(chooseEmployeeBeen.get(i).getUser().getUserId());
+                if (chooseEmployeeBeen.size() - 1 != i) {
+                    sb.append(",");
+                }
             }
-            if (!TextUtils.isEmpty(mNextUserId)) {
-                mNextUserId = mNextUserId.substring(0, mNextUserId.length() - 1);
-            }
+            mNextUserId = sb.toString();
             addEmployee();
         }
     }

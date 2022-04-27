@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 润油管理
+ * 润滑管理
  * Created by zhangan on 2017/9/21.
  */
 

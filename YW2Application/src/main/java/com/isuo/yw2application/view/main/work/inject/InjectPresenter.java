@@ -14,7 +14,7 @@ import java.util.Map;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- * 润油管理
+ * 润滑管理
  * Created by zhangan on 2017/9/21.
  */
 

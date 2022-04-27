@@ -410,9 +410,9 @@ public class WorkRepository implements WorkDataSource {
             allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
         }
         if (payMenuBean.getOilSo() == 0) {
-            payWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
+            payWorkItems.add(new WorkItem(20, "润滑管理", R.drawable.oiling));
         } else {
-            allWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
+            allWorkItems.add(new WorkItem(20, "润滑管理", R.drawable.oiling));
         }
         if (payMenuBean.getToolSo() == 0) {
             payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
@@ -478,9 +478,9 @@ public class WorkRepository implements WorkDataSource {
             allWorkItems.add(new WorkItem(1, "专项工作", R.drawable.special));
         }
         if (payMenuBean.getOilSo() == 0) {
-            payWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
+            payWorkItems.add(new WorkItem(20, "润滑管理", R.drawable.oiling));
         } else {
-            allWorkItems.add(new WorkItem(20, "润油管理", R.drawable.oiling));
+            allWorkItems.add(new WorkItem(20, "润滑管理", R.drawable.oiling));
         }
         if (payMenuBean.getToolSo() == 0) {
             payWorkItems.add(new WorkItem(21, "工具管理", R.drawable.tool_mgt));
