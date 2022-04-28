@@ -231,7 +231,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="检修任务"
+                        android:text="即时任务"
                         android:textColor="@color/text333"
                         android:textSize="18sp"
                         android:textStyle="bold" />
