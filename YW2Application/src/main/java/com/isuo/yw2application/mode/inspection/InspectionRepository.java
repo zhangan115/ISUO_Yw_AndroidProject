@@ -1556,7 +1556,7 @@ public class InspectionRepository implements InspectionSourceData {
     }
 
     /**
-     * 上传巡检拍照设备
+     * 上传巡检拍照对象
      *
      * @param localPhoto 地址
      * @param callBack   回调

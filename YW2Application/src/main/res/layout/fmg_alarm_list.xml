@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_alarm_list_title_2"
-                    android:text="设备类型" />
+                    android:text="对象类型" />
 
                 <View
                     android:id="@+id/view_division_white_1"

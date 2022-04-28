@@ -467,7 +467,7 @@ public class OverhaulExecuteFragment extends MvpFragment<OverhaulExecuteContract
         } else {
             equipmentAlias = mRepairWorkBean.getEquipment().getEquipmentAlias();
         }
-        ((TextView) getView().findViewById(R.id.tv_equip_alias)).setText(String.format("设备别名:%s", equipmentAlias));
+        ((TextView) getView().findViewById(R.id.tv_equip_alias)).setText(String.format("对象别名:%s", equipmentAlias));
         ((TextView) getView().findViewById(R.id.tv_plan_start_time))
                 .setText(MessageFormat.format("计划开始时间:{0}", DataUtil.timeFormat(mRepairWorkBean.getStartTime(), null)));
         ((TextView) getView().findViewById(R.id.tv_plan_end_time))

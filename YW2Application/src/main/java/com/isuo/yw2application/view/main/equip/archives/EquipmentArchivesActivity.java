@@ -13,7 +13,7 @@ import com.sito.library.utils.ActivityUtils;
 import javax.inject.Inject;
 
 /**
- * 设备档案
+ * 对象档案
  * Created by zhangan on 2017/10/12.
  */
 
@@ -25,7 +25,7 @@ public class EquipmentArchivesActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_container_toolbar, "设备详情");
+        setLayoutAndToolbar(R.layout.activity_container_toolbar, "对象详情");
         EquipmentBean bean = getIntent().getParcelableExtra(ConstantStr.KEY_BUNDLE_OBJECT);
         String equipmentIdResult = getIntent().getStringExtra(ConstantStr.KEY_BUNDLE_STR);
         if (bean == null && TextUtils.isEmpty(equipmentIdResult)) {

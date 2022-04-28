@@ -713,7 +713,7 @@ public class AlarmListFragment extends MvpFragment<AlarmListContact.Presenter> i
                         equipmentTypeBeen.get(i).setSelect(false);
                     }
                 }
-                String title = "设备类型";
+                String title = "对象类型";
                 equipmentTypeStr = null;
                 for (int i = 0; i < equipmentTypeBeen.size(); i++) {
                     if (equipmentTypeBeen.get(i).isSelect()) {

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.List;
 
 /**
- * 巡检设备对象
+ * 巡检对象对象
  * Created by zhangan on 2017-07-10.
  */
 
@@ -16,7 +16,7 @@ public class TaskEquipmentBean implements Parcelable {
     private int taskEquipmentState;
     private EquipmentBean equipment;
     private List<DataListBean> dataList;
-    private boolean isAlarm;//本地添加属性:判断当前设备是否异常上报过
+    private boolean isAlarm;//本地添加属性:判断当前对象是否异常上报过
     private boolean isTakePhoto;//本地添加属性:是否进行拍照
     private boolean isUpload;//本地添加属性:是否上传
 

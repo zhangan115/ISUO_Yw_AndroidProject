@@ -239,7 +239,7 @@
         <!--图片裁剪-->
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
 
-        <!--设备相关-->
+        <!--对象相关-->
         <activity
             android:name=".view.main.device.search.EquipSearchActivity"
             android:allowTaskReparenting="true"

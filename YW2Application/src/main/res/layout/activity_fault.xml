@@ -203,7 +203,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="44dp"
                         android:gravity="center_vertical"
-                        android:text="指派给"
+                        android:text="提交给"
                         android:textColor="@color/text333"
                         android:textSize="14sp" />
 

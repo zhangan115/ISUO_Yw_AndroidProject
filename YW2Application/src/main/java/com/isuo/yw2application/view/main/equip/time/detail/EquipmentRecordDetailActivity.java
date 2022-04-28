@@ -24,7 +24,7 @@ public class EquipmentRecordDetailActivity extends BaseActivity {
         TimeLineBean lineBean = getIntent().getParcelableExtra(ConstantStr.KEY_BUNDLE_OBJECT);
         String title = null;
        if (lineBean.getType() == 2) {
-            title = "设备图纸";
+            title = "对象图纸";
         } else  {
             title = "维修方案";
         }

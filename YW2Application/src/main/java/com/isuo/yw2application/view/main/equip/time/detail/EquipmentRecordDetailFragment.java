@@ -95,7 +95,7 @@ public class EquipmentRecordDetailFragment extends MvpFragment<EquipmentRecordDe
         ((TextView) getView().findViewById(R.id.tv_equip_name)).setText(equipRecordDetail.getRecordName());
         TextView contentTitleTv = getView().findViewById(R.id.tv_record_title);
         if (timeLineBean.getType() == 2) {
-            contentTitleTv.setText("设备图纸");
+            contentTitleTv.setText("对象图纸");
         } else {
             contentTitleTv.setText("维修方案");
         }

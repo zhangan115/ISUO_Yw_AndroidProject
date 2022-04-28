@@ -9,7 +9,7 @@ import com.sito.library.base.BaseView;
 import java.util.List;
 
 /**
- * 选择设备区域，设备类型
+ * 选择对象区域，对象类型
  * Created by zhangan on 2017/9/30.
  */
 

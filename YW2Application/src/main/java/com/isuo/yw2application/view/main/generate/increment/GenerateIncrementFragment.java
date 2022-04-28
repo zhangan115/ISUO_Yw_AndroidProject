@@ -433,13 +433,13 @@ public class GenerateIncrementFragment extends MvpFragment<GenerateIncrementCont
                             uploadJson.put("equipmentId", equipmentId);
                             uploadJson.put("operation", operation);
                         } else {
-                            getApp().showToast("请选择设备");
+                            getApp().showToast("请选择对象");
                         }
                     } else if (mTypeCode == 4) {
                         if (!TextUtils.isEmpty(equipmentId)) {
                             uploadJson.put("equipmentId", equipmentId);
                         } else {
-                            getApp().showToast("请选择设备");
+                            getApp().showToast("请选择对象");
                             return;
                         }
                     }

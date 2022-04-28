@@ -13,7 +13,7 @@ import java.util.List;
 import rx.Subscription;
 
 /**
- * 创建设备
+ * 创建对象
  * Created by zhangan on 2017/9/22.
  */
 

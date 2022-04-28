@@ -15,7 +15,7 @@ import com.sito.library.base.BaseView;
 import java.util.List;
 
 /**
- * 巡检设备列表
+ * 巡检对象列表
  * Created by zhangan on 2017-06-26.
  */
 
@@ -32,16 +32,16 @@ public interface ReportContract {
         void loadInspectionDataFromDb(long taskId, @NonNull RoomListBean roomListBean);
 
         /**
-         * 保存需要编辑的设备到缓存
+         * 保存需要编辑的对象到缓存
          *
-         * @param taskEquipmentBean 设备集合
+         * @param taskEquipmentBean 对象集合
          */
         void saveEditTaskEquipToCache(TaskEquipmentBean taskEquipmentBean);
 
         /**
-         * 获取设备信息
+         * 获取对象信息
          *
-         * @return 设备
+         * @return 对象
          */
         @Nullable
         TaskEquipmentBean getTaskEquipFromRepository();
@@ -55,7 +55,7 @@ public interface ReportContract {
         InspectionDetailBean getInspectionData(long taskId);
 
         /**
-         * 获取设备完成的数量
+         * 获取对象完成的数量
          *
          * @param taskId       任务id
          * @param roomListBean 配电室
@@ -64,11 +64,11 @@ public interface ReportContract {
         int getEquipmentFinishCount(long taskId, @NonNull RoomListBean roomListBean);
 
         /**
-         * 获取设备录入项目的完成数量
+         * 获取对象录入项目的完成数量
          *
          * @param taskId      任务id
          * @param roomId      配电室id
-         * @param equipmentId 设备id
+         * @param equipmentId 对象id
          * @return 数量
          */
         long getEquipmentDataFinishCount(long taskId, long roomId, long equipmentId);
@@ -99,12 +99,12 @@ public interface ReportContract {
         void hideUploadLoading();
 
         /**
-         * 上传设备录入数据失败
+         * 上传对象录入数据失败
          */
         void uploadDataError();
 
         /**
-         * 上传设备录入数据成功
+         * 上传对象录入数据成功
          */
         void uploadDataSuccess(List<User> users);
 

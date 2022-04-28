@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- * 设备档案
+ * 对象档案
  * Created by zhangan on 2017/10/12.
  */
 

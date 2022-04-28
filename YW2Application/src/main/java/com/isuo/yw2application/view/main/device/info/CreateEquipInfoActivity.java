@@ -8,7 +8,7 @@ import com.isuo.yw2application.view.base.BaseActivity;
 import com.sito.library.utils.ActivityUtils;
 
 /**
- * 选择设备区域，设备类型
+ * 选择对象区域，对象类型
  * Created by zhangan on 2017/10/9.
  */
 
@@ -22,7 +22,7 @@ public class CreateEquipInfoActivity extends BaseActivity {
             finish();
             return;
         }
-        setLayoutAndToolbar(R.layout.activity_container_toolbar, chooseType == 0 ? "添加属地" : "添加设备类型");
+        setLayoutAndToolbar(R.layout.activity_container_toolbar, chooseType == 0 ? "添加属地" : "添加对象类型");
         CreateEquipInfoFragment fragment = (CreateEquipInfoFragment) getFragmentManager().findFragmentById(R.id.frame_container);
         if (fragment == null) {
             fragment = CreateEquipInfoFragment.newInstance(chooseType);

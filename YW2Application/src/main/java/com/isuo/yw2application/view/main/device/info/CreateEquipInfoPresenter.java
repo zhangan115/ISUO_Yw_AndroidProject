@@ -12,7 +12,7 @@ import java.util.List;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- * 选择设备区域，设备类型
+ * 选择对象区域，对象类型
  * Created by zhangan on 2017/10/9.
  */
 

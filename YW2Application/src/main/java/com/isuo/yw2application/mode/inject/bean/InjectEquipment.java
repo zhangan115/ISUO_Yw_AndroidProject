@@ -5,7 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 /**
- * 注油设备
+ * 注油对象
  * Created by zhangan on 2017/8/29.
  */
 

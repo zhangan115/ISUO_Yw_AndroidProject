@@ -8,7 +8,7 @@ import com.isuo.yw2application.mode.bean.db.EquipmentDb;
 import java.util.List;
 
 /**
- * 设备信息
+ * 对象信息
  * Created by zhangan on 2017-07-10.
  */
 
@@ -30,11 +30,11 @@ public class EquipmentBean implements Parcelable {
     private long startTime;
     private long installTime;
     private String itemNumber;
-    private String equipmentFsn;//设备出厂编号
+    private String equipmentFsn;//对象出厂编号
     private EquipmentType equipmentType;
     private String equipmentAlias;
     private RoomBean room;//所属配电
-    private EquipmentDb equipmentDb;//本地添加属性:设备录入的数据
+    private EquipmentDb equipmentDb;//本地添加属性:对象录入的数据
     private List<ExpandListBean> expandList;
     private int isOnFocus;//是否已关注：0或null为未关注，1为审核中，2为已关注
 

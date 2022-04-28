@@ -10,7 +10,7 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
 /**
- * 创建设备数据库
+ * 创建对象数据库
  * Created by zhangan on 2017/9/22.
  */
 @Entity(nameInDb = "create_equipment")
@@ -18,12 +18,12 @@ public class CreateEquipmentDb implements Parcelable {
 
     @Id(autoincrement = true)
     private Long _id;
-    private Long equipmentId;//设备id
-    private String equipmentName;//设备名称
-    private int equipmentTypeId;//设备类型id
+    private Long equipmentId;//对象id
+    private String equipmentName;//对象名称
+    private int equipmentTypeId;//对象类型id
     private int voltageGradesId;//电压等级id
-    private String equipmentNum;//设备位号
-    private String productNum;//设备出厂编号
+    private String equipmentNum;//对象位号
+    private String productNum;//对象出厂编号
     private long createTime;//创建时间
     private boolean needUpload;//是否需要上传
     private long currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();

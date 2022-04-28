@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by Yangzb on 2017/7/14 14:06
  * E-mail：yangzongbin@si-top.com
- * 今日设备故障
+ * 今日对象故障
  */
 public class Fault implements Parcelable {
 

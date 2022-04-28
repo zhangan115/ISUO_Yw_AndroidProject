@@ -11,7 +11,7 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
 /**
- * 设备
+ * 对象
  * Created by zhangan on 2017-07-10.
  */
 @Entity(nameInDb = "equipment")
@@ -21,7 +21,7 @@ public class EquipmentDb implements Parcelable {
     private Long _id;
     private long taskId; //任务id
     private long roomId;//位置id
-    private long equipmentId;//设备id
+    private long equipmentId;//对象id
     private String equipmentName;
     private boolean alarmState;//是否异常
     private boolean uploadState;//是否上传

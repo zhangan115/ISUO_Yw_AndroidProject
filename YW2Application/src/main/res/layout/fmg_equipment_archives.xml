@@ -105,14 +105,14 @@
                     style="@style/Equipment_TEXT_TITLE_STYLE"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="设备位号" />
+                    android:text="对象位号" />
 
                 <TextView
                     android:id="@+id/tv_1"
                     style="@style/Equipment_TEXT_CONTENT_STYLE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="设备位号" />
+                    tools:text="对象位号" />
 
             </LinearLayout>
 
@@ -127,14 +127,14 @@
                     style="@style/Equipment_TEXT_TITLE_STYLE"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="设备类型" />
+                    android:text="对象类型" />
 
                 <TextView
                     android:id="@+id/tv_2"
                     style="@style/Equipment_TEXT_CONTENT_STYLE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="设备位号" />
+                    tools:text="对象位号" />
 
             </LinearLayout>
 
@@ -155,7 +155,7 @@
                     style="@style/Equipment_TEXT_CONTENT_STYLE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="设备位号" />
+                    tools:text="对象位号" />
 
             </LinearLayout>
 
@@ -176,7 +176,7 @@
                     style="@style/Equipment_TEXT_CONTENT_STYLE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="设备位号" />
+                    tools:text="对象位号" />
 
             </LinearLayout>
 
@@ -197,7 +197,7 @@
                     style="@style/Equipment_TEXT_CONTENT_STYLE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="设备位号" />
+                    tools:text="对象位号" />
 
             </LinearLayout>
 
@@ -218,7 +218,7 @@
                     style="@style/Equipment_TEXT_CONTENT_STYLE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="设备位号" />
+                    tools:text="对象位号" />
 
             </LinearLayout>
 
@@ -232,14 +232,14 @@
                     style="@style/Equipment_TEXT_TITLE_STYLE"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="设备状态" />
+                    android:text="对象状态" />
 
                 <TextView
                     android:id="@+id/tv_7"
                     style="@style/Equipment_TEXT_CONTENT_STYLE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="设备位号" />
+                    tools:text="对象位号" />
 
             </LinearLayout>
 
@@ -260,7 +260,7 @@
                     style="@style/Equipment_TEXT_CONTENT_STYLE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="设备位号" />
+                    tools:text="对象位号" />
 
             </LinearLayout>
 
@@ -281,7 +281,7 @@
                     style="@style/Equipment_TEXT_CONTENT_STYLE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="设备位号" />
+                    tools:text="对象位号" />
 
             </LinearLayout>
 
@@ -302,7 +302,7 @@
                     style="@style/Equipment_TEXT_CONTENT_STYLE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="设备位号" />
+                    tools:text="对象位号" />
 
             </LinearLayout>
 
@@ -316,14 +316,14 @@
                     style="@style/Equipment_TEXT_TITLE_STYLE"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="设备别名" />
+                    android:text="对象别名" />
 
                 <TextView
                     android:id="@+id/tv_11"
                     style="@style/Equipment_TEXT_CONTENT_STYLE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="设备位号" />
+                    tools:text="对象位号" />
 
             </LinearLayout>
 
@@ -452,7 +452,7 @@
                         android:layout_height="wrap_content"
                         android:drawableTop="@drawable/equipment_drawings"
                         android:drawablePadding="15dp"
-                        android:text="设备图纸"
+                        android:text="对象图纸"
                         android:textColor="@color/color535862"
                         android:textSize="12sp" />
                 </LinearLayout>

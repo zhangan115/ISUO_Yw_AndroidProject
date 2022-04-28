@@ -615,7 +615,7 @@
                                 android:layout_height="wrap_content"
                                 android:drawableTop="@drawable/equipment_drawings"
                                 android:drawablePadding="15dp"
-                                android:text="设备图纸"
+                                android:text="对象图纸"
                                 android:textColor="@color/color535862"
                                 android:textSize="12sp" />
                         </LinearLayout>

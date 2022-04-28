@@ -126,7 +126,7 @@ public class OverhaulDetailFragment extends MvpFragment<OverhaulDetailContract.P
             equipmentName = overhaulBean.getEquipment().getEquipmentName() + "(" + overhaulBean.getEquipment().getEquipmentSn() + ")";
         }
         tv_equip_name.setText(equipmentName);
-        tv_equip_alias.setText(String.format("设备别名:%s", TextUtils.isEmpty(overhaulBean.getEquipment().getEquipmentAlias())
+        tv_equip_alias.setText(String.format("对象别名:%s", TextUtils.isEmpty(overhaulBean.getEquipment().getEquipmentAlias())
                 ? "" : overhaulBean.getEquipment().getEquipmentAlias()));
         String[] faultPicUrl;
         if (overhaulBean.getAddType() == 0) {

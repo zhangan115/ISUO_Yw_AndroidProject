@@ -394,8 +394,8 @@ public class WorkRepository implements WorkDataSource {
         List<WorkItem> allWorkItems = new ArrayList<>();
         List<WorkItem> payWorkItems = new ArrayList<>();
         //可用item
-        allWorkItems.add(new WorkItem(2, "执行检修", R.drawable.overhaul));
-        allWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
+        allWorkItems.add(new WorkItem(2, "执行任务", R.drawable.overhaul));
+        allWorkItems.add(new WorkItem(3, "生成任务", R.drawable.assign));
         allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
         allWorkItems.add(new WorkItem(5, "事件上报", R.drawable.fault_report));
         allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.drive_input));
@@ -445,8 +445,8 @@ public class WorkRepository implements WorkDataSource {
         }
         if (myWorkItems.isEmpty()) {
             myWorkItems.add(new WorkItem(8, "待办事项", R.drawable.to_do_list));
-            myWorkItems.add(new WorkItem(2, "执行检修", R.drawable.overhaul));
-            myWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
+            myWorkItems.add(new WorkItem(2, "执行任务", R.drawable.overhaul));
+            myWorkItems.add(new WorkItem(3, "生成任务", R.drawable.assign));
             myWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
             myWorkItems.add(new WorkItem(5, "事件上报", R.drawable.fault_report));
             myWorkItems.add(new WorkItem(6, "台账录入", R.drawable.drive_input));
@@ -462,8 +462,8 @@ public class WorkRepository implements WorkDataSource {
         List<WorkItem> allWorkItems = new ArrayList<>();
         List<WorkItem> payWorkItems = new ArrayList<>();
         //可用item
-        allWorkItems.add(new WorkItem(2, "执行检修", R.drawable.overhaul));
-        allWorkItems.add(new WorkItem(3, "发布检修", R.drawable.assign));
+        allWorkItems.add(new WorkItem(2, "执行任务", R.drawable.overhaul));
+        allWorkItems.add(new WorkItem(3, "生成任务", R.drawable.assign));
         allWorkItems.add(new WorkItem(4, "发布通知", R.drawable.notice));
         allWorkItems.add(new WorkItem(5, "事件上报", R.drawable.fault_report));
         allWorkItems.add(new WorkItem(6, "台账录入", R.drawable.drive_input));

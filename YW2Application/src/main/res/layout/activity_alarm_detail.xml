@@ -432,7 +432,7 @@
                             android:layout_weight="1"
                             android:paddingTop="7dp"
                             android:paddingBottom="7dp"
-                            android:text="重点关注此设备"
+                            android:text="重点关注此对象"
                             android:textColor="@color/text333"
                             android:textSize="14sp" />
 

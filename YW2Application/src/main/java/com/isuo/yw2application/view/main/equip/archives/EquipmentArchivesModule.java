@@ -4,7 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * 设备档案
+ * 对象档案
  * Created by zhangan on 2017/10/12.
  */
 @Module

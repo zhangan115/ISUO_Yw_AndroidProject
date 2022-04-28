@@ -38,7 +38,7 @@ import rx.Observable;
 import rx.Subscription;
 
 /**
- * 设备
+ * 对象
  * Created by zhangan on 2017/10/13.
  */
 @Singleton

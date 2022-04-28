@@ -117,7 +117,7 @@ public interface CustomerDataSource {
     @NonNull
     Subscription autoLogin(@NonNull SplashCallBack callBack);
 
-    //设备台账
+    //对象台账
     @NonNull
     Subscription getEquipInfo(boolean isFocus, @NonNull IListCallBack<EquipBean> callBack);
 
@@ -132,13 +132,13 @@ public interface CustomerDataSource {
     //本月未到岗统计
     Subscription getMonthCount(@NonNull String time, @NonNull String deptId, @NonNull IListCallBack<MonthCount> callBack);
 
-    //获取设备类型
+    //获取对象类型
     Subscription getEquipType(@NonNull IListCallBack<EquipType> callBack);
 
     //获取配电室
     Subscription getEquipRoom(@NonNull IListCallBack<EquipRoom> callBack);
 
-    //根据条件获取设备列表
+    //根据条件获取对象列表
     Subscription getEquipList(@NonNull Map<String, Object> map, IListCallBack<EquipmentBean> callBack);
 
     //获取巡检详情头部信息
@@ -149,10 +149,10 @@ public interface CustomerDataSource {
 
     Subscription getMoreFaultList(long taskId, int lastId, IListCallBack<FaultList> callBack);
 
-    //今日设备故障
+    //今日对象故障
     Subscription getTodayFault(@NonNull String startTime, @NonNull String endTime, IListCallBack<FaultList> callBack);
 
-    //今日设备故障
+    //今日对象故障
     @NonNull
     Subscription getTodayFault(int faultState, Long lastId, IListCallBack<FaultList> callBack);
 
@@ -176,7 +176,7 @@ public interface CustomerDataSource {
     //故障等级统计
     Subscription getFaultLevel(@NonNull String time, @NonNull IObjectCallBack<FaultLevel> callBack);
 
-    //根据taskid查询设备
+    //根据taskid查询对象
     Subscription getEquipByTaskId(long taskId, @NonNull IListCallBack<EquipBean> callBack);
 
     @NonNull
@@ -232,9 +232,9 @@ public interface CustomerDataSource {
     }
 
     /**
-     * 获取设备详情
+     * 获取对象详情
      *
-     * @param equipmentId 设备id
+     * @param equipmentId 对象id
      * @param callBack    回调
      * @return 订阅
      */
@@ -279,9 +279,9 @@ public interface CustomerDataSource {
     Subscription getFireSaveMessage(long messageId, IObjectCallBack<MessageListBean> callBack);
 
     /**
-     * 获取关注设备数据
+     * 获取关注对象数据
      *
-     * @param equipmentId 设备id
+     * @param equipmentId 对象id
      * @param callBack    回调
      * @return 订阅
      */

@@ -8,7 +8,7 @@ import com.isuo.yw2application.view.base.BaseActivity;
 import com.sito.library.utils.ActivityUtils;
 
 /**
- * 设备图纸，维修方案
+ * 对象图纸，维修方案
  * Created by zhangan on 2017/10/13.
  */
 
@@ -24,7 +24,7 @@ public class EquipmentTimeLineActivity extends BaseActivity {
         }
         String title;
        if (showType == 2) {
-            title = "设备图纸";
+            title = "对象图纸";
         } else {
             title = "维修方案";
         }

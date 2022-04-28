@@ -226,7 +226,7 @@ public interface InspectionSourceData {
     }
 
     /**
-     * 上传设备数据
+     * 上传对象数据
      *
      * @param position   位置
      * @param detailBean 巡检数据
@@ -259,7 +259,7 @@ public interface InspectionSourceData {
     /**
      * 保存输入类型数据
      *
-     * @param taskEquipmentBean 巡检设备
+     * @param taskEquipmentBean 巡检对象
      * @param isAuto            是否自动
      */
     void saveInputData(TaskEquipmentBean taskEquipmentBean, boolean isAuto);
@@ -307,7 +307,7 @@ public interface InspectionSourceData {
      * 更新用户照片
      *
      * @param taskId      任务id
-     * @param equipmentId 设备id
+     * @param equipmentId 对象id
      * @param url         地址
      * @param callBack    回调
      * @return 订阅
@@ -338,9 +338,9 @@ public interface InspectionSourceData {
     Subscription roomListFinish(long taskId, int operation, @NonNull String userIds, @NonNull IObjectCallBack<String> callBack);
 
     /**
-     * 获取关注设备数据
+     * 获取关注对象数据
      *
-     * @param equipmentId 设备id
+     * @param equipmentId 对象id
      * @param callBack    回调
      * @return 订阅
      */
@@ -366,9 +366,9 @@ public interface InspectionSourceData {
     }
 
     /**
-     * 获取保存的设备信息
+     * 获取保存的对象信息
      *
-     * @return 设备
+     * @return 对象
      */
     @NotNull
     Subscription getTaskEquipmentData(@NotNull IGetTaskEquipmentCallBack callBack);
@@ -381,9 +381,9 @@ public interface InspectionSourceData {
     }
 
     /**
-     * 保存设备到repository
+     * 保存对象到repository
      *
-     * @param taskEquipmentBean 设备
+     * @param taskEquipmentBean 对象
      */
     void saveTaskEquipToRepository(TaskEquipmentBean taskEquipmentBean);
 
@@ -392,7 +392,7 @@ public interface InspectionSourceData {
 
 
     /**
-     * 获取设备完成的数量
+     * 获取对象完成的数量
      *
      * @return 数量
      */
@@ -400,14 +400,14 @@ public interface InspectionSourceData {
 
 
     /**
-     * 获取设备录入项的完成数量
+     * 获取对象录入项的完成数量
      *
      * @return 数量
      */
     long getEquipmentInputCount(long taskId, long roomId, long equipmentId);
 
     /**
-     * 获取设备的完成状态
+     * 获取对象的完成状态
      *
      * @param taskId      taskId
      * @param roomId      roomId

@@ -17,14 +17,14 @@
             style="@style/Equipment_TEXT_TITLE_STYLE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="设备别名" />
+            android:text="对象别名" />
 
         <TextView
             android:id="@+id/tv_value"
             style="@style/Equipment_TEXT_CONTENT_STYLE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="设备位号" />
+            tools:text="对象位号" />
 
     </LinearLayout>
 

@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * 设备类型类
+ * 对象类型类
  * Created by zhangan on 2017/10/11.
  */
 

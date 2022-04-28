@@ -144,7 +144,7 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
         if (equipmentId != -1 && !TextUtils.isEmpty(equipmentName)) {
             equipId = equipmentId;
             mDeviceName.setText(equipmentName);
-            isChooseEquip = false;//无法选择其他设备
+            isChooseEquip = false;//无法选择其他对象
             mDeviceName.setCompoundDrawables(null, null, null, null);
         }
         addEmployeeLayout = findViewById(R.id.ll_employee_add);
@@ -432,7 +432,7 @@ public class FaultActivity extends SpeechActivity implements View.OnClickListene
                         mImageUrl = sb.toString();
                     }
                     if (equipId == -1) {
-                        Yw2Application.getInstance().showToast("请选择设备");
+                        Yw2Application.getInstance().showToast("请选择对象");
                         return;
                     }
                     jsonObject.put("equipmentId", equipId);

@@ -29,7 +29,7 @@ public class DataItemBean implements Parcelable {
     private int isShareValue;//是否共享
     //本地添加的字段，进行逻辑处理
     private String chooseInspectionName;//本地添加属性：选择结果名称
-    private EquipmentDataDb equipmentDataDb;//本地添加属性：保存的设备数据
+    private EquipmentDataDb equipmentDataDb;//本地添加属性：保存的对象数据
     private boolean isUploading;
 
     public long getCreateTime() {

@@ -63,7 +63,7 @@ public class EquipSearchActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_equip_search, "设备列表");
+        setLayoutAndToolbar(R.layout.activity_equip_search, "对象列表");
         DaggerEquipSearchComponent.builder().customerRepositoryComponent(Yw2Application.getInstance().getRepositoryComponent())
                 .equipSearchModule(new EquipSearchModule(this)).build()
                 .inject(this);

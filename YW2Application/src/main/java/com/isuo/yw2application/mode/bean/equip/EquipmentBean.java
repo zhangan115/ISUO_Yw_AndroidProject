@@ -7,7 +7,7 @@ import java.util.List;
 
 
 /**
- * 设备
+ * 对象
  * Created by zhangan on 2017-07-10.
  */
 
@@ -32,7 +32,7 @@ public class EquipmentBean implements Parcelable {
     private RoomBean room;//所属配电
     private String itemNumber;
     private String equipmentAlias;
-    private String equipmentFsn;//设备出厂编号
+    private String equipmentFsn;//对象出厂编号
     private List<ExpandListBean> expandList;
     private int isOnFocus;//是否已关注：0或null为未关注，1为审核中，2为已关注
 

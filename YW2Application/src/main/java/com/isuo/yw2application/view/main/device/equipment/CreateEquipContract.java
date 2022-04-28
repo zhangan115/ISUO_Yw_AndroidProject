@@ -9,7 +9,7 @@ import com.sito.library.base.BaseView;
 import org.json.JSONObject;
 
 /**
- * 创建设备/修改设备信息
+ * 创建对象/修改对象信息
  * Created by zhangan on 2017/9/30.
  */
 

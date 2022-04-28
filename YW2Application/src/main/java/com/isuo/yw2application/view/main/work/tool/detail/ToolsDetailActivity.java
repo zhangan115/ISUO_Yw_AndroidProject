@@ -330,7 +330,7 @@ public class ToolsDetailActivity extends BaseActivity implements ToolsDetailCont
             }
         }
         TextView tvToolsNum = (TextView) viewHolder.getView(R.id.tvToolsNum);
-        tvToolsNum.setText(String.format("设备编号:%s", tools.getToolNumber()));
+        tvToolsNum.setText(String.format("对象编号:%s", tools.getToolNumber()));
         TextView tvToolsDes = (TextView) viewHolder.getView(R.id.tvToolsDes);
         if (!TextUtils.isEmpty(tools.getToolDesc())) {
             tvToolsDes.setVisibility(View.VISIBLE);

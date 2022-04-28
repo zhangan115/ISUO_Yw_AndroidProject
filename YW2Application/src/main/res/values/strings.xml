@@ -19,9 +19,9 @@
 
     <string name="no_data">没有您找的数据</string>
     <string name="energy_point">请根据操作规范隔离能量\n系统将记录您本次操作</string>
-    <string name="mine_about_content">&#160;&#160;&#160;&#160;&#160;&#160;西安小梭易智信息科技有限公司是一家专门为生产制造企业设备管理组织及人员提供高性价比的数字化、信息化、智能化、共享化服务及应用的创新型企业。
-        \n&#160;&#160;&#160;&#160;&#160;&#160;公司由多年从事设备管理、市场业务及系统研发人员合作创立，致力于为用户提供有用、易用、乐用的设备管理相关应用及服务，帮助提高设备运维管理能力及效率，并为设备全生命周期健康管理提供可靠的数据支持及分析能力。
-        \n&#160;&#160;&#160;&#160;&#160;&#160;公司还将打通企业间的设备及管理链接，实现更进一步的的大数据化设备运维管理体系，为用户带来更多更好的效益。</string>
+    <string name="mine_about_content">&#160;&#160;&#160;&#160;&#160;&#160;西安小梭易智信息科技有限公司是一家专门为生产制造企业对象管理组织及人员提供高性价比的数字化、信息化、智能化、共享化服务及应用的创新型企业。
+        \n&#160;&#160;&#160;&#160;&#160;&#160;公司由多年从事对象管理、市场业务及系统研发人员合作创立，致力于为用户提供有用、易用、乐用的对象管理相关应用及服务，帮助提高对象运维管理能力及效率，并为对象全生命周期健康管理提供可靠的数据支持及分析能力。
+        \n&#160;&#160;&#160;&#160;&#160;&#160;公司还将打通企业间的对象及管理链接，实现更进一步的的大数据化对象运维管理体系，为用户带来更多更好的效益。</string>
     <string name="mine_content">&#160;&#160;&#160;&#160;&#160;&#160;您若有想法、建议或新的功能需求，欢迎联系我们</string>
     <string name="mine_tel_1">&#160;&#160;&#160;&#160;&#160;&#160;服务微信：isuotech</string>
     <string name="mine_tel_2">&#160;&#160;&#160;&#160;&#160;&#160;服务QQ：1513874</string>
@@ -127,7 +127,7 @@
     <string name="room_type_2">电机区域</string>
 
     <string name="toolbar_title_create_equip">台账录入</string>
-    <string name="toolbar_title_equip_info">设备信息</string>
+    <string name="toolbar_title_equip_info">对象信息</string>
 
     <string name="chat_10kv">10kV</string>
     <string name="chat_35kv">35kV</string>
@@ -146,6 +146,6 @@
     <string name="title_tab_start_date">开始时间</string>
     <string name="ttile_tab_end_date">结束时间</string>
     <string name="no_data_now">暂时没有数据</string>
-    <string name="equipment_count">设备数量</string>
+    <string name="equipment_count">对象数量</string>
     <string name="start_task">开始任务</string>
 </resources>

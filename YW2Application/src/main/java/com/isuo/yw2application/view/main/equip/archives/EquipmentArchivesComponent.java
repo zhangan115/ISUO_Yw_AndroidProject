@@ -7,7 +7,7 @@ import com.isuo.yw2application.view.FragmentScoped;
 import dagger.Component;
 
 /**
- * 设备档案
+ * 对象档案
  * Created by Administrator on 2017/6/22.
  */
 @FragmentScoped

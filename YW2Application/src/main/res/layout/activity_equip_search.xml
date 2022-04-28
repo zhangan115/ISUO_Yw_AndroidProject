@@ -32,7 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="设备名称"
+                    android:text="对象名称"
                     android:textColor="@color/text333"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -57,7 +57,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:hint="请输入设备名称/位号/编号"
+                        android:hint="请输入对象名称/位号/编号"
                         android:textColor="@color/text333"
                         android:textSize="14sp"
                         app:searchIcon="@drawable/searth_icon" />
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="@dimen/DP_10"
-                    android:text="设备类型"
+                    android:text="对象类型"
                     android:textColor="@color/text333"
                     android:textSize="14sp"
                     android:textStyle="bold" />

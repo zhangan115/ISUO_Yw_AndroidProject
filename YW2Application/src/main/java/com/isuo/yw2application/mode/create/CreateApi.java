@@ -10,7 +10,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * 创建设备
+ * 创建对象
  * Created by zhangan on 2018/3/30.
  */
 
@@ -35,9 +35,9 @@ public interface CreateApi {
     Observable<Bean<String>> editEquipment(@Body() String jsonInfo);
 
     /**
-     * 删除设备类型
+     * 删除对象类型
      *
-     * @param equipmentTypeId 设备类型id
+     * @param equipmentTypeId 对象类型id
      * @return 订阅
      */
     @GET("equipment/type/delete.json")

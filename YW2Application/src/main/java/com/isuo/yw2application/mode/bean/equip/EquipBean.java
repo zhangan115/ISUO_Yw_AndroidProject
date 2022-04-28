@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Yangzb on 2017/7/7 11:41
  * E-mail：yangzongbin@si-top.com
- * 设备列表 带配电室
+ * 对象列表 带配电室
  */
 public class EquipBean {
 

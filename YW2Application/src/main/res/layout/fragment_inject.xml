@@ -35,7 +35,7 @@
                     android:background="@null"
                     android:drawableLeft="@drawable/search_icon"
                     android:drawablePadding="4dp"
-                    android:hint="电机位号/设备名称模糊搜索"
+                    android:hint="电机位号/对象名称模糊搜索"
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:lines="1"

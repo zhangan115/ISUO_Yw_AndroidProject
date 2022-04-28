@@ -49,7 +49,7 @@ import java.util.Map;
 import pub.devrel.easypermissions.AppSettingsDialog;
 
 /**
- * 创建设备/修改设备信息
+ * 创建对象/修改对象信息
  * Created by zhangan on 2017/9/30.
  */
 
@@ -326,7 +326,7 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
                         })
                         .show();
                 break;
-            case R.id.ll_create_equip_level://设备等级
+            case R.id.ll_create_equip_level://对象等级
                 List<String> levelList = new ArrayList<>();
                 levelList.add("A类");
                 levelList.add("B类");
@@ -428,11 +428,11 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
             return false;
         }
         if (TextUtils.isEmpty(tv_create_equip_type.getText())) {
-            showMessage("请选择设备类型");
+            showMessage("请选择对象类型");
             return false;
         }
         if (TextUtils.isEmpty(tv_create_equip_name.getText())) {
-            showMessage("请输入设备名称");
+            showMessage("请输入对象名称");
             return false;
         }
         if (chooseNameType == 1 && TextUtils.isEmpty(tv_create_equip_num.getText())) {
@@ -444,7 +444,7 @@ public class CreateEquipFragment extends MvpFragment<CreateEquipContract.Present
             return false;
         }
         if (equipmentLevel == -1) {
-            showMessage("请选择设备等级");
+            showMessage("请选择对象等级");
             return false;
         }
         return true;

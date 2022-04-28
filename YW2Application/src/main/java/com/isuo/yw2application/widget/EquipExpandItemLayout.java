@@ -10,7 +10,7 @@ import com.isuo.yw2application.mode.bean.equip.ExpandListBean;
 
 
 /**
- * 设备详情
+ * 对象详情
  * Created by zhangan on 2018/1/9.
  */
 

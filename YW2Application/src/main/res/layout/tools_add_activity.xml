@@ -160,7 +160,7 @@
                         android:layout_marginLeft="7dp"
                         android:paddingTop="16dp"
                         android:paddingBottom="16dp"
-                        android:text="设备编号"
+                        android:text="对象编号"
                         android:textColor="@color/text333"
                         android:textSize="15dp" />
 

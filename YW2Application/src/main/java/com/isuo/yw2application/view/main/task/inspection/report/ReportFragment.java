@@ -242,7 +242,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
             @Override
             public void onClick(View v) {
                 if (!canUpload) {
-                    Yw2Application.getInstance().showToast("有设备没有完成巡检");
+                    Yw2Application.getInstance().showToast("有对象没有完成巡检");
                     return;
                 }
                 if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
@@ -317,7 +317,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     private static final int ACTION_START_EQUIPMENT = 102;
     LocalBroadcastManager manager;
 
-    /******* 随机生成的需要拍照的设备******/
+    /******* 随机生成的需要拍照的对象******/
     private void toUploadEquipmentPhoto() {
         @SuppressLint("InflateParams")
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_take_photo, null);

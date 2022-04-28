@@ -391,14 +391,14 @@ public class IncrementActivity extends SpeechActivity implements View.OnClickLis
                     }
                     if (mTypeCode == 1) {
                         if (TextUtils.isEmpty(equipId)) {
-                            Yw2Application.getInstance().showToast("请选择设备");
+                            Yw2Application.getInstance().showToast("请选择对象");
                             return;
                         }
                         jsonObject.put("equipmentId", equipId);
                         jsonObject.put("operation", operation);
                     } else if (mTypeCode == 4) {
                         if (TextUtils.isEmpty(equipId)) {
-                            Yw2Application.getInstance().showToast("请选择设备");
+                            Yw2Application.getInstance().showToast("请选择对象");
                             return;
                         }
                         jsonObject.put("equipmentId", equipId);

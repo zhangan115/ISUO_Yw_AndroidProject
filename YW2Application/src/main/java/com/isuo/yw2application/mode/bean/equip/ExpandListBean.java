@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * 设备的自定义数据
+ * 对象的自定义数据
  * Created by zhangan on 2018/1/9.
  */
 

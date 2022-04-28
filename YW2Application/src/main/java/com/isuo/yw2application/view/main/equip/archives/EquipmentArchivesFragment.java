@@ -27,7 +27,7 @@ import com.sito.library.utils.DataUtil;
 import com.sito.library.utils.GlideUtils;
 
 /**
- * 设备档案
+ * 对象档案
  * Created by zhangan on 2017/10/12.
  */
 
@@ -219,6 +219,6 @@ public class EquipmentArchivesFragment extends MvpFragment<EquipmentArchivesCont
 
     @Override
     public void scannerResultError() {
-        Yw2Application.getInstance().showToast("没有找到设备");
+        Yw2Application.getInstance().showToast("没有找到对象");
     }
 }

@@ -107,7 +107,7 @@ public interface WorkApi {
     Observable<Bean<OverhaulBean>> getRepairDetail(@Query("repairId") String repairId);
 
     /**
-     * 设备类型
+     * 对象类型
      *
      * @return 订阅
      */

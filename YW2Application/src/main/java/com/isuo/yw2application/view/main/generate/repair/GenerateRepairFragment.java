@@ -410,7 +410,7 @@ public class GenerateRepairFragment extends MvpFragment<GenerateRepairContract.P
                         uploadJson.put("picsUrlAdd", imageUrl);
                     }
                     if (TextUtils.isEmpty(equipmentId)) {
-                        getApp().showToast("请选择设备");
+                        getApp().showToast("请选择对象");
                         return;
                     }
                     uploadJson.put("equipmentId", equipmentId);

@@ -70,7 +70,7 @@
                     android:drawableLeft="@drawable/search_icon"
                     android:drawablePadding="4dp"
                     android:freezesText="false"
-                    android:hint="设备名称模糊搜索"
+                    android:hint="对象名称模糊搜索"
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:lines="1"

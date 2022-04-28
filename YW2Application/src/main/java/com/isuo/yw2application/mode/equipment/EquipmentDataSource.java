@@ -14,7 +14,7 @@ import com.isuo.yw2application.mode.bean.overhaul.OverhaulBean;
 import rx.Subscription;
 
 /**
- * 设备相关
+ * 对象相关
  * Created by zhangan on 2017/10/13.
  */
 

@@ -6,7 +6,7 @@ import com.sito.library.base.BasePresenter;
 import com.sito.library.base.BaseView;
 
 /**
- * 设备档案
+ * 对象档案
  * Created by zhangan on 2017/10/12.
  */
 
@@ -17,9 +17,9 @@ interface EquipmentArchivesContract {
         void getEquipmentDetail(long equipmentId);
 
         /**
-         * 获取设备重点关注数据
+         * 获取对象重点关注数据
          *
-         * @param equipmentId 设备id
+         * @param equipmentId 对象id
          */
         void getEquipmentCare(long equipmentId);
     }

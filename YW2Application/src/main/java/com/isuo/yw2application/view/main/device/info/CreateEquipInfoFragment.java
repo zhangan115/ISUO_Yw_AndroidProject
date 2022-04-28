@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 选择设备区域，设备类型
+ * 选择对象区域，对象类型
  * Created by zhangan on 2017/10/9.
  */
 
@@ -90,7 +90,7 @@ public class CreateEquipInfoFragment extends MvpFragment<CreateEquipInfoContract
         mEquipmentTypeAdapter = new EquipmentTypeAdapter(getActivity(), listView, R.layout.equipment_level_1, R.layout.equipment_level_2);
         listView.setAdapter(mEquipmentTypeAdapter);
         mEquipmentTypeAdapter.setDeleteCallback(chooseRoomOrType -> new MaterialDialog.Builder(getActivity())
-                .content("是否删除当前的设备类型")
+                .content("是否删除当前的对象类型")
                 .negativeText("取消")
                 .positiveText("确定")
                 .onPositive((dialog, which) -> {
@@ -105,7 +105,7 @@ public class CreateEquipInfoFragment extends MvpFragment<CreateEquipInfoContract
                 mPresenter.getRoomList();
             }
         } else {
-            edit_content.setHint("添加设备类型名称");
+            edit_content.setHint("添加对象类型名称");
             mRecyclerView.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
             if (mPresenter != null) {
@@ -117,7 +117,7 @@ public class CreateEquipInfoFragment extends MvpFragment<CreateEquipInfoContract
             if (chooseType == 0) {
                 note = "是否删除当前属地?";
             } else {
-                note = "是否删除当前设备类型?";
+                note = "是否删除当前对象类型?";
             }
             new MaterialDialog.Builder(getActivity())
                     .content(note)
@@ -172,7 +172,7 @@ public class CreateEquipInfoFragment extends MvpFragment<CreateEquipInfoContract
                 getActivity().setResult(Activity.RESULT_OK, intent);
                 getActivity().finish();
             } else {
-                showMessage("请选中一个设备类型");
+                showMessage("请选中一个对象类型");
             }
         }
         return true;
@@ -193,7 +193,7 @@ public class CreateEquipInfoFragment extends MvpFragment<CreateEquipInfoContract
                             .show();
                 } else {
                     List<String> items = new ArrayList<>();
-                    items.add("创建一级设备类型");
+                    items.add("创建一级对象类型");
                     for (ChooseRoomOrType type : dataList) {
                         items.add(type.getName());
                     }

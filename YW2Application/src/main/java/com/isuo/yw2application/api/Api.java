@@ -291,14 +291,14 @@ public class Api {
         Observable<Bean<String>> agree(@Body() String info);
     }
 
-    //获取设备
+    //获取对象
     public interface Equip {
-        //获取设备 带配电室
+        //获取对象 带配电室
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("room/equipment/list.json")
         Observable<Bean<List<EquipBean>>> getEquipInfo(@Body() String body);
 
-        //设备类型列表 不分页
+        //对象类型列表 不分页
         @GET("equipment/type/list.json")
         Observable<Bean<List<EquipType>>> getEquipType();
 
@@ -306,22 +306,22 @@ public class Api {
         @GET("room/user/list.json")
         Observable<Bean<List<EquipRoom>>> getEquipPlace();
 
-        //查询设备
+        //查询对象
         @GET("equipment/list.json")
         Observable<Bean<List<EquipmentBean>>> getEquipList(@QueryMap Map<String, Object> map);
 
-        //设备详情
+        //对象详情
         @GET("equipment/get.json")
         Observable<Bean<EquipmentBean>> getEquipmentDetail(@Query("equipmentId") long taskId);
 
-        //根据设备id获取检修记录
+        //根据对象id获取检修记录
         @GET("repair/equipment/list.json")
         Observable<Bean<List<OverhaulBean>>> getOverByEId(@Query("equipmentId") long equipId, @Query("count") int pageSize);
 
         @GET("repair/list.json")
         Observable<Bean<List<OverhaulBean>>> getMoreOverByEId(@Query("equipmentId") long equipId, @Query("count") int pageSize, @Query("lastId") int lastId);
 
-        //根据设备id获取检修数据
+        //根据对象id获取检修数据
         @GET("inspectionData/item/list.json")
         Observable<Bean<InspectionData>> getCheckData(@Query("equipmentId") long equipId);
 
@@ -411,11 +411,11 @@ public class Api {
         @GET("fault/list.json")
         Observable<Bean<List<FaultList>>> getMoreFaultList(@Query("count") int pageSize, @Query("taskId") long taskId, @Query("lastId") int lastId);
 
-        //今日设备故障
+        //今日对象故障
         @GET("fault/list.json")
         Observable<Bean<List<FaultList>>> getTodayFault(@Query("count") int pageSize, @Query("startTime") String startTime, @Query("endTime") String endTime);
 
-        //今日设备故障
+        //今日对象故障
         @GET("fault/list.json")
         Observable<Bean<List<FaultList>>> getMoreTodayFault(@Query("count") int pageSize, @Query("lastId") long lastId, @Query("startTime") String startTime, @Query("endTime") String endTime);
 
@@ -428,7 +428,7 @@ public class Api {
         @GET("fault/list.json")
         Observable<Bean<List<FaultList>>> getAlarmList(@QueryMap() Map<String, String> map);
 
-        //根据takid查询设备
+        //根据takid查询对象
         @GET("task/get/room/equipments.json")
         Observable<Bean<List<EquipBean>>> getEquipByTaskId(@Query("taskId") long taskId);
     }

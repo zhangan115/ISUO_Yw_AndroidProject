@@ -11,7 +11,7 @@
         android:layout_marginLeft="8dp"
         android:paddingBottom="10dp"
         android:paddingTop="15dp"
-        android:text="以设备为背景自拍一张"
+        android:text="以对象为背景自拍一张"
         android:textColor="@color/color535862"
         android:textSize="14sp" />
 

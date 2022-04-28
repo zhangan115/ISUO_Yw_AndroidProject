@@ -4,7 +4,7 @@
     <item
         android:id="@+id/menu"
         android:orderInCategory="100"
-        android:title="设备列表"
+        android:title="对象列表"
         app:showAsAction="always" />
 
 </menu>

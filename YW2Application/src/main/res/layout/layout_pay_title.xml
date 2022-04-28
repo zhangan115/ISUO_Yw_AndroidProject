@@ -273,7 +273,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="多功能\n设备台账"
+                    android:text="多功能\n对象台账"
                     android:textColor="@color/text333"
                     android:textSize="14sp" />
 
@@ -432,7 +432,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="设备重点\n关注管理"
+                    android:text="对象重点\n关注管理"
                     android:textColor="@color/gray_999999"
                     android:textSize="12sp" />
 
@@ -826,7 +826,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="设备基本\n台账多端录入"
+                    android:text="对象基本\n台账多端录入"
                     android:textColor="@color/gray_999999"
                     android:textSize="12sp" />
 
@@ -848,7 +848,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="多维度设备\n分类及排序管理"
+                    android:text="多维度对象\n分类及排序管理"
                     android:textColor="@color/gray_999999"
                     android:textSize="12sp" />
 

@@ -315,7 +315,7 @@ public class InputActivity extends BaseActivity implements Type3Layout.OnTakePho
         }
     }
 
-    /******* 随机生成的需要拍照的设备******/
+    /******* 随机生成的需要拍照的对象******/
     private void toUploadEquipmentPhoto() {
         @SuppressLint("InflateParams")
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_take_photo, null);

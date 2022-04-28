@@ -32,7 +32,7 @@ public interface InjectOilDataSource {
     Subscription getInjectRoomList(@NonNull IListCallBack<InjectRoomBean> callBack);
 
     /**
-     * 获取注油设备
+     * 获取注油对象
      *
      * @param roomId   区域id
      * @param callBack 回调

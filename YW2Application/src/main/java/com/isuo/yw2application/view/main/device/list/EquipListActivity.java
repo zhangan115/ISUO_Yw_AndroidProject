@@ -73,7 +73,7 @@ public class EquipListActivity extends BaseActivity implements EquipListContract
         isShowEquipment = getIntent().getBooleanExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, false);
         isShowEquipmentInfo = getIntent().getBooleanExtra(ConstantStr.KEY_BUNDLE_BOOLEAN_1, false);
         isFocusNow = getIntent().getBooleanExtra(ConstantStr.KEY_BUNDLE_BOOLEAN_2, false);
-        setLayoutAndToolbar(R.layout.activity_equip_list, isFocusNow ? "关注设备" : "设备列表");
+        setLayoutAndToolbar(R.layout.activity_equip_list, isFocusNow ? "关注对象" : "对象列表");
         DaggerEquipListComponent.builder().customerRepositoryComponent(Yw2Application.getInstance().getRepositoryComponent())
                 .equipListModule(new EquipListModule(this)).build()
                 .inject(this);

@@ -61,11 +61,11 @@ public interface FaultApi {
      * count 每页多少条，app和bs使用
      * byCurrentUser 查询当前用户创建的故障
      * roomId 配电室id
-     * equipmentId 设备id
+     * equipmentId 对象id
      * taskId 任务id
      * faultState 故障状态
      * faultType 故障等级
-     * equipmentType 设备类型
+     * equipmentType 对象类型
      * startTime 开始时间
      * endTime 结束时间
      * lessThanFaultState 故障状态

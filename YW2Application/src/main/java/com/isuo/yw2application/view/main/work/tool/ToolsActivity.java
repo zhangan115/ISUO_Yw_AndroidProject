@@ -129,7 +129,7 @@ public class ToolsActivity extends BaseActivity implements ToolsContract.View, S
                 GlideUtils.ShowImage(ToolsActivity.this, data.getToolPic(), ivImage, R.drawable.picture_default);
                 tvToolsDes.setText(data.getToolDesc());
                 tvToolsName.setText(data.getToolName());
-                tvToolsNum.setText(String.format("设备编号:%s", data.getToolNumber()));
+                tvToolsNum.setText(String.format("对象编号:%s", data.getToolNumber()));
                 if (data.getIsUse().equals("0")) {
                     tvToolsLocal.setTextColor(findColorById(R.color.colorTextBlue));
                     tvToolsLocal.setText("在库");
@@ -179,7 +179,7 @@ public class ToolsActivity extends BaseActivity implements ToolsContract.View, S
                 GlideUtils.ShowImage(ToolsActivity.this, data.getToolPic(), ivImage, R.drawable.picture_default);
                 tvToolsDes.setText(data.getToolDesc());
                 tvToolsName.setText(data.getToolName());
-                tvToolsNum.setText(String.format("设备编号:%s", data.getToolNumber()));
+                tvToolsNum.setText(String.format("对象编号:%s", data.getToolNumber()));
                 if (data.getIsUse().equals("0")) {
                     tvToolsLocal.setTextColor(findColorById(R.color.colorTextBlue));
                     tvToolsLocal.setText("在库");

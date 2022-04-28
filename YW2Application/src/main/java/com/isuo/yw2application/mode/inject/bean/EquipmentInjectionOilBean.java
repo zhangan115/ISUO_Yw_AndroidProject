@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.isuo.yw2application.mode.bean.User;
 
 /**
- * 设备注油信息
+ * 对象注油信息
  * Created by zhangan on 2018/4/13.
  */
 

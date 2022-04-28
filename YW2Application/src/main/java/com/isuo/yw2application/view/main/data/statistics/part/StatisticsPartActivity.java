@@ -113,9 +113,9 @@ public class StatisticsPartActivity extends BaseActivity implements ChooseTimeLa
             llIncrementItem.addView(view);
         }
         if (!TextUtils.isEmpty(statistics.getTheMostStat().getFlimsyEquipmentType().getEquipmentTypeName())){
-            ((TextView) findViewById(R.id.tv_4_1)).setText(MessageFormat.format("最多事件设备类型:{0}", statistics.getTheMostStat().getFlimsyEquipmentType().getEquipmentTypeName()));
+            ((TextView) findViewById(R.id.tv_4_1)).setText(MessageFormat.format("最多事件对象类型:{0}", statistics.getTheMostStat().getFlimsyEquipmentType().getEquipmentTypeName()));
         }else{
-            ((TextView) findViewById(R.id.tv_4_1)).setText("最多事件设备类型:");
+            ((TextView) findViewById(R.id.tv_4_1)).setText("最多事件对象类型:");
         }
         if (!TextUtils.isEmpty(statistics.getTheMostStat().getTheMostFaultType())){
             ((TextView) findViewById(R.id.tv_4_2)).setText(MessageFormat.format("最多事件类型:{0}", statistics.getTheMostStat().getTheMostFaultType()));
