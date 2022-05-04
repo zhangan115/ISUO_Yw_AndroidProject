@@ -5,6 +5,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -17,6 +19,7 @@ import com.isuo.yw2application.mode.bean.count.WeekList;
 import com.isuo.yw2application.mode.bean.discover.DeptType;
 import com.isuo.yw2application.utils.Utils;
 import com.isuo.yw2application.view.base.BaseActivity;
+import com.isuo.yw2application.widget.ChooseTimeLayout;
 import com.isuo.yw2application.widget.StaffDialog;
 import com.sito.library.adapter.RVAdapter;
 import com.sito.library.utils.DataUtil;
@@ -28,10 +31,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class StaffCountActivity extends BaseActivity implements StaffCountContract.View {
+public class StaffCountActivity extends BaseActivity implements StaffCountContract.View, ChooseTimeLayout.IChooseTime {
     //view
     private TextView mYesterday;
     private TextView mToday;
+
+    private LinearLayout llChooseTime, llEmpty, llShowContent;
+    private TextView tvTime;
+    private ImageView ivTime;
 
     private ExpendRecycleView mComeRecycle;
 
@@ -59,6 +66,7 @@ public class StaffCountActivity extends BaseActivity implements StaffCountContra
     private TextView mMonthNum;
     private String mNowTime;//当前时间
     private String mChoseTime;
+    private String mStartTime, mEndTime;
     @Inject
     StaffCountPresenter mStaffCountPresenter;
     StaffCountContract.Presenter mPresenter;
@@ -75,9 +83,74 @@ public class StaffCountActivity extends BaseActivity implements StaffCountContra
         DaggerStaffCountComponent.builder().customerRepositoryComponent(Yw2Application.getInstance().getRepositoryComponent())
                 .staffCountModule(new StaffCountModule(this)).build()
                 .inject(this);
+        findViewById(R.id.llEmpty).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                llChooseTime.setVisibility(View.GONE);
+                llEmpty.setVisibility(View.GONE);
+                ivTime.setImageDrawable(findDrawById(R.drawable.drop_down));
+            }
+        });
+        findViewById(R.id.llOpenChooseTime).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (llChooseTime.getVisibility() == View.VISIBLE) {
+                    llChooseTime.setVisibility(View.GONE);
+                    llEmpty.setVisibility(View.GONE);
+                    ivTime.setImageDrawable(findDrawById(R.drawable.drop_down));
+                } else {
+                    llChooseTime.setVisibility(View.VISIBLE);
+                    llEmpty.setVisibility(View.VISIBLE);
+                    ivTime.setImageDrawable(findDrawById(R.drawable.pack_up));
+                }
+            }
+        });
+        LinearLayout linearLayout = findViewById(R.id.countLayout);
+        findViewById(R.id.layout_0).setOnClickListener(this);
+        findViewById(R.id.layout_1).setOnClickListener(this);
+        findViewById(R.id.layout_2).setOnClickListener(this);
+        findViewById(R.id.layout_3).setOnClickListener(this);
+        findViewById(R.id.layout_4).setOnClickListener(this);
+        llChooseTime = findViewById(R.id.llChooseTime);
+        llEmpty = findViewById(R.id.llEmpty);
+        llShowContent = findViewById(R.id.llShowContent);
+        tvTime = findViewById(R.id.tvTime);
+        ivTime = findViewById(R.id.ivTime);
+        ChooseTimeLayout layout = new ChooseTimeLayout(this);
+        layout.setChooseTimeListener(this, getSupportFragmentManager());
+        llChooseTime.addView(layout);
+
         initView();
         initEvent();
         initData();
+    }
+
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()) {
+            case R.id.layout_0:
+            case R.id.layout_1:
+            case R.id.layout_2:
+            case R.id.layout_3:
+            case R.id.layout_4:
+                if (view.getTag() == null) {
+                    break;
+                }
+                int type = Integer.parseInt(String.valueOf(view.getTag()));
+                mComeCounts.clear();
+                if (type == 0) {
+                    mComeCounts.addAll(allComeCounts);
+                } else {
+                    for (int j = 0; j < allComeCounts.size(); j++) {
+                        if (allComeCounts.get(j).getTaskStationState() == type) {
+                            mComeCounts.add(allComeCounts.get(j));
+                        }
+                    }
+                }
+                mComeRecycle.getAdapter().notifyDataSetChanged();
+                break;
+        }
     }
 
     private void initEvent() {
@@ -91,7 +164,7 @@ public class StaffCountActivity extends BaseActivity implements StaffCountContra
 
                 long time = System.currentTimeMillis() - 24 * 60 * 60 * 1000;
                 mChoseTime = DataUtil.timeFormat(time, "yyyy-MM-dd");
-                mPresenter.getComeCount(mChoseTime, mDeptId + "");
+                mPresenter.getComeCount(mStartTime, mEndTime, mDeptId + "");
                 mNowTime = mChoseTime;
             }
         });
@@ -105,7 +178,7 @@ public class StaffCountActivity extends BaseActivity implements StaffCountContra
 
                 long time = System.currentTimeMillis();
                 mNowTime = DataUtil.timeFormat(time, "yyyy-MM-dd");
-                mPresenter.getComeCount(mNowTime, mDeptId + "");
+                mPresenter.getComeCount(mStartTime, mEndTime, mDeptId + "");
             }
         });
     }
@@ -524,30 +597,52 @@ public class StaffCountActivity extends BaseActivity implements StaffCountContra
                                 mDeptId = mDeptTypes.get(position).getDeptId();
                                 isShowGroup = false;
                                 Utils.setDrawable(StaffCountActivity.this, R.drawable.drop_down_arrow, mGroup, 2);
-                                mPresenter.getComeCount(mNowTime, mDeptId + "");
-                                mPresenter.getWeekList(mNowTime, mDeptId + "");
-                                mPresenter.getMonthCount(mNowTime, mDeptId + "");
+                                mPresenter.getComeCount(mStartTime, mEndTime, mDeptId + "");
                             }
                         })
                         .show();
             }
         });
         if (mDeptId != -1) {
-            mPresenter.getComeCount(mNowTime, mDeptId + "");
-            mPresenter.getWeekList(mNowTime, mDeptId + "");
-            mPresenter.getMonthCount(mNowTime, mDeptId + "");
+            mPresenter.getComeCount(mStartTime, mEndTime, mDeptId + "");
         }
     }
+
+    private List<ComeCount> allComeCounts = new ArrayList<>();
 
     @Override
     public void showComeCount(List<ComeCount> comeCounts) {
         mComeCounts.clear();
+        allComeCounts.clear();
+        allComeCounts.addAll(comeCounts);
         mComeCounts.addAll(comeCounts);
         if (mComeCounts.size() > 0) {
             mComeRecycle.setVisibility(View.VISIBLE);
         } else {
             mComeRecycle.setVisibility(View.GONE);
         }
+        int count1 = 0;
+        int count2 = 0;
+        int count3 = 0;
+        int count4 = 0;
+
+        for (int i = 0; i < comeCounts.size(); i++) {
+            ComeCount data = comeCounts.get(i);
+            if (data.getTaskStationState() == 1) {
+                count1++;
+            } else if (data.getTaskStationState() == 2) {
+                count2++;
+            } else if (data.getTaskStationState() == 3) {
+                count3++;
+            } else if (data.getTaskStationState() == 4) {
+                count4++;
+            }
+        }
+        ((TextView) findViewById(R.id.tv0)).setText(String.valueOf(allComeCounts.size()));
+        ((TextView) findViewById(R.id.tv1)).setText(String.valueOf(count1));
+        ((TextView) findViewById(R.id.tv2)).setText(String.valueOf(count2));
+        ((TextView) findViewById(R.id.tv3)).setText(String.valueOf(count3));
+        ((TextView) findViewById(R.id.tv4)).setText(String.valueOf(count4));
         mComeRecycle.getAdapter().notifyDataSetChanged();
     }
 
@@ -558,58 +653,11 @@ public class StaffCountActivity extends BaseActivity implements StaffCountContra
 
     @Override
     public void showMonthCount(List<MonthCount> monthCounts) {
-        mMonthNum.setText(MessageFormat.format("本月未到岗统计 {0}", monthCounts.size()));
-        mMonthCounts.clear();
-        mMonthCounts.addAll(monthCounts);
-        mRecycleLeave.getAdapter().notifyDataSetChanged();
+
     }
 
     @Override
     public void showWeekList(List<WeekList> weekLists) {
-        mWeek01.clear();
-        mWeek02.clear();
-        mWeek03.clear();
-        mWeek04.clear();
-        mWeek05.clear();
-        mWeek06.clear();
-        mWeek07.clear();
-        if (weekLists != null && weekLists.size() > 0) {
-            if (weekLists.get(0) != null && weekLists.get(0).getWeek() != null && weekLists.get(0).getWeek().size() > 0) {
-                mWeek01.addAll(weekLists.get(0).getWeek());
-
-            }
-            mRecycle01.getAdapter().notifyDataSetChanged();
-            if (weekLists.get(1) != null && weekLists.get(1).getWeek() != null && weekLists.get(1).getWeek().size() > 0) {
-                mWeek02.addAll(weekLists.get(1).getWeek());
-
-            }
-            mRecycle02.getAdapter().notifyDataSetChanged();
-            if (weekLists.get(2) != null && weekLists.get(2).getWeek() != null && weekLists.get(2).getWeek().size() > 0) {
-                mWeek03.addAll(weekLists.get(2).getWeek());
-
-            }
-            mRecycle03.getAdapter().notifyDataSetChanged();
-            if (weekLists.get(3) != null && weekLists.get(3).getWeek() != null && weekLists.get(3).getWeek().size() > 0) {
-                mWeek04.addAll(weekLists.get(3).getWeek());
-
-            }
-            mRecycle04.getAdapter().notifyDataSetChanged();
-            if (weekLists.get(4) != null && weekLists.get(4).getWeek() != null && weekLists.get(4).getWeek().size() > 0) {
-                mWeek05.addAll(weekLists.get(4).getWeek());
-
-            }
-            mRecycle05.getAdapter().notifyDataSetChanged();
-            if (weekLists.get(5) != null && weekLists.get(5).getWeek() != null && weekLists.get(5).getWeek().size() > 0) {
-                mWeek06.addAll(weekLists.get(5).getWeek());
-
-            }
-            mRecycle06.getAdapter().notifyDataSetChanged();
-            if (weekLists.get(6) != null && weekLists.get(6).getWeek() != null && weekLists.get(6).getWeek().size() > 0) {
-                mWeek07.addAll(weekLists.get(6).getWeek());
-
-            }
-            mRecycle07.getAdapter().notifyDataSetChanged();
-        }
     }
 
     @Override
@@ -625,5 +673,18 @@ public class StaffCountActivity extends BaseActivity implements StaffCountContra
     @Override
     public void noData() {
 
+    }
+
+    @Override
+    public void onTimeChange(String startTime, String endTime, String title) {
+        this.mStartTime = startTime;
+        this.mEndTime = endTime;
+        llChooseTime.setVisibility(View.GONE);
+        llEmpty.setVisibility(View.GONE);
+        ivTime.setImageDrawable(findDrawById(R.drawable.drop_down));
+        tvTime.setText(title);
+        if (mPresenter != null && this.mDeptId != -1) {
+            mPresenter.getComeCount(startTime, endTime, String.valueOf(this.mDeptId));
+        }
     }
 }

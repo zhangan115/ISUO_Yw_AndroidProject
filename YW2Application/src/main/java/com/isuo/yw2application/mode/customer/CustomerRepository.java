@@ -463,6 +463,27 @@ public class CustomerRepository implements CustomerDataSource {
         }.execute1();
     }
 
+    @NonNull
+    @Override
+    public Subscription getSituation(@NonNull String startTime,@NonNull String endTime, @NonNull String deptId, @NonNull final IListCallBack<ComeCount> callBack) {
+        Observable<Bean<List<ComeCount>>> observable = Api.createRetrofit().create(Api.Count.class)
+                .getSituationCount(startTime,endTime, deptId);
+        return new ApiCallBack<List<ComeCount>>(observable) {
+            @Override
+            public void onSuccess(List<ComeCount> comeCounts) {
+                callBack.onFinish();
+                callBack.onSuccess(comeCounts);
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+
     @Override
     public Subscription getWeekCount(@NonNull String time, @NonNull String deptId, @NonNull final IListCallBack<WeekCount> callBack) {
         Observable<Bean<List<WeekCount>>> observable = Api.createRetrofit().create(Api.Count.class)

@@ -170,6 +170,10 @@ public interface CustomerDataSource {
     //获取部门id
     Subscription getDeptTypeId(@NonNull String types, @NonNull IListCallBack<DeptType> callBack);
 
+    //到岗统计
+    @NonNull
+    Subscription getSituation(@NonNull String startTime,@NonNull String endTime, @NonNull String deptId, @NonNull IListCallBack<ComeCount> callBack);
+
     //获取故障上报统计
     Subscription getFaultReport(long deptId, @NonNull String time, @NonNull IListCallBack<FaultReport> callBack);
 

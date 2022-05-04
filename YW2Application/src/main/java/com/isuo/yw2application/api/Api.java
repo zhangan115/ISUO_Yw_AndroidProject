@@ -350,6 +350,11 @@ public class Api {
 
     //统计
     public interface Count {
+
+        //人员今日昨日到岗统计
+        @GET("task/unstation/time/situation.json")
+        Observable<Bean<List<ComeCount>>> getSituationCount(@Query("startTime") String startTime,@Query("endTime") String endTime,@Query("deptId") String deptId);
+
         //人员今日昨日到岗统计
         @GET("task/unstation/situation.json")
         Observable<Bean<List<ComeCount>>> getTodaCount(@Query("time") String time, @Query("deptId") String deptId);
