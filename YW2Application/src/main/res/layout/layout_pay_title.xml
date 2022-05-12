@@ -46,7 +46,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="工作看板"
+                    android:text="即时看板"
                     android:textColor="@color/text333"
                     android:textSize="14sp" />
 
@@ -66,7 +66,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="事件闭\n环管理"
+                    android:text="任务闭\n环管理"
                     android:textColor="@color/text333"
                     android:textSize="14sp" />
 
@@ -143,6 +143,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView
@@ -369,7 +370,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="工作看板"
+                    android:text="最新工作动态"
                     android:textColor="@color/gray_999999"
                     android:textSize="12sp" />
 
@@ -410,7 +411,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="报修、维修\n闭环管理"
+                    android:text="闭环管理"
                     android:textColor="@color/gray_999999"
                     android:textSize="12sp" />
 
@@ -557,6 +558,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView
@@ -580,6 +582,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView
