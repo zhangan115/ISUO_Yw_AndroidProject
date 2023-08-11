@@ -33,15 +33,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="小梭运维＋"
-                android:textSize="22sp"
-                android:visibility="gone" />
+                android:text="智能任务到位管理系统"
+                android:textSize="14sp"
+                android:visibility="visible" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/app_name"
+                android:visibility="gone"
                 android:textColor="@color/gray_666666"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -54,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:text="西安小梭易智信息科技有限公司@2018-2021版权信息"
+        android:text="西安小梭易智信息科技有限公司@2018-2023版权信息"
         android:textColor="@color/gray_666666"
         android:textSize="14sp" />
 
