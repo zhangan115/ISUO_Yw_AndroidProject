@@ -27,6 +27,15 @@ interface WorkInspectionContract {
         void getData(int inspectionType, @NonNull String time);
 
         /**
+         * 从网络中获取数据
+         *
+         * @param inspectionType 巡检类型
+         * @param time           时间
+         * @param isMonitor      观察模式
+         */
+        void getData(int inspectionType, @NonNull String time, boolean isMonitor);
+
+        /**
          * 从缓存中获取数据
          *
          * @param inspection 巡检类型

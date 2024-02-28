@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
+import com.isuo.yw2application.mode.bean.User;
 import com.isuo.yw2application.mode.bean.employee.DepartmentBean;
 import com.isuo.yw2application.view.contact.detail.UserDetailActivity;
 import com.sito.library.utils.GlideUtils;
@@ -140,7 +141,14 @@ class ContactListAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (ChildViewHolder) convertView.getTag();
         }
-        holder.nameTv.setText(data.get(groupPosition).getUserList().get(childPosition).getUser().getRealName());
+        User user = data.get(groupPosition).getUserList().get(childPosition).getUser();
+        if (user.getIsHideName() == 1) {
+            holder.nameTv.setText("");
+            holder.nameTv.setVisibility(View.GONE);
+        }else {
+            holder.nameTv.setText(user.getRealName());
+            holder.nameTv.setVisibility(View.VISIBLE);
+        }
         if (data.get(groupPosition).getUserList().get(childPosition).getUser().getUserId() == Yw2Application.getInstance().getCurrentUser().getUserId()) {
             GlideUtils.ShowCircleImage(context, Yw2Application.getInstance().getCurrentUser().getPortraitUrl()
                     , holder.stateIv, R.drawable.mine_head_default);
@@ -151,7 +159,13 @@ class ContactListAdapter extends BaseExpandableListAdapter {
         holder.ll_child_layout.setTag(R.id.tag_group_position, groupPosition);
         holder.ll_child_layout.setTag(R.id.tag_child_position, childPosition);
         holder.positionTV.setText(data.get(groupPosition).getUserList().get(childPosition).getUser().getUserRoleNames());
-        holder.callTv.setText(data.get(groupPosition).getUserList().get(childPosition).getUser().getUserPhone());
+        if (user.getIsHidePhone() == 1){
+            holder.callTv.setText(user.getUserPhone());
+            holder.callTv.setVisibility(View.GONE);
+        }else {
+            holder.callTv.setText(user.getUserPhone());
+            holder.callTv.setVisibility(View.VISIBLE);
+        }
         holder.ll_child_layout.setTag(R.id.tag_position, data.get(groupPosition).getUserList().get(childPosition).getUser().getUserPhone());
         holder.ll_child_layout.setTag(R.id.tag_position_1, data.get(groupPosition).getUserList().get(childPosition).getUser().getUserId());
         holder.ll_child_layout.setOnClickListener(call);

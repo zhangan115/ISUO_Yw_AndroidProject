@@ -92,126 +92,246 @@
                         </RelativeLayout>
 
                     </RelativeLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
                         android:layout_marginTop="120dp"
+                        android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
                         android:layout_marginBottom="10dp"
-                        android:background="@drawable/white_bg_with_shape"
-                        android:orientation="vertical"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="8dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="12dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="巡检任务"
-                            android:textColor="@color/text333"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:weightSum="3">
+                            android:background="@drawable/white_bg_with_shape"
+                            android:orientation="vertical"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="执行检查"
+                                android:textColor="@color/text333"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
                             <LinearLayout
-                                android:id="@+id/layout_1"
-                                android:layout_width="0dp"
-                                android:layout_height="70dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_task_blue"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:tag="1">
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal"
+                                android:weightSum="3">
 
-                                <TextView
-                                    android:id="@+id/monthCountTv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="#419af9"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold"
-                                    tools:text="0/16" />
+                                <LinearLayout
+                                    android:id="@+id/monitor_layout_1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="70dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_task_blue"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:tag="1">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="本月"
-                                    android:textColor="@color/text333"
-                                    android:textSize="12sp" />
+                                    <TextView
+                                        android:id="@+id/monitor_monthCountTv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#419af9"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold"
+                                        tools:text="0/16" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dp"
+                                        android:text="本月"
+                                        android:textColor="@color/text333"
+                                        android:textSize="12sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/monitor_layout_2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="70dp"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginRight="12dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_task_blue"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:tag="2">
+
+                                    <TextView
+                                        android:id="@+id/monitor_workCountTv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#419af9"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold"
+                                        tools:text="0/16" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dp"
+                                        android:text="本周"
+                                        android:textColor="@color/text333"
+                                        android:textSize="12sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/monitor_layout_3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="70dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_task_blue"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:tag="3">
+
+                                    <TextView
+                                        android:id="@+id/monitor_dayCountTv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#419af9"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold"
+                                        tools:text="0/16" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dp"
+                                        android:text="今日"
+                                        android:textColor="@color/text333"
+                                        android:textSize="12sp" />
+                                </LinearLayout>
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:id="@+id/layout_2"
-                                android:layout_width="0dp"
-                                android:layout_height="70dp"
-                                android:layout_marginLeft="12dp"
-                                android:layout_marginRight="12dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_task_blue"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:tag="2">
-
-                                <TextView
-                                    android:id="@+id/workCountTv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="#419af9"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold"
-                                    tools:text="0/16" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="本周"
-                                    android:textColor="@color/text333"
-                                    android:textSize="12sp" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/layout_3"
-                                android:layout_width="0dp"
-                                android:layout_height="70dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_task_blue"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:tag="3">
-
-                                <TextView
-                                    android:id="@+id/dayCountTv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="#419af9"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold"
-                                    tools:text="0/16" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="今日"
-                                    android:textColor="@color/text333"
-                                    android:textSize="12sp" />
-                            </LinearLayout>
                         </LinearLayout>
 
-                    </LinearLayout>
-                </FrameLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/white_bg_with_shape"
+                            android:layout_marginTop="12dp"
+                            android:orientation="vertical"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="12dp">
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="精益任务"
+                                android:textColor="@color/text333"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal"
+                                android:weightSum="3">
+
+                                <LinearLayout
+                                    android:id="@+id/layout_1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="70dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_task_blue"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:tag="1">
+
+                                    <TextView
+                                        android:id="@+id/monthCountTv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#419af9"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold"
+                                        tools:text="0/16" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dp"
+                                        android:text="本月"
+                                        android:textColor="@color/text333"
+                                        android:textSize="12sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/layout_2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="70dp"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginRight="12dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_task_blue"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:tag="2">
+
+                                    <TextView
+                                        android:id="@+id/workCountTv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#419af9"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold"
+                                        tools:text="0/16" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dp"
+                                        android:text="本周"
+                                        android:textColor="@color/text333"
+                                        android:textSize="12sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/layout_3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="70dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_task_blue"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:tag="3">
+
+                                    <TextView
+                                        android:id="@+id/dayCountTv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#419af9"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold"
+                                        tools:text="0/16" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dp"
+                                        android:text="今日"
+                                        android:textColor="@color/text333"
+                                        android:textSize="12sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

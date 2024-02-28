@@ -37,6 +37,7 @@ import com.isuo.yw2application.mode.bean.news.MessageListBean;
 import com.isuo.yw2application.mode.bean.option.OptionBean;
 import com.isuo.yw2application.mode.bean.overhaul.OverhaulBean;
 import com.isuo.yw2application.mode.bean.today.TodayToDoBean;
+import com.isuo.yw2application.mode.bean.work.WorkMonitorState;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.isuo.yw2application.mode.inject.bean.InjectEquipment;
 import com.isuo.yw2application.mode.inject.bean.InjectRoomBean;
@@ -391,6 +392,9 @@ public class Api {
 
         @GET("statistics/work/stat.json")
         Observable<Bean<WorkState>> getWorkStat();
+
+        @GET("statistics/work/monitor/stat.json")
+        Observable<Bean<WorkMonitorState>> getWorkMonitorStat();
 
         @GET("statistics/today/todoList.json")
         Observable<Bean<List<TodayToDoBean>>> getTodayToList();

@@ -28,6 +28,7 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
     private PinnedHeaderExpandableListView mExpandListView;
     private Context context;
     private int groupLayout, childLayout;
+    private boolean isMonitor = false;
     private List<InspectionRegionModel> data = new ArrayList<>();
 
     private int[] icons = new int[]{R.drawable.work_day_icon
@@ -58,6 +59,14 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
         this.groupLayout = groupLayout;
         this.childLayout = childLayout;
         this.mExpandListView = expandableListView;
+    }
+
+    WorkInspectionAdapter(Context context, PinnedHeaderExpandableListView expandableListView, int groupLayout, int childLayout,boolean isMonitor) {
+        this.context = context;
+        this.groupLayout = groupLayout;
+        this.childLayout = childLayout;
+        this.mExpandListView = expandableListView;
+        this.isMonitor = isMonitor;
     }
 
     public void setData(List<InspectionRegionModel> data) {
@@ -270,7 +279,7 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
         } else {
             vHolder.tv_time_plan_end.setVisibility(View.GONE);
         }
-        if (data.getTaskState() == ConstantInt.TASK_STATE_4) {
+        if (data.getTaskState() == ConstantInt.TASK_STATE_4||isMonitor) {
             vHolder.startTaskLayout.setVisibility(View.GONE);
         } else {
             vHolder.startTaskLayout.setVisibility(View.VISIBLE);

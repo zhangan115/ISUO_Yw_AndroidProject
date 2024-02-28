@@ -9,43 +9,39 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/id_item_equip_place"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/unitTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:lines="1"
-            android:text="1#配电室"
+            tools:text="1#配电室"
+            android:layout_weight="1"
             android:textColor="@color/text333"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/unitTv"
             android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/iv_state"
-            android:gravity="right|center_vertical"
+            android:layout_height="wrap_content"
+            android:gravity="end|center_vertical"
             android:textColor="@color/text333"
+            android:layout_marginEnd="@dimen/DP_10"
             android:textSize="12sp" />
 
         <ImageView
             android:id="@+id/iv_state"
             android:layout_width="13dp"
             android:layout_height="13dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/DP_10"
             android:src="@drawable/bg_employee_arrow" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

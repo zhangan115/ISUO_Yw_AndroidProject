@@ -110,6 +110,18 @@ public interface InspectionSourceData {
     @NonNull
     Subscription getInspectionData(int inspectionType, @NonNull String data, @Nullable String lastId, @NonNull IListCallBack<InspectionBean> callBack);
 
+
+    /**
+     * 获取巡检列表
+     *
+     * @param data     时间
+     * @param lastId   最后的id
+     * @param callBack 回调
+     * @return 订阅
+     */
+    @NonNull
+    Subscription getInspectionData(int inspectionType, @NonNull String data, @Nullable String lastId,@Nullable Integer monitor, @NonNull IListCallBack<InspectionBean> callBack);
+
     //从数据库获取任务执行人回调
     interface LoadTaskUserCallBack {
 

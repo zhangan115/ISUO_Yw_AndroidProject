@@ -1,5 +1,6 @@
 package com.isuo.yw2application.view.main.task;
 
+import com.isuo.yw2application.mode.bean.work.WorkMonitorState;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.sito.library.base.BasePresenter;
 import com.sito.library.base.BaseView;
@@ -13,11 +14,15 @@ interface TaskContract {
     interface Presenter extends BasePresenter {
 
         void getWorkCount();
+
+        void getWorkMonitorCount();
     }
 
     interface View extends BaseView<Presenter> {
 
         void showWorkCount(WorkState workState);
+
+        void showWorkMonitorCount(WorkMonitorState workState);
 
         void showWorkCountFinish();
 

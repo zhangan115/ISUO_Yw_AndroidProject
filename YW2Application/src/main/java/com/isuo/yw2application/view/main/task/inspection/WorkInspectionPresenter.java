@@ -81,7 +81,28 @@ public class WorkInspectionPresenter implements WorkInspectionContract.Presenter
     @Override
     public void getData(int inspectionType, @NonNull String time) {
         mView.showLoading();
-        mSubscriptions.add(mSourceData.getInspectionData(inspectionType, time, null, new IListCallBack<InspectionBean>() {
+        mSubscriptions.add(mSourceData.getInspectionData(inspectionType, time, null,null, new IListCallBack<InspectionBean>() {
+            @Override
+            public void onSuccess(@NonNull List<InspectionBean> list) {
+                mView.showData(list);
+            }
+
+            @Override
+            public void onError(String message) {
+                mView.noData();
+            }
+
+            @Override
+            public void onFinish() {
+                mView.hideLoading();
+            }
+        }));
+    }
+
+    @Override
+    public void getData(int inspectionType, @NonNull String time, boolean isMonitor) {
+        mView.showLoading();
+        mSubscriptions.add(mSourceData.getInspectionData(inspectionType, time, null,isMonitor?Yw2Application.getInstance().getCurrentUser().getUserId():null, new IListCallBack<InspectionBean>() {
             @Override
             public void onSuccess(@NonNull List<InspectionBean> list) {
                 mView.showData(list);

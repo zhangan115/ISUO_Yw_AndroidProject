@@ -26,10 +26,10 @@ android {
         applicationId "com.isuo.yw2application"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
-        versionName "1.6"
+        versionCode 14
+        versionName "1.7"
         ndk {
-            abiFilters "armeabi"
+            abiFilters "armeabi","x86","x86_64"
         }
         multiDexEnabled true
     }
@@ -81,7 +81,7 @@ android {
     }
     //green dao 配置
     greendao {
-        schemaVersion 6//版本号
+        schemaVersion 7//版本号
     }
 }
 

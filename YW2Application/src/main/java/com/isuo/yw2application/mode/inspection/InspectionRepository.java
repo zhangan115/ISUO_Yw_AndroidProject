@@ -255,6 +255,82 @@ public class InspectionRepository implements InspectionSourceData {
 
     @NonNull
     @Override
+    public Subscription getInspectionData(int inspectionType, @NonNull String data, @Nullable String lastId
+            ,Integer userId, @NonNull final IListCallBack<InspectionBean> callBack) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("time", data);
+            jsonObject.put("agentType", 0);
+            jsonObject.put("monitor", userId);
+            jsonObject.put("count", ConstantInt.MAX_PAGE_SIZE);
+            if (inspectionType != -1) {
+                switch (inspectionType) {
+                    case 1:
+                        jsonObject.put("planPeriodType", 1);
+                        break;
+                    case 2:
+                        jsonObject.put("planPeriodType", 2);
+                        break;
+                    case 3:
+                        jsonObject.put("planPeriodType", 3);
+                        break;
+                }
+            }
+            jsonObject.put("lastId", lastId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Observable<Bean<List<InspectionBean>>> observable =
+                Api.createRetrofit().create(InspectionApi.class).getInspection(jsonObject.toString());
+        return new ApiCallBack<List<InspectionBean>>(observable) {
+            @Override
+            public void onSuccess(List<InspectionBean> result) {
+                callBack.onFinish();
+                if (result == null || result.size() == 0) {
+                    callBack.onError("");
+                } else {
+                    Observable.just(result)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io())
+                            .doOnNext(new Action1<List<InspectionBean>>() {
+                                @Override
+                                public void call(List<InspectionBean> inspectionBeans) {
+                                    ACache.get(Yw2Application.getInstance()).put(data + "_" + inspectionType, new Gson().toJson(result));
+                                }
+                            })
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Subscriber<List<InspectionBean>>() {
+                                @Override
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    e.printStackTrace();
+                                    callBack.onFinish();
+                                    callBack.onError(e.getMessage());
+                                }
+
+                                @Override
+                                public void onNext(List<InspectionBean> inspectionDetailBean) {
+                                    callBack.onFinish();
+                                    callBack.onSuccess(inspectionDetailBean);
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
     public Subscription getSecureInfo(long securityId, @NonNull final IObjectCallBack<SecureBean> callBack) {
         Observable<Bean<SecureBean>> observable = Api.createRetrofit().create(InspectionApi.class)
                 .getSecureInfo(securityId);
@@ -358,10 +434,12 @@ public class InspectionRepository implements InspectionSourceData {
                                             mustDataValue.add(bean);
                                         }
                                     }
-                                    int randomDataValue = (int) (Math.random() * mustDataValue.size());
-                                    DataItemValueListBean dataItemValueListBean = mustDataValue.get(randomDataValue);
-                                    roomDb.setDataItemName(dataItemValueListBean.getDataItem().getInspectionName());
-                                    roomDb.setTakePhotoPosition(taskEquipmentBean.getEquipment().getEquipmentId());
+                                    if (!mustDataValue.isEmpty()){
+                                        int randomDataValue = (int) (Math.random() * mustDataValue.size());
+                                        DataItemValueListBean dataItemValueListBean = mustDataValue.get(randomDataValue);
+                                        roomDb.setDataItemName(dataItemValueListBean.getDataItem().getInspectionName());
+                                        roomDb.setTakePhotoPosition(taskEquipmentBean.getEquipment().getEquipmentId());
+                                    }
                                 }
                             }
                             roomDb.setTaskState(inspectionDetailBean.getRoomList().get(i).getTaskRoomState());

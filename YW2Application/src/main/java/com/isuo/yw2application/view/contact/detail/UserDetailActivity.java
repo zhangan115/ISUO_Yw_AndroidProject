@@ -80,6 +80,7 @@ public class UserDetailActivity extends BaseActivity implements UserDetailContra
         chooseTx[2] = findViewById(R.id.choose3);
         chooseTx[2].setOnClickListener(this);
         editInfoTv = findViewById(R.id.editInfoTv);
+        editInfoTv.setVisibility(View.GONE);
         editInfoTv.setOnClickListener(this);
 
         findViewById(R.id.ll_1).setOnClickListener(this);

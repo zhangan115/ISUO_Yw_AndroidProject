@@ -31,8 +31,9 @@
 
                 <TextView
                     android:id="@+id/tv_value_title_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:paddingTop="15dp"
                     android:paddingBottom="10dp"
                     android:textColor="@color/text333"
@@ -41,10 +42,9 @@
 
                 <TextView
                     android:id="@+id/tv_norma_value"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:textColor="@color/gray_999999"
                     android:textSize="12sp"
                     tools:text="电流（mA）" />

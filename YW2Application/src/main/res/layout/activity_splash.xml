@@ -25,14 +25,14 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:background="@drawable/ui_log" />
+                android:background="@mipmap/ic_launcher" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginTop="20dp"
-                android:text="多维度多场景企业数字化\n任务精益到位协同管理系统"
+                android:text="数字化线下任务执行精益管理"
                 android:textColor="@color/gray_666666"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:text="西安小梭易智信息科技有限公司@2018-2022版权信息"
+        android:text="西安小梭易智信息科技有限公司@2018-2024版权信息"
         android:textColor="@color/gray_666666"
         android:textSize="14sp" />
 
