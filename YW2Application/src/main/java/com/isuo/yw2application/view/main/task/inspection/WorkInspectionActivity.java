@@ -21,6 +21,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -109,6 +110,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     private NdefMessage ndefMessage;
     private Switch mTimeSt;
     private int currentState = 0;
+    private boolean isMonitor = false;
 
     private LocalBroadcastManager manager;
     private TaskStateChangeReceiver taskStateChangeReceiver;
@@ -121,6 +123,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
             title = "执行巡检";
         }
         inspectionType = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT, -1);
+        isMonitor = getIntent().getBooleanExtra(ConstantStr.KEY_BUNDLE_BOOLEAN,false);
         setLayoutAndToolbar(R.layout.activivity_inspection_work_list, title);
         new WorkInspectionPresenter(InspectionRepository.getRepository(this), this);
         mRecyclerView = findViewById(R.id.recycleViewId);
@@ -164,11 +167,14 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                     }
                     unitTv.setText(MessageFormat.format("总数:{0} 未完成:{1}", taskCount, notFinishCount));
                     boolean isExpanded = expandableListView.isGroupExpanded(firstVisibleGroupPos);
+                    stateIv.setVisibility(View.VISIBLE);
                     if (isExpanded) {
                         stateIv.setImageDrawable(findDrawById(R.drawable.bg_employee_arrow_open));
                     } else {
                         stateIv.setImageDrawable(findDrawById(R.drawable.bg_employee_arrow));
                     }
+                }else {
+                    //stateIv.setVisibility(View.GONE);
                 }
             }
         });
@@ -219,7 +225,12 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         findViewById(R.id.screenConditionsLayout).setOnClickListener(this);
         findViewById(R.id.ll_choose_month_day).setOnClickListener(this);
         findViewById(R.id.ll_choose_day_empty).setOnClickListener(this);
-        findViewById(R.id.uploadBtn).setOnClickListener(this);
+        if (isMonitor) {
+            findViewById(R.id.uploadBtn).setVisibility(View.GONE);
+        }else {
+            findViewById(R.id.uploadBtn).setVisibility(View.VISIBLE);
+            findViewById(R.id.uploadBtn).setOnClickListener(this);
+        }
         mTimeSt = findViewById(R.id.switchSt);
         mTimeSt.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
@@ -232,8 +243,9 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         mList = new ArrayList<>();
         initRecycleView();
         setDayToView();
-        initNfcAdapter();
-
+        if (!isMonitor) {
+            initNfcAdapter();
+        }
         manager = LocalBroadcastManager.getInstance(this);
         taskStateChangeReceiver = new TaskStateChangeReceiver();
         IntentFilter intentFilter = new IntentFilter();
@@ -268,7 +280,11 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     }
 
     private void initRecycleView() {
-        inspectionAdapter = new WorkInspectionAdapter(this, expandableListView, R.layout.item_equip_group, R.layout.item_day_inspection);
+        if (isMonitor) {
+            inspectionAdapter = new WorkInspectionAdapter(this, expandableListView, R.layout.item_equip_group, R.layout.item_day_inspection, true);
+        }else {
+            inspectionAdapter = new WorkInspectionAdapter(this, expandableListView, R.layout.item_equip_group, R.layout.item_day_inspection);
+        }
         expandableListView.setAdapter(inspectionAdapter);
         inspectionAdapter.setItemListener(new WorkInspectionAdapter.ItemClickListener() {
             @Override
@@ -441,7 +457,11 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         getDate(mCurrentDay.get(Calendar.YEAR), mCurrentDay.get(Calendar.MONTH), mCurrentDay.get(Calendar.DAY_OF_MONTH));
         dataList.clear();
         inspectionAdapter.notifyDataSetChanged();
-        getDataFromCache();
+        if (isMonitor) {
+            onRefresh();
+        }else {
+            getDataFromCache();
+        }
     }
 
     private void getDate(int year, int monthOfYear, int dayOfMonth) {
@@ -489,7 +509,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
             boolean hasBean = false;
             InspectionRegionModel regionModel = null;
             if (TextUtils.isEmpty(bean.getRegionName())) {
-                bean.setRegionName("未分区域");
+                bean.setRegionName("未分类");
             }
             for (InspectionRegionModel model : dataList) {
                 if (model.getRegionName().equals(bean.getRegionName())) {
@@ -598,10 +618,9 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         mList.clear();
         this.dataList.clear();
         inspectionAdapter.setData(this.dataList);
-        if (mRecyclerView.getAdapter() == null) {
-            return;
+        if (mRecyclerView.getAdapter() != null) {
+            mRecyclerView.getAdapter().notifyDataSetChanged();
         }
-        mRecyclerView.getAdapter().notifyDataSetChanged();
         noDataLayout.setVisibility(View.VISIBLE);
     }
 
@@ -639,7 +658,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     public void onRefresh() {
         if (mPresenter != null) {
             noDataLayout.setVisibility(View.GONE);
-            mPresenter.getData(inspectionType, mDate);
+            mPresenter.getData(inspectionType, mDate,isMonitor);
         }
     }
 

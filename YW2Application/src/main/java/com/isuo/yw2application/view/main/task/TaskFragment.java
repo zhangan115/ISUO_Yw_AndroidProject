@@ -15,6 +15,7 @@ import com.isuo.yw2application.R;
 import com.isuo.yw2application.app.Yw2Application;
 import com.isuo.yw2application.common.ConstantStr;
 import com.isuo.yw2application.mode.bean.PayMenuBean;
+import com.isuo.yw2application.mode.bean.work.WorkMonitorState;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.isuo.yw2application.view.base.MvpFragmentV4;
 import com.isuo.yw2application.view.main.about.AboutActivity;
@@ -33,6 +34,7 @@ import java.text.MessageFormat;
 public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implements TaskContract.View, View.OnClickListener {
 
     private TextView finishCountTv, monthCountTv, weakCountTv, dayCountTv;
+    private TextView monitorMonthCountTv, monitorWeakCountTv, monitorDayCountTv;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     public static TaskFragment newInstance() {
@@ -59,6 +61,7 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
             public void onRefresh() {
                 if (mPresenter != null) {
                     mPresenter.getWorkCount();
+                    mPresenter.getWorkMonitorCount();
                 }
             }
         });
@@ -66,6 +69,9 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
         monthCountTv = rootView.findViewById(R.id.monthCountTv);
         weakCountTv = rootView.findViewById(R.id.workCountTv);
         dayCountTv = rootView.findViewById(R.id.dayCountTv);
+        monitorMonthCountTv = rootView.findViewById(R.id.monitor_monthCountTv);
+        monitorWeakCountTv = rootView.findViewById(R.id.monitor_workCountTv);
+        monitorDayCountTv = rootView.findViewById(R.id.monitor_dayCountTv);
         int width = (getActivity().getResources().getDisplayMetrics().widthPixels - DisplayUtil.dip2px(getActivity(), 60)) / 2;
         int height = width / 142 * 90;
         rootView.findViewById(R.id.taskIv1).setLayoutParams(new LinearLayout.LayoutParams(width, height));
@@ -82,6 +88,9 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
         rootView.findViewById(R.id.layout_1).setOnClickListener(this);
         rootView.findViewById(R.id.layout_2).setOnClickListener(this);
         rootView.findViewById(R.id.layout_3).setOnClickListener(this);
+        rootView.findViewById(R.id.monitor_layout_1).setOnClickListener(this);
+        rootView.findViewById(R.id.monitor_layout_2).setOnClickListener(this);
+        rootView.findViewById(R.id.monitor_layout_3).setOnClickListener(this);
         TextView payTitle = rootView.findViewById(R.id.payTitle);
         payMenuBean = Yw2Application.getInstance().getCurrentUser().getCustomerSetMenu();
         payTitle.setText(MessageFormat.format("当前为{0}", payMenuBean.getMenuName()));
@@ -94,6 +103,7 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
         super.onResume();
         if (mPresenter != null) {
             mPresenter.getWorkCount();
+            mPresenter.getWorkMonitorCount();
         }
     }
 
@@ -193,6 +203,33 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
                 }
                 startActivity(intent);
                 break;
+            case R.id.monitor_layout_1:
+            case R.id.monitor_layout_2:
+            case R.id.monitor_layout_3:
+                String monitorType = view.getTag().toString();
+                Intent monitorIntent = new Intent();
+                switch (monitorType) {
+                    case "1":
+                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_STR, "月巡检");
+                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_INT, 3);
+                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, true);
+                        monitorIntent.setClass(getActivity(), WorkInspectionActivity.class);
+                        break;
+                    case "2":
+                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_STR, "周巡检");
+                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_INT, 2);
+                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, true);
+                        monitorIntent.setClass(getActivity(), WorkInspectionActivity.class);
+                        break;
+                    case "3":
+                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_STR, "日巡检");
+                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_INT, 1);
+                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, true);
+                        monitorIntent.setClass(getActivity(), WorkInspectionActivity.class);
+                        break;
+                }
+                startActivity(monitorIntent);
+                break;
         }
     }
 
@@ -202,6 +239,13 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
         monthCountTv.setText(String.format("%s/%s", workState.getMonthFinishCount(), workState.getMonthAllCount()));
         weakCountTv.setText(String.format("%s/%s", workState.getWeekFinishCount(), workState.getWeekAllCount()));
         dayCountTv.setText(String.format("%s/%s", workState.getDayFinishCount(), workState.getDayAllCount()));
+    }
+
+    @Override
+    public void showWorkMonitorCount(WorkMonitorState workState) {
+        monitorMonthCountTv.setText(String.format("%s/%s", workState.getMonthFinishCount(), workState.getMonthAllCount()));
+        monitorWeakCountTv.setText(String.format("%s/%s", workState.getWeekFinishCount(), workState.getWeekAllCount()));
+        monitorDayCountTv.setText(String.format("%s/%s", workState.getDayFinishCount(), workState.getDayFinishCount()));
     }
 
     @Override

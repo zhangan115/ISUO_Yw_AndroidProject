@@ -39,7 +39,8 @@ public class User implements Parcelable {
     private String ability;
     private String entryTime;
     private String userCode;
-
+    private int isHideName;
+    private int isHidePhone;
     private PayMenuBean customerSetMenu;
 
 
@@ -217,6 +218,22 @@ public class User implements Parcelable {
 
     public void setUserCode(String userCode) {
         this.userCode = userCode;
+    }
+
+    public int getIsHideName() {
+        return isHideName;
+    }
+
+    public void setIsHideName(int isHideName) {
+        this.isHideName = isHideName;
+    }
+
+    public int getIsHidePhone() {
+        return isHidePhone;
+    }
+
+    public void setIsHidePhone(int isHidePhone) {
+        this.isHidePhone = isHidePhone;
     }
 
     public static class CustomerBean implements Parcelable {
@@ -505,6 +522,8 @@ public class User implements Parcelable {
         dest.writeString(this.ability);
         dest.writeString(this.entryTime);
         dest.writeString(this.userCode);
+        dest.writeInt(this.isHideName);
+        dest.writeInt(this.isHidePhone);
         dest.writeParcelable(this.customerSetMenu, flags);
     }
 
@@ -531,6 +550,8 @@ public class User implements Parcelable {
         this.ability = in.readString();
         this.entryTime = in.readString();
         this.userCode = in.readString();
+        this.isHideName = in.readInt();
+        this.isHidePhone = in.readInt();
         this.customerSetMenu = in.readParcelable(PayMenuBean.class.getClassLoader());
     }
 

@@ -3,6 +3,7 @@ package com.isuo.yw2application.view.main.task;
 import android.support.annotation.NonNull;
 
 import com.isuo.yw2application.mode.IObjectCallBack;
+import com.isuo.yw2application.mode.bean.work.WorkMonitorState;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.isuo.yw2application.mode.work.WorkDataSource;
 
@@ -40,7 +41,6 @@ class TaskPresenter implements TaskContract.Presenter {
         subscription.add(mRepository.getWorkState(new IObjectCallBack<WorkState>() {
             @Override
             public void onSuccess(@NonNull WorkState workState) {
-
                 mView.showWorkCount(workState);
             }
 
@@ -52,6 +52,26 @@ class TaskPresenter implements TaskContract.Presenter {
             @Override
             public void onFinish() {
                 mView.showWorkCountFinish();
+            }
+        }));
+    }
+
+    @Override
+    public void getWorkMonitorCount() {
+        subscription.add(mRepository.getWorkMonitorState(new IObjectCallBack<WorkMonitorState>() {
+            @Override
+            public void onSuccess(@NonNull WorkMonitorState workState) {
+                mView.showWorkMonitorCount(workState);
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
             }
         }));
     }

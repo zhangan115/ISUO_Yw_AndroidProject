@@ -14,6 +14,7 @@ import com.isuo.yw2application.mode.bean.work.IncrementBean;
 import com.isuo.yw2application.mode.bean.work.InspectionDataBean;
 import com.isuo.yw2application.mode.bean.work.WorkInspectionBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
+import com.isuo.yw2application.mode.bean.work.WorkMonitorState;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 
 import org.json.JSONObject;
@@ -121,6 +122,9 @@ public interface WorkDataSource {
 
     @NonNull
     Subscription getWorkState(IObjectCallBack<WorkState> callBack);
+
+    @NonNull
+    Subscription getWorkMonitorState(IObjectCallBack<WorkMonitorState> callBack);
 
     @NonNull
     Subscription get24HFaultList(Map<String, String> map, @NonNull IListCallBack<FaultList> callBack);

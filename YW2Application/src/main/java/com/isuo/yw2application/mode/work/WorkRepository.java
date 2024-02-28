@@ -29,6 +29,7 @@ import com.isuo.yw2application.mode.bean.work.IncrementBean;
 import com.isuo.yw2application.mode.bean.work.InspectionDataBean;
 import com.isuo.yw2application.mode.bean.work.WorkInspectionBean;
 import com.isuo.yw2application.mode.bean.work.WorkItem;
+import com.isuo.yw2application.mode.bean.work.WorkMonitorState;
 import com.isuo.yw2application.mode.bean.work.WorkState;
 import com.isuo.yw2application.mode.inspection.InspectionApi;
 import com.isuo.yw2application.utils.ACache;
@@ -344,6 +345,29 @@ public class WorkRepository implements WorkDataSource {
         return new ApiCallBack<WorkState>(Api.createRetrofit().create(Api.Count.class).getWorkStat()) {
             @Override
             public void onSuccess(@Nullable WorkState workState) {
+                callBack.onFinish();
+                if (workState != null) {
+                    callBack.onSuccess(workState);
+                } else {
+                    callBack.onError("");
+                }
+            }
+
+            @Override
+            public void onFail() {
+                callBack.onFinish();
+                callBack.onError("");
+            }
+        }.execute1();
+    }
+
+    @NonNull
+    @Override
+    public Subscription getWorkMonitorState(IObjectCallBack<WorkMonitorState> callBack) {
+        return new ApiCallBack<WorkMonitorState>(Api.createRetrofit().create(Api.Count.class).getWorkMonitorStat()){
+
+            @Override
+            public void onSuccess(@Nullable WorkMonitorState workState) {
                 callBack.onFinish();
                 if (workState != null) {
                     callBack.onSuccess(workState);
