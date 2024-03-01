@@ -198,7 +198,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="7dp"
-                                    android:text="已修复"
+                                    android:text="已关闭"
                                     android:textColor="@color/text333"
                                     android:textSize="12sp" />
                             </LinearLayout>

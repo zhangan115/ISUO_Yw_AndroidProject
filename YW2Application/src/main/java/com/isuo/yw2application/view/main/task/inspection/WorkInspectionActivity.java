@@ -175,6 +175,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                     }
                 }else {
                     //stateIv.setVisibility(View.GONE);
+                    stateIv.setImageDrawable(null);
                 }
             }
         });
