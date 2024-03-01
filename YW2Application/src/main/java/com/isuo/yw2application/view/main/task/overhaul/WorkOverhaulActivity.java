@@ -66,7 +66,7 @@ public class WorkOverhaulActivity extends BaseActivity implements DatePickerView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activivity_inspection_work_list, "执行任务");
+        setLayoutAndToolbar(R.layout.activivity_inspection_work_list, "执行检修任务");
         new OverhaulPresenter(Yw2Application.getInstance().getWorkRepositoryComponent().getRepository(), this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar == null) {

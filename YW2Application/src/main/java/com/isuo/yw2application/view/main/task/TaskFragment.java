@@ -186,17 +186,17 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
                 Intent intent = new Intent();
                 switch (type) {
                     case "1":
-                        intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "月巡检");
+                        intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "月任务检查");
                         intent.putExtra(ConstantStr.KEY_BUNDLE_INT, 3);
                         intent.setClass(getActivity(), WorkInspectionActivity.class);
                         break;
                     case "2":
-                        intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "周巡检");
+                        intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "周任务检查");
                         intent.putExtra(ConstantStr.KEY_BUNDLE_INT, 2);
                         intent.setClass(getActivity(), WorkInspectionActivity.class);
                         break;
                     case "3":
-                        intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "日巡检");
+                        intent.putExtra(ConstantStr.KEY_BUNDLE_STR, "日任务检查");
                         intent.putExtra(ConstantStr.KEY_BUNDLE_INT, 1);
                         intent.setClass(getActivity(), WorkInspectionActivity.class);
                         break;
@@ -210,19 +210,19 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
                 Intent monitorIntent = new Intent();
                 switch (monitorType) {
                     case "1":
-                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_STR, "月巡检");
+                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_STR, "月任务检查");
                         monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_INT, 3);
                         monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, true);
                         monitorIntent.setClass(getActivity(), WorkInspectionActivity.class);
                         break;
                     case "2":
-                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_STR, "周巡检");
+                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_STR, "周任务检查");
                         monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_INT, 2);
                         monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, true);
                         monitorIntent.setClass(getActivity(), WorkInspectionActivity.class);
                         break;
                     case "3":
-                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_STR, "日巡检");
+                        monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_STR, "日任务检查");
                         monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_INT, 1);
                         monitorIntent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, true);
                         monitorIntent.setClass(getActivity(), WorkInspectionActivity.class);
@@ -245,7 +245,7 @@ public class TaskFragment extends MvpFragmentV4<TaskContract.Presenter> implemen
     public void showWorkMonitorCount(WorkMonitorState workState) {
         monitorMonthCountTv.setText(String.format("%s/%s", workState.getMonthFinishCount(), workState.getMonthAllCount()));
         monitorWeakCountTv.setText(String.format("%s/%s", workState.getWeekFinishCount(), workState.getWeekAllCount()));
-        monitorDayCountTv.setText(String.format("%s/%s", workState.getDayFinishCount(), workState.getDayFinishCount()));
+        monitorDayCountTv.setText(String.format("%s/%s", workState.getDayFinishCount(), workState.getDayAllCount()));
     }
 
     @Override

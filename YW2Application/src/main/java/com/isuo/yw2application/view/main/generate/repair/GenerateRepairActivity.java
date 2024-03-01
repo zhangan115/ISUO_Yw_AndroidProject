@@ -22,7 +22,7 @@ public class GenerateRepairActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutAndToolbar(R.layout.activity_container_toolbar, "发布及时任务");
+        setLayoutAndToolbar(R.layout.activity_container_toolbar, "发布检修任务");
         GenerateRepairFragment fragment = (GenerateRepairFragment) getFragmentManager().findFragmentById(R.id.frame_container);
         if (fragment == null) {
             fragment = GenerateRepairFragment.newInstance();

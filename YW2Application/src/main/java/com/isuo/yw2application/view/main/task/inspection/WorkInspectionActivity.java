@@ -175,6 +175,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                     }
                 }else {
                     //stateIv.setVisibility(View.GONE);
+                    stateIv.setImageDrawable(null);
                 }
             }
         });
@@ -429,7 +430,9 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     public void uploadNext() {
         currentUploadIndex++;
         if (currentUploadIndex >= uploadTask.size()) {
-            mPresenter.toSaveInspectionDataToAcCache(WorkInspectionActivity.this.inspectionType, WorkInspectionActivity.this.mDate, mList);
+            if (!isMonitor) {
+                mPresenter.toSaveInspectionDataToAcCache(WorkInspectionActivity.this.inspectionType, WorkInspectionActivity.this.mDate, mList);
+            }
             if (inspectionAdapter != null) {
                 inspectionAdapter.notifyDataSetChanged();
             }
@@ -491,6 +494,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     @Override
     public void showData(List<InspectionBean> been) {
         noDataLayout.setVisibility(View.GONE);
+        expandableListView.setVisibility(View.VISIBLE);
         mList.clear();
         mList.addAll(been);
         if (mTimeSt.isChecked()) {
@@ -498,6 +502,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         } else {
             defaultData(currentState);
         }
+        expandableListView.requestRefreshHeader();
         if (mRecyclerView.getAdapter() != null) {
             mRecyclerView.getAdapter().notifyDataSetChanged();
         }
@@ -618,6 +623,8 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         mList.clear();
         this.dataList.clear();
         inspectionAdapter.setData(this.dataList);
+        expandableListView.requestRefreshHeader();
+        expandableListView.setVisibility(View.GONE);
         if (mRecyclerView.getAdapter() != null) {
             mRecyclerView.getAdapter().notifyDataSetChanged();
         }
@@ -636,7 +643,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
         if (inspectionAdapter != null) {
             inspectionAdapter.notifyDataSetChanged();
         }
-        if (mPresenter != null) {
+        if (mPresenter != null&&!isMonitor) {
             mPresenter.toSaveInspectionDataToAcCache(this.inspectionType, this.mDate, mList);
         }
         Yw2Application.getInstance().showToast("任务领取成功");
@@ -648,7 +655,7 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
     }
 
     private void getDataFromCache() {
-        if (mPresenter != null) {
+        if (mPresenter != null&&!isMonitor) {
             noDataLayout.setVisibility(View.GONE);
             mPresenter.getDataFromAcCache(inspectionType, mDate);
         }
@@ -901,7 +908,9 @@ public class WorkInspectionActivity extends BaseActivity implements DatePickerVi
                         inspectionBean.setEndTime(System.currentTimeMillis());
                     }
                 }
-                mPresenter.toSaveInspectionDataToAcCache(WorkInspectionActivity.this.inspectionType, WorkInspectionActivity.this.mDate, mList);
+                if (!isMonitor) {
+                    mPresenter.toSaveInspectionDataToAcCache(WorkInspectionActivity.this.inspectionType, WorkInspectionActivity.this.mDate, mList);
+                }
                 if (inspectionAdapter != null) {
                     inspectionAdapter.notifyDataSetChanged();
                 }

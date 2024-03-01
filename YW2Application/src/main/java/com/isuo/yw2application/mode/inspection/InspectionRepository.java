@@ -295,7 +295,9 @@ public class InspectionRepository implements InspectionSourceData {
                             .doOnNext(new Action1<List<InspectionBean>>() {
                                 @Override
                                 public void call(List<InspectionBean> inspectionBeans) {
-                                    ACache.get(Yw2Application.getInstance()).put(data + "_" + inspectionType, new Gson().toJson(result));
+                                    if (userId==0){
+                                        ACache.get(Yw2Application.getInstance()).put(data + "_" + inspectionType, new Gson().toJson(result));
+                                    }
                                 }
                             })
                             .observeOn(AndroidSchedulers.mainThread())
