@@ -26,11 +26,11 @@ android {
         applicationId "com.isuo.yw2application"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 14
-        versionName "1.7"
+        versionCode 20
+        versionName "2.0"
         ndk {
-            // 64 位改造：保留 armeabi（讯飞 1.x 只有 32 位 so），新增 arm64-v8a（个推 2.14.2.0 官方 aar 提供）。
-            // 等讯飞升级到带 arm64/libmsc.so 的版本后，再把 armeabi 换成 armeabi-v7a。
+            // 64 位改造：讯飞语音 1.1.50 与个推 2.14.2.0 均已带 arm64-v8a 原生库，
+            // 统一只打 armeabi-v7a + arm64-v8a（去掉已废弃的 armeabi 与 x86 系列）。
             abiFilters "armeabi-v7a", "arm64-v8a"
         }
         multiDexEnabled true
