@@ -74,6 +74,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     private ArrayList<TaskEquipmentBean> showBean;
     private int roomPosition = -1, editPosition;
     private long taskId;
+    private boolean needUploadRoomImage;
     private boolean canUpload = false;
     private static final int ACTION_START_INPUT = 101;
     private boolean caEdit = true;
@@ -84,10 +85,11 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
     private RelativeLayout noDataLayout;
 
 
-    public static ReportFragment newInstance(long taskId, int position) {
+    public static ReportFragment newInstance(long taskId, int position,boolean needUploadRoomImage) {
         Bundle args = new Bundle();
         args.putLong(ConstantStr.KEY_BUNDLE_LONG, taskId);
         args.putInt(ConstantStr.KEY_BUNDLE_INT, position);
+        args.putBoolean(ConstantStr.KEY_BUNDLE_BOOLEAN, needUploadRoomImage);
         ReportFragment fragment = new ReportFragment();
         fragment.setArguments(args);
         return fragment;
@@ -107,6 +109,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
         if (bundle != null) {
             roomPosition = bundle.getInt(ConstantStr.KEY_BUNDLE_INT);
             taskId = bundle.getLong(ConstantStr.KEY_BUNDLE_LONG);
+            needUploadRoomImage = bundle.getBoolean(ConstantStr.KEY_BUNDLE_BOOLEAN);
         }
         mInspectionDetailBean = mPresenter.getInspectionData(taskId);
         if (mInspectionDetailBean != null) {
@@ -245,7 +248,7 @@ public class ReportFragment extends MvpFragment<ReportContract.Presenter> implem
                     Yw2Application.getInstance().showToast("有对象没有完成巡检");
                     return;
                 }
-                if (TextUtils.isEmpty(roomDb.getPhotoUrl())) {
+                if (TextUtils.isEmpty(roomDb.getPhotoUrl())&&needUploadRoomImage) {
                     toUploadEquipmentPhoto();
                 } else {
                     showUploadNoteDialog("是否上传巡检数据?");

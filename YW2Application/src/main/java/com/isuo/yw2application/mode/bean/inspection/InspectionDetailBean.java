@@ -19,6 +19,7 @@ public class InspectionDetailBean implements Parcelable {
     private long taskId;
     private String taskName;
     private int taskState;
+    private int isImageActivated;
     private List<ExecutorUserList> executorUserList;
     private List<RoomListBean> roomList;
 
@@ -86,6 +87,14 @@ public class InspectionDetailBean implements Parcelable {
         this.taskState = taskState;
     }
 
+    public int getIsImageActivated() {
+        return isImageActivated;
+    }
+
+    public void setIsImageActivated(int isImageActivated) {
+        this.isImageActivated = isImageActivated;
+    }
+
     public List<ExecutorUserList> getExecutorUserList() {
         return executorUserList;
     }
@@ -112,6 +121,7 @@ public class InspectionDetailBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.endTime);
         dest.writeInt(this.isManualCreated);
+        dest.writeInt(this.isImageActivated);
         dest.writeLong(this.planEndTime);
         dest.writeLong(this.planStartTime);
         dest.writeLong(this.startTime);
@@ -128,6 +138,7 @@ public class InspectionDetailBean implements Parcelable {
     protected InspectionDetailBean(Parcel in) {
         this.endTime = in.readLong();
         this.isManualCreated = in.readInt();
+        this.isImageActivated = in.readInt();
         this.planEndTime = in.readLong();
         this.planStartTime = in.readLong();
         this.startTime = in.readLong();

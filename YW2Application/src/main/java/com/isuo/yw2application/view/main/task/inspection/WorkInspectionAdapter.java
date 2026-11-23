@@ -170,6 +170,7 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
             vHolder.tv_inspection_type = (TextView) convertView.findViewById(R.id.tv_inspection_type);
             vHolder.tv_executor_inspection_user = (TextView) convertView.findViewById(R.id.tv_executor_inspection_user);
             vHolder.startTaskLayout = (LinearLayout) convertView.findViewById(R.id.ll_start_task);
+            vHolder.tv_task_state = (TextView) convertView.findViewById(R.id.task_state);
             convertView.setTag(vHolder);
         } else {
             vHolder = (ChildViewHolder) convertView.getTag();
@@ -210,6 +211,7 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
             vHolder.tv_executor_user_type.setText("被指派人:");
             vHolder.actualStartTimeTv.setText("实际开始:");
             vHolder.startTaskTv.setText("领取任务");
+            vHolder.tv_task_state.setVisibility(View.INVISIBLE);
         } else if (data.getTaskState() == ConstantInt.TASK_STATE_2) {
             vHolder.ll_actual_time.setVisibility(View.GONE);
             vHolder.tv_executor_user_type.setText("领 取 人:");
@@ -220,6 +222,9 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
             }
             vHolder.actualStartTimeTv.setText("实际开始:");
             vHolder.startTaskTv.setText("开始任务");
+            vHolder.tv_task_state.setVisibility(View.VISIBLE);
+            vHolder.tv_task_state.setText("已领取");
+            vHolder.tv_task_state.setBackground(context.getResources().getDrawable(R.drawable.inspection_task_state_1));
         } else if (data.getTaskState() == ConstantInt.TASK_STATE_3) {
             vHolder.ll_actual_time.setVisibility(View.GONE);
             vHolder.tv_executor_user_type.setText("领 取 人:");
@@ -230,6 +235,7 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
             }
             vHolder.actualStartTimeTv.setText("实际开始:");
             vHolder.startTaskTv.setText("开始任务");
+            vHolder.tv_task_state.setVisibility(View.INVISIBLE);
         } else if (data.getTaskState() == ConstantInt.TASK_STATE_4) {
             vHolder.actualStartTimeTv.setText("巡检截至:");
             vHolder.ll_actual_time.setVisibility(View.VISIBLE);
@@ -250,6 +256,9 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
             vHolder.tv_executor_inspection_user.setText(sb.toString());
             vHolder.tv_executor_user_type.setText("执 行 人:");
             vHolder.startTaskTv.setText("开始任务");
+            vHolder.tv_task_state.setVisibility(View.VISIBLE);
+            vHolder.tv_task_state.setText("已完成");
+            vHolder.tv_task_state.setBackground(context.getResources().getDrawable(R.drawable.inspection_task_state_2));
         }
         StringBuilder sb = new StringBuilder();
         if (data.getRooms() != null) {
@@ -362,6 +371,7 @@ public class WorkInspectionAdapter extends BaseExpandableListAdapter {
         ImageView iv_inspection_type;
         TextView tv_inspection_type;
         TextView tv_executor_inspection_user;
+        TextView tv_task_state;
         LinearLayout startTaskLayout;
     }
 }

@@ -118,7 +118,8 @@ public class InspectionRepository implements InspectionSourceData {
     @NonNull
     @Override
     public Subscription getInspectionDataFromCache(int inspectionType, String data, IListCallBack<InspectionBean> callBack) {
-        return Observable.just(ACache.get(Yw2Application.getInstance()).getAsString(data + "_" + inspectionType))
+        int userId = Yw2Application.getInstance().getCurrentUser().getUserId();
+        return Observable.just(ACache.get(Yw2Application.getInstance()).getAsString(userId+"_"+data + "_" + inspectionType))
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .flatMap(new Func1<String, Observable<List<InspectionBean>>>() {
@@ -166,8 +167,9 @@ public class InspectionRepository implements InspectionSourceData {
                     @Override
                     public Observable<?> call(List<InspectionBean> s) {
                         boolean isSuccess = false;
+                        int userId = Yw2Application.getInstance().getCurrentUser().getUserId();
                         if (s != null && s.size() > 0) {
-                            ACache.get(Yw2Application.getInstance()).put(data + "_" + inspectionType, new Gson().toJson(s));
+                            ACache.get(Yw2Application.getInstance()).put(userId+"_"+data + "_" + inspectionType, new Gson().toJson(s));
                             isSuccess = true;
                         }
                         return Observable.just(isSuccess);
@@ -219,7 +221,8 @@ public class InspectionRepository implements InspectionSourceData {
                             .doOnNext(new Action1<List<InspectionBean>>() {
                                 @Override
                                 public void call(List<InspectionBean> inspectionBeans) {
-                                    ACache.get(Yw2Application.getInstance()).put(data + "_" + inspectionType, new Gson().toJson(result));
+                                    int userId = Yw2Application.getInstance().getCurrentUser().getUserId();
+                                    ACache.get(Yw2Application.getInstance()).put(userId+"_"+data + "_" + inspectionType, new Gson().toJson(result));
                                 }
                             })
                             .observeOn(AndroidSchedulers.mainThread())
@@ -295,8 +298,9 @@ public class InspectionRepository implements InspectionSourceData {
                             .doOnNext(new Action1<List<InspectionBean>>() {
                                 @Override
                                 public void call(List<InspectionBean> inspectionBeans) {
-                                    if (userId==0){
-                                        ACache.get(Yw2Application.getInstance()).put(data + "_" + inspectionType, new Gson().toJson(result));
+                                    if (userId==null||userId==0){
+                                        int currentUserId = Yw2Application.getInstance().getCurrentUser().getUserId();
+                                        ACache.get(Yw2Application.getInstance()).put(currentUserId + "_"+data + "_" + inspectionType, new Gson().toJson(result));
                                     }
                                 }
                             })
@@ -1180,45 +1184,56 @@ public class InspectionRepository implements InspectionSourceData {
 
     private void uploadRoomPhoto(InspectionDetailBean task, @Nullable RoomListBean roomListBean, UploadTaskCallBack callBack) {
         RoomDb roomDb = needUploadRoomData.get(currentRoomCount);
-        uploadEquipmentPhoto(roomDb.getPhotoUrl(), new IUploadPhotoCallBack() {
+        if (task.getIsImageActivated() == 1){
+            uploadEquipmentPhoto(roomDb.getPhotoUrl(), new IUploadPhotoCallBack() {
 
-            @Override
-            public void onFail() {
-                callBack.onError();
-            }
+                @Override
+                public void onFail() {
+                    callBack.onError();
+                }
 
-            @Override
-            public void onSuccess(String url) {
-                uploadRandomPhotoInfo(roomDb.getTaskId(), roomDb.getTakePhotoPosition(), url, new IObjectCallBack<String>() {
-                    @Override
-                    public void onSuccess(@NonNull String s) {
-                        roomDb.setUploadPhotoUrl(url);
-                        Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
-                        currentRoomCount++;
-                        if (currentRoomCount == needUploadRoomData.size()) {
-                            uploadTaskData(task, roomListBean, callBack);
-                        } else {
-                            uploadRoomPhoto(task, roomListBean, callBack);
+                @Override
+                public void onSuccess(String url) {
+                    uploadRandomPhotoInfo(roomDb.getTaskId(), roomDb.getTakePhotoPosition(), url, new IObjectCallBack<String>() {
+                        @Override
+                        public void onSuccess(@NonNull String s) {
+                            roomDb.setUploadPhotoUrl(url);
+                            Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+                            currentRoomCount++;
+                            if (currentRoomCount == needUploadRoomData.size()) {
+                                uploadTaskData(task, roomListBean, callBack);
+                            } else {
+                                uploadRoomPhoto(task, roomListBean, callBack);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onError(String message) {
-                        callBack.onError();
-                    }
+                        @Override
+                        public void onError(String message) {
+                            callBack.onError();
+                        }
 
-                    @Override
-                    public void onFinish() {
+                        @Override
+                        public void onFinish() {
 
-                    }
-                });
+                        }
+                    });
+                }
+
+                @Override
+                public void onFinish() {
+
+                }
+            });
+        }else {
+            roomDb.setUploadPhotoUrl("");
+            Yw2Application.getInstance().getDaoSession().getRoomDbDao().insertOrReplaceInTx(roomDb);
+            currentRoomCount++;
+            if (currentRoomCount == needUploadRoomData.size()) {
+                uploadTaskData(task, roomListBean, callBack);
+            } else {
+                uploadRoomPhoto(task, roomListBean, callBack);
             }
-
-            @Override
-            public void onFinish() {
-
-            }
-        });
+        }
     }
 
     @NonNull

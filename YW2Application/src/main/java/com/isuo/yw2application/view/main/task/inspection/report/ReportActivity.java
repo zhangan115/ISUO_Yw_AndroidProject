@@ -20,9 +20,10 @@ public class ReportActivity extends BaseActivity {
         setLayoutAndToolbar(R.layout.activity_container, "开始巡检");
         int position = getIntent().getIntExtra(ConstantStr.KEY_BUNDLE_INT, -1);
         long taskId = getIntent().getLongExtra(ConstantStr.KEY_BUNDLE_LONG, -1);
+        boolean needUploadRoomImage = getIntent().getBooleanExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, true);
         ReportFragment reportFragment = (ReportFragment) getFragmentManager().findFragmentById(R.id.frame_container);
         if (reportFragment == null) {
-            reportFragment = ReportFragment.newInstance(taskId,position);
+            reportFragment = ReportFragment.newInstance(taskId,position,needUploadRoomImage);
             ActivityUtils.addFragmentToActivity(getFragmentManager(), reportFragment, R.id.frame_container);
         }
     }

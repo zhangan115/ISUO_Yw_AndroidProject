@@ -92,6 +92,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="10dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -103,7 +105,6 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
                                 android:orientation="horizontal">
 
                                 <TextView
@@ -133,6 +134,16 @@
                             </LinearLayout>
 
                         </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/task_state"
+                            android:textSize="12sp"
+                            android:textColor="@color/colorWhite"
+                            android:background="@drawable/inspection_task_state_1"
+                            android:layout_width="wrap_content"
+                            android:gravity="center"
+                            android:text="已领取"
+                            android:layout_height="wrap_content"/>
 
                     </LinearLayout>
 
@@ -251,7 +262,7 @@
                     android:id="@+id/ll_start_task"
                     android:layout_width="94dp"
                     android:layout_height="36dp"
-                    android:layout_gravity="right"
+                    android:layout_gravity="end"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/bg_get_task_blue"
                     android:orientation="vertical">

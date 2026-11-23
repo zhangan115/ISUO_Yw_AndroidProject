@@ -500,6 +500,9 @@ public class InspectionRoomFragment extends MvpFragmentV4<InspectionRoomContract
         Intent reportIntent = new Intent(getActivity(), ReportActivity.class);
         reportIntent.putExtra(ConstantStr.KEY_BUNDLE_INT, mPosition);
         reportIntent.putExtra(ConstantStr.KEY_BUNDLE_LONG, taskId);
+        if (this.inspectionDetailBean != null) {
+            reportIntent.putExtra(ConstantStr.KEY_BUNDLE_BOOLEAN, this.inspectionDetailBean.getIsImageActivated() == 1);
+        }
         startActivityForResult(reportIntent, REQUEST_CODE_START);
     }
 
