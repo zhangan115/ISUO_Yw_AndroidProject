@@ -68,6 +68,10 @@ public class AACRecord implements Runnable {
             try {
                 aacEncoder = new AacEncoder();
                 hAac = aacEncoder.AACEncoderOpen(sampleRate, 1);
+                if (hAac != 0) {
+                    // 该采样率创建编码器失败，换下一个采样率重试（沿用原有降级策略）
+                    continue;
+                }
                 minBufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
                 if (minBufferSize < 2048)
                     minBufferSize = 2048;
@@ -78,7 +82,25 @@ public class AACRecord implements Runnable {
                 break;
             } catch (Exception e) {
                 e.printStackTrace();
+                // 本次尝试失败，释放已创建的编码器，避免泄漏
+                if (aacEncoder != null) {
+                    aacEncoder.AACEncoderClose(hAac);
+                }
             }
+        }
+        if (recordInstance == null) {
+            // 所有采样率都没能创建录音/编码器，直接结束，避免下面空指针，并把已打开的资源收掉
+            isStart = false;
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException ignore) {
+            }
+            if (aacEncoder != null) {
+                aacEncoder.AACEncoderClose(hAac);
+            }
+            return;
         }
         while (isStart) {
             int bufferRead = recordInstance.read(tempBuffer, 0, minBufferSize);
@@ -89,9 +111,14 @@ public class AACRecord implements Runnable {
                     System.arraycopy(tempBuffer, i * bufferSize, temp, 0, bufferSize);
                     byte[] ret = aacEncoder.AACEncoderEncode(hAac, temp, temp.length);
                     try {
-                        fos.write(ret);
-                        if (iRecordListener != null && ret.length != 0) {
-                            iRecordListener.onRecord(tempBuffer, 0, minBufferSize);
+                        if (ret != null && ret.length > 0) {
+                            fos.write(ret);
+                        }
+                        // 注意：语音识别（讯飞 writeAudio）依赖每一段 PCM，必须无条件回调。
+                        // MediaCodec 是异步编码，前几帧会返回空数组，若把回调挂在 ret.length != 0
+                        // 上就会丢音频，导致识别结果缺失。
+                        if (iRecordListener != null) {
+                            iRecordListener.onRecord(temp, 0, temp.length);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
