@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.iflytek.cloud.thirdparty.V;
 import com.orhanobut.logger.Logger;
 import com.sito.customer.R;
 import com.sito.customer.utils.CountDownTimerUtils;

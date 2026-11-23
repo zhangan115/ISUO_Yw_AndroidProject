@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.iflytek.cloud.thirdparty.V;
 import com.sito.evpro.inspection.R;
 import com.sito.evpro.inspection.common.ConstantStr;
 import com.sito.evpro.inspection.mode.bean.equip.TimeLineBean;

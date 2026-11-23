@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.iflytek.cloud.thirdparty.V;
 import com.isuo.yw2application.R;
 import com.isuo.yw2application.utils.Utils;
 import com.sito.library.utils.DataUtil;

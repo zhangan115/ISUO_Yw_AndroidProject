@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.huxq17.handygridview.scrollrunner.OnItemMovedListener;
-import com.iflytek.cloud.thirdparty.V;
 import com.sito.customer.R;
 import com.sito.customer.mode.bean.work.WorkItem;
 
