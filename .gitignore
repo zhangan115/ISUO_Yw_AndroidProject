@@ -8,3 +8,20 @@
 /Library/build/intermediates/classes/debug/
 /YwApplication/build/
 /YwApplication/build/intermediates/classes/customer_app_default/debug/
+/ShuHeApplication/build/
+/popupLibrary/build/
+/materialprogressbar/build/
+/easyadapter/build/
+/.idea/
+/DateTimePicker/build/
+/MPChartLib/build/
+/ShuHeApplication/shuhe_app_default/
+/ShuHeApplication/yw2_app_default/
+/YW2Application/build/
+/build/
+/FilePickLibrary/build/
+/YW3Application/build/
+/YwInspection/build/
+# 本机环境配置
+/local.properties
+*.iml

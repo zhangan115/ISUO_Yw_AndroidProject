@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: ./YW2Application/libs/SystemProperties.jar">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/YW2Application/libs/SystemProperties.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
