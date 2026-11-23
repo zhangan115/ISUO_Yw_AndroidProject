@@ -27,14 +27,26 @@ public class SpeechActivity extends BaseActivity {
     }
 
     private void initSpeech() {
-        // 初始化识别无UI识别对象
-        // 使用SpeechRecognizer对象，可根据回调消息自定义界面；
-        mIat = SpeechRecognizer.createRecognizer(this, mInitListener);
-        //2.设置听写参数，详见《科大讯飞MSC API手册(Android)》SpeechConstant类
-        mIat.setParameter(SpeechConstant.DOMAIN, "iat");
-        mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn");//中文
-        mIat.setParameter(SpeechConstant.ACCENT, "mandarin ");//普通话
-        mIat.setParameter(SpeechConstant.AUDIO_SOURCE, "-1");
+        // 64 位包在还没带 arm64/libmsc.so 时，创建识别对象会抛 UnsatisfiedLinkError，
+        // 这里直接降级，避免用户点麦克风就崩。
+        if (!Yw2Application.getInstance().isSpeechReady()) {
+            Yw2Application.getInstance().showToast("当前机型暂不支持语音识别");
+            return;
+        }
+        try {
+            // 初始化识别无UI识别对象
+            // 使用SpeechRecognizer对象，可根据回调消息自定义界面；
+            mIat = SpeechRecognizer.createRecognizer(this, mInitListener);
+            //2.设置听写参数，详见《科大讯飞MSC API手册(Android)》SpeechConstant类
+            mIat.setParameter(SpeechConstant.DOMAIN, "iat");
+            mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn");//中文
+            mIat.setParameter(SpeechConstant.ACCENT, "mandarin ");//普通话
+            mIat.setParameter(SpeechConstant.AUDIO_SOURCE, "-1");
+        } catch (Throwable e) {
+            mIat = null;
+            Log.e(TAG, "语音识别初始化失败", e);
+            Yw2Application.getInstance().showToast("当前机型暂不支持语音识别");
+        }
     }
 
     /**
@@ -52,6 +64,10 @@ public class SpeechActivity extends BaseActivity {
     };
 
     public void setParam() {
+        if (mIat == null) {
+            // 语音不可用（见 initSpeech），直接跳过参数设置
+            return;
+        }
         // 清空参数
         mIat.setParameter(SpeechConstant.PARAMS, null);
         // 设置听写引擎

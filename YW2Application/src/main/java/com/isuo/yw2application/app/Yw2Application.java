@@ -68,6 +68,11 @@ public class Yw2Application extends AbsBaseApp {
     private ArrayList<OptionBean> mOptionBeen;
     private Map<String, Map<String, String>> mapOption;
 
+    /** 讯飞语音是否初始化成功（64 位包缺少 arm64/libmsc.so 时为 false） */
+    private boolean speechReady = false;
+    /** 个推是否初始化成功（64 位包缺少 arm64/libgetuiext3.so 时为 false） */
+    private boolean pushReady = false;
+
     private CustomerRepositoryComponent mRepositoryComponent;
     private WorkRepositoryComponent workRepositoryComponent;
     private FaultRepositoryComponent faultRepositoryComponent;
@@ -99,14 +104,34 @@ public class Yw2Application extends AbsBaseApp {
         initGetuiPush();
     }
 
+    /**
+     * 个推初始化。当前 ABI 缺少 libgetuiext3.so 时（例如 64 位包还没带 arm64 版本的原生库），
+     * 只降级打日志，不能让整个应用启动失败。
+     */
     private void initGetuiPush() {
-        PushManager.getInstance().initialize(this);
-        PushManager.getInstance().setDebugLogger(this, new IUserLoggerInterface() {
-            @Override
-            public void log(String s) {
-                Log.i("PUSH_LOG",s);
-            }
-        });
+        try {
+            PushManager.getInstance().initialize(this);
+            PushManager.getInstance().setDebugLogger(this, new IUserLoggerInterface() {
+                @Override
+                public void log(String s) {
+                    Log.i("PUSH_LOG", s);
+                }
+            });
+            pushReady = true;
+        } catch (Throwable e) {
+            pushReady = false;
+            Log.e("PUSH_LOG", "个推初始化失败（当前 ABI 缺少原生库），推送功能不可用", e);
+        }
+    }
+
+    /** 个推是否初始化成功 */
+    public boolean isPushReady() {
+        return pushReady;
+    }
+
+    /** 讯飞语音是否初始化成功 */
+    public boolean isSpeechReady() {
+        return speechReady;
     }
 
     /**
@@ -123,7 +148,15 @@ public class Yw2Application extends AbsBaseApp {
      * 初始化第三方模块
      */
     private void initThirdModel() {
-        SpeechUtility.createUtility(getApplicationContext(), ConstantStr.SPEED_APPID);
+        // 讯飞语音：jar 在、.so 缺失（如 64 位包未带 arm64/libmsc.so）时会抛 UnsatisfiedLinkError，
+        // 这里必须兜住，否则应用一启动就崩。降级后录音文件仍可正常生成，只是没有语音转文字。
+        try {
+            SpeechUtility.createUtility(getApplicationContext(), ConstantStr.SPEED_APPID);
+            speechReady = true;
+        } catch (Throwable e) {
+            speechReady = false;
+            Log.e("SPEECH_LOG", "讯飞语音初始化失败（当前 ABI 缺少 libmsc.so），语音识别不可用", e);
+        }
         iwxapi = WXAPIFactory.createWXAPI(this, ConstantStr.WEIXIN_APP_ID, true);
         iwxapi.registerApp(ConstantStr.WEIXIN_APP_ID);
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
